@@ -2,5 +2,8 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>qtquickcontrols2.conf</file>
+        <file>Logo(White_RightText).png</file>
+        <file>Speedometer.qml</file>
+        <file>PositionSlider.qml</file>
     </qresource>
 </RCC>
