@@ -9,6 +9,8 @@ CONFIG += c++11
 SOURCES += \
         ProcessingUnit.cpp \
         VelocityProcessingUnit.cpp \
+        accelerationprocessingunit.cpp \
+        accelerationvelocityunit.cpp \
         main.cpp
 
 RESOURCES += qml.qrc
@@ -26,4 +28,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     ProcessingUnit.h \
-    VelocityProcessingUnit.h
+    VelocityProcessingUnit.h \
+    accelerationprocessingunit.h \
+    accelerationvelocityunit.h
