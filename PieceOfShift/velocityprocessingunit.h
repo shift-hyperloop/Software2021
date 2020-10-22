@@ -2,7 +2,7 @@
 #define VELOCITYPROCESSINGUNIT_H
 
 #include <QMetaType>
-#include "ProcessingUnit.h"
+#include "processingunit.h"
 
 typedef struct velocityStruct {
     double velocity;

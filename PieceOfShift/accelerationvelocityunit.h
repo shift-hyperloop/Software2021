@@ -2,8 +2,8 @@
 #define ACCELERATIONVELOCITYUNIT_H
 
 #include <QMetaType>
-#include "ProcessingUnit.h"
-#include "VelocityProcessingUnit.h"
+#include "processingunit.h"
+#include "velocityprocessingunit.h"
 #include "accelerationprocessingunit.h"
 
 
