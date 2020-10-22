@@ -3,7 +3,7 @@
 #include <QMetaType>
 #include <QDebug>
 #include <QAction>
-#include "VelocityProcessingUnit.h"
+#include "velocityprocessingunit.h"
 #include "accelerationprocessingunit.h"
 #include "accelerationvelocityunit.h"
 #include <QElapsedTimer>

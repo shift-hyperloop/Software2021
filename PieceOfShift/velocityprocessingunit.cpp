@@ -1,4 +1,4 @@
-#include "VelocityProcessingUnit.h"
+#include "velocityprocessingunit.h"
 #include <QMutexLocker>
 #include <QDebug>
 

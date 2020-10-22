@@ -1,4 +1,4 @@
-#include "ProcessingUnit.h"
+#include "processingunit.h"
 
 void ProcessingUnit::process()
 {
