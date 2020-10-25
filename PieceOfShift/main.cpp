@@ -3,15 +3,13 @@
 #include <QMetaType>
 #include <QDebug>
 #include <QAction>
-#include "velocityprocessingunit.h"
-#include "accelerationprocessingunit.h"
-#include "accelerationvelocityunit.h"
+#include "datamanager.h"
 #include <QElapsedTimer>
 
 int main(int argc, char *argv[])
 {
     // TODO: Move these to other file
-    qmlRegisterType<VelocityProcessingUnit>("shift.datamanagement", 1, 0, "VelocityProcessingUnit");
+    qmlRegisterType<DataManager>("shift.datamanagement", 1, 0, "DataManager");
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QGuiApplication app(argc, argv);
@@ -43,33 +41,27 @@ int main(int argc, char *argv[])
     apu.process();
 */
 
-    AccelerationVelocityUnit avu;
-    AccelerationProcessingUnit apu;
-    VelocityProcessingUnit vpu;
+    /*AccelerationVelocityUnit avu;
+    AccelerationProcessingUnit apu;*/
+    /*VelocityProcessingUnit vpu;
     for (unsigned int i = 1; i < 100; i++) {
         VelocityStruct* vs = new VelocityStruct();
         vs->velocity = static_cast<double>(i*3);
-        AccelerationStruct* as = new AccelerationStruct();
-        as->acceleration= static_cast<double>(i*2);
-        avu.addData(*as, *vs);
-        apu.addData(*as);
-        vpu.addData(*vs);
+        QVariant vData = QVariant::fromValue(*vs);
+        vpu.addData(vData);
     }
-    avu.process();
-    apu.process();
-    vpu.process();
+    vpu.process();*/
 
-/*
-    VelocityProcessingUnit vpu;
+    /*VelocityProcessingUnit vpu;
     for (unsigned int i = 1; i < 2; i++) {
         VelocityStruct* vs = new VelocityStruct();
         vs->velocity = static_cast<double>(i*10);
-        vpu.addData(*vs);
+        QVariant vData = QVariant::fromValue(*vs);
+        vpu.addData(vData);
     }
     vpu.process();
-    qInfo("Something");
+    qInfo("Something");*/
 
-*/
     engine.load(url);
 
     return app.exec();
