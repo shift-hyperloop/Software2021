@@ -3,16 +3,14 @@
 
 #include <QVariant>
 #include <QQueue>
-#include <qqml.h>
 
 
+// The data structs should be in Decoder, but here for demonstration purposes
 typedef struct velocityStruct {
     double velocity;
 } VelocityStruct;
 
-// TODO: Move to other file
-Q_DECLARE_METATYPE(VelocityStruct);
-
+// Might move to Decoder?
 enum DataType {
     VELOCITY,
     ACCELERATION
@@ -25,16 +23,19 @@ class ProcessingUnit : public QObject
 public:
 
     virtual void process() = 0;
+
+    // This shouldn't really be called, use data from signal instead
     QVariant data() {
         if (!dataQueue.empty())
             return dataQueue.back();
         else
-            return QVariant::fromValue(10);
+            return 0;
     }
 
     DataType dataType() { return m_dataType; }
 
 public slots:
+    // Add data to queue and start processing
     void addData(const QVariant &data)
     {
         dataQueue.enqueue(data);
@@ -42,9 +43,7 @@ public slots:
     }
 
 signals:
-    /*
-     *   Use this to be able to use QVariant with custom struct 
-     */
+    // This signal is emitted when new data is available
     void newData(const QVariant &data);
 
 protected:
