@@ -27,13 +27,13 @@ Item {
             onWheel: {
                 if((wheel.angleDelta).y > 0){
                    var p = chartview.plotArea
-                   var m = 1.25
-                    chartview.zoomIn(Qt.rect(p.x,p.y + (p.height - p.height/m),p.width / m, p.height / m))
+                   var zoom = 4/3
+                    chartview.zoomIn(Qt.rect(p.x,p.y + (p.height - p.height/zoom),p.width / zoom, p.height / zoom))
                 }
                 else{
                     p = chartview.plotArea
-                    m = 3/4
-                    chartview.zoomIn(Qt.rect(p.x ,p.y + (p.height - p.height/m),p.width / m, p.height / m))
+                    zoom = 0.75
+                    chartview.zoomIn(Qt.rect(p.x ,p.y + (p.height - p.height/zoom),p.width / zoom, p.height / zoom))
                 }
             }
             onPressed: {
