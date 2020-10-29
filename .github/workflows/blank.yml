@@ -21,3 +21,14 @@ jobs:
           aqtversion: '==0.9.7'
           py7zrversion: '==0.10.1'
           extra: '--external 7z'
+        
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Build Application
+        run: |
+          cd tests/TestWithModules
+          call "%programfiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+          dir %Qt5_DIR%/lib/cmake
+          qmake
+        shell: cmd
