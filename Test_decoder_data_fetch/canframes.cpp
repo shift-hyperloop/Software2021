@@ -4,11 +4,9 @@
 #include <QTimer>
 #include <QCanBus>
 #include <QCanBusDevice>
-#include <QDesktopServices>
-#include <QCloseEvent>
-#include <QtDebug>
-#include <QObject>
-#include <QVector>
+#include <QCanBusDeviceInfo>
+#include <QCanBusFrame>
+#include <QDebug>
 
 void canframes::processErrors(QCanBusDevice::CanBusError error) const
 {
@@ -31,16 +29,12 @@ void canframes::processErrors(QCanBusDevice::CanBusError error) const
 void canframes::connectDevice()
 {
     QString Error_string;
+    c_canDevice.reset(QCanBus::instance()->createDevice(QStringLiteral("virtualcan"), QStringLiteral("can0"), 0));
+    c_canDevice->setConfigurationParameter(QCanBusDevice::CanFdKey, QCanBusFrame::FrameType(QCanBusFrame::DataFrame));
 
     c_numberFramesWritten = 0;
 
-
-        if(QCanBus::instance()->plugins().contains(QStringLiteral("systeccan"))){
-            QCanBusDevice *device = QCanBus::instance()->createDevice(QStringLiteral("systeccan"), QStringLiteral("can0.0"));
-            device->connectDevice();
-        }
-
-        else if(!c_canDevice){
+        if(!c_canDevice){
             qInfo() << "Sum tin wong";
             c_canDevice.reset();
         }

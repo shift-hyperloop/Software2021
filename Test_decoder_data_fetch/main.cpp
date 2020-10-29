@@ -5,7 +5,7 @@ int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
     canframes w;
-    w.busStatus();
+    w.connectDevice();
 
 
     return a.exec();
