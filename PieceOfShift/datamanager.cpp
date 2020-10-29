@@ -6,9 +6,13 @@
 
 DataManager::DataManager()
 {
+    /* Create and append all processing units here,
+     * maybe refactor to separate function
+     */
     VelocityProcessingUnit* vpu = new VelocityProcessingUnit();
     processingUnits.append(vpu);
 
+    // Connect newData signal to corresponding DataManager signal
     connect(vpu, &VelocityProcessingUnit::newData,
             this, &DataManager::newVelocity);
 
