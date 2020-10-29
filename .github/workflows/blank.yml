@@ -3,7 +3,7 @@ name: Qt Build
 on: [push, pull_request]
 
 jobs:
-  install:
+  build:
     runs-on: windows-latest
     steps:
       - name: Install Qt
@@ -22,9 +22,6 @@ jobs:
           py7zrversion: '==0.10.1'
           extra: '--external 7z'
         
-  build:
-    runs-on: windows-latest
-    steps:
       - name: Build Application
         run: |
           cd tests/TestWithModules
