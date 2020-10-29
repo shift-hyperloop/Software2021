@@ -15,7 +15,7 @@ QT_END_NAMESPACE
 
 class canframes
 {
-public:
+public slots:
 
 
     void processReceivedFrames();
@@ -25,7 +25,7 @@ public:
     void busStatus();
     void processFramesWritten(qint64);
     void initActionConnections();
-
+public:
     qint64 c_numberFramesWritten = 0;
 
     QLabel *c_written=nullptr;

@@ -23,6 +23,7 @@ void canframes::processErrors(QCanBusDevice::CanBusError error) const
         qInfo() << c_status;
         break;
     default:
+        qInfo() << "Ran";
         break;
     }
 }
@@ -34,10 +35,12 @@ void canframes::connectDevice()
     c_numberFramesWritten = 0;
 
 
-        c_canDevice->setConfigurationParameter(QCanBusDevice::CanFdKey,
-                                               QVariant::fromValue(QCanBusFrame::FrameType(QCanBusFrame::UnknownFrame)));
+        if(QCanBus::instance()->plugins().contains(QStringLiteral("systeccan"))){
+            QCanBusDevice *device = QCanBus::instance()->createDevice(QStringLiteral("systeccan"), QStringLiteral("can0.0"));
+            device->connectDevice();
+        }
 
-        if(!c_canDevice){
+        else if(!c_canDevice){
             qInfo() << "Sum tin wong";
             c_canDevice.reset();
         }
@@ -64,7 +67,7 @@ void canframes::connectDevice()
 
 
         }
-
+ qInfo() << "code has run";
 }
 
 static QString frameFlags(const QCanBusFrame &frame)
@@ -90,6 +93,7 @@ void canframes::processReceivedFrames()
 {
     if(!c_canDevice)
     {
+        qInfo() << "at least it runs";
         return;
     }
     while(c_canDevice->framesAvailable())
@@ -123,5 +127,22 @@ void canframes::busStatus()
     {
         qInfo() << "No Can Bus status available";
         c_busTimer->stop();
+        return;
+    }
+    switch (c_canDevice->busStatus()) {
+    case QCanBusDevice::CanBusStatus::Good:
+        qInfo() << "Can ok";
+        break;
+    case QCanBusDevice::CanBusStatus::BusOff:
+        qInfo() << "No bus man thing";
+        break;
+    case QCanBusDevice::CanBusStatus::Error:
+        qInfo() << "sum thin wong man";
+        break;
+    case QCanBusDevice::CanBusStatus::Warning:
+        qInfo() << "SQUEEL";
+        break;
+    default:
+        qInfo() << "ran code with 0 errors";
     }
 }
