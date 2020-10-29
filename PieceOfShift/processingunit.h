@@ -3,7 +3,6 @@
 
 #include <QVariant>
 #include <QQueue>
-#include <QWaitCondition>
 #include <qqml.h>
 
 
@@ -13,6 +12,11 @@ typedef struct velocityStruct {
 
 // TODO: Move to other file
 Q_DECLARE_METATYPE(VelocityStruct);
+
+enum DataType {
+    VELOCITY,
+    ACCELERATION
+};
 
 class ProcessingUnit : public QObject
 {
@@ -27,6 +31,8 @@ public:
         else
             return QVariant::fromValue(10);
     }
+
+    DataType dataType() { return m_dataType; }
 
 public slots:
     void addData(const QVariant &data)
@@ -43,6 +49,8 @@ signals:
 
 protected:
     QQueue<QVariant> dataQueue;
+
+    DataType m_dataType;
 };
 
 #endif // PROCESSINGUNIT_H

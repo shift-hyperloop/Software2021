@@ -1,7 +1,7 @@
 #ifndef VELOCITYPROCESSINGUNIT_H
 #define VELOCITYPROCESSINGUNIT_H
 
-#include <QMetaType>
+#include <QElapsedTimer>
 #include "processingunit.h"
 
 class VelocityProcessingUnit : public ProcessingUnit
@@ -11,6 +11,9 @@ public:
     ~VelocityProcessingUnit();
 
     virtual void process() override;
+
+private:
+    QElapsedTimer myTimer; // REMOVE THIS
 };
 
 #endif // VELOCITYPROCESSINGUNIT_H
