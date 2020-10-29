@@ -1,0 +1,27 @@
+name: Qt Build
+
+on: [pull_request]
+
+jobs:
+  install:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest]
+        version: ['5.15.1']
+    steps:
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: '5.15.1'
+          host: 'windows'
+          target: 'desktop'
+          arch: 'win64_msvc2019_64'
+          dir: '${{ github.workspace }}/example/'
+          install-deps: 'true'
+          modules: 'qtcharts qtwebengine'
+          mirror: 'http://mirrors.ocf.berkeley.edu/qt/'
+          cached: 'false'
+          aqtversion: '==0.9.7'
+          py7zrversion: '==0.10.1'
+          extra: '--external 7z'
