@@ -24,7 +24,7 @@ jobs:
         
       - name: Build Application
         run: |
-          cd tests/TestWithModules
+          cd PieceOfShift
           call "%programfiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
           dir %Qt5_DIR%/lib/cmake
           qmake
