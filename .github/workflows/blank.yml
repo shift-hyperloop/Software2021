@@ -16,10 +16,12 @@ jobs:
           dir: '${{ github.workspace }}/example/'
           install-deps: 'true'
           modules: 'qtcharts'
+          
+      - name: Checkout
+        uses: actions/checkout@v1
         
       - name: Build Application
         run: |
-          cd example
           dir
           call "%programfiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
           dir %Qt5_DIR%/lib/cmake
