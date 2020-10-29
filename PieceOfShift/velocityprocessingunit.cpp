@@ -1,10 +1,12 @@
 #include "velocityprocessingunit.h"
-#include <QMutexLocker>
+#include <QRandomGenerator>
 #include <QDebug>
 
 VelocityProcessingUnit::VelocityProcessingUnit()
 {
-    
+    m_dataType = VELOCITY;
+
+    myTimer.start(); // REMOVE THIS
 }
 
 VelocityProcessingUnit::~VelocityProcessingUnit()
@@ -15,16 +17,18 @@ VelocityProcessingUnit::~VelocityProcessingUnit()
 void VelocityProcessingUnit::process()
 {
     if(dataQueue.empty()) {
-        emit newData(QVariant::fromValue(0)); // REMOVE THIS
         return;
     }
-    VelocityStruct result = dataQueue.dequeue().value<VelocityStruct>();
-    for (unsigned int i = 0; i < 1000000000; i++) {
+    VelocityStruct result = dataQueue.back().value<VelocityStruct>();
+    for (unsigned int i = 0; i < 100000000; i++) {
         if (i % 2) {
-            result.velocity *= 2;
+            result.velocity += 0.00001;
         } else if (i % 3) {
-            result.velocity *= 4;
+            result.velocity += 0.00004;
         }
     }
-    emit newData(QVariant::fromValue(result));
+    int nMs = myTimer.elapsed();
+    QRandomGenerator random(nMs);
+    double vel = random.generate() % 40000;
+    emit newData(QPointF(nMs, vel));
 }
