@@ -1,15 +1,14 @@
 name: Qt Build
 
-on: [pull_request]
+on: [push, pull_request]
 
 jobs:
-  install:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [windows-latest]
-        version: ['5.15.1']
+  build:
+    runs-on: windows-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      
       - name: Install Qt
         uses: jurplel/install-qt-action@v2
         with:
@@ -19,9 +18,12 @@ jobs:
           arch: 'win64_msvc2019_64'
           dir: '${{ github.workspace }}/example/'
           install-deps: 'true'
-          modules: 'qtcharts qtwebengine'
-          mirror: 'http://mirrors.ocf.berkeley.edu/qt/'
-          cached: 'false'
-          aqtversion: '==0.9.7'
-          py7zrversion: '==0.10.1'
-          extra: '--external 7z'
+          modules: 'qtcharts'
+        
+      - name: Build Application
+        run: |
+          cd PieceOfShift
+          call "%programfiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+          dir %Qt5_DIR%/lib/cmake
+          qmake
+        shell: cmd
