@@ -6,11 +6,18 @@ Item {
     property alias x_axis: x_axis
     property alias chartview: chartview
     property alias lineseries: lineseries
+    property alias chartWidth: chartview.width
+    property alias chartHeight: chartview.height
+
     ChartView{
         id: chartview
         visible: true
-        width:10
+        width: 10
         height: 10
+        antialiasing: true
+        backgroundColor: "transparent"
+        titleColor: "white"
+
         MouseArea{
             id: chartMouseArea
             anchors.fill: parent
@@ -66,15 +73,20 @@ Item {
             id: lineseries
             axisX: x_axis
             axisY: y_axis
+            pointsVisible: true
 
             ValueAxis{
                 id: y_axis
+                labelsColor: "white"
+                color: "white"
                 min: 0
                 max: 10
                 titleText: ""
             }
             ValueAxis{
                 id: x_axis
+                labelsColor: "white"
+                color: "white"
                 min: 0
                 max: 10
                 titleText: ""
@@ -91,9 +103,11 @@ Item {
                 var punkt = "(" + point.x.toFixed(2) + "," + point.y.toFixed(2) + ")"
                 _text.text = punkt
                 var p = chartview.mapToPosition(Qt.point(point.x,point.y),lineseries)
+                rectangle1.visible = true
                 rectangle1.x = p.x
                 rectangle1.y = p.y
             }
+
             onPointAdded: {
                 var new_point = at(index)
                 if(new_point.x > x_axis.max){
@@ -108,12 +122,12 @@ Item {
         }
             Rectangle {
                 id: rectangle1
-                visible: parent.activeFocus
+                visible: false
                 z: 1
                 width: _text.width + 20
                 height: 40
                 color: "grey"
-                radius:50
+                radius: 50
                 Text {
                     id: _text
                     text: qsTr("")
@@ -122,17 +136,16 @@ Item {
             }
 
             Keys.onLeftPressed: {
-                chartview.scrollLeft(100)
+                chartview.scrollLeft(x_axis.max)
             }
             Keys.onRightPressed: {
-                chartview.scrollRight(100)
+                chartview.scrollRight(x_axis.max)
             }
             Keys.onUpPressed: {
-                chartview.scrollUp(100)
+                chartview.scrollUp(y_axis.max)
             }
             Keys.onDownPressed: {
-                chartview.scrollDown(100)
-                lineseries.append(10,15)
+                chartview.scrollDown(y_axis.max)
             }
     }
 }
