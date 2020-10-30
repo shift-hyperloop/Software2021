@@ -21,7 +21,7 @@ ApplicationWindow {
         x: 31
         y: 34
         width: 250
-        source: "Logo(White_RightText).png"
+        source: "assets/images/Shift_Logo.png"
         fillMode: Image.PreserveAspectFit
     }
     Speedometer {

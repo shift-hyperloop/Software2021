@@ -4,12 +4,15 @@ import QtQuick.Controls 2.5
 import QtQuick.Controls.Styles 1.4
 Item {
     id: speedometer
+
     property alias minValue: circulargauge.minimumValue
     property alias maxValue: circulargauge.maximumValue
     property alias value: circulargauge.value
     property alias style: circulargauge.style
+
     width: 300
     height: 300
+
     CircularGauge{
         id: circulargauge
         x: 46
@@ -49,8 +52,8 @@ Item {
 
     Text {
         id: speedometerValueText
-        x: 126
-        y: 249
+        x: circulargauge.scale * circulargauge.x + 126
+        y: circulargauge.scale * circulargauge.y + 249
         color: "#e5e5e5"
         text: qsTr(circulargauge.value + "km/h")
         anchors.verticalCenter: parent.verticalCenter
