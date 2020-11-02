@@ -111,10 +111,10 @@ Item {
             onPointAdded: {
                 var new_point = at(index)
                 if(new_point.x > x_axis.max){
-                    x_axis.max*=1.5
+                    x_axis.max = new_point.x + Math.round(x/2)
                 }
                 if(new_point.y > y_axis.max){
-                    y_axis.max*=1.5
+                    y_axis.max = new_point.y+ Math.round(y/2)
                 }
             }
 
