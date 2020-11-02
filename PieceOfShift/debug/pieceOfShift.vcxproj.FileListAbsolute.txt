@@ -1,0 +1,2 @@
+C:\Users\Mathias\Prosjekter\Høst 2020\Shift_Hyperloop\Software\Software2021\PieceOfShift\debug\pieceOfShift.exe
+C:\Users\Mathias\Prosjekter\Høst 2020\Shift_Hyperloop\Software\Software2021\PieceOfShift\debug\pieceOfShift.pdb

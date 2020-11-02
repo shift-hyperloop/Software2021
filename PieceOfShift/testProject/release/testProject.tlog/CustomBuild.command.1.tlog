@@ -1,2 +1,0 @@
-^C:\USERS\MATHIAS\PROSJEKTER\HØST 2020\SHIFT_HYPERLOOP\QT_LOCAL_TESTING\TESTPROJECT\RELEASE\MOC_PREDEFS.H.CBT
-cl -Bx"C:\Qt\5.15.1\msvc2019\\bin\qmake.exe" -nologo -Zc:wchar_t -FS -Zc:rvalueCast -Zc:inline -Zc:strictStrings -Zc:throwingNew -Zc:referenceBinding -Zc:__cplusplus -O2 -MD -W3 -w34100 -w34189 -w44996 -w44456 -w44457 -w44458 -wd4577 -wd4467 -E C:\Qt\5.15.1\msvc2019\\mkspecs\features\data\dummy.cpp 2>NUL >release\moc_predefs.h
