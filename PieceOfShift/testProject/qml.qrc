@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>qtquickcontrols2.conf</file>
+        <file>button_script.js</file>
+        <file>testPage.qml</file>
+        <file>testPage2.qml</file>
+        <file>test_script.js</file>
+        <file>futuristic_border.png</file>
+        <file>TestComp.qml</file>
+    </qresource>
+</RCC>
