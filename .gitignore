@@ -86,3 +86,5 @@ PieceOfShift/debug/pieceOfShift.exe.recipe
 PieceOfShift/debug/pieceOfShift.ilk
 *.pdb
 *.txt
+PieceOfShift/pieceOfShift.vcxproj
+PieceOfShift/pieceOfShift.vcxproj.filters
