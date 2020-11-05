@@ -88,3 +88,6 @@ PieceOfShift/debug/pieceOfShift.ilk
 *.txt
 PieceOfShift/pieceOfShift.vcxproj
 PieceOfShift/pieceOfShift.vcxproj.filters
+*.vcxproj
+*.filters
+*.user
