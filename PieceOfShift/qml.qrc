@@ -2,6 +2,7 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>qtquickcontrols2.conf</file>
+        <file>Speedometer.qml</file>
         <file>Chart.qml</file>
     </qresource>
 </RCC>
