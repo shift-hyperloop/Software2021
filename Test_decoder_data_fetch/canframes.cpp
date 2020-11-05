@@ -1,5 +1,4 @@
 #include "canframes.h"
-#include "connection.h"
 
 #include <QTimer>
 #include <QCanBus>
@@ -8,6 +7,12 @@
 #include <QCanBusFrame>
 #include <QDebug>
 
+//given function to reconnect when program starts
+canframes::canframes(){
+    connectDevice();
+}
+//function to check for the programs error handling
+//checks if the program cleanly recieves messages
 void canframes::processErrors(QCanBusDevice::CanBusError error) const
 {
     QString c_status;
@@ -18,24 +23,28 @@ void canframes::processErrors(QCanBusDevice::CanBusError error) const
     case QCanBusDevice::ConfigurationError:
     case QCanBusDevice::UnknownError:
         c_status=error;
-        qInfo() << c_status;
+        //c_status can be logged to error messaging
         break;
     default:
-        qInfo() << "Ran";
         break;
     }
 }
-
+//connects the computer/program to the available canbus, should be able to interpret
+//canframes as other signals reveiced on the computer
 void canframes::connectDevice()
 {
     QString Error_string;
     c_canDevice.reset(QCanBus::instance()->createDevice(QStringLiteral("virtualcan"), QStringLiteral("can0"), 0));
     c_canDevice->setConfigurationParameter(QCanBusDevice::CanFdKey, QCanBusFrame::FrameType(QCanBusFrame::DataFrame));
 
-    c_numberFramesWritten = 0;
+//redirects dataflow to other functions in the class based on the entry data
+    connect(c_canDevice.get(), &QCanBusDevice::errorOccurred,
+            this, &canframes::processErrors);
+    connect(c_canDevice.get(), &QCanBusDevice::framesReceived,
+            this, &canframes::processReceivedFrames);
+
 
         if(!c_canDevice){
-            qInfo() << "Sum tin wong";
             c_canDevice.reset();
         }
         else{
@@ -46,48 +55,23 @@ void canframes::connectDevice()
                 const QVariant dataBitRate =
                         c_canDevice->configurationParameter(QCanBusDevice::DataBitRateKey);
                 if (isCanFd && dataBitRate.isValid()) {
-                    qInfo() << "Connected";
-                } else {
-                    qInfo() << "Plugin: connected at unknown kBit/s";
+                    //her kan bitrate vises
                 }
             }
             else {
-                qInfo() << "yes. connected";
+                processReceivedFrames();
             }
-            if (c_canDevice->hasBusStatus())
-                c_busTimer->start(2000);
-            else
-                qInfo() << "No CAN bus status available.";
 
 
         }
- qInfo() << "code has run";
 }
 
-static QString frameFlags(const QCanBusFrame &frame)
-{
-    QString results = QLatin1String("---");
-
-    if(frame.hasBitrateSwitch())
-    {
-        results[1] = QLatin1Char('B');
-    }
-    if(frame.hasErrorStateIndicator())
-    {
-        results[2] = QLatin1Char('E');
-    }
-    if(frame.hasLocalEcho())
-    {
-        results[3] = QLatin1Char('L');
-    }
-    return results;
-}
-
+//function that reads frames the program has received and writes them as single frame format
+//instead of an entire CanBus object
 void canframes::processReceivedFrames()
 {
     if(!c_canDevice)
     {
-        qInfo() << "at least it runs";
         return;
     }
     while(c_canDevice->framesAvailable())
@@ -107,36 +91,47 @@ void canframes::processReceivedFrames()
                 .arg(frame.timeStamp().seconds(), 10, 10, QLatin1Char(' '))
                 .arg(frame.timeStamp().microSeconds() /100, 4, 10, QLatin1Char(0));
 
-        const QString flags = frameFlags(frame);
 
-        CanFrameFinished += time + ',' + flags + ',' + frame_strings + ';';
+        CanFrameFinished += time + ',' + frame_strings + ';';
 
     }
+    //sends code struct to next functionality to check for faults with the canbuses frames
+    busStatus();
 
 }
-
+//function that gives feedback to what the canBus status is
 void canframes::busStatus()
 {
     if(!c_canDevice || !c_canDevice->hasBusStatus())
     {
-        qInfo() << "No Can Bus status available";
-        c_busTimer->stop();
+        //insert what to happen if there is no available CanBus
+        //This code, inclusive the entire function might not be necessary
         return;
     }
     switch (c_canDevice->busStatus()) {
     case QCanBusDevice::CanBusStatus::Good:
-        qInfo() << "Can ok";
+        //nothing has to be done, message about nice data is not needed
         break;
     case QCanBusDevice::CanBusStatus::BusOff:
-        qInfo() << "No bus man thing";
+        //Might be a necessity to give a logged feedback to this case
+        //including the rest of the cases with the same logging possibilities
         break;
     case QCanBusDevice::CanBusStatus::Error:
-        qInfo() << "sum thin wong man";
         break;
     case QCanBusDevice::CanBusStatus::Warning:
-        qInfo() << "SQUEEL";
         break;
     default:
-        qInfo() << "ran code with 0 errors";
+        //probabliy also error messages if code proceedes past good status
+        break;
     }
+}
+//function to send message in canFrame back to pod
+//
+void canframes::sendFrame(const QCanBusFrame &frame) const{
+    if(!c_canDevice){
+        return;
+    }
+    //writes back to self as a debug function
+    c_canDevice->writeFrame(frame);
+    emit sendFrame(frame);
 }

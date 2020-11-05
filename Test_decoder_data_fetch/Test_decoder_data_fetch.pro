@@ -20,5 +20,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    canframes.h \
-    connection.h
+    canframes.h

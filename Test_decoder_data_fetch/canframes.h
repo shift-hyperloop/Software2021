@@ -3,6 +3,7 @@
 
 #include <QCanBusDevice>
 #include <QCanBus>
+#include <QObject>
 
 class ConnectDialog;
 
@@ -13,8 +14,11 @@ class QTimer;
 class canframes;
 QT_END_NAMESPACE
 
-class canframes
+class canframes: public QObject
 {
+    Q_OBJECT
+public:
+    canframes();
 public slots:
 
 
@@ -23,10 +27,7 @@ public slots:
     void processErrors(QCanBusDevice::CanBusError) const;
     void connectDevice();
     void busStatus();
-    void processFramesWritten(qint64);
-    void initActionConnections();
 public:
-    qint64 c_numberFramesWritten = 0;
 
     QLabel *c_written=nullptr;
     ConnectDialog *c_connectDialog=nullptr;
