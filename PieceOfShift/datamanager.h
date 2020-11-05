@@ -14,19 +14,25 @@ public:
     DataManager();
     ~DataManager();
 
-    // Move this to slots and have Decoder send signal to add data
-    void addData(const QString& name, const DataType &dataType, const QVariant &data);
 
 public slots:
+
+    // MHave Decoder send signal to add data
+    void addData(const QString& name, const DataType &dataType, const QVariant &data);
+
+    // REMOVE THIS
+    void dummyData();
+
     // This should use a Decoder slot to send command to pod
     // void sendPodCommand(PodCommand command);
 
 signals:
     // TODO: Add signals for each data type
-    void newVelocity(const QVariant &v);
+    void newVelocity(const QString &name, const QVariant &velocity);
 
 private:
     QVector<ProcessingUnit*> processingUnits;
+
 };
 
 #endif // DATAMANAGER_H

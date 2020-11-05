@@ -19,5 +19,5 @@ void VelocityProcessingUnit::process(const QString& name)
     /*
      *  Do calculations on result here
      */
-    emit newData(QPointF(0.0, 0.0)); // Use result and time to create point
+    emit newData(name, QPointF(result.timeMs, result.velocity)); // Use result and time to create point
 }

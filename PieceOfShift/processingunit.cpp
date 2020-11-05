@@ -8,15 +8,15 @@ ProcessingUnit::~ProcessingUnit()
     }
 }
 
-void ProcessingUnit::addData(const QPair<QString, QVariant> &data)
+void ProcessingUnit::addData(const QString &name, const QVariant &data)
 {
-    if (dataMap.contains(data.first)) {
-        dataMap.value(data.first)->enqueue(data.second);
+    if (dataMap.contains(name)) {
+        dataMap.value(name)->enqueue(data);
     } else {
         QQueue<QVariant> *dataQueue = new QQueue<QVariant>();
-        dataQueue->enqueue(data.second);
-        dataMap.insert(data.first, dataQueue);
+        dataQueue->enqueue(data);
+        dataMap.insert(name, dataQueue);
     }
-    process(data.first);
+    process(name);
 }
 

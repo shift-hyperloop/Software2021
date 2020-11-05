@@ -13,9 +13,18 @@ ApplicationWindow {
     DataManager {
         id: manager
         onNewVelocity: {
-            console.log(v.x, v.y)
-            lineSeries.append(v.x, v.y)
+            lineSeries.append(velocity.x, velocity.y)
         }
+    }
+
+    Timer {
+        id: timer
+        repeat: true
+        interval: 1
+        onTriggered: {
+            manager.dummyData();
+        }
+
     }
 
     ChartView {
@@ -29,17 +38,17 @@ ApplicationWindow {
 
             ValueAxis {
                 id: xAxis
-                min: 800
-                max: 1200
-                tickCount: 10
+                min: 0
+                max: 1000
+                tickCount: 11
                 labelFormat: "%d"
             }
 
             ValueAxis {
                 id: yAxis
-                min: 5000
-                max: 40000
-                tickCount: 10
+                min: 0
+                max: 100
+                tickCount: 11
                 labelFormat: "%d"
             }
 
@@ -62,14 +71,16 @@ ApplicationWindow {
         id: startThread
         text: "Start"
         onClicked: {
+            timer.start()
         }
     }
 
-    Timer {
-        id: timer
-        interval: 500; running: true; repeat: true
-        onTriggered: {
-
+    Button {
+        id: stopThread
+        text: "Stop"
+        x: 200
+        onClicked: {
+            timer.stop()
         }
     }
 }

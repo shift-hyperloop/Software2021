@@ -23,29 +23,28 @@ enum DataType {
 class ProcessingUnit : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QVariant data READ data WRITE addData NOTIFY newData)
+    //Q_PROPERTY(QPair<QString, QVariant> data READ data WRITE addData NOTIFY newData)
 
 public:
 
-    ProcessingUnit();
     ~ProcessingUnit();
 
     virtual void process(const QString& name) = 0;
 
     // This shouldn't really be called, use data from signal instead
-    QVariant data() {
-        return 0;
-    }
+    /*QPair<QString, QVariant> data() {
+        return QPair<QString, QVariant>(0, 0);
+    }*/
 
     DataType dataType() { return m_dataType; }
 
 public slots:
     // Add data to queue and start processing
-    void addData(const QPair<QString, QVariant> &data);
+    void addData(const QString &name, const QVariant &data);
 
 signals:
     // This signal is emitted when new data is available
-    void newData(const QVariant &data);
+    void newData(const QString &name, const QVariant &data);
 
 protected:
     QMap<QString, QQueue<QVariant>*> dataMap;

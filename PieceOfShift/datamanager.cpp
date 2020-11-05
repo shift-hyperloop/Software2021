@@ -36,6 +36,20 @@ void DataManager::addData(const QString& name, const DataType &dataType, const Q
                           processingUnits.end(),
                           [&dataType](auto x)
                           { return x->dataType() == dataType; });
-    QtConcurrent::run(processingUnit, &ProcessingUnit::addData, QPair<QString, QVariant>(name, data));
+    QtConcurrent::run(processingUnit, &ProcessingUnit::addData, name, data);
+    //processingUnit->addData(name, data);
+}
+
+int t = 0;
+float v = 2;
+
+void DataManager::dummyData()
+{
+    float value = QRandomGenerator::global()->bounded(80, 100);
+    v =  0.01 *((float) t * log(t));
+    VelocityStruct vs;
+    vs.timeMs = ++t;
+    vs.velocity = v;
+    addData("Velocity", DataType::VELOCITY, QVariant::fromValue(vs));
 }
 
