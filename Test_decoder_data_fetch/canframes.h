@@ -25,6 +25,7 @@ public slots:
     void busStatus();
     void processFramesWritten(qint64);
     void initActionConnections();
+    void canFDMessageConvertor(int messageID);
 public:
     qint64 c_numberFramesWritten = 0;
 

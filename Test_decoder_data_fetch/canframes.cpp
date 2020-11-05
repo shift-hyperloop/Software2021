@@ -140,3 +140,29 @@ void canframes::busStatus()
         qInfo() << "ran code with 0 errors";
     }
 }
+
+void canframes::canFDMessageConvertor(int messageID){
+    QByteArray datagram;
+
+    switch(messageID){
+    // MessageID determines which signal to send to the pod
+    case 1: // emergencyBrake (AA3)
+        datagram = QByteArray::fromStdString("101010100011");
+        break;
+    case 2: // start braking (DA1)
+        datagram = QByteArray::fromStdString("110110100001");
+        break;
+    case 3: //  regular braking (DA2)
+        datagram = QByteArray::fromStdString("110110100010");
+        break;
+    }
+
+   //  Need to create frameID
+    quint32 frameID;
+    QCanBusFrame frame = QCanBusFrame(frameID, datagram);
+    frame.setExtendedFrameFormat(true);
+    frame.setFlexibleDataRateFormat(true);
+    frame.setBitrateSwitch(true);
+    c_canDevice->writeFrame(frame);
+
+}
