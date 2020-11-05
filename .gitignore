@@ -91,3 +91,8 @@ PieceOfShift/pieceOfShift.vcxproj.filters
 *.vcxproj
 *.filters
 *.user
+*.json
+*.opendb
+.vs/testProject/v16/.suo
+*.sqlite
+.vs/pieceOfShift/v16/.suo
