@@ -3,12 +3,16 @@
 
 #include <QVariant>
 #include <QQueue>
-
+#include <QMap>
+#include <QThread>
 
 // The data structs should be in Decoder, but here for demonstration purposes
-typedef struct velocityStruct {
+struct VelocityStruct {
+    int timeMs;
     double velocity;
-} VelocityStruct;
+};
+
+Q_DECLARE_METATYPE(VelocityStruct)
 
 // Might move to Decoder?
 enum DataType {
@@ -20,34 +24,31 @@ class ProcessingUnit : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QVariant data READ data WRITE addData NOTIFY newData)
+
 public:
 
-    virtual void process() = 0;
+    ProcessingUnit();
+    ~ProcessingUnit();
+
+    virtual void process(const QString& name) = 0;
 
     // This shouldn't really be called, use data from signal instead
     QVariant data() {
-        if (!dataQueue.empty())
-            return dataQueue.back();
-        else
-            return 0;
+        return 0;
     }
 
     DataType dataType() { return m_dataType; }
 
 public slots:
     // Add data to queue and start processing
-    void addData(const QVariant &data)
-    {
-        dataQueue.enqueue(data);
-        process();
-    }
+    void addData(const QPair<QString, QVariant> &data);
 
 signals:
     // This signal is emitted when new data is available
     void newData(const QVariant &data);
 
 protected:
-    QQueue<QVariant> dataQueue;
+    QMap<QString, QQueue<QVariant>*> dataMap;
 
     DataType m_dataType;
 };

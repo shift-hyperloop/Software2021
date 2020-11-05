@@ -16,7 +16,7 @@ AccelerationVelocityUnit::~AccelerationVelocityUnit() {
 }
 
 
-void AccelerationVelocityUnit::process()
+void AccelerationVelocityUnit::process(const QString& name)
 {
 
 }

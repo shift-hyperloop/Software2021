@@ -9,7 +9,7 @@ public:
     VelocityProcessingUnit();
     ~VelocityProcessingUnit();
 
-    virtual void process() override;
+    virtual void process(const QString& name) override;
 
 private:
 };

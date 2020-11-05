@@ -28,7 +28,7 @@ DataManager::~DataManager()
     }
 }
 
-void DataManager::addData(const DataType &dataType, const QVariant &data)
+void DataManager::addData(const QString& name, const DataType &dataType, const QVariant &data)
 {
     // Find processing unit with correct data type and add data
     ProcessingUnit* processingUnit =
@@ -36,6 +36,6 @@ void DataManager::addData(const DataType &dataType, const QVariant &data)
                           processingUnits.end(),
                           [&dataType](auto x)
                           { return x->dataType() == dataType; });
-    processingUnit->addData(data);
+    QtConcurrent::run(processingUnit, &ProcessingUnit::addData, QPair<QString, QVariant>(name, data));
 }
 

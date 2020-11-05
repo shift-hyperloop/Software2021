@@ -15,14 +15,14 @@ public:
     ~DataManager();
 
     // Move this to slots and have Decoder send signal to add data
-    void addData(const DataType &dataType, const QVariant &data);
+    void addData(const QString& name, const DataType &dataType, const QVariant &data);
 
 public slots:
     // This should use a Decoder slot to send command to pod
     // void sendPodCommand(PodCommand command);
 
 signals:
-    // TODO: Add signals for each CAN message
+    // TODO: Add signals for each data type
     void newVelocity(const QVariant &v);
 
 private:

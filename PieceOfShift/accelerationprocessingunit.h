@@ -18,7 +18,7 @@ public:
     AccelerationProcessingUnit();
     ~AccelerationProcessingUnit();
 
-    virtual void process() override;
+    virtual void process(const QString& name) override;
 };
 
 #endif // ACCELERATIONPROCESSINGUNIT_H

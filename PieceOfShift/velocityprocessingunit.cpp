@@ -10,12 +10,12 @@ VelocityProcessingUnit::~VelocityProcessingUnit()
 
 }
 
-void VelocityProcessingUnit::process()
+void VelocityProcessingUnit::process(const QString& name)
 {
-    if(dataQueue.empty()) {
+    if(dataMap.value(name)->empty()) {
         return;
     }
-    VelocityStruct result = dataQueue.back().value<VelocityStruct>();
+    VelocityStruct result = dataMap.value(name)->back().value<VelocityStruct>();
     /*
      *  Do calculations on result here
      */

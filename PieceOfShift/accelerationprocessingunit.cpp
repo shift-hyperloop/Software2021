@@ -16,7 +16,7 @@ AccelerationProcessingUnit::~AccelerationProcessingUnit()
 
 }
 
-void AccelerationProcessingUnit::process()
+void AccelerationProcessingUnit::process(const QString& name)
 {
 
 }
