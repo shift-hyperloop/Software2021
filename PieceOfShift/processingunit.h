@@ -8,8 +8,8 @@
 
 // The data structs should be in Decoder, but here for demonstration purposes
 struct VelocityStruct {
-    int timeMs;
     double velocity;
+    int timeMs;
 };
 
 Q_DECLARE_METATYPE(VelocityStruct)
@@ -23,18 +23,12 @@ enum DataType {
 class ProcessingUnit : public QObject
 {
     Q_OBJECT
-    //Q_PROPERTY(QPair<QString, QVariant> data READ data WRITE addData NOTIFY newData)
 
 public:
 
     ~ProcessingUnit();
 
     virtual void process(const QString& name) = 0;
-
-    // This shouldn't really be called, use data from signal instead
-    /*QPair<QString, QVariant> data() {
-        return QPair<QString, QVariant>(0, 0);
-    }*/
 
     DataType dataType() { return m_dataType; }
 

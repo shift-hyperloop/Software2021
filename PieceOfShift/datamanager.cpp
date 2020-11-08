@@ -37,18 +37,21 @@ void DataManager::addData(const QString& name, const DataType &dataType, const Q
                           [&dataType](auto x)
                           { return x->dataType() == dataType; });
     QtConcurrent::run(processingUnit, &ProcessingUnit::addData, name, data);
-    //processingUnit->addData(name, data);
 }
 
+
+/* The follwing code is just used for testing, and
+ * should be removed before production
+ */
 int t = 0;
 float v = 2;
 
 void DataManager::dummyData()
 {
-    float value = QRandomGenerator::global()->bounded(80, 100);
     v =  0.01 *((float) t * log(t));
     VelocityStruct vs;
-    vs.timeMs = ++t;
+    t += 1;
+    vs.timeMs = t;
     vs.velocity = v;
     addData("Velocity", DataType::VELOCITY, QVariant::fromValue(vs));
 }

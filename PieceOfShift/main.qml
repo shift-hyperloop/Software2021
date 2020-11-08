@@ -14,6 +14,7 @@ ApplicationWindow {
         id: manager
         onNewVelocity: {
             lineSeries.append(velocity.x, velocity.y)
+            chartView.title = name
         }
     }
 
@@ -35,6 +36,7 @@ ApplicationWindow {
             width: 1000
             height: 500
             y: 100
+            antialiasing: true
 
             ValueAxis {
                 id: xAxis
@@ -56,6 +58,7 @@ ApplicationWindow {
                 axisX: xAxis
                 axisY: yAxis
                 id: lineSeries
+                useOpenGL: true
                 name: "Data"
             }
         }
@@ -81,6 +84,15 @@ ApplicationWindow {
         x: 200
         onClicked: {
             timer.stop()
+        }
+    }
+
+    Button {
+        id: clearGraph
+        text: "Clear"
+        x: 100
+        onClicked: {
+            lineSeries.clear()
         }
     }
 }
