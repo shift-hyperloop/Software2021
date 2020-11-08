@@ -4,5 +4,6 @@
         <file>qtquickcontrols2.conf</file>
         <file>Speedometer.qml</file>
         <file>Chart.qml</file>
+        <file>Thermometer.qml</file>
     </qresource>
 </RCC>

@@ -24,6 +24,7 @@ ApplicationWindow {
         source: "assets/images/Shift_Logo.png"
         fillMode: Image.PreserveAspectFit
     }
+
     Speedometer {
         id: speedometer
         x: 49
@@ -34,6 +35,9 @@ ApplicationWindow {
         maxValue: 600
     }
 
+    Thermometer {
+
+    }
 
     Slider {
         id: slider
