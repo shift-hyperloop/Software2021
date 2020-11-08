@@ -70,6 +70,8 @@ PieceOfShift/testProject/.vs/testProject/v16/Browse.VC.db
 PieceOfShift/.vs/pieceOfShift/v16/Browse.VC.opendb
 PieceOfShift/pieceOfShift.vcxproj.filters
 PieceOfShift/pieceOfShift.vcxproj
+PieceOfShift/debug/
+PieceOfShift/release/
 *.pdb
 *.pdb
 PieceOfShift/debug/vc142.pdb
