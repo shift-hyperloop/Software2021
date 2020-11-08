@@ -1,6 +1,5 @@
 ﻿import QtQuick 2.14
 import QtCharts 2.3
-import QtQuick.Controls 2.5
 
 Item {
     property alias y_axis: y_axis
@@ -18,8 +17,7 @@ Item {
         antialiasing: true
         backgroundColor: "transparent"
         titleColor: "white"
-        property var x_max: x_axis.max
-        property var y_max: y_axis.max
+
         MouseArea{
             id: chartMouseArea
             anchors.fill: parent
@@ -110,11 +108,9 @@ Item {
                 var new_point = at(index)
                 if(new_point.x > x_axis.max){
                     x_axis.max = new_point.x + Math.round(x/2)
-                    chartview.x_max = x_axis.max
                 }
                 if(new_point.y > y_axis.max){
                     y_axis.max = new_point.y+ Math.round(y/2)
-                    chartview.y_max = y_axis.max
                 }
                 if (new_point.y < y_axis.min) {
                     y_axis.min = new_point.y - Math.round(y/2)
@@ -149,17 +145,6 @@ Item {
             }
             Keys.onDownPressed: {
                 chartview.scrollDown(y_axis.max)
-            }
-            Button{
-                text: "reset"
-                x: 15
-                y: 10
-                onClicked: {
-                    x_axis.min = 0
-                    y_axis.min = 0
-                    x_axis.max = chartview.x_max
-                    y_axis.max = chartview.y_max
-                }
             }
     }
 }
