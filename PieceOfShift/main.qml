@@ -36,7 +36,12 @@ ApplicationWindow {
     }
 
     Thermometer {
-
+        id: thermometer
+        x: 1170
+        y: 233
+        scale: 2
+        minValue: 0
+        maxValue: 50
     }
 
     Slider {
@@ -93,8 +98,8 @@ ApplicationWindow {
         var speed = (distance * 50) / 0.02;
         slider.value = slider.value + distance;
         speedometer.value = speed;
+        thermometer.value = Math.random() * 25 + 25;
     }
-
 }
 
 /*##^##
