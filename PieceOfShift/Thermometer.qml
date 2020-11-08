@@ -14,7 +14,7 @@ Item {
     Rectangle {
         id: rectangle1
         x: thermometer.width / 2
-        y: 161
+        y: thermometer.height * 0.9
         width: 26
         height: 26
         color: "#cacaca"
@@ -44,6 +44,7 @@ Item {
             }
         }
     }
+    //the circle at the bottom
     Rectangle {
         id: rectangle
         width: rectangle1.width * 0.8
