@@ -28,13 +28,12 @@ Item {
             }
         }
 
-
-
         LineSeries{
             id: lineseries
             axisX: x_axis
             axisY: y_axis
             pointsVisible: true
+            useOpenGL: true
 
             ValueAxis{
                 id: y_axis

@@ -74,7 +74,7 @@ Item {
             axisX: x_axis
             axisY: y_axis
             pointsVisible: true
-
+            useOpenGL: true
             ValueAxis{
                 id: y_axis
                 labelsColor: "white"
@@ -83,6 +83,7 @@ Item {
                 max: 10
                 titleText: ""
             }
+
             ValueAxis{
                 id: x_axis
                 labelsColor: "white"

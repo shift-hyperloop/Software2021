@@ -55,7 +55,6 @@ ApplicationWindow {
                 }
             }
 
-
             //Timer for simulating continously updated points
             Timer {
                 running: true; repeat: true; interval: 1000;
