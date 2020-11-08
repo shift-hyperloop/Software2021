@@ -1,4 +1,4 @@
-nclude "canframes.h"
+#include "canframes.h"
 
 #include <QTimer>
 #include <QCanBus>
