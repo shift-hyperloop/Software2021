@@ -23,7 +23,7 @@ ApplicationWindow {
     Image {
         id: logoWhite_RightText
         x: 31
-        y: 34
+        y: 50
         width: 250
         source: "assets/images/Shift_Logo.png"
         fillMode: Image.PreserveAspectFit
@@ -88,6 +88,37 @@ ApplicationWindow {
         height: 100
     }
 
+    Button {
+        id: startThread
+        text: "Start"
+        onClicked: {
+             timer.start()
+        }
+    }
+
+    Button {
+        id: stopThread
+        text: "Stop"
+        x: 200
+        onClicked: {
+            timer.stop()
+        }
+    }
+    
+    Button {
+        id: clearGraph
+        text: "Clear"
+        x: 100
+        onClicked:  {
+            lineSeries.clear()
+        }
+    }
+    ControlButtons{
+        height: 200
+        width: 300
+        y: window.height - (height + 100)
+        x: window.width - (width + 150)
+    }
 }
 
 /*##^##
