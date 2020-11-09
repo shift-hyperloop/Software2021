@@ -104,13 +104,6 @@ ApplicationWindow {
         thermometer.value = Math.random() * 25 + 25;
     }
 
-    DataManager {
-        id: manager
-        onNewVelocity: {
-            lineSeries.append(velocity.x, velocity.y)
-            chartView.title = name
-        }
-    }
 
     Timer {
         id: timer
@@ -123,6 +116,8 @@ ApplicationWindow {
 
     Chart {
         id: chart
+        chartHeight: 300
+        chartWidth: 300
     }
 
     Text {
@@ -132,29 +127,4 @@ ApplicationWindow {
         height: 100
     }
 
-    Button {
-        id: startThread
-        text: "Start"
-        onClicked: {
-             timer.start()
-        }
-    }
-
-    Button {
-        id: stopThread
-        text: "Stop"
-        x: 200
-        onClicked: {
-            timer.stop()
-        }
-    }
-    
-    Button {
-        id: clearGraph
-        text: "Clear"
-        x: 100
-        onClicked:  {
-            lineSeries.clear()
-        }
-    }
 }
