@@ -24,6 +24,7 @@ ApplicationWindow {
         source: "assets/images/Shift_Logo.png"
         fillMode: Image.PreserveAspectFit
     }
+
     Speedometer {
         id: speedometer
         x: 49
@@ -34,6 +35,14 @@ ApplicationWindow {
         maxValue: 600
     }
 
+    Thermometer {
+        id: thermometer
+        x: 1170
+        y: 233
+        scale: 2
+        minValue: 0
+        maxValue: 50
+    }
 
     Slider {
         id: slider
@@ -89,8 +98,8 @@ ApplicationWindow {
         var speed = (distance * 50) / 0.02;
         slider.value = slider.value + distance;
         speedometer.value = speed;
+        thermometer.value = Math.random() * 25 + 25;
     }
-
 }
 
 /*##^##
