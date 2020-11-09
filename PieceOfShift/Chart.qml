@@ -1,5 +1,5 @@
-﻿﻿import QtQuick 2.14
-import QtCharts 2.3
+﻿import QtCharts 2.3
+import QtQuick 2.14
 
 Item {
     property alias y_axis: y_axis
@@ -74,7 +74,7 @@ Item {
             axisX: x_axis
             axisY: y_axis
             pointsVisible: true
-            useOpenGL: true
+            //useOpenGL: true
             ValueAxis{
                 id: y_axis
                 labelsColor: "white"

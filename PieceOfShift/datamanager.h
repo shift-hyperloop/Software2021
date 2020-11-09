@@ -13,12 +13,6 @@ public:
     DataManager();
     ~DataManager();
 
-    // Have Decoder send signal to add data
-    void addData(const QString& name, const DataType &dataType, const QVariant &data);
-
-    // REMOVE THIS
-    void dummyData();
-
 public slots:
 
     // MHave Decoder send signal to add data

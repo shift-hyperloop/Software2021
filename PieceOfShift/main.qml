@@ -117,43 +117,11 @@ ApplicationWindow {
         onTriggered: {
             manager.dummyData();
         }
-
     }
 
-    ChartView {
-            id: chartView
-            theme: ChartView.ChartThemeBlueCerulean
-            backgroundColor: "#2b2b2b"
-            titleColor: "white"
-            width: 1000
-            height: 500
-            y: 100
-            antialiasing: true
-
-            ValueAxis {
-                id: xAxis
-                min: 0
-                max: 1000
-                tickCount: 11
-                labelFormat: "%d"
-            }
-
-            ValueAxis {
-                id: yAxis
-                min: 0
-                max: 100
-                tickCount: 11
-                labelFormat: "%d"
-            }
-
-            LineSeries {
-                axisX: xAxis
-                axisY: yAxis
-                id: lineSeries
-                useOpenGL: true
-                name: "Data"
-            }
-        }
+    Chart {
+        id: chart
+    }
 
     Text {
         id: labelText
@@ -183,7 +151,6 @@ ApplicationWindow {
         id: clearGraph
         text: "Clear"
         x: 100
-        onClicked: {
         onClicked:  {
             lineSeries.clear()
         }
