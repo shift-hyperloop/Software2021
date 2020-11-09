@@ -29,16 +29,31 @@ Item {
                 antialiasing: true
                 color: "#0099ff"
             }
-
             foreground: Rectangle {
                 width: outerRadius * 0.1
                 height: width
                 radius: width / 2
-                color: "#e5e5e5"
+                color: "#ededed"
                 anchors.centerIn: parent
             }
-            tickmarkLabel: {
-                color: "#e5e5e5"
+            //change the color and style of text, plus make it red at high values
+            tickmarkLabel: Text {
+                font.pixelSize: outerRadius * 0.13
+                text: styleData.value
+                color: styleData.value >= (Math.round(circulargauge.maximumValue * 0.008) * 100) ? "#e34c22" : "#ededed"
+                antialiasing: true
+            }
+            tickmark: Rectangle {
+                implicitWidth: outerRadius * 0.02
+                antialiasing: true
+                implicitHeight: outerRadius * 0.06
+                color: styleData.value >= (Math.round(circulargauge.maximumValue * 0.008) * 100) ? "#e34c22" : "#ededed"
+            }
+            minorTickmark: Rectangle {
+                implicitWidth: outerRadius * 0.01
+                antialiasing: true
+                implicitHeight: outerRadius * 0.03
+                color: styleData.value >= (Math.round(circulargauge.maximumValue * 0.008) * 100) ? "#e34c22" : "#ededed"
             }
         }
 
@@ -54,7 +69,7 @@ Item {
         id: speedometerValueText
         x: circulargauge.scale * circulargauge.x + 126
         y: circulargauge.scale * circulargauge.y + 249
-        color: "#e5e5e5"
+        color: "#ededed"
         text: qsTr(circulargauge.value + "km/h")
         anchors.verticalCenter: parent.verticalCenter
         font.pixelSize: 18
@@ -62,7 +77,7 @@ Item {
         anchors.verticalCenterOffset: 99
         anchors.horizontalCenterOffset: 1
         anchors.horizontalCenter: circulargauge.horizontalCenter
-        styleColor: "#e5e5e5"
+        styleColor: "#ededed"
         minimumPointSize: 18
         minimumPixelSize: 18
         font.family: "Arial"
