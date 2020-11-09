@@ -36,7 +36,7 @@ Item {
             radius: 2
             color: "#999999"
         }
-
+/*
         handle: Rectangle {
             x: slider.leftPadding + slider.visualPosition * (slider.availableWidth - width)
             y: slider.topPadding + slider.availableHeight / 2 - height / 2
@@ -44,6 +44,13 @@ Item {
             implicitHeight: 26
             radius: 13
             color: "#0099ff"
+        }*/
+        handle: Image {
+            source: "assets/images/Pod.png"
+            width: 150
+            fillMode: Image.PreserveAspectFit
+            x: slider.leftPadding + slider.visualPosition * (slider.availableWidth - width)
+            y: slider.topPadding + slider.availableHeight / 2 - height / 1.5
         }
     }
 }
