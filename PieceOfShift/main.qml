@@ -68,13 +68,17 @@ ApplicationWindow {
         slider.value = slider.value + distance;
         speedometer.value = speed;
         thermometer.value = Math.random() * 25 + 25;
+        chart.counter++;
+        chart.lineseries.append(chart.counter, speed)
     }
 
     Chart {
         id: chart
         chartHeight: 300
         chartWidth: 300
-        x: 300
+        property var counter: 0
+        x: 500
+        y: 100
     }
 
     Text {
@@ -116,3 +120,9 @@ ApplicationWindow {
         x: window.width - (width + 150)
     }
 }
+
+/*##^##
+Designer {
+    D{i:0;formeditorZoom:0.8999999761581421}
+}
+##^##*/
