@@ -11,6 +11,7 @@ SOURCES += \
         accelerationvelocityunit.cpp \
         datamanager.cpp \
         main.cpp \
+        processingunit.cpp \
         velocityprocessingunit.cpp
 
 RESOURCES += qml.qrc

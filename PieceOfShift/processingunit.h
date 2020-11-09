@@ -3,53 +3,54 @@
 
 #include <QVariant>
 #include <QQueue>
+#include <QMap>
+#include <QThread>
 
-
-// The data structs should be in Decoder, but here for demonstration purposes
-typedef struct velocityStruct {
+struct VelocityStruct {
     double velocity;
-} VelocityStruct;
-
-// Might move to Decoder?
-enum DataType {
-    VELOCITY,
-    ACCELERATION
+    int timeMs;
 };
 
-class ProcessingUnit : public QObject
-{
+struct AccelerationStruct {
+    double acceleration;
+    int timeMs;
+};
+
+struct AccelerationVelocityStruct {
+    double acceleration;
+    double velocity;
+    int timeMs;
+};
+
+Q_DECLARE_METATYPE(VelocityStruct)
+Q_DECLARE_METATYPE(AccelerationStruct)
+Q_DECLARE_METATYPE(AccelerationVelocityStruct)
+
+enum DataType {
+    VELOCITY,
+    ACCELERATION,
+    ACCELERATIONVELOCITY
+};
+
+class ProcessingUnit : public QObject {
     Q_OBJECT
-    Q_PROPERTY(QVariant data READ data WRITE addData NOTIFY newData)
+
 public:
+    ~ProcessingUnit();
 
-    virtual void process() = 0;
-
-    // This shouldn't really be called, use data from signal instead
-    QVariant data() {
-        if (!dataQueue.empty())
-            return dataQueue.back();
-        else
-            return 0;
-    }
+    virtual void process(const QString& name) = 0;
 
     DataType dataType() { return m_dataType; }
 
 public slots:
-    // Add data to queue and start processing
-    void addData(const QVariant &data)
-    {
-        dataQueue.enqueue(data);
-        process();
-    }
+    void addData(const QString &name, const QVariant &data);
 
 signals:
-    // This signal is emitted when new data is available
-    void newData(const QVariant &data);
+    void newData(const QString &name, const QVariant &data);
 
 protected:
-    QQueue<QVariant> dataQueue;
-
+    QMap<QString, QQueue<QVariant>*> dataMap;
     DataType m_dataType;
 };
 
-#endif // PROCESSINGUNIT_H
+#endif //PROCESSINGUNIT_H
