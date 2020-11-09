@@ -5,5 +5,6 @@
         <file>Speedometer.qml</file>
         <file>Chart.qml</file>
         <file>Thermometer.qml</file>
+        <file>CustomMenuBar.qml</file>
     </qresource>
 </RCC>

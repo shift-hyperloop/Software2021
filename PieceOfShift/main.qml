@@ -16,7 +16,9 @@ ApplicationWindow {
     visible: true
     color: "#444444"
     title: "PieceOfShift"
-
+    menuBar: CustomMenuBar{
+        _width: window.width
+    }
     Image {
         id: logoWhite_RightText
         x: 31
