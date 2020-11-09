@@ -62,5 +62,48 @@ Item {
             }
             }
         }
+        Menu{
+            title: qsTr("Components")
+            MenuItem{
+                CheckBox{
+                    checked: true
+                    onCheckStateChanged: speedometer.visible = checked
+                    }
+                Label{
+                        text: "Speedometer"
+                        anchors.centerIn: parent
+                    }
+            }
+            MenuItem{
+                CheckBox{
+                    checked: true
+                    onCheckStateChanged: thermometer.visible = checked
+                    }
+                Label{
+                        text: "Thermometer"
+                        anchors.centerIn: parent
+                    }
+            }
+            MenuItem{
+                CheckBox{
+                    checked: true
+                    onCheckStateChanged: slider.visible = checked
+                    }
+                Label{
+                        text: "Distance slider"
+                        anchors.centerIn: parent
+                    }
+            }
+            MenuItem{
+                CheckBox{
+                    checked: true
+                    onCheckStateChanged: chart.visible = checked
+                    }
+                Label{
+                        text: "Chart"
+                        anchors.centerIn: parent
+                    }
+            }
+        }
     }
 }
