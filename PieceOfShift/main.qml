@@ -13,10 +13,20 @@ ApplicationWindow {
     DataManager {
         id: manager
         onNewVelocity: {
-            console.log(v.x, v.y)
-            lineSeries.append(v.x, v.y)
+            lineSeries.append(velocity.x, velocity.y)
+            chartView.title = name
         }
     }
+
+    Timer {
+            id: timer
+            repeat: true
+            interval: 1
+            onTriggered: {
+                manager.dummyData();
+            }
+
+        }
 
     ChartView {
             id: chartView
@@ -26,20 +36,21 @@ ApplicationWindow {
             width: 1000
             height: 500
             y: 100
+            antialiasing: true
 
             ValueAxis {
                 id: xAxis
-                min: 800
-                max: 1200
-                tickCount: 10
+                min: 0
+                max: 1000
+                tickCount: 11
                 labelFormat: "%d"
             }
 
             ValueAxis {
                 id: yAxis
-                min: 5000
-                max: 40000
-                tickCount: 10
+                min: 0
+                max: 100
+                tickCount: 11
                 labelFormat: "%d"
             }
 
@@ -47,6 +58,7 @@ ApplicationWindow {
                 axisX: xAxis
                 axisY: yAxis
                 id: lineSeries
+                useOpenGL: true
                 name: "Data"
             }
         }
@@ -62,14 +74,24 @@ ApplicationWindow {
         id: startThread
         text: "Start"
         onClicked: {
+             timer.start()
         }
     }
 
-    Timer {
-        id: timer
-        interval: 500; running: true; repeat: true
-        onTriggered: {
-
+    Button {
+        id: stopThread
+        text: "Stop"
+        x: 200
+        onClicked: {
+            timer.stop()
+        }
+    }
+    Button {
+        id: clearGraph
+        text: "Clear"
+        x: 100
+        onClicked:  {
+            lineSeries.clear()
         }
     }
 }

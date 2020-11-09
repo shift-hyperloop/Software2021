@@ -3,6 +3,8 @@
 
 #include "datamanager.h"
 #include "velocityprocessingunit.h"
+#include "accelerationprocessingunit.h"
+#include "accelerationvelocityunit.h"
 
 DataManager::DataManager()
 {
@@ -11,10 +13,18 @@ DataManager::DataManager()
      */
     VelocityProcessingUnit* vpu = new VelocityProcessingUnit();
     processingUnits.append(vpu);
+    AccelerationProcessingUnit* apu = new AccelerationProcessingUnit();
+    processingUnits.append(apu);
+    AccelerationVelocityUnit* avu = new AccelerationVelocityUnit();
+    processingUnits.append(avu);
 
     // Connect newData signal to corresponding DataManager signal
     connect(vpu, &VelocityProcessingUnit::newData,
             this, &DataManager::newVelocity);
+    connect(apu, &AccelerationProcessingUnit::newData,
+            this, &DataManager::newAcceleration);
+    connect(avu, &AccelerationVelocityUnit::newData,
+            this, &DataManager::newAccelerationVelocity);
 
     /* Create Decoder/DataFetcher object here and start it when signal from
      QML has been received */
@@ -28,7 +38,7 @@ DataManager::~DataManager()
     }
 }
 
-void DataManager::addData(const DataType &dataType, const QVariant &data)
+void DataManager::addData(const QString& name, const DataType &dataType, const QVariant &data)
 {
     // Find processing unit with correct data type and add data
     ProcessingUnit* processingUnit =
@@ -36,6 +46,35 @@ void DataManager::addData(const DataType &dataType, const QVariant &data)
                           processingUnits.end(),
                           [&dataType](auto x)
                           { return x->dataType() == dataType; });
-    processingUnit->addData(data);
+    QtConcurrent::run(processingUnit, &ProcessingUnit::addData, name, data);
+}
+
+
+/* The follwing code is just used for testing, and
+ * should be removed before production
+ */
+int t = 0;
+float v = 2;
+float a = 3;
+
+void DataManager::dummyData()
+{
+    v =  0.01 *((float) t * log(t));
+    a =  0.03 *((float) t * log(t));
+    VelocityStruct vs;
+    AccelerationStruct as;
+    AccelerationVelocityStruct avs;
+    t += 1;
+    vs.timeMs = t;
+    as.timeMs = t;
+    avs.timeMs = t;
+    vs.velocity = v;
+    as.acceleration = a;
+    avs.acceleration = a;
+    avs.velocity = v;
+    addData("Velocity", DataType::VELOCITY, QVariant::fromValue(vs));
+    addData("Acceleration", DataType::ACCELERATION, QVariant::fromValue(vs));
+    addData("AccelerationVelocity", DataType::ACCELERATIONVELOCITY, QVariant::fromValue(vs));
+
 }
 
