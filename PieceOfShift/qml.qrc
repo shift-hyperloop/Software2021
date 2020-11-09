@@ -7,5 +7,6 @@
         <file>Thermometer.qml</file>
         <file>CustomMenuBar.qml</file>
         <file>ControlButtons.qml</file>
+        <file>DistanceSlider.qml</file>
     </qresource>
 </RCC>
