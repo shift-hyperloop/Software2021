@@ -37,8 +37,24 @@ Item {
                 color: "#e5e5e5"
                 anchors.centerIn: parent
             }
-            tickmarkLabel: {
-                color: "#e5e5e5"
+            //change the color and style of text, plus make it red at high values
+            tickmarkLabel: Text {
+                font.pixelSize: outerRadius * 0.13
+                text: styleData.value
+                color: styleData.value >= (Math.round(circulargauge.maximumValue * 0.008) * 100) ? "#e34c22" : "#ededed"
+                antialiasing: true
+            }
+            tickmark: Rectangle {
+                implicitWidth: outerRadius * 0.02
+                antialiasing: true
+                implicitHeight: outerRadius * 0.06
+                color: styleData.value >= (Math.round(circulargauge.maximumValue * 0.008) * 100) ? "#e34c22" : "#ededed"
+            }
+            minorTickmark: Rectangle {
+                implicitWidth: outerRadius * 0.01
+                antialiasing: true
+                implicitHeight: outerRadius * 0.03
+                color: styleData.value >= (Math.round(circulargauge.maximumValue * 0.008) * 100) ? "#e34c22" : "#ededed"
             }
         }
 

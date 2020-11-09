@@ -75,9 +75,9 @@ ApplicationWindow {
     Chart {
         id: chart
         chartHeight: 300
-        chartWidth: 300
+        chartWidth: 700
         property var counter: 0
-        x: 500
+        x: 300
         y: 100
     }
 
