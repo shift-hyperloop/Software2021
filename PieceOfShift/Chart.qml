@@ -50,8 +50,8 @@ Item {
             }
             onReleased: {
                 timer.stop()
-
             }
+
             Timer{
                 id: timer
                 repeat: true
@@ -65,9 +65,7 @@ Item {
                     mouse_y_ = chartMouseArea.mouseY
                 }
             }
-
         }
-
 
         LineSeries{
             id: lineseries
@@ -106,44 +104,42 @@ Item {
             onPointAdded: {
                 var new_point = at(index)
                 if(new_point.x > x_axis.max){
-                    x_axis.max = new_point.x + Math.round(x/2)
+                    x_axis.max = new_point.x + Math.round(new_point.x/2)
                 }
                 if(new_point.y > y_axis.max){
-                    y_axis.max = new_point.y+ Math.round(y/2)
+                    y_axis.max = new_point.y+ Math.round(new_point.y/2)
                 }
                 if (new_point.y < y_axis.min) {
-                    y_axis.min = new_point.y - Math.round(y/2)
+                    y_axis.min = new_point.y - Math.round(new_point.y/2)
                 }
             }
-
-
         }
-            Rectangle {
-                id: rectangle1
-                visible: false
-                z: 1
-                width: _text.width + 20
-                height: 40
-                color: "grey"
-                radius: 50
-                Text {
-                    id: _text
-                    text: qsTr("")
-                    anchors.centerIn: parent
-                }
+        Rectangle {
+            id: rectangle1
+            visible: false
+            z: 1
+            width: _text.width + 20
+            height: 40
+            color: "grey"
+            radius: 50
+            Text {
+                id: _text
+                text: qsTr("")
+                anchors.centerIn: parent
             }
+        }
 
-            Keys.onLeftPressed: {
-                chartview.scrollLeft(x_axis.max)
-            }
-            Keys.onRightPressed: {
-                chartview.scrollRight(x_axis.max)
-            }
-            Keys.onUpPressed: {
-                chartview.scrollUp(y_axis.max)
-            }
-            Keys.onDownPressed: {
-                chartview.scrollDown(y_axis.max)
-            }
+        Keys.onLeftPressed: {
+            chartview.scrollLeft(x_axis.max)
+        }
+        Keys.onRightPressed: {
+            chartview.scrollRight(x_axis.max)
+        }
+        Keys.onUpPressed: {
+            chartview.scrollUp(y_axis.max)
+        }
+        Keys.onDownPressed: {
+            chartview.scrollDown(y_axis.max)
+        }
     }
 }
