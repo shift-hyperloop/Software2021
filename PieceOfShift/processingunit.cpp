@@ -19,4 +19,3 @@ void ProcessingUnit::addData(const QString &name, const QVariant &data)
     }
     process(name);
 }
-

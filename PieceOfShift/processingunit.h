@@ -6,26 +6,36 @@
 #include <QMap>
 #include <QThread>
 
-// The data structs should be in Decoder, but here for demonstration purposes
 struct VelocityStruct {
     double velocity;
     int timeMs;
 };
 
-Q_DECLARE_METATYPE(VelocityStruct)
-
-// Might move to Decoder?
-enum DataType {
-    VELOCITY,
-    ACCELERATION
+struct AccelerationStruct {
+    double acceleration;
+    int timeMs;
 };
 
-class ProcessingUnit : public QObject
-{
+struct AccelerationVelocityStruct {
+    double acceleration;
+    double velocity;
+    int timeMs;
+};
+
+Q_DECLARE_METATYPE(VelocityStruct)
+Q_DECLARE_METATYPE(AccelerationStruct)
+Q_DECLARE_METATYPE(AccelerationVelocityStruct)
+
+enum DataType {
+    VELOCITY,
+    ACCELERATION,
+    ACCELERATIONVELOCITY
+};
+
+class ProcessingUnit : public QObject {
     Q_OBJECT
 
 public:
-
     ~ProcessingUnit();
 
     virtual void process(const QString& name) = 0;
@@ -35,15 +45,13 @@ public:
 public slots:
     // Add data to queue and start processing
     void addData(const QString &name, const QVariant &data);
-
+  
 signals:
-    // This signal is emitted when new data is available
     void newData(const QString &name, const QVariant &data);
 
 protected:
     QMap<QString, QQueue<QVariant>*> dataMap;
-
     DataType m_dataType;
 };
 
-#endif // PROCESSINGUNIT_H
+#endif //PROCESSINGUNIT_H

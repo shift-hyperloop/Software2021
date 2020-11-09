@@ -74,7 +74,7 @@ ApplicationWindow {
         id: startThread
         text: "Start"
         onClicked: {
-            timer.start()
+             timer.start()
         }
     }
 
@@ -86,12 +86,13 @@ ApplicationWindow {
             timer.stop()
         }
     }
-
+    
     Button {
         id: clearGraph
         text: "Clear"
         x: 100
         onClicked: {
+        onClicked:  {
             lineSeries.clear()
         }
     }

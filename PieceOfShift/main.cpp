@@ -1,10 +1,6 @@
 #include <QtWidgets/QApplication>
 #include <QQmlApplicationEngine>
-#include <QMetaType>
-#include <QDebug>
-#include <QThread>
 #include "datamanager.h"
-#include <QElapsedTimer>
 
 void addData()
 {

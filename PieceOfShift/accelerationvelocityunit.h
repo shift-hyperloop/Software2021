@@ -1,20 +1,17 @@
 #ifndef ACCELERATIONVELOCITYUNIT_H
 #define ACCELERATIONVELOCITYUNIT_H
 
-#include <QMetaType>
 #include "processingunit.h"
-#include "velocityprocessingunit.h"
-#include "accelerationprocessingunit.h"
 
-class AccelerationVelocityUnit : public ProcessingUnit
+class AccelerationVelocityUnit: public ProcessingUnit
 {
-
 public:
     AccelerationVelocityUnit();
     ~AccelerationVelocityUnit();
 
     virtual void process(const QString& name) override;
 
+private:
 };
 
-#endif // ACCELERATIONVELOCITYUNIT_H
+#endif //ACCELERATIONVELOCITYUNIT_H

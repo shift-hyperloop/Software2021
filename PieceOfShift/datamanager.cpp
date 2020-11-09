@@ -3,6 +3,8 @@
 
 #include "datamanager.h"
 #include "velocityprocessingunit.h"
+#include "accelerationprocessingunit.h"
+#include "accelerationvelocityunit.h"
 
 DataManager::DataManager()
 {
@@ -11,10 +13,18 @@ DataManager::DataManager()
      */
     VelocityProcessingUnit* vpu = new VelocityProcessingUnit();
     processingUnits.append(vpu);
+    AccelerationProcessingUnit* apu = new AccelerationProcessingUnit();
+    processingUnits.append(apu);
+    AccelerationVelocityUnit* avu = new AccelerationVelocityUnit();
+    processingUnits.append(avu);
 
     // Connect newData signal to corresponding DataManager signal
     connect(vpu, &VelocityProcessingUnit::newData,
             this, &DataManager::newVelocity);
+    connect(apu, &AccelerationProcessingUnit::newData,
+            this, &DataManager::newAcceleration);
+    connect(avu, &AccelerationVelocityUnit::newData,
+            this, &DataManager::newAccelerationVelocity);
 
     /* Create Decoder/DataFetcher object here and start it when signal from
      QML has been received */
@@ -45,6 +55,7 @@ void DataManager::addData(const QString& name, const DataType &dataType, const Q
  */
 int t = 0;
 float v = 2;
+float a = 3;
 
 void DataManager::dummyData()
 {
@@ -54,5 +65,17 @@ void DataManager::dummyData()
     vs.timeMs = t;
     vs.velocity = v;
     addData("Velocity", DataType::VELOCITY, QVariant::fromValue(vs));
+    a =  0.03 *((float) t * log(t));
+    AccelerationStruct as;
+    AccelerationVelocityStruct avs;
+    as.timeMs = t;
+    avs.timeMs = t;
+    vs.velocity = v;
+    as.acceleration = a;
+    avs.acceleration = a;
+    avs.velocity = v;
+    addData("Velocity", DataType::VELOCITY, QVariant::fromValue(vs));
+    addData("Acceleration", DataType::ACCELERATION, QVariant::fromValue(vs));
+    addData("AccelerationVelocity", DataType::ACCELERATIONVELOCITY, QVariant::fromValue(vs));
 }
 
