@@ -1,4 +1,4 @@
-import QtQuick 2.14
+﻿﻿import QtQuick 2.14
 import QtCharts 2.3
 
 Item {
@@ -55,7 +55,7 @@ Item {
             Timer{
                 id: timer
                 repeat: true
-                interval: 50
+                interval: 1
                 property int mouse_x_: chartMouseArea.mouseX
                 property int mouse_y_: chartMouseArea.mouseY
                 onTriggered: {
@@ -74,7 +74,7 @@ Item {
             axisX: x_axis
             axisY: y_axis
             pointsVisible: true
-
+            useOpenGL: true
             ValueAxis{
                 id: y_axis
                 labelsColor: "white"
@@ -91,21 +91,16 @@ Item {
                 max: 10
                 titleText: ""
             }
-            XYPoint { x: 0; y: 0 }
-            XYPoint { x: 1.1; y: 2.1 }
-            XYPoint { x: 1.9; y: 3.3 }
-            XYPoint { x: 2.1; y: 2.1 }
-            XYPoint { x: 2.9; y: 4.9 }
-            XYPoint { x: 3.4; y: 3.0 }
-            XYPoint { x: 4.1; y: 3.3 }
+
             onHovered: {
                 //
-                var punkt = "(" + point.x.toFixed(2) + "," + point.y.toFixed(2) + ")"
-                _text.text = punkt
-                var p = chartview.mapToPosition(Qt.point(point.x,point.y),lineseries)
-                rectangle1.visible = true
-                rectangle1.x = p.x
-                rectangle1.y = p.y
+                var punkt = "(" + point.x.toFixed(2) + "," + point.y.toFixed(2) + ")";
+                _text.text = punkt;
+                var p = chartview.mapToPosition(Qt.point(point.x,point.y),lineseries);
+                rectangle1.visible = true;
+                rectangle1.x = p.x;
+                rectangle1.y = p.y;
+
             }
 
             onPointAdded: {
@@ -115,6 +110,9 @@ Item {
                 }
                 if(new_point.y > y_axis.max){
                     y_axis.max = new_point.y+ Math.round(y/2)
+                }
+                if (new_point.y < y_axis.min) {
+                    y_axis.min = new_point.y - Math.round(y/2)
                 }
             }
 

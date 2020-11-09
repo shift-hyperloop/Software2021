@@ -1,5 +1,6 @@
 #include <QtWidgets/QApplication>
 #include <QQmlApplicationEngine>
+#include <QtWidgets/QApplication>
 
 int main(int argc, char *argv[])
 {
@@ -9,6 +10,7 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/main.qml"));
+    //engine.rootContext()->setContextProperty("applicationDirPath", QGuiApplication::applicationDirPath());
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {
         if (!obj && url == objUrl)
