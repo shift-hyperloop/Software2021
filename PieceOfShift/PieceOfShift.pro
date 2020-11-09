@@ -1,5 +1,4 @@
-QT += quick widgets
-QT += charts
+QT += charts quick widgets concurrent
 
 CONFIG += c++11
 
@@ -8,7 +7,12 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        main.cpp
+        accelerationprocessingunit.cpp \
+        accelerationvelocityunit.cpp \
+        datamanager.cpp \
+        main.cpp \
+        processingunit.cpp \
+        velocityprocessingunit.cpp
 
 RESOURCES += qml.qrc \
     assets.qrc
@@ -26,3 +30,10 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 DISTFILES += \
     futuristic_border.png
+    
+HEADERS += \
+    accelerationprocessingunit.h \
+    accelerationvelocityunit.h \
+    datamanager.h \
+    processingunit.h \
+    velocityprocessingunit.h
