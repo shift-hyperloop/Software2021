@@ -25,8 +25,6 @@ DataManager::DataManager()
             this, &DataManager::newAcceleration);
     connect(avu, &AccelerationVelocityUnit::newData,
             this, &DataManager::newAccelerationVelocity);
-    connect(avu, &VelocityProcessingUnit::newData,
-            this, &DataManager::newAccelerationVelocity);
 
     /* Create Decoder/DataFetcher object here and start it when signal from
      QML has been received */
