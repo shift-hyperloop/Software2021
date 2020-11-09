@@ -9,7 +9,7 @@ public:
     AccelerationVelocityUnit();
     ~AccelerationVelocityUnit();
 
-    virtual void process(const QString &name) override;
+    virtual void process(const QString& name) override;
 
 private:
 };

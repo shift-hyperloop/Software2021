@@ -16,7 +16,6 @@ void VelocityProcessingUnit::process(const QString& name)
         return;
     }
     VelocityStruct result = dataMap.value(name)->back().value<VelocityStruct>();
-
     /*
      *  Do calculations on result here
      */

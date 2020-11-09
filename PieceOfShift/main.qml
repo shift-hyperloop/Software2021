@@ -19,14 +19,14 @@ ApplicationWindow {
     }
 
     Timer {
-            id: timer
-            repeat: true
-            interval: 1
-            onTriggered: {
-                manager.dummyData();
-            }
-
+        id: timer
+        repeat: true
+        interval: 1
+        onTriggered: {
+            manager.dummyData();
         }
+
+    }
 
     ChartView {
             id: chartView
@@ -86,10 +86,12 @@ ApplicationWindow {
             timer.stop()
         }
     }
+    
     Button {
         id: clearGraph
         text: "Clear"
         x: 100
+        onClicked: {
         onClicked:  {
             lineSeries.clear()
         }

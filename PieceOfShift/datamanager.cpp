@@ -60,12 +60,14 @@ float a = 3;
 void DataManager::dummyData()
 {
     v =  0.01 *((float) t * log(t));
-    a =  0.03 *((float) t * log(t));
     VelocityStruct vs;
-    AccelerationStruct as;
-    AccelerationVelocityStruct avs;
     t += 1;
     vs.timeMs = t;
+    vs.velocity = v;
+    addData("Velocity", DataType::VELOCITY, QVariant::fromValue(vs));
+    a =  0.03 *((float) t * log(t));
+    AccelerationStruct as;
+    AccelerationVelocityStruct avs;
     as.timeMs = t;
     avs.timeMs = t;
     vs.velocity = v;
@@ -75,6 +77,5 @@ void DataManager::dummyData()
     addData("Velocity", DataType::VELOCITY, QVariant::fromValue(vs));
     addData("Acceleration", DataType::ACCELERATION, QVariant::fromValue(vs));
     addData("AccelerationVelocity", DataType::ACCELERATIONVELOCITY, QVariant::fromValue(vs));
-
 }
 

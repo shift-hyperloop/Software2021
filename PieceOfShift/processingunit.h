@@ -43,8 +43,9 @@ public:
     DataType dataType() { return m_dataType; }
 
 public slots:
+    // Add data to queue and start processing
     void addData(const QString &name, const QVariant &data);
-
+  
 signals:
     void newData(const QString &name, const QVariant &data);
 
