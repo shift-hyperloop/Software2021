@@ -22,7 +22,7 @@ ApplicationWindow {
     Image {
         id: logoWhite_RightText
         x: 31
-        y: 34
+        y: 50
         width: 250
         source: "assets/images/Shift_Logo.png"
         fillMode: Image.PreserveAspectFit
@@ -123,6 +123,9 @@ ApplicationWindow {
 
     Chart {
         id: chart
+        chartHeight: 300
+        chartWidth: 300
+        x: 300
     }
 
     Text {
@@ -156,5 +159,11 @@ ApplicationWindow {
         onClicked:  {
             lineSeries.clear()
         }
+    }
+    ControlButtons{
+        height: 200
+        width: 300
+        y: window.height - (height + 100)
+        x: window.width - (width + 150)
     }
 }
