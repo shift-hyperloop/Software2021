@@ -19,6 +19,7 @@ class canframes: public QObject
     Q_OBJECT
 public:
     canframes();
+    ~canframes();
 public slots:
 
 

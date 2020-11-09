@@ -7,10 +7,13 @@
 #include <QCanBusFrame>
 #include <QDebug>
 
-//given function to reconnect when program starts
+//given function to reconnect when program starts if necessary
 canframes::canframes(){
     connectDevice();
 }
+canframes::~canframes(){
+};
+
 //function to check for the programs error handling
 //checks if the program cleanly recieves messages
 void canframes::processErrors(QCanBusDevice::CanBusError error) const
@@ -59,6 +62,7 @@ void canframes::connectDevice()
                 }
             }
             else {
+                qInfo() << "test run canframes";
                 processReceivedFrames();
             }
 
