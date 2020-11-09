@@ -88,31 +88,6 @@ ApplicationWindow {
         height: 100
     }
 
-    Button {
-        id: startThread
-        text: "Start"
-        onClicked: {
-             timer.start()
-        }
-    }
-
-    Button {
-        id: stopThread
-        text: "Stop"
-        x: 200
-        onClicked: {
-            timer.stop()
-        }
-    }
-    
-    Button {
-        id: clearGraph
-        text: "Clear"
-        x: 100
-        onClicked:  {
-            lineSeries.clear()
-        }
-    }
     ControlButtons{
         height: 200
         width: 300
