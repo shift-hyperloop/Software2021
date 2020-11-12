@@ -16,11 +16,14 @@ ApplicationWindow {
     visible: true
     color: "#444444"
     title: "PieceOfShift"
+    menuBar: CustomMenuBar{
+        _width: window.width
+    }
 
     Image {
         id: logoWhite_RightText
         x: 31
-        y: 34
+        y: 50
         width: 250
         source: "assets/images/Shift_Logo.png"
         fillMode: Image.PreserveAspectFit
@@ -45,48 +48,12 @@ ApplicationWindow {
         maxValue: 50
     }
 
-    Slider {
+    DistanceSlider{
         id: slider
-        from: 0
-        to: 100
-        x: 28
-        y: 594
-        width: 1224
-        height: 98
-        font.pointSize: 14
-        hoverEnabled: false
-        enabled: false
-        live: true
-        snapMode: Slider.NoSnap
-        value: 0
-
-        Behavior on value {
-            NumberAnimation {
-                 duration: 200
-            }
-
-         }
-         background: Rectangle {
-            x: slider.leftPadding
-            y: slider.topPadding + slider.availableHeight / 2 - height / 2
-            implicitWidth: 200
-            implicitHeight: 4
-            width: slider.availableWidth
-            height: implicitHeight
-            radius: 2
-            color: "#999999"
-        }
-
-        handle: Rectangle {
-            x: slider.leftPadding + slider.visualPosition * (slider.availableWidth - width)
-            y: slider.topPadding + slider.availableHeight / 2 - height / 2
-            implicitWidth: 26
-            implicitHeight: 26
-            radius: 13
-            color: "#0099ff"
-        }
-
+        minValue: 0
+        maxValue: 10
     }
+
     Timer {
         interval: 200
         running: true
@@ -94,33 +61,24 @@ ApplicationWindow {
         property var distance: Math.random
         onTriggered: update()
     }
+
     function update(){
         var distance = (Math.random() * 0.03) + 0.1;
         var speed = (distance * 50) / 0.02;
-        slider.value = slider.value + distance;
+        slider.value = slider.value + distance / 10;
         speedometer.value = speed;
         thermometer.value = Math.random() * 25 + 25;
-    }
-
-    DataManager {
-        id: manager
-        onNewVelocity: {
-            lineSeries.append(velocity.x, velocity.y)
-            chartView.title = name
-        }
-    }
-
-    Timer {
-        id: timer
-        repeat: true
-        interval: 1
-        onTriggered: {
-            manager.dummyData();
-        }
+        chart.counter++;
+        chart.lineseries.append(chart.counter, speed)
     }
 
     Chart {
         id: chart
+        chartHeight: 300
+        chartWidth: 700
+        property var counter: 0
+        x: 300
+        y: 100
     }
 
     Text {
@@ -130,29 +88,16 @@ ApplicationWindow {
         height: 100
     }
 
-    Button {
-        id: startThread
-        text: "Start"
-        onClicked: {
-             timer.start()
-        }
-    }
-
-    Button {
-        id: stopThread
-        text: "Stop"
-        x: 200
-        onClicked: {
-            timer.stop()
-        }
-    }
-    
-    Button {
-        id: clearGraph
-        text: "Clear"
-        x: 100
-        onClicked:  {
-            lineSeries.clear()
-        }
+    ControlButtons{
+        height: 200
+        width: 300
+        y: window.height - (height + 100)
+        x: window.width - (width + 150)
     }
 }
+
+/*##^##
+Designer {
+    D{i:0;formeditorZoom:0.8999999761581421}
+}
+##^##*/

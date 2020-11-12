@@ -1,6 +1,6 @@
 ﻿import QtCharts 2.3
 import QtQuick 2.14
-
+import QtQuick.Controls 2.5
 Item {
     property alias y_axis: y_axis
     property alias x_axis: x_axis
@@ -17,7 +17,8 @@ Item {
         antialiasing: true
         backgroundColor: "transparent"
         titleColor: "white"
-
+        property var x_max: x_axis.max
+        property var y_max: y_axis.max
         MouseArea{
             id: chartMouseArea
             anchors.fill: parent
@@ -50,8 +51,8 @@ Item {
             }
             onReleased: {
                 timer.stop()
-
             }
+
             Timer{
                 id: timer
                 repeat: true
@@ -65,16 +66,14 @@ Item {
                     mouse_y_ = chartMouseArea.mouseY
                 }
             }
-
         }
-
 
         LineSeries{
             id: lineseries
             axisX: x_axis
             axisY: y_axis
             pointsVisible: true
-            //useOpenGL: true
+            useOpenGL: true
             ValueAxis{
                 id: y_axis
                 labelsColor: "white"
@@ -106,44 +105,55 @@ Item {
             onPointAdded: {
                 var new_point = at(index)
                 if(new_point.x > x_axis.max){
-                    x_axis.max = new_point.x + Math.round(x/2)
+                    x_axis.max = new_point.x + Math.round(new_point.x/2)
+                    chartview.x_max = x_axis.max
                 }
                 if(new_point.y > y_axis.max){
-                    y_axis.max = new_point.y+ Math.round(y/2)
+                    y_axis.max = new_point.y+ Math.round(new_point.y/2)
+                    chartview.y_max = y_axis.max
                 }
                 if (new_point.y < y_axis.min) {
-                    y_axis.min = new_point.y - Math.round(y/2)
+                    y_axis.min = new_point.y - Math.round(new_point.y/2)
                 }
             }
-
-
         }
-            Rectangle {
-                id: rectangle1
-                visible: false
-                z: 1
-                width: _text.width + 20
-                height: 40
-                color: "grey"
-                radius: 50
-                Text {
-                    id: _text
-                    text: qsTr("")
-                    anchors.centerIn: parent
-                }
+        Rectangle {
+            id: rectangle1
+            visible: false
+            z: 1
+            width: _text.width + 20
+            height: 40
+            color: "grey"
+            radius: 50
+            Text {
+                id: _text
+                text: qsTr("")
+                anchors.centerIn: parent
             }
+        }
 
-            Keys.onLeftPressed: {
-                chartview.scrollLeft(x_axis.max)
+        Keys.onLeftPressed: {
+            chartview.scrollLeft(x_axis.max)
+        }
+        Keys.onRightPressed: {
+            chartview.scrollRight(x_axis.max)
+        }
+        Keys.onUpPressed: {
+            chartview.scrollUp(y_axis.max)
+        }
+        Keys.onDownPressed: {
+            chartview.scrollDown(y_axis.max)
+        }
+        Button{
+            text: "reset"
+            x: 15
+            y: 10
+            onClicked: {
+                x_axis.min = 0
+                y_axis.min = 0
+                x_axis.max = chartview.x_max
+                y_axis.max = chartview.y_max
             }
-            Keys.onRightPressed: {
-                chartview.scrollRight(x_axis.max)
-            }
-            Keys.onUpPressed: {
-                chartview.scrollUp(y_axis.max)
-            }
-            Keys.onDownPressed: {
-                chartview.scrollDown(y_axis.max)
-            }
+        }
     }
 }
