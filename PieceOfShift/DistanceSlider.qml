@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.15
 import QtQuick.Controls 2.5
 
 Item {
@@ -9,10 +9,10 @@ Item {
     height: 720
     Slider {
         id: slider
-        x: 28
+        x: 0.05 * window.width
         y: 594
-        width: 1224
-        height: 98
+        width: 0.95 * window.width
+        height: 0.08 * height
         font.pointSize: 14
         hoverEnabled: false
         enabled: false
@@ -44,7 +44,8 @@ Item {
             implicitHeight: 26
             radius: 13
             color: "#0099ff"
-        }*/
+        }
+*/
         handle: Image {
             source: "assets/images/Pod.png"
             width: 150
@@ -53,10 +54,33 @@ Item {
             y: slider.topPadding + slider.availableHeight / 2 - height / 1.5
         }
     }
+    //creates tickmarks and tick labels
+    Repeater{
+        id: repeater
+        model: 11
+        Rectangle {
+            id: tick
+            width: 3
+            height: width * 4
+            x: slider.x * 1.1 + ((slider.width * 0.99) * (index / (repeater.model - 1)))
+            y: slider.y + slider.height / 1.95
+            color: "#ededed"
+            Text {
+                id: text
+                text: slider.to * index / 10 + qsTr(" km")
+                x: -t_metrics.width / 2
+                y: 10
+                font.pointSize: 12
+                color: "#ededed"
+            }
+            TextMetrics {
+                    id: t_metrics
+                    font: text.font
+                    text: text.text
+                }
+        }
+
+    }
 }
 
-/*##^##
-Designer {
-    D{i:0;formeditorZoom:0.33000001311302185}
-}
-##^##*/
+

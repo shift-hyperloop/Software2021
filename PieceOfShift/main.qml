@@ -51,7 +51,7 @@ ApplicationWindow {
     DistanceSlider{
         id: slider
         minValue: 0
-        maxValue: 100
+        maxValue: 10
     }
 
     Timer {
@@ -65,7 +65,7 @@ ApplicationWindow {
     function update(){
         var distance = (Math.random() * 0.03) + 0.1;
         var speed = (distance * 50) / 0.02;
-        slider.value = slider.value + distance;
+        slider.value = slider.value + distance / 10;
         speedometer.value = speed;
         thermometer.value = Math.random() * 25 + 25;
         chart.counter++;
