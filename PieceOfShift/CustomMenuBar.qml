@@ -64,45 +64,75 @@ Item {
         }
         Menu{
             title: qsTr("Components")
-            MenuItem{
-                CheckBox{
-                    checked: true
-                    onCheckStateChanged: speedometer.visible = checked
+            Menu{
+                title: qsTr("Battery")
+                MenuItem{
+                    CheckBox{
+                        checked: true
+                        onCheckStateChanged: thermometer.visible = checked
+                        }
+                    Label{
+                            text: "Thermometer"
+                            anchors.centerIn: parent
+                        }
+                    Menu{
+                        title: qsTr("Charts")
+
                     }
-                Label{
-                        text: "Speedometer"
-                        anchors.centerIn: parent
-                    }
+                }
+                Menu{
+                    title: qsTr("Charts")
+                }
             }
-            MenuItem{
-                CheckBox{
-                    checked: true
-                    onCheckStateChanged: thermometer.visible = checked
+            Menu{
+                title: qsTr("Speed")
+                MenuItem{
+                    CheckBox{
+                        checked: true
+                        onCheckStateChanged: speedometer.visible = checked
+                        }
+                    Label{
+                            text: "Speedometer"
+                            anchors.centerIn: parent
+                        }
+                }
+                Menu{
+                    title: qsTr("Charts")
+                    MenuItem{
+                        CheckBox{
+                            checked: true
+                            onCheckStateChanged: chart.visible = checked
+                            }
+                        Label{
+                                text: "Speed"
+                                anchors.centerIn: parent
+                            }
                     }
-                Label{
-                        text: "Thermometer"
-                        anchors.centerIn: parent
-                    }
+                }
             }
-            MenuItem{
-                CheckBox{
-                    checked: true
-                    onCheckStateChanged: slider.visible = checked
-                    }
-                Label{
-                        text: "Distance slider"
-                        anchors.centerIn: parent
-                    }
+            Menu{
+                title: qsTr("Position")
+                MenuItem{
+                    CheckBox{
+                        checked: true
+                        onCheckStateChanged: slider.visible = checked
+                        }
+                    Label{
+                            text: "Distance slider"
+                            anchors.centerIn: parent
+                        }
+                }
+                Menu{
+                    title: qsTr("Charts")
+
+                }
             }
-            MenuItem{
-                CheckBox{
-                    checked: true
-                    onCheckStateChanged: chart.visible = checked
-                    }
-                Label{
-                        text: "Chart"
-                        anchors.centerIn: parent
-                    }
+            Menu{
+                title: qsTr("Rotation")
+                Menu{
+                    title: qsTr("Charts")
+
+                }
             }
         }
     }
