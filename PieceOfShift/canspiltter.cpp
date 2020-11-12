@@ -3,7 +3,7 @@
 #include <QDataStream>
 #include <iostream>
 
-#include "canSplitter.h"
+#include "cansplitter.h"
 //define canSplitter start
 //class start function
 CanSplitter::CanSplitter()

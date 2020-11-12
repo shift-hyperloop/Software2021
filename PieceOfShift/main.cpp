@@ -1,6 +1,6 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
-#include "canSplitter.h"
+#include "cansplitter.h"
 
 int main(int argc, char *argv[])
 {
