@@ -1,5 +1,5 @@
-#ifndef FINDDATATYPE_H
-#define FINDDATATYPE_H
+#ifndef MANAGEDATATYPE_H
+#define MANAGEDATATYPE_H
 
 #include <QObject>
 #include <QMap>
@@ -33,4 +33,4 @@ public slots:
 
 
 
-#endif // FINDDATATYPE_H
+#endif // MANAGEDATATYPE_H

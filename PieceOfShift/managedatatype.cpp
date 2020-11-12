@@ -2,15 +2,15 @@
 #include <QPair>
 #include <QVector>
 
-#include "manageDatatype.h"
+#include "managedatatype.h"
 
 ManageDatatype::ManageDatatype(){
-    findData();
+    newData();
 }
 ManageDatatype::~ManageDatatype(){
 }
 
-void ManageDatatype::findData(){
+void ManageDatatype::newData(){
 
 }
 void ManageDatatype::mapGivenIDandData(){

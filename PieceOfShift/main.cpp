@@ -1,6 +1,6 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
-#include "manageDatatype.h"
+#include "managedatatype.h"
 
 int main(int argc, char *argv[])
 {
