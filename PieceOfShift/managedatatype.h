@@ -3,11 +3,13 @@
 
 #include <QObject>
 #include <QMap>
-//#include "canframes.h"
+#include <QByteArray>
+
+//#include "canSplitter.h"
 
 struct velocityStruct{
-    double velocity
-    int time
+    double velocity;
+    int time;
 };
 
 
@@ -17,16 +19,16 @@ enum Datatype{
     ACCELERATIONVELOCITY
 };
 
-class FindDatatype : public QObject
+class ManageDatatype : public QObject
 {
     Q_OBJECT
 public:
-    FindDatatype();
-    ~FindDatatype();
+    ManageDatatype();
+    ~ManageDatatype();
 
     void mapGivenIDandData();
 public slots:
-    void findData(/*canframes::processReceivedData &frame canframesFrame*/);
+    void newData(quint16, quint8, QByteArray);
 };
 
 
