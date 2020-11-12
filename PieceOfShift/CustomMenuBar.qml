@@ -82,16 +82,6 @@ Item {
                 }
                 Menu{
                     title: qsTr("Charts")
-                    MenuItem{
-                        CheckBox{
-                            checked: true
-                            onCheckStateChanged: chart.visible = checked
-                            }
-                        Label{
-                                text: "Speed"
-                                anchors.centerIn: parent
-                            }
-                    }
                 }
             }
             Menu{
@@ -108,7 +98,16 @@ Item {
                 }
                 Menu{
                     title: qsTr("Charts")
-
+                    MenuItem{
+                        CheckBox{
+                            checked: true
+                            onCheckStateChanged: chart.visible = checked
+                            }
+                        Label{
+                                text: "Speed"
+                                anchors.centerIn: parent
+                            }
+                    }
                 }
             }
             Menu{
@@ -123,6 +122,13 @@ Item {
                             anchors.centerIn: parent
                         }
                 }
+                Menu{
+                    title: qsTr("Charts")
+
+                }
+            }
+            Menu{
+                title: qsTr("Rotation")
                 Menu{
                     title: qsTr("Charts")
 
