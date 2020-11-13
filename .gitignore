@@ -31,6 +31,11 @@ Makefile*
 *build-*
 *.qm
 *.prl
+*.idx
+*.props
+*.tlog
+*.log
+*.props
 
 # Qt unit tests
 target_wrapper.*
@@ -50,3 +55,44 @@ compile_commands.json
 
 # QtCreator local machine specific files for imported projects
 *creator.user*
+PieceOfShift/testProject/.vs/testProject/v16/Browse.VC.db
+PieceOfShift/testProject/.vs/testProject/v16/Browse.VC.db-shm
+PieceOfShift/testProject/.vs/testProject/v16/Browse.VC.db-wal
+PieceOfShift/testProject/.vs/testProject/v16/Browse.VC.opendb
+PieceOfShift/testProject/debug/qmake/qtvars_Win32_Debug.props
+PieceOfShift/testProject/debug/qmake/temp/05221D14-F05E-3A7B-94F0-D217EE1F4374.testProject.designtime.idx
+PieceOfShift/testProject/debug/qmake/temp/qtvars_Win32_Debug.props
+PieceOfShift/testProject/debug/testProject.exe.recipe
+PieceOfShift/testProject/release/qmake/qtvars_Win32_Release.props
+PieceOfShift/testProject/release/qmake/temp/05221D14-F05E-3A7B-94F0-D217EE1F4374.testProject.designtime.idx
+PieceOfShift/testProject/release/qmake/temp/qtvars_Win32_Release.props
+PieceOfShift/testProject/.vs/testProject/v16/Browse.VC.db
+PieceOfShift/.vs/pieceOfShift/v16/Browse.VC.opendb
+PieceOfShift/pieceOfShift.vcxproj.filters
+PieceOfShift/pieceOfShift.vcxproj
+*.pdb
+*.pdb
+PieceOfShift/debug/vc142.pdb
+PieceOfShift/debug/testProject.pdb
+PieceOfShift/.vs/pieceOfShift/v16/.suo
+*.db
+*.db-shm
+*.db-wal
+*.ipch
+PieceOfShift/.vs/pieceOfShift/v16/Browse.VC.db
+*.obj
+PieceOfShift/debug/pieceOfShift.exe
+PieceOfShift/debug/pieceOfShift.exe.recipe
+PieceOfShift/debug/pieceOfShift.ilk
+*.pdb
+*.txt
+PieceOfShift/pieceOfShift.vcxproj
+PieceOfShift/pieceOfShift.vcxproj.filters
+*.vcxproj
+*.filters
+*.user
+*.json
+*.opendb
+.vs/testProject/v16/.suo
+*.sqlite
+.vs/pieceOfShift/v16/.suo

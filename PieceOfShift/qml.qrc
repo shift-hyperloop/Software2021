@@ -2,5 +2,11 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>qtquickcontrols2.conf</file>
+        <file>Speedometer.qml</file>
+        <file>Chart.qml</file>
+        <file>Thermometer.qml</file>
+        <file>CustomMenuBar.qml</file>
+        <file>ControlButtons.qml</file>
+        <file>DistanceSlider.qml</file>
     </qresource>
 </RCC>
