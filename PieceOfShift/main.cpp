@@ -1,5 +1,6 @@
 #include <QtWidgets/QApplication>
 #include <QQmlApplicationEngine>
+#include "cansplitter.h"
 #include "datamanager.h"
 
 int main(int argc, char *argv[])
@@ -8,6 +9,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<DataManager>("shift.datamanagement", 1, 0, "DataManager");
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
+    CanSplitter w;
     QApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
