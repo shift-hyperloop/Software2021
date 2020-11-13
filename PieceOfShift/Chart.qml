@@ -146,8 +146,8 @@ Item {
         }
         Button{
             text: "reset"
-            x: 15
-            y: 10
+            x: chartview.x
+            y: Math.max(chartview.y, 35)
             onClicked: {
                 x_axis.min = 0
                 y_axis.min = 0

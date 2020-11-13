@@ -2,10 +2,10 @@ import QtQuick 2.12
 import QtQuick.Window 2.3
 import QtQuick.Controls 2.5
 Item {
-    property alias _width: __menu.width
+    //property alias _width: __menu.width Don't need this if we only set width in main.qml
     MenuBar{
         id: __menu
-        width: _width
+        //width: _width
         Menu{
             title: qsTr("&File")
 

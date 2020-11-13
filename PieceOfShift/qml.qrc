@@ -8,5 +8,8 @@
         <file>CustomMenuBar.qml</file>
         <file>ControlButtons.qml</file>
         <file>DistanceSlider.qml</file>
+        <file>ExampleComponent.qml</file>
+        <file>PreviewPage.qml</file>
+        <file>SimpleChart.qml</file>
     </qresource>
 </RCC>
