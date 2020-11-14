@@ -2,10 +2,11 @@ import QtQuick 2.12
 import QtQuick.Window 2.3
 import QtQuick.Controls 2.5
 Item {
-    //property alias _width: __menu.width Don't need this if we only set width in main.qml
+    property alias _width: __menu.width
+    //Don't need this if we only set width in main.qml <-- Turns out we actually do
     MenuBar{
         id: __menu
-        //width: _width
+        width: _width
         Menu{
             title: qsTr("&File")
 
@@ -54,16 +55,8 @@ Item {
                 }
              }
         }
-        Menu {
-            title: qsTr("&Help")
-            MenuItem { text: qsTr("&About")
-            onTriggered: {
-                Qt.openUrlExternally("https://github.com/shift-hyperloop/Software2021");
-            }
-            }
-        }
         Menu{
-            title: qsTr("Components")
+            title: qsTr("View")
             Menu{
                 title: qsTr("Battery")
                 MenuItem{
@@ -133,6 +126,22 @@ Item {
                     title: qsTr("Charts")
 
                 }
+            }
+        }
+        Menu{
+            title: qsTr("State indication")
+            MenuItem { text: qsTr("Change State")
+                onTriggered: {
+                    stackView.push("StateIndication.qml");
+                }
+              }
+        }
+        Menu {
+            title: qsTr("&Help")
+            MenuItem { text: qsTr("&About")
+            onTriggered: {
+                Qt.openUrlExternally("https://github.com/shift-hyperloop/Software2021");
+            }
             }
         }
     }

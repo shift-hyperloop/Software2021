@@ -11,5 +11,6 @@
         <file>ExampleComponent.qml</file>
         <file>PreviewPage.qml</file>
         <file>SimpleChart.qml</file>
+        <file>StateIndication.qml</file>
     </qresource>
 </RCC>

@@ -18,7 +18,7 @@ ApplicationWindow {
     color: "#444444"
     title: "PieceOfShift"
     menuBar: CustomMenuBar{
-        width: window.width
+        _width: window.width
     }
 
     StackView {
