@@ -10,7 +10,7 @@ Item {
     Slider {
         id: slider
         x: 0.025 * window.width
-        y: 0.9 * window.height
+        y: Math.max(window.height - 60, speedometer.y + speedometer.height);
         width: 0.95 * window.width
         height: 0.08 * window.height
         font.pointSize: 14
@@ -82,5 +82,4 @@ Item {
 
     }
 }
-
 
