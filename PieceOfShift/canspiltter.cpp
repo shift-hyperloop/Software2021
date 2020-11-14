@@ -30,6 +30,7 @@ void CanSplitter::splitDataToMessages()
         datagram.resize(int(udpSocket->pendingDatagramSize()));
         //push received data into datagram
         udpSocket->readDatagram(datagram.data(), datagram.size());
+        bool ok;
         //define area of datagram as id, datasize and data
         quint16 id = qFromBigEndian<quint16>(datagram.mid(CAN_ID_OFFSET, CAN_ID_SIZE).toHex().toInt(&ok, 16));
         quint8 dataSize = qFromBigEndian<quint8>(datagram.mid(CAN_DATA_SIZE_OFFSET, CAN_DATA_SIZE_SIZE).toHex().toInt(&ok, 16));
