@@ -29,12 +29,11 @@ Item {
                 antialiasing: true
                 color: "#0099ff"
             }
-
             foreground: Rectangle {
                 width: outerRadius * 0.1
                 height: width
                 radius: width / 2
-                color: "#e5e5e5"
+                color: "#ededed"
                 anchors.centerIn: parent
             }
             //change the color and style of text, plus make it red at high values
@@ -70,7 +69,7 @@ Item {
         id: speedometerValueText
         x: circulargauge.scale * circulargauge.x + 126
         y: circulargauge.scale * circulargauge.y + 249
-        color: "#e5e5e5"
+        color: "#ededed"
         text: qsTr(circulargauge.value + "km/h")
         anchors.verticalCenter: parent.verticalCenter
         font.pixelSize: 18
@@ -78,7 +77,7 @@ Item {
         anchors.verticalCenterOffset: 99
         anchors.horizontalCenterOffset: 1
         anchors.horizontalCenter: circulargauge.horizontalCenter
-        styleColor: "#e5e5e5"
+        styleColor: "#ededed"
         minimumPointSize: 18
         minimumPixelSize: 18
         font.family: "Arial"

@@ -9,12 +9,10 @@ Item {
     height: 720
     Slider {
         id: slider
-        x: 0.05 * window.width
-        //y: 594
-        //I suggest for dynamic positioning:
+        x: 0.025 * window.width
         y: Math.max(window.height - 60, speedometer.y + speedometer.height);
         width: 0.95 * window.width
-        height: 0.08 * height
+        height: 0.08 * window.height
         font.pointSize: 14
         hoverEnabled: false
         enabled: false
