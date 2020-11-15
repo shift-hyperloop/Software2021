@@ -7,24 +7,25 @@
 
 //#include "canSplitter.h"
 
-struct velocityStruct{
-    double velocity;
-    int time;
+
+
+static const QLatin1String ValueNames[]={
+  //names of all the different id meassurements
+};
+static const ushort IDTable[] = {
+    //list of possible ID's
+};
+static const qulonglong DataTypeTable[] = {
+    //Set the datatype in here to convert ids in set order to correct datatype
 };
 
-
-enum Datatype{
-    VELOCITY,
-    ACCELERATION,
-    ACCELERATIONVELOCITY
-};
-
-class ManageDatatype : public QObject
+class Decoder : public QObject
 {
     Q_OBJECT
 public:
-    ManageDatatype();
-    ~ManageDatatype();
+    Decoder();
+    ~Decoder();
+
 
 public slots:
     void newData(quint16, quint8, QByteArray);
