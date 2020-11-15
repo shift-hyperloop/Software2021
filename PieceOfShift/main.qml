@@ -18,7 +18,8 @@ ApplicationWindow {
     color: "#444444"
     title: "PieceOfShift"
     menuBar: CustomMenuBar{
-        _width: window.width
+        /*_width: window.width - logoWhite_RightText.width
+        x: logoWhite_RightText.width + 10*/
     }
 
     StackView {
@@ -35,14 +36,6 @@ ApplicationWindow {
             property alias chart: chart;
             property alias counter: chart.counter
 
-            Image {
-                id: logoWhite_RightText
-                x: 31
-                y: 50
-                width: 250
-                source: "assets/images/Shift_Logo.png"
-                fillMode: Image.PreserveAspectFit
-            }
 
             Speedometer {
                 id: speedometer
@@ -128,6 +121,6 @@ ApplicationWindow {
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:0.8999999761581421}
+    D{i:0;formeditorZoom:0.6600000262260437;height:480}
 }
 ##^##*/

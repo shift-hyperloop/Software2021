@@ -4,9 +4,30 @@ import QtQuick.Controls 2.5
 Item {
     property alias _width: __menu.width
     //Don't need this if we only set width in main.qml <-- Turns out we actually do
+    Rectangle {
+        width: logoWhite_RightText.width + 5
+        height: logoWhite_RightText.height + 10
+        color: "#373840"
+        Image {
+            id: logoWhite_RightText
+            x: 5
+            y: 5
+            height: 0.05 * window.height - 10
+            source: "assets/images/Shift_Logo.png"
+            fillMode: Image.PreserveAspectFit
+
+
+        }
+    }
     MenuBar{
         id: __menu
-        width: _width
+        width: window.width - logoWhite_RightText.width
+        height: 0.05 * window.height
+        x: logoWhite_RightText.width
+        background: Rectangle {
+            color: "#373840"
+        }
+
         Menu{
             title: qsTr("&File")
 
