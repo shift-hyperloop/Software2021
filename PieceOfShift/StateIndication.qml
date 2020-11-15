@@ -29,6 +29,7 @@ Page{
         anchors.centerIn: parent
         RadioButton{
             text: "Off"
+            checked: true
         }
         RadioButton{
             text: "State 1"
