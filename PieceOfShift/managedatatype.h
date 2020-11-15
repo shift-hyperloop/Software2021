@@ -26,9 +26,11 @@ public:
     ManageDatatype();
     ~ManageDatatype();
 
-    void mapGivenIDandData();
 public slots:
     void newData(quint16, quint8, QByteArray);
+
+private:
+    void mapGivenIDandData();
 };
 
 
