@@ -113,6 +113,12 @@ ApplicationWindow {
                 x: Math.max(window.width - (width + 30), thermometer.x + thermometer.width + 30)
                 //Buttons will stop when colliding with thermometer
             }
+            /*Battery{
+                height:
+                width:
+                x:
+                y:
+            }*/
         }
     }
 

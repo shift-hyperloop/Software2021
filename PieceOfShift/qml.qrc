@@ -12,5 +12,6 @@
         <file>PreviewPage.qml</file>
         <file>SimpleChart.qml</file>
         <file>StateIndication.qml</file>
+        <file>Battery.qml</file>
     </qresource>
 </RCC>
