@@ -46,7 +46,7 @@ ApplicationWindow {
 
             Speedometer {
                 id: speedometer
-                x: 0
+                x: 0.05 * window.width
                 y: 144
                 width: 306
                 height: 320
@@ -65,10 +65,10 @@ ApplicationWindow {
 
             DistanceSlider{
                 id: slider
+                x: 0.025 * window.width
+                y: Math.max(window.height - 100, speedometer.y + speedometer.height);
                 minValue: 0
                 maxValue: 100
-                //x: 28
-                //y: Math.max(window.height - 60, speedometer.y + speedometer.height);
             }
 
             Timer {

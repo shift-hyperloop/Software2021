@@ -15,8 +15,6 @@ Item {
 
     CircularGauge{
         id: circulargauge
-        x: 46
-        y: 24
         minimumValue: 0
         maximumValue: 500
         stepSize: 1
