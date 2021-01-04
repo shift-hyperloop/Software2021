@@ -1,15 +1,15 @@
 <RCC>
     <qresource prefix="/">
-        <file>main.qml</file>
+        <file>src/Frontend/Chart.qml</file>
+        <file>src/Frontend/ControlButtons.qml</file>
+        <file>src/Frontend/CustomMenuBar.qml</file>
+        <file>src/Frontend/DistanceSlider.qml</file>
+        <file>src/Frontend/ExampleComponent.qml</file>
+        <file>src/Frontend/main.qml</file>
+        <file>src/Frontend/PreviewPage.qml</file>
+        <file>src/Frontend/SimpleChart.qml</file>
+        <file>src/Frontend/Speedometer.qml</file>
+        <file>src/Frontend/Thermometer.qml</file>
         <file>qtquickcontrols2.conf</file>
-        <file>Speedometer.qml</file>
-        <file>Chart.qml</file>
-        <file>Thermometer.qml</file>
-        <file>CustomMenuBar.qml</file>
-        <file>ControlButtons.qml</file>
-        <file>DistanceSlider.qml</file>
-        <file>ExampleComponent.qml</file>
-        <file>PreviewPage.qml</file>
-        <file>SimpleChart.qml</file>
     </qresource>
 </RCC>
