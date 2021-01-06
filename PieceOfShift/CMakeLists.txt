@@ -17,8 +17,6 @@ if(WIN32)
   set(CMAKE_PREFIX_PATH "C:\\Qt\\5.15.2\\msvc2019_64")
 endif()
 
-message(${CMAKE_PREFIX_PATH})
-
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Quick REQUIRED)
 find_package(Qt5Widgets REQUIRED)
