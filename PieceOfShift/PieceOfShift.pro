@@ -7,13 +7,13 @@ CONFIG += c++14
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        canspiltter.cpp \
-        accelerationprocessingunit.cpp \
-        accelerationvelocityunit.cpp \
-        datamanager.cpp \
-        main.cpp \
-        processingunit.cpp \
-        velocityprocessingunit.cpp
+        src/Decoding/canspiltter.cpp \
+        src/Processing/accelerationprocessingunit.cpp \
+        src/Processing/accelerationvelocityunit.cpp \
+        src/Processing/datamanager.cpp \
+        src/main.cpp \
+        src/Processing/processingunit.cpp \
+        src/Processing/velocityprocessingunit.cpp
 
 RESOURCES += qml.qrc \
     assets.qrc
@@ -31,11 +31,11 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
     
 DISTFILES += \
     futuristic_border.png
-    
+
 HEADERS += \
-    accelerationprocessingunit.h \
-    accelerationvelocityunit.h \
-    datamanager.h \
-    processingunit.h \
-    cansplitter.h \
-    velocityprocessingunit.h
+    src/Processing/accelerationprocessingunit.h \
+    src/Processing/accelerationvelocityunit.h \
+    src/Processing/datamanager.h \
+    src/Processing/processingunit.h \
+    src/Decoding/cansplitter.h \
+    src/Processing/velocityprocessingunit.h

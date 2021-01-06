@@ -40,7 +40,7 @@ ApplicationWindow {
                 x: 31
                 y: 50
                 width: 250
-                source: "assets/images/Shift_Logo.png"
+                source: "../../assets/images/Shift_Logo.png"
                 fillMode: Image.PreserveAspectFit
             }
 
