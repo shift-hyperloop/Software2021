@@ -12,8 +12,17 @@ set(CMAKE_AUTORCC ON)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Quick Widgets Concurrent REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick Widgets Concurrent REQUIRED)
+if(WIN32)
+  # NOTE: Change to Qt Path if on Windows
+  set(CMAKE_PREFIX_PATH "C:\\Qt\\5.15.2\\msvc2019_64")
+endif()
+
+message(${CMAKE_PREFIX_PATH})
+
+find_package(Qt5Core REQUIRED)
+find_package(Qt5Quick REQUIRED)
+find_package(Qt5Widgets REQUIRED)
+find_package(Qt5Concurrent REQUIRED)
 
 file(GLOB_RECURSE SOURCE_FILES
   "${PROJECT_SOURCE_DIR}/src/*.cpp"

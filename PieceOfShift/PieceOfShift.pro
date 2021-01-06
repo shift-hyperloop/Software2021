@@ -7,13 +7,13 @@ CONFIG += c++14
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        src/Backend/canspiltter.cpp \
-        src/Backend/accelerationprocessingunit.cpp \
-        src/Backend/accelerationvelocityunit.cpp \
-        src/Backend/datamanager.cpp \
-        src/Backend/main.cpp \
-        src/Backend/processingunit.cpp \
-        src/Backend/velocityprocessingunit.cpp
+        src/Decoding/canspiltter.cpp \
+        src/Processing/accelerationprocessingunit.cpp \
+        src/Processing/accelerationvelocityunit.cpp \
+        src/Processing/datamanager.cpp \
+        src/main.cpp \
+        src/Processing/processingunit.cpp \
+        src/Processing/velocityprocessingunit.cpp
 
 RESOURCES += qml.qrc \
     assets.qrc
@@ -33,9 +33,9 @@ DISTFILES += \
     futuristic_border.png
 
 HEADERS += \
-    src/Backend/accelerationprocessingunit.h \
-    src/Backend/accelerationvelocityunit.h \
-    src/Backend/datamanager.h \
-    src/Backend/processingunit.h \
-    src/Backend/cansplitter.h \
-    src/Backend/velocityprocessingunit.h
+    src/Processing/accelerationprocessingunit.h \
+    src/Processing/accelerationvelocityunit.h \
+    src/Processing/datamanager.h \
+    src/Processing/processingunit.h \
+    src/Decoding/cansplitter.h \
+    src/Processing/velocityprocessingunit.h
