@@ -1,6 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>assets/images/Shift_Logo.png</file>
-        <file>assets/images/Pod.png</file>
-    </qresource>
-</RCC>

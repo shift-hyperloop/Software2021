@@ -15,8 +15,8 @@ SOURCES += \
         src/Processing/processingunit.cpp \
         src/Processing/velocityprocessingunit.cpp
 
-RESOURCES += qml.qrc \
-    assets.qrc
+OTHER_FILES += \
+    src/Frontend/*.qml
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =

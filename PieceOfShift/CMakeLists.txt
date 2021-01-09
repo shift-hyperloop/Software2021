@@ -14,7 +14,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if(WIN32)
   # NOTE: Change to Qt Path if on Windows
-  set(CMAKE_PREFIX_PATH "C:\\Qt\\5.15.2\\msvc2019_64")
+  set(CMAKE_PREFIX_PATH "C:\\Qt\\5.15.1\\msvc2019_64")
 endif()
 
 find_package(Qt5Core REQUIRED)
@@ -30,7 +30,11 @@ file(GLOB_RECURSE HEADER_FILES
   "${PROJECT_SOURCE_DIR}/src/*.h"
   )
 
-add_executable(PieceOfShift ${HEADER_FILES} ${SOURCE_FILES} qml.qrc assets.qrc)
+file(GLOB_RECURSE QML
+  "${PROJECT_SOURCE_DIR}/src/Frontend/*.qml"
+  )
+
+add_executable(PieceOfShift ${HEADER_FILES} ${SOURCE_FILES} ${QML})
 
 target_compile_definitions(PieceOfShift
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
