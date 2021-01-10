@@ -8,8 +8,10 @@ import Qt3D.Core 2.9
 import Qt3D.Render 2.9
 import QtCharts 2.3
 import shift.datamanagement 1.0
+import QtQuick.Controls.Material 2.12
 
 ApplicationWindow {
+    Material.theme: Material.Dark
     id: window
     width: 1700
     height: 900
@@ -40,7 +42,7 @@ ApplicationWindow {
                 x: 31
                 y: 50
                 width: 250
-                source: "../../assets/images/Shift_Logo.png"
+                source: "Shift_Logo.png"
                 fillMode: Image.PreserveAspectFit
             }
 
