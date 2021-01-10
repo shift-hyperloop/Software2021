@@ -21,6 +21,7 @@ find_package(Qt5Core REQUIRED)
 find_package(Qt5Quick REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Concurrent REQUIRED)
+find_package(Qt5QuickControls2 REQUIRED)
 
 file(GLOB_RECURSE SOURCE_FILES
   "${PROJECT_SOURCE_DIR}/src/*.cpp"
@@ -34,10 +35,20 @@ file(GLOB_RECURSE QML
   "${PROJECT_SOURCE_DIR}/src/Frontend/*.qml"
   )
 
+file(GLOB_RECURSE ASSETS
+  "${PROJECT_SOURCE_DIR}/assets/*"
+  )
+
+file(COPY ${QML}
+     DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
+ file(COPY ${ASSETS}
+      DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
 add_executable(PieceOfShift ${HEADER_FILES} ${SOURCE_FILES} ${QML})
 
 target_compile_definitions(PieceOfShift
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 target_link_libraries(PieceOfShift
-  PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Concurrent)
+  PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Concurrent Qt${QT_VERSION_MAJOR}::QuickControls2)
 
