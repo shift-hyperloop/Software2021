@@ -24,7 +24,7 @@ defineTest(copyToDestdir) {
 }
 
 SOURCES += \
-        src/Decoding/managedatatype.cpp
+        src/Decoding/managedatatype.cpp \
         src/Decoding/canspiltter.cpp \
         src/Decoding/poddatasender.cpp \
         src/Processing/accelerationprocessingunit.cpp \
@@ -32,7 +32,8 @@ SOURCES += \
         src/Processing/datamanager.cpp \
         src/main.cpp \
         src/Processing/processingunit.cpp \
-        src/Processing/velocityprocessingunit.cpp
+        src/Processing/velocityprocessingunit.cpp \
+
 
 OTHER_FILES += \
     src/Frontend/*.qml \
@@ -58,11 +59,11 @@ DISTFILES += \
 for(f, DISTFILES):copyToDestdir($$files($${PWD}/$${f}))
 
 HEADERS += \
-    src/Decoding/managedatatype.h
+    src/Decoding/managedatatype.h \
     src/Processing/accelerationprocessingunit.h \
     src/Processing/accelerationvelocityunit.h \
     src/Processing/datamanager.h \
     src/Processing/processingunit.h \
     src/Decoding/cansplitter.h \
     src/Decoding/poddatasender.h \
-    src/Processing/velocityprocessingunit.h
+    src/Processing/velocityprocessingunit.h \
