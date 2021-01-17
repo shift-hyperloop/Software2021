@@ -12,6 +12,7 @@ SOURCES += \
         accelerationvelocityunit.cpp \
         datamanager.cpp \
         main.cpp \
+        poddatasender.cpp \
         processingunit.cpp \
         velocityprocessingunit.cpp
 
@@ -36,6 +37,7 @@ HEADERS += \
     accelerationprocessingunit.h \
     accelerationvelocityunit.h \
     datamanager.h \
+    poddatasender.h \
     processingunit.h \
     cansplitter.h \
     velocityprocessingunit.h
