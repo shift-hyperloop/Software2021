@@ -1,5 +1,5 @@
 #include "accelerationprocessingunit.h"
-
+#include <QPointF>
 
 
 

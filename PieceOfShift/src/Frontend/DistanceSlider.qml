@@ -9,10 +9,10 @@ Item {
     height: 720
     Slider {
         id: slider
-        x: 0.05 * window.width
-        y: 594
+        x: 0.025 * window.width
+        y: Math.max(window.height - 100, speedometer.y + speedometer.height);
         width: 0.95 * window.width
-        height: 0.08 * height
+        height: 0.08 * window.height
         font.pointSize: 14
         hoverEnabled: false
         enabled: false
@@ -47,7 +47,7 @@ Item {
         }
 */
         handle: Image {
-            source: "assets/images/Pod.png"
+            source: "Pod.png"
             width: 150
             fillMode: Image.PreserveAspectFit
             x: slider.leftPadding + slider.visualPosition * (slider.availableWidth - width) - width / 2
@@ -82,5 +82,4 @@ Item {
 
     }
 }
-
 

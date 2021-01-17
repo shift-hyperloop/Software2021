@@ -17,6 +17,8 @@ Item {
         antialiasing: true
         backgroundColor: "transparent"
         titleColor: "white"
+        property var x_max: x_axis.max
+        property var y_max: y_axis.max
 
         MouseArea{
             id: chartMouseArea
@@ -52,24 +54,18 @@ Item {
                 titleText: ""
             }
 
-            XYPoint { x: 0; y: 0 }
-            XYPoint { x: 1.1; y: 2.1 }
-            XYPoint { x: 1.9; y: 3.3 }
-            XYPoint { x: 2.1; y: 2.1 }
-            XYPoint { x: 2.9; y: 4.9 }
-            XYPoint { x: 3.4; y: 3.0 }
-            XYPoint { x: 4.1; y: 3.3 }
-
             onPointAdded: {
                 var new_point = at(index)
                 if(new_point.x > x_axis.max){
-                    x_axis.max = new_point.x + Math.round(x/2)
+                    x_axis.max = new_point.x + Math.round(new_point.x/2)
+                    chartview.x_max = x_axis.max
                 }
                 if(new_point.y > y_axis.max){
-                    y_axis.max = new_point.y+ Math.round(y/2)
+                    y_axis.max = new_point.y+ Math.round(new_point.y/2)
+                    chartview.y_max = y_axis.max
                 }
                 if (new_point.y < y_axis.min) {
-                    y_axis.min = new_point.y - Math.round(y/2)
+                    y_axis.min = new_point.y - Math.round(new_point.y/2)
                 }
             }
 

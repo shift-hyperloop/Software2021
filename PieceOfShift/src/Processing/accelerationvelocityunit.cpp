@@ -1,6 +1,6 @@
 #include "accelerationvelocityunit.h"
 #include <QDebug>
-
+#include <QPointF>
 
 
 AccelerationVelocityUnit::AccelerationVelocityUnit()

@@ -16,32 +16,19 @@ Page {
           */
     }
 
-    Label {
-        id: label
-        text: qsTr("This is an example page with an example chart.")
-    }
-    Button {
-        onClicked: stackView.pop("main.qml")
-        x: detailedChart.chartview.x
-        y: detailedChart.chartview.height + 20
-        text: qsTr("Previous page")
-        font.capitalization: Font.MixedCase
-    }
-
     Chart {
         id: detailedChart
-        x: label.x + 10
-        y: label.y + label.height + 10
-        chartview.width: 400
-        chartview.height: 400
-        chartview.theme: "ChartThemeDark"
+        x: 0
+        y: 0
+        chartview.width: window.width - 100
+        chartview.height: window.height
         /*
           The following function is called when the component (i.e. page) is loaded.
           It will then iterate through the points from the previous graph (in main.qml)
           and add all those points to this graph.
         */
         Component.onCompleted: {
-            let prv_graph = mainView.simpleChart;
+            let prv_graph = mainView.chart;
             for (let i = 0; i < prv_graph.lineseries.count; i++) {
                 let x_point = prv_graph.lineseries.at(i).x
                 let y_point = prv_graph.lineseries.at(i).y
@@ -52,11 +39,16 @@ Page {
 
         //Timer for simulating continously updated points
         Timer {
-            running: true; repeat: true; interval: 1000;
+            running: mainView.timer.running; repeat: true; interval: 200;
             onTriggered: {
-                let increment = mainView.counter;
-                parent.lineseries.append(increment, increment);
-                increment++;
+                update(detailedChart, mainView.counter);
+            }
+
+            function update(chart, globalCounter) {
+                var distance = (Math.random() * 0.03) + 0.1;
+                var speed = (distance * 50) / 0.02;
+                globalCounter++;
+                chart.lineseries.append(globalCounter, speed)
             }
         }
     }
