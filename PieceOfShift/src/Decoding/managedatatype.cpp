@@ -16,11 +16,11 @@ Decoder::~Decoder()
 void Decoder::newData(quint16 &id,quint8 &dataSize, QByteArray &data)
 {
     //ulong Data = CanSplitter::newData::&data;
-    int N = sizeof(IDTable)/sizeof (IDTable[0]);
+    //int N = sizeof(IDTable)/sizeof (IDTable[0]);
 
-    const ushort *ID = qBinaryFind(IDTable, IDTable + N,
-                                  id);
+   // const ushort *ID = qBinaryFind(IDTable, IDTable + N,
+   //                               id);
 
-    int index = ID-IDTable;
-    dataType = DataTypeTable[index];
+   // int index = ID-IDTable;
+   // dataType = DataTypeTable[index];
 }
