@@ -8,24 +8,19 @@
 // NOTE: This was commented so the project would build
 Decoder::Decoder()
 {
-    //newData();
 }
 Decoder::~Decoder()
 {
 }
 
-void Decoder::newData(quint16, quint8, QByteArray)
+void Decoder::newData(quint16 &id,quint8 &dataSize, QByteArray &data)
 {
     //ulong Data = CanSplitter::newData::&data;
-    //connect(ID, &CanSplitter::newData::id, this, Decoder::mapGivenIDandData());
-}
-void Decoder::mapGivenIDandData()
-{
     int N = sizeof(IDTable)/sizeof (IDTable[0]);
 
-    //const ushort *ID = qBinaryFind(IDTable, IDTable + N,
-    //                               ID);
+    const ushort *ID = qBinaryFind(IDTable, IDTable + N,
+                                  id);
 
-    //int index = ID-IDTable;
-    //(DataTypeTable[index])Data;
+    int index = ID-IDTable;
+    dataType = DataTypeTable[index];
 }

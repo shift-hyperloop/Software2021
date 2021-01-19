@@ -31,7 +31,7 @@ public:
 
 
 public slots:
-    void newData(quint16, quint8, QByteArray);
+    void newData(quint16 &id , quint8 &dataSize, QByteArray &data);
 
 private:
     void mapGivenIDandData();
