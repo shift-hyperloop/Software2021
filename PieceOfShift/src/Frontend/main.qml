@@ -8,8 +8,10 @@ import Qt3D.Core 2.9
 import Qt3D.Render 2.9
 import QtCharts 2.3
 import shift.datamanagement 1.0
+import QtQuick.Controls.Material 2.12
 
 ApplicationWindow {
+    Material.theme: Material.Dark
     id: window
     width: 1700
     height: 900
@@ -36,6 +38,15 @@ ApplicationWindow {
             property alias chart: chart;
             property alias counter: chart.counter
 
+
+            Image {
+                id: logoWhite_RightText
+                x: 31
+                y: 50
+                width: 250
+                source: "Shift_Logo.png"
+                fillMode: Image.PreserveAspectFit
+            }
 
             Speedometer {
                 id: speedometer

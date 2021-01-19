@@ -1,4 +1,5 @@
 #include "velocityprocessingunit.h"
+#include <QPointF>
 
 VelocityProcessingUnit::VelocityProcessingUnit()
 {

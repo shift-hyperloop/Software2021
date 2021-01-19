@@ -1,7 +1,8 @@
 #include <QtWidgets/QApplication>
 #include <QQmlApplicationEngine>
-#include "cansplitter.h"
-#include "datamanager.h"
+#include <QQuickStyle>
+#include "Decoding/cansplitter.h"
+#include "Processing/datamanager.h"
 
 int main(int argc, char *argv[])
 {
@@ -13,7 +14,7 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
-    const QUrl url(QStringLiteral("qrc:/main.qml"));;
+    const QUrl url(QStringLiteral("main.qml"));;
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {
         if (!obj && url == objUrl) {
@@ -21,7 +22,9 @@ int main(int argc, char *argv[])
         }
     }, Qt::QueuedConnection);
 
-    engine.load(url);
+    QQuickStyle::setStyle("Material");
+
+    engine.load(QUrl::fromLocalFile("main.qml"));
 
     return app.exec();
 }
