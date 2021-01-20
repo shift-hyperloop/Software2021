@@ -5,7 +5,14 @@
 #include <QMap>
 #include <QByteArray>
 
-//#include "canSplitter.h"
+
+enum DataType {
+    VELOCITY,
+    ACCELERATION,
+    ACCELERATIONVELOCITY
+};
+
+#include "cansplitter.h"
 
 
 
@@ -17,8 +24,8 @@ static const ushort IDTable[] = {
     0x001,
     //list of possible ID's
 };
-static const qulonglong DataTypeTable[] = {
-    0,
+static const QVariant DataTypeTable[] = {
+    VELOCITY,
     //Set the datatype in here to convert ids in set order to correct datatype
 };
 
@@ -29,12 +36,16 @@ public:
     Decoder();
     ~Decoder();
 
+    int dataType;
+    QString name;
+
 
 public slots:
-    void newData(quint16 &id , quint8 &dataSize, QByteArray &data);
+    void checkData(quint16 &id , quint8 &dataSize, QByteArray &data);
 
-private:
-    void mapGivenIDandData();
+signals:
+    void addData(const QString name, const DataType dataType, const QVariant data);
+
 };
 
 
