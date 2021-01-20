@@ -71,6 +71,7 @@ ApplicationWindow {
                 id: slider
                 x: 0.025 * window.width
                 y: Math.max(window.height - 100, speedometer.y + speedometer.height);
+                //y: 100
                 minValue: 0
                 maxValue: 100
             }
@@ -83,6 +84,7 @@ ApplicationWindow {
                 property var distance: Math.random //What does this var do?
                 onTriggered: update();
 
+                //Updates both the speedometer and the graph with random values (for now)
                 function update(){
                     var distance = (Math.random() * 0.03) + 0.1;
                     var speed = (distance * 50) / 0.02;
@@ -102,12 +104,7 @@ ApplicationWindow {
                 x: speedometer.width + 50
                 y: 40
 
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        stackView.push("PreviewPage.qml");
-                    }
-                }
+
             }
 
             Text {
