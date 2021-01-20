@@ -22,6 +22,7 @@ ApplicationWindow {
     menuBar: CustomMenuBar{
         /*_width: window.width - logoWhite_RightText.width
         x: logoWhite_RightText.width + 10*/
+        id: menuBar
     }
 
     StackView {
@@ -31,27 +32,16 @@ ApplicationWindow {
 
         initialItem: Item {
 
-
             id: mainView
 
             property alias timer: timer
             property alias chart: chart;
             property alias counter: chart.counter
 
-
-            Image {
-                id: logoWhite_RightText
-                x: 31
-                y: 50
-                width: 250
-                source: "Shift_Logo.png"
-                fillMode: Image.PreserveAspectFit
-            }
-
             Speedometer {
                 id: speedometer
-                x: 0.05 * window.width
-                y: 144
+                x: 0.03 * window.width
+                y: 1.5 * speedometer.x
                 width: 306
                 height: 320
                 minValue: 0
