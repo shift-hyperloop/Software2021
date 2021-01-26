@@ -24,7 +24,7 @@ void Decoder::checkData(quint16 &id,quint8 &dataSize, QByteArray &data)
     //also resize the data and set it to qvariant
     quint16 index = ID-IDTable;
     name = ValueNames[index];
-    DataType dataType = DataType(index);
+    DataTypeDecoder dataType = DataTypeDecoder(index);
     data.resize(dataSize);
 
 
