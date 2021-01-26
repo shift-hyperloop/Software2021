@@ -8,7 +8,7 @@
 #include "cansplitter.h"
 
 //all tables and the DataType enum will have to be extended as the library of sensors expand
-enum DataType {
+enum DataTypeDecoder {
     VELOCITY,
     ACCELERATION,
     ACCELERATIONVELOCITY
@@ -43,7 +43,7 @@ public slots:
     void checkData(quint16 &id , quint8 &dataSize, QByteArray &data);
 
 signals:
-    void addData(const QString name, const DataType dataType, const QVariant data);
+    void addData(const QString name, const DataTypeDecoder dataType, const QVariant data);
 
 };
 
