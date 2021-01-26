@@ -6,14 +6,9 @@
 #include <QByteArray>
 
 #include "cansplitter.h"
+#include "../Processing/processingunit.h"
 
 //all tables and the DataType enum will have to be extended as the library of sensors expand
-enum DataTypeDecoder {
-    VELOCITY,
-    ACCELERATION,
-    ACCELERATIONVELOCITY
-};
-
 
 static const QLatin1String ValueNames[]={
     QLatin1String("Speed"),
@@ -43,7 +38,7 @@ public slots:
     void checkData(quint16 &id , quint8 &dataSize, QByteArray &data);
 
 signals:
-    void addData(const QString name, const DataTypeDecoder dataType, const QVariant data);
+    void addData(const QString name, const DataType dataType, const QVariant data);
 
 };
 
