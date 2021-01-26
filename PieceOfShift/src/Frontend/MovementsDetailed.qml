@@ -16,12 +16,37 @@ Page {
           */
     }
 
+    //Buttons for resetting the graph-axis or going back to previous page
+    Button{
+        id: but1
+        text: "Reset Graph"
+        x: 0
+        // This y-value corresponds to the y-value of the MenuBar in CustomMenuBar.qml
+        y: 0.05 * window.height
+        onClicked: {
+            // reset the zoom
+            detailedChart.x_axis.min = 0
+            detailedChart.y_axis.min = 0
+            //detailedChart.x_axis.max = detailedChart.x_max
+            //detailedChart.y_axis.max = detailedChart.y_max
+        }
+    }
+    Button {
+        id: but2
+        text: "Previous Page"
+        x: but1.x + but1.width
+        y: but1.y
+        onClicked: {
+            stackView.pop("main.qml");
+        }
+    }
+
     Chart {
         id: detailedChart
         x: 0
-        y: 0
+        y: but1.y + but1.height
         chartview.width: window.width - 100
-        chartview.height: window.height
+        chartview.height: window.height - but1.height - but1.y
         /*
           The following function is called when the component (i.e. page) is loaded.
           It will then iterate through the points from the previous graph (in main.qml)

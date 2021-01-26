@@ -141,25 +141,6 @@ Item {
         Keys.onDownPressed: {
             chartview.scrollDown(y_axis.max)
         }
-        Button{
-            id: but1
-            text: "reset"
-            x: chartview.x
-            y: Math.max(chartview.y, 35)
-            onClicked: {// reset the zoom
-                x_axis.min = 0
-                y_axis.min = 0
-                x_axis.max = chartview.x_max
-                y_axis.max = chartview.y_max
-            }
-        }
-        Button {
-            text: "Go back"
-            x: but1.x + but1.width
-            y: but1.y
-            onClicked: {
-                stackView.pop("main.qml");
-            }
-        }
+
     }
 }

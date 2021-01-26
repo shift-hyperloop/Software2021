@@ -26,7 +26,7 @@ Item {
             hoverEnabled: true
             cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor;
             onClicked: {
-                stackView.push("PreviewPage.qml")
+                stackView.push("MovementsDetailed.qml")
             }
         }
 

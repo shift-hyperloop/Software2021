@@ -3,6 +3,7 @@ import QtQuick.Window 2.3
 import QtQuick.Controls 2.5
 Item {
     property alias _width: __menu.width
+    property alias _height: __menu.height
     //Don't need this if we only set width in main.qml <-- Turns out we actually do
     Rectangle {
         width: logoWhite_RightText.width + 5

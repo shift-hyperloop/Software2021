@@ -4,13 +4,12 @@ Item {
 
     id: detailedBatteryPage
     property alias chart1: chart1;
-    /*
     property alias chart2: chart2;
     property alias chart3: chart3;
     property alias chart4: chart4;
     property alias chart5: chart5;
     property alias chart6: chart6;
-    */
+
     //If backspace is pressed => go back to previous page
     Keys.onPressed: {
         if (event.key === 16777219) {
