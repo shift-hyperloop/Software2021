@@ -5,15 +5,14 @@
 #include <QMap>
 #include <QByteArray>
 
+#include "cansplitter.h"
 
+//all tables and the DataType enum will have to be extended as the library of sensors expand
 enum DataType {
     VELOCITY,
     ACCELERATION,
     ACCELERATIONVELOCITY
 };
-
-#include "cansplitter.h"
-
 
 
 static const QLatin1String ValueNames[]={

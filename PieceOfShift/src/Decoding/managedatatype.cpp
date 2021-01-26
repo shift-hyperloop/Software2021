@@ -22,13 +22,12 @@ void Decoder::checkData(quint16 &id,quint8 &dataSize, QByteArray &data)
                                   id);
     //setup name, and find right datatype
     //also resize the data and set it to qvariant
-    int index = ID-IDTable;
+    quint16 index = ID-IDTable;
     name = ValueNames[index];
-    /*updates needed here*/
-    DataType EnumOfIndex(index);
+    DataType dataType = DataType(index);
     data.resize(dataSize);
 
 
-
-    emit addData(name, DataType DataTypeTable[index], data);
+    //send data onwards to the processor
+    emit addData(name, dataType, data);
 }
