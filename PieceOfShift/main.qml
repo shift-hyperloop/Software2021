@@ -22,7 +22,7 @@ ApplicationWindow {
     menuBar: CustomMenuBar{
         /*_width: window.width - logoWhite_RightText.width
         x: logoWhite_RightText.width + 10*/
-        id: topBar
+        id: menuBar
     }
 
     StackView {
@@ -37,30 +37,18 @@ ApplicationWindow {
             property alias timer: timer
             property alias chart: chart;
             property alias counter: chart.counter
-            Item {
-                id: panelRight
-                y: topBar.height
-                height: window.height - slider.height
-                width: 0.3 * window.width
 
-                Speedometer {
-                    id: speedometer
-                    anchors {
-                        left: parent.left
-                        top: parent.top
-                    }
+            Speedometer {
+                id: speedometer
+                x: 50
+                y: 0.06 * window.height //height of menubar is 0.05, but you cant use menuBar.height for some reason.
+                //speedometer has a weird bug where explicitly setting width and height turns it into a white circle
+                //therefore, scale is used to, uh, scale
+                scale: 0.1 + Math.min(window.width / 1000, window.height / 1000)
+                minValue: 0
+                maxValue: 600
 
-                    y: 0.06 * window.height //height of menubar is 0.05, but you cant use menuBar.height for some reason.
-                    //speedometer has a weird bug where explicitly setting width and height turns it into a white circle
-                    //therefore, scale is used to, uh, scale
-                    scale: 0.1 + Math.min(window.width / 1000, window.height / 1000)
-                    minValue: 0
-                    maxValue: 600
-
-                }
             }
-
-
 
             Thermometer {
                 id: thermometer
@@ -98,6 +86,7 @@ ApplicationWindow {
                     chart.lineseries.append(chart.counter, speed);
                 }
             }
+
             SimpleChart {
                 id: chart
                 chartHeight: 300
@@ -113,6 +102,7 @@ ApplicationWindow {
                     }
                 }
             }
+
             Text {
                 id: labelText
                 color: "white"
@@ -135,4 +125,12 @@ ApplicationWindow {
             }*/
         }
     }
+
+
 }
+
+/*##^##
+Designer {
+    D{i:0;formeditorZoom:0.6600000262260437;height:480}
+}
+##^##*/
