@@ -44,7 +44,8 @@ jobs:
           dir: '${{ github.workspace }}/example/'
           install-deps: 'true'
           modules: 'qtcharts'
-          
+          arch: win32_mingw53
+                  
       - name: get-cmake
         # You may pin to the exact commit or the version.
         # uses: lukka/get-cmake@ce884ff4748bc525a2177d60e239360355738b4d
