@@ -61,8 +61,17 @@ Item {
                 }
               }
             MenuItem { text: qsTr("Save &As...")
-                onTriggered: {
+                FolderDialog {
+                    id: folderDialog
+                    acceptLabel : "Save here"
+                    //folder: //standard folder
 
+                    onAccepted: {
+                        console.log(folder) // this is the path of the folder
+                    }
+                 }
+                onTriggered: {
+                    folderDialog.open()
                 }
               }
             MenuSeparator { }
