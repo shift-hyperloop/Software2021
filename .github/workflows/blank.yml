@@ -55,9 +55,7 @@ jobs:
           cd PieceOfShift
           mkdir build
           cd build
-          cmake ..
-          dir
-          dir ..
+          cmake .. -G "MinGW Makefiles"
           make
         shell: bash
     
