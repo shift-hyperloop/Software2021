@@ -91,6 +91,7 @@ Item {
                 titleText: ""
             }
 
+            //Note: the hovered rectangle will never disappear after having showed. Can fix later by using a QML Timer-object
             onHovered: { // display the point you're hovering over on the chart by setting the content of rectangle1 to the hovered point
                 _text.text = "(" + point.x.toFixed(2) + "," + point.y.toFixed(2) + ")";
                 var p = chartview.mapToPosition(Qt.point(point.x,point.y),lineseries);
@@ -101,7 +102,7 @@ Item {
 
             onPointAdded: {
                 var new_point = at(index)
-                if(new_point.x > x_axis.max){ // if a now point is added and it is outside the visible area, the axies will scale
+                if(new_point.x > x_axis.max){ // if a now point is added and it is outside the visible area, the axes will scale
                     x_axis.max = new_point.x + Math.round(new_point.x/2)
                     chartview.x_max = x_axis.max
                 }

@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import QtQuick.Controls 2.15
 
 Item {
 
@@ -24,12 +25,47 @@ Item {
         chart.lineseries.append(globalCounter, speed)
     }
 
+    function resetChartAxes(charts) {
+        charts.forEach(chart => {
+            const currentLineseries = chart.lineseries;
+            chart.x_axis.min = 0;
+            chart.y_axis.min = 0;
+            chart.x_axis.max = currentLineseries.at(currentLineseries.length - 1).x - 20;
+            chart.y_axis.max = currentLineseries.at(currentLineseries.length - 1).y - 40;
+        });
+    }
+
+    Button {
+        id: but1
+        text: "Reset Graph"
+        x: 0
+        // This y-value corresponds to the y-value of the MenuBar in CustomMenuBar.qml
+        y: 0.05 * window.height
+        onClicked: {
+            const charts = [chart1, chart2, chart3, chart4, chart5, chart6];
+            resetChartAxes(charts);
+        }
+    }
+    Button {
+        id: but2
+        text: "Previous Page"
+        x: but1.x + but1.width
+        y: but1.y
+        onClicked: {
+            stackView.pop("main.qml");
+        }
+    }
+
+
+    //This is the amount of vertical height that's "left" when taking buttons and menu-bar into account
+    property var remainingWindowHeight: window.height - 0.05 * window.height - but1.height
+
     Chart {
         id: chart1
         x: 0
-        y: 0
+        y: 0.05 * window.height + but1.height
         chartview.width: Math.floor(window.width / 2)
-        chartview.height: Math.floor(window.height / 3)
+        chartview.height: Math.floor(remainingWindowHeight / 3)
 
 
         //Timer for simulating continously updated points
@@ -49,9 +85,9 @@ Item {
     Chart {
         id: chart2
         x: chart1.chartview.width
-        y: 0
+        y: 0.05 * window.height + but1.height
         chartview.width: Math.floor(window.width / 2)
-        chartview.height: Math.floor(window.height / 3)
+        chartview.height: Math.floor(remainingWindowHeight / 3)
 
 
         //Timer for simulating continously updated points
@@ -65,9 +101,9 @@ Item {
     Chart {
         id: chart3
         x: 0
-        y: chart1.chartview.height
+        y: chart1.y + chart1.chartview.height
         chartview.width: Math.floor(window.width / 2)
-        chartview.height: Math.floor(window.height / 3)
+        chartview.height: Math.floor(remainingWindowHeight / 3)
 
 
         //Timer for simulating continously updated points
@@ -82,9 +118,9 @@ Item {
     Chart {
         id: chart4
         x: chart1.chartview.width
-        y: chart1.chartview.height
+        y: chart1.y + chart1.chartview.height
         chartview.width: Math.floor(window.width / 2)
-        chartview.height: Math.floor(window.height / 3)
+        chartview.height: Math.floor(remainingWindowHeight / 3)
 
 
         //Timer for simulating continously updated points
@@ -99,9 +135,9 @@ Item {
     Chart {
         id: chart5
         x: 0
-        y: chart1.chartview.height + chart3.chartview.height
+        y: chart1.y + chart1.chartview.height + chart3.chartview.height
         chartview.width: Math.floor(window.width / 2)
-        chartview.height: Math.floor(window.height / 3)
+        chartview.height: Math.floor(remainingWindowHeight / 3)
 
 
         //Timer for simulating continously updated points
@@ -116,9 +152,9 @@ Item {
     Chart {
         id: chart6
         x: chart1.chartview.width
-        y: chart1.chartview.height + chart3.chartview.height
+        y: chart1.y + chart1.chartview.height + chart3.chartview.height
         chartview.width: Math.floor(window.width / 2)
-        chartview.height: Math.floor(window.height / 3)
+        chartview.height: Math.floor(remainingWindowHeight / 3)
 
 
         //Timer for simulating continously updated points

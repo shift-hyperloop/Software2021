@@ -26,7 +26,8 @@ Item {
             hoverEnabled: true
             cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor;
             onClicked: {
-                stackView.push("MovementsDetailed.qml")
+                //stackView.push("MovementsDetailed.qml");
+                stackView.push("BrakesPage.qml");
             }
         }
 
@@ -61,7 +62,7 @@ Item {
                     chartview.x_max = x_axis.max
                 }
                 if(new_point.y > y_axis.max){
-                    y_axis.max = new_point.y+ Math.round(new_point.y/2)
+                    y_axis.max = new_point.y + Math.round(new_point.y/2)
                     chartview.y_max = y_axis.max
                 }
                 if (new_point.y < y_axis.min) {
