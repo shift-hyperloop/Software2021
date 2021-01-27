@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Shift_Logo.png</file>
+        <file>Pod.png</file>
+    </qresource>
+</RCC>

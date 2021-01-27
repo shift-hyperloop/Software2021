@@ -38,6 +38,15 @@ ApplicationWindow {
             property alias chart: chart;
             property alias counter: chart.counter
 
+            Image {
+                id: logoWhite_RightText
+                x: 31
+                y: 50
+                width: 250
+                source: "../Shift_Logo.png"
+                fillMode: Image.PreserveAspectFit
+            }
+
             Speedometer {
                 id: speedometer
                 x: 0.03 * window.width
@@ -122,12 +131,4 @@ ApplicationWindow {
             }*/
         }
     }
-
-
 }
-
-/*##^##
-Designer {
-    D{i:0;formeditorZoom:0.6600000262260437;height:480}
-}
-##^##*/
