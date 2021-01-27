@@ -22,7 +22,7 @@ ApplicationWindow {
     menuBar: CustomMenuBar{
         /*_width: window.width - logoWhite_RightText.width
         x: logoWhite_RightText.width + 10*/
-        id: menuBar
+        id: topBar
     }
 
     StackView {
@@ -38,7 +38,7 @@ ApplicationWindow {
             property alias chart: chart;
             property alias counter: chart.counter
             Item {
-                id: panelRightx
+                id: panelRight
                 y: topBar.height
                 height: window.height - slider.height
                 width: 0.3 * window.width
@@ -56,26 +56,18 @@ ApplicationWindow {
                     scale: 0.1 + Math.min(window.width / 1000, window.height / 1000)
                     minValue: 0
                     maxValue: 600
-
-            Speedometer {
-                id: speedometer
-                x: 0.03 * window.width
-                y: 1.5 * speedometer.x
-                width: 306
-                height: 320
-                minValue: 0
-                maxValue: 600
+                }
             }
 
             Thermometer {
                 id: thermometer
-                x: 1170
-                y: 233
+                anchors.right: parent.right
+                anchors.rightMargin: 50
+                y: (window.height - thermometer.height) / 2
                 scale: 2
                 minValue: 0
                 maxValue: 50
             }
-
             DistanceSlider{
                 id: slider
                 x: 0.025 * window.width
@@ -126,12 +118,11 @@ ApplicationWindow {
                 height: 100
             }
 
-            ControlButtons{
+            ControlButtons {
                 height: 200
                 width: 300
                 y: window.height - (height + 100)
-                x: Math.max(window.width - (width + 30), thermometer.x + thermometer.width + 30)
-                //Buttons will stop when colliding with thermometer
+                x: Math.max(thermometer.x - thermometer.width - 100 - width, 0)
             }
             /*Battery{
                 height:
@@ -139,14 +130,6 @@ ApplicationWindow {
                 x:
                 y:
             }*/
+            }
         }
     }
-
-
-}
-
-/*##^##
-Designer {
-    D{i:0;formeditorZoom:0.6600000262260437;height:480}
-}
-##^##*/
