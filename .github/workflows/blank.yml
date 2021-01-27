@@ -56,11 +56,13 @@ jobs:
           mkdir build
           cd build
           cmake ..
+          dir
+          dir ..
           make
         shell: bash
     
   Build-Mac-OS:
-    runs-on: macos-latest
+    runs-on: macos-11.0
     steps:
       - name: Checkout
         uses: actions/checkout@v1
