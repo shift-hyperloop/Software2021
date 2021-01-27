@@ -37,6 +37,25 @@ ApplicationWindow {
             property alias timer: timer
             property alias chart: chart;
             property alias counter: chart.counter
+            Item {
+                id: panelRightx
+                y: topBar.height
+                height: window.height - slider.height
+                width: 0.3 * window.width
+
+                Speedometer {
+                    id: speedometer
+                    anchors {
+                        left: parent.left
+                        top: parent.top
+                    }
+
+                    y: 0.06 * window.height //height of menubar is 0.05, but you cant use menuBar.height for some reason.
+                    //speedometer has a weird bug where explicitly setting width and height turns it into a white circle
+                    //therefore, scale is used to, uh, scale
+                    scale: 0.1 + Math.min(window.width / 1000, window.height / 1000)
+                    minValue: 0
+                    maxValue: 600
 
             Image {
                 id: logoWhite_RightText
