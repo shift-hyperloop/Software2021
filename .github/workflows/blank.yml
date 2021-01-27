@@ -3,7 +3,7 @@ name: Qt Build
 on: [push, pull_request]
 
 jobs:
-  Build Ubuntu:
+  Build-Ubuntu:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -31,7 +31,7 @@ jobs:
           make
         shell: bash
         
-  Build Windows:
+  Build-Windows:
     runs-on: windows-latest
     steps:
       - name: Checkout
@@ -59,7 +59,7 @@ jobs:
           make
         shell: bash
     
-  Build Mac OS:
+  Build-Mac-OS:
     runs-on: macos-latest
     steps:
       - name: Checkout
