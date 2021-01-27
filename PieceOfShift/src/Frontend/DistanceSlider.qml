@@ -45,7 +45,7 @@ Item {
         }
 */
         handle: Image {
-            source: "../Pod.png"
+            source: "Pod.png"
             width: 150
             fillMode: Image.PreserveAspectFit
             x: slider.leftPadding + slider.visualPosition * (slider.availableWidth - width) - width / 2
