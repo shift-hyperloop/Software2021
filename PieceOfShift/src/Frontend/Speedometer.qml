@@ -9,30 +9,24 @@ Item {
     property alias maxValue: circulargauge.maximumValue
     property alias value: circulargauge.value
     property alias style: circulargauge.style
-    property alias speedometerWidth: circulargauge.width
-    property alias speedometerHeight: circulargauge.height
 
-
-    width: 208
-    height: 290
+    width: 300
+    height: 300
     x: 0
     y: 0
 
     CircularGauge{
         id: circulargauge
-        x: 0
-        y: 0
         minimumValue: 0
         maximumValue: 500
         stepSize: 1
         style: CircularGaugeStyle {
-
             labelStepSize: 100
             tickmarkStepSize: 50
             needle: Rectangle {
-                width: outerRadius * 0.03
-                height: outerRadius * 0.9
-                antialiasing: false
+                implicitWidth: outerRadius * 0.03
+                implicitHeight: outerRadius * 0.9
+                antialiasing: true
                 color: "#0099ff"
             }
             foreground: Rectangle {
@@ -47,19 +41,19 @@ Item {
                 font.pixelSize: outerRadius * 0.13
                 text: styleData.value
                 color: styleData.value >= (Math.round(circulargauge.maximumValue * 0.008) * 100) ? "#e34c22" : "#ededed"
-                antialiasing: false
+                antialiasing: true
             }
             tickmark: Rectangle {
-                width: outerRadius * 0.02
-                height: outerRadius * 0.06
+                implicitWidth: outerRadius * 0.02
+                antialiasing: true
+                implicitHeight: outerRadius * 0.06
                 color: styleData.value >= (Math.round(circulargauge.maximumValue * 0.008) * 100) ? "#e34c22" : "#ededed"
-                antialiasing: false
             }
             minorTickmark: Rectangle {
-                width: outerRadius * 0.01
-                height: outerRadius * 0.03
+                implicitWidth: outerRadius * 0.01
+                antialiasing: true
+                implicitHeight: outerRadius * 0.03
                 color: styleData.value >= (Math.round(circulargauge.maximumValue * 0.008) * 100) ? "#e34c22" : "#ededed"
-                antialiasing: false
             }
         }
 

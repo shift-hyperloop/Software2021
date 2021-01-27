@@ -13,7 +13,7 @@ import QtQuick.Controls.Material 2.12
 ApplicationWindow {
     Material.theme: Material.Dark
     id: window
-    width: 1600
+    width: 1700
     height: 900
     visible: true
     //visibility: "FullScreen"
@@ -22,7 +22,7 @@ ApplicationWindow {
     menuBar: CustomMenuBar{
         /*_width: window.width - logoWhite_RightText.width
         x: logoWhite_RightText.width + 10*/
-        id: topBar
+        id: menuBar
     }
 
     StackView {
@@ -37,36 +37,30 @@ ApplicationWindow {
             property alias timer: timer
             property alias chart: chart;
             property alias counter: chart.counter
-            Item {
-                id: panelRight
-                y: topBar.height
-                height: window.height - slider.height
-                width: 0.3 * window.width
 
-                Speedometer {
-                    id: speedometer
-                    anchors {
-                        left: parent.left
-                        top: parent.top
-                    }
-
-                    y: 0.06 * window.height //height of menubar is 0.05, but you cant use menuBar.height for some reason.
-                    //speedometer has a weird bug where explicitly setting width and height turns it into a white circle
-                    //therefore, scale is used to, uh, scale
-                    scale: 0.1 + Math.min(window.width / 1000, window.height / 1000)
-                    minValue: 0
-                    maxValue: 600
-
-                }
+            Image {
+                id: logoWhite_RightText
+                x: 31
+                y: 50
+                width: 250
+                source: "../Shift_Logo.png"
+                fillMode: Image.PreserveAspectFit
             }
 
-
+            Speedometer {
+                id: speedometer
+                x: 0.03 * window.width
+                y: 1.5 * speedometer.x
+                width: 306
+                height: 320
+                minValue: 0
+                maxValue: 600
+            }
 
             Thermometer {
                 id: thermometer
-                anchors.right: parent.right
-                anchors.rightMargin: 50
-                y: (window.height - thermometer.height) / 2
+                x: 1170
+                y: 233
                 scale: 2
                 minValue: 0
                 maxValue: 50
@@ -98,6 +92,7 @@ ApplicationWindow {
                     chart.lineseries.append(chart.counter, speed);
                 }
             }
+
             SimpleChart {
                 id: chart
                 chartHeight: 300
@@ -113,6 +108,7 @@ ApplicationWindow {
                     }
                 }
             }
+
             Text {
                 id: labelText
                 color: "white"
@@ -124,7 +120,7 @@ ApplicationWindow {
                 height: 200
                 width: 300
                 y: window.height - (height + 100)
-                x: thermometer.x - thermometer.width - 100 - width
+                x: Math.max(window.width - (width + 30), thermometer.x + thermometer.width + 30)
                 //Buttons will stop when colliding with thermometer
             }
             /*Battery{
