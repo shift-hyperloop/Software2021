@@ -1,4 +1,4 @@
-QT += charts quick widgets concurrent quickcontrols2
+QT += charts quick widgets concurrent quickcontrols2 core
 
 CONFIG += c++14
 
@@ -25,6 +25,7 @@ defineTest(copyToDestdir) {
 
 SOURCES += \
         src/Decoding/canspiltter.cpp \
+        src/Decoding/filehandler.cpp \
         src/Decoding/poddatasender.cpp \
         src/Processing/accelerationprocessingunit.cpp \
         src/Processing/accelerationvelocityunit.cpp \
@@ -57,6 +58,7 @@ DISTFILES += \
 for(f, DISTFILES):copyToDestdir($$files($${PWD}/$${f}))
 
 HEADERS += \
+    src/Decoding/filehandler.h \
     src/Processing/accelerationprocessingunit.h \
     src/Processing/accelerationvelocityunit.h \
     src/Processing/datamanager.h \

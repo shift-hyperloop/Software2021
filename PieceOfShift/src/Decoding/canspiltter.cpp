@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "cansplitter.h"
+
 //define canSplitter start
 //class start function
 CanSplitter::CanSplitter()
@@ -15,6 +16,8 @@ CanSplitter::CanSplitter()
 
     //send current, if connection achieved, to new function
     connect(udpSocket, &QUdpSocket::readyRead, this, &CanSplitter::splitDataToMessages);
+
+
 }
 CanSplitter::~CanSplitter()
 {
@@ -30,6 +33,8 @@ void CanSplitter::splitDataToMessages()
         datagram.resize(int(udpSocket->pendingDatagramSize()));
         //push received data into datagram
         udpSocket->readDatagram(datagram.data(), datagram.size());
+        // add datagram to a list, storing it in memory
+       // messages.push_back(datagram);
         bool ok;
         //define area of datagram as id, datasize and data
         quint16 id = qFromBigEndian<quint16>(datagram.mid(CAN_ID_OFFSET, CAN_ID_SIZE).toHex().toInt(&ok, 16));

@@ -25,9 +25,13 @@ public:
 
     QString frame;
 
+private:
+    // QList<QByteArray> messages;
+
 //set given slots
 public slots:
     void splitDataToMessages();
+    // QList<QByteArray> getMessages;
 signals:
     void newData(quint16, quint8, QByteArray);
 

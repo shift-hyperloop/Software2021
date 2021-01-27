@@ -11,7 +11,11 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     CanSplitter w;
+
     QApplication app(argc, argv);
+    // FileHandler fh;
+    // fh.writeToFile();
+
 
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("main.qml"));;
@@ -25,6 +29,7 @@ int main(int argc, char *argv[])
     QQuickStyle::setStyle("Material");
 
     engine.load(QUrl::fromLocalFile("main.qml"));
+
 
     return app.exec();
 }
