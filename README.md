@@ -9,8 +9,6 @@ This repository contains the Shift Base Station System which has the purpose of:
 - Visualizing the CAN data for analysis
 - Sending CAN signals to start/stop the pod via radio transmission
 
-<img align="right" src="./docs/assets/release-it.gif?raw=true" height="280">
-
 ![Action Stat](https://github.com/shift-hyperloop/Software2021/workflows/Qt%20Build/badge.svg)
 ![Qt](https://camo.githubusercontent.com/01733e7677dabab55bd47062ade39c7e00944cf2536e5e9a7adeea2c19d97d6c/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f51742d716d616b652d677265656e2e737667)
 
