@@ -38,13 +38,25 @@ ApplicationWindow {
             property alias chart: chart;
             property alias counter: chart.counter
             Item {
-                id: panelRight
-                y: 0.06 * window.height //height of menubar is 0.05, but you cant use menuBar.height for some reason.
-                height: window.height - slider.height
+                Rectangle {
+                    anchors.fill: parent
+                    color: "#258f85"
+                    opacity: 50
+                }
+
+                id: panelLeft
+                height: window.height - slider.height - anchors.topMargin
                 width: 0.3 * window.width
+                anchors {
+                    left: parent.left
+                    top: parent.top
+                    topMargin: 0.05 * window.height //height of menubar is 0.05, but you cant use menuBar.height for some reason.
+                }
 
                 Speedometer {
                     id: speedometer
+                    width: 226
+                    height: 300
                     anchors {
                         left: parent.left
                         top: parent.top
@@ -56,11 +68,16 @@ ApplicationWindow {
                     maxValue: 600
                 }
             }
+            Item {
+                id: panelRight
+            }
 
             Thermometer {
                 id: thermometer
-                anchors.right: parent.right
-                anchors.rightMargin: 50
+                anchors {
+                    right: parent.right
+                    rightMargin: 50
+                }
                 y: (window.height - thermometer.height) / 2
                 scale: 2
                 minValue: 0
@@ -69,7 +86,7 @@ ApplicationWindow {
             DistanceSlider{
                 id: slider
                 x: 0.025 * window.width
-                y: Math.max(window.height - 100, speedometer.y + speedometer.height);
+                y: Math.max(window.height - 100, speedometer.y + (speedometer.height * speedometer.scale));
                 minValue: 0
                 maxValue: 100
             }
