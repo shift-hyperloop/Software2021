@@ -38,15 +38,10 @@ ApplicationWindow {
             property alias chart: chart;
             property alias counter: chart.counter
             Item {
-                Rectangle {
-                    anchors.fill: parent
-                    color: "#258f85"
-                    opacity: 50
-                }
-
                 id: panelLeft
                 height: window.height - slider.height - anchors.topMargin
                 width: 0.3 * window.width
+
                 anchors {
                     left: parent.left
                     top: parent.top
@@ -60,29 +55,60 @@ ApplicationWindow {
                     anchors {
                         left: parent.left
                         top: parent.top
+                        topMargin: 30
+                        leftMargin: 30
                     }
                     //speedometer has a weird bug where explicitly setting width and height turns it into a white circle
                     //therefore, scale is used to, uh, scale
-                    scale: 0.1 + Math.min(window.width / 1000, window.height / 1000)
+                    scale: 0.15 + Math.min(window.width / 1600, window.height / 900)
+                    transformOrigin: Item.TopLeft
                     minValue: 0
                     maxValue: 600
                 }
             }
             Item {
                 id: panelRight
-            }
+                height: window.height - slider.height - anchors.topMargin
+                width: 0.3 * window.width
 
-            Thermometer {
-                id: thermometer
                 anchors {
                     right: parent.right
-                    rightMargin: 50
+                    top: parent.top
+                    topMargin: 0.05 * window.height
                 }
-                y: (window.height - thermometer.height) / 2
-                scale: 2
-                minValue: 0
-                maxValue: 50
+
+                Thermometer {
+                    id: thermometer
+                    anchors {
+                        right: parent.right
+                        rightMargin: 20
+                        top: parent.top
+                        topMargin: (window.height - (height * scale) - slider.height - (controlButtons.height * controlButtons.scale)) / 2
+                    }
+                    scale: Math.min(window.width / 800, window.height / 450)
+                    transformOrigin: Item.TopRight
+                    minValue: 0
+                    maxValue: 50
+                }
+
+                ControlButtons {
+                    id: controlButtons
+                    height: 200
+                    width: 300
+                    anchors {
+                        bottom: parent.bottom
+                        bottomMargin: height * scale * 0.2
+                        right: parent.right
+                        rightMargin: 20
+                    }
+                    scale: Math.min(window.width / 1600, window.height / 900)
+                    transformOrigin: Item.TopRight
+
+                    //y: window.height - (height + 100)
+                    //x: Math.max(thermometer.x - thermometer.width - 100 - width, 0)
+                }
             }
+
             DistanceSlider{
                 id: slider
                 x: 0.025 * window.width
@@ -96,7 +122,6 @@ ApplicationWindow {
                 interval: 200
                 running: true
                 repeat: true
-                property var distance: Math.random //What does this var do?
                 onTriggered: update();
 
                 function update(){
@@ -115,7 +140,7 @@ ApplicationWindow {
                 chartHeight: 300
                 chartWidth: 700
                 property var counter: 0
-                x: speedometer.width + 50
+                x: speedometer.width * speedometer.scale + 100
                 y: 40
 
                 MouseArea {
@@ -133,12 +158,6 @@ ApplicationWindow {
                 height: 100
             }
 
-            ControlButtons {
-                height: 200
-                width: 300
-                y: window.height - (height + 100)
-                x: Math.max(thermometer.x - thermometer.width - 100 - width, 0)
-            }
             /*Battery{
                 height:
                 width:
