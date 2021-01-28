@@ -7,6 +7,7 @@ cmake_minimum_required(VERSION 3.19)
 project(PieceOfShift)
 
 # Find includes in corresponding build directories
+set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 if(WIN32)
