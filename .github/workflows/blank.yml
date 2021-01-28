@@ -3,7 +3,7 @@ name: Qt Build
 on: [push, pull_request]
 
 jobs:
-  build:
+  Build-Ubuntu:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -12,7 +12,64 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v2
         with:
-          version: '5.15.1'
+          version: '5.15.2'
+          dir: '${{ github.workspace }}/example/'
+          install-deps: 'true'
+          modules: 'qtcharts'
+          
+      - name: get-cmake
+        # You may pin to the exact commit or the version.
+        # uses: lukka/get-cmake@ce884ff4748bc525a2177d60e239360355738b4d
+        uses: lukka/get-cmake@v3.19.2
+        
+      - name: Build Application
+        run: |
+          cd PieceOfShift
+          mkdir build
+          cd build
+          cmake ..
+          make
+        shell: bash
+        
+  Build-Windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: '5.15.2'
+          dir: '${{ github.workspace }}/example/'
+          install-deps: 'true'
+          modules: 'qtcharts'
+          arch: win32_mingw53
+                  
+      - name: get-cmake
+        # You may pin to the exact commit or the version.
+        # uses: lukka/get-cmake@ce884ff4748bc525a2177d60e239360355738b4d
+        uses: lukka/get-cmake@v3.19.2
+        
+      - name: Build Application
+        run: |
+          cd PieceOfShift
+          mkdir build
+          cd build
+          cmake .. -G "MinGW Makefiles"
+          make
+        shell: bash
+    
+  Build-Mac-OS:
+    runs-on: macos-11.0
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: '5.15.2'
           dir: '${{ github.workspace }}/example/'
           install-deps: 'true'
           modules: 'qtcharts'
