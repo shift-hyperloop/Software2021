@@ -27,7 +27,7 @@ Item {
             cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor;
             onClicked: {
                 //stackView.push("MovementsDetailed.qml");
-                stackView.push("BrakesPage.qml");
+                stackView.push("MechanicalDetails.qml");
             }
         }
 

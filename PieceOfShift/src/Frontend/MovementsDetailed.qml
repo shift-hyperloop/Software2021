@@ -19,7 +19,7 @@ Page {
     //Buttons for resetting the graph-axis or going back to previous page
     Button{
         id: but1
-        text: "Reset Graph"
+        text: "Reset Graph Axes"
         x: 0
         // This y-value corresponds to the y-value of the MenuBar in CustomMenuBar.qml
         y: 0.05 * window.height
