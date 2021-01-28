@@ -51,6 +51,8 @@ DISTFILES += \
     assets/images/* \
     #assets/images/Shift_Logo.png \
     src/Frontend/* \
+    src/Frontend/Semicircle.qml \
+    src/Frontend/Tilitmeter.qml
 
 
 for(f, DISTFILES):copyToDestdir($$files($${PWD}/$${f}))
