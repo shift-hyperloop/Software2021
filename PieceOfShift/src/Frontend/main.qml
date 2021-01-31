@@ -27,7 +27,7 @@ ApplicationWindow {
     StackView {
         id: stackView
         anchors.fill: parent
-
+        property var chosenState // variable for the chosen state in StateIndication.qml
 
         initialItem: Item {
 
