@@ -112,7 +112,10 @@ ApplicationWindow {
             DistanceSlider{
                 id: slider
                 x: 0.025 * window.width
-                y: Math.max(window.height - 100, speedometer.y + (speedometer.height * speedometer.scale));
+                anchors {
+                    bottom: parent.bottom
+                }
+
                 minValue: 0
                 maxValue: 100
             }

@@ -22,13 +22,13 @@ Item {
     }
     MenuBar{
         id: __menu
-        width: window.width - logoWhite_RightText.width
-        x: logoWhite_RightText.width
+        width: window.width - logoWhite_RightText.width - 5
+        x: logoWhite_RightText.width + 5
         height: 0.05 * window.height
         background: Rectangle {
             color: "#373840"
         }
-        padding: 0
+        padding: 2
         delegate: MenuBarItem {
             id: menuBarItem
             font.pixelSize: 0.025 * window.height
@@ -180,7 +180,7 @@ Item {
               }
         }
         Menu {
-            title: qsTr("&Help")
+            title: qsTr("Help")
             MenuItem { text: qsTr("&About")
             onTriggered: {
                 Qt.openUrlExternally("https://github.com/shift-hyperloop/Software2021");
