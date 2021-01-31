@@ -17,7 +17,7 @@ FileHandler::~FileHandler(){
 }
 
 
-void readDataFromFile(QString(path)){
+void FileHandler::readDataFromFile(QString(path)){
 
 
     QFile file(path);
@@ -46,14 +46,18 @@ void readDataFromFile(QString(path)){
 //
 
 
-void writeToFile(){
+void FileHandler::writeToFile(){
+    qDebug() << "entered writetofile";
     QString fileName = QDateTime::currentDateTime().toString();
-    QFile file(fileName);
+    QFile file("C:/Users/hkonw/OneDrive/Documents/GitHub/Software2021/PieceOfShift/src/Decoding/test.txt");
+    file.seek(0);
+    qDebug() << "file opened";
     // file("Logs/fileName.txt") ?
 
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-        return;
-
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)){
+        qDebug() << "big thing error";
+        return;}
+    file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text);
     QList<QByteArray> test;
     QByteArray en("hei dette er først de fire og så bang");
     QByteArray to("Poopy-di scoop Scoop-diddy-whoop Whoop-di-scoop-di-poop Poop-di-scoopty Scoopty-whoop");
@@ -61,7 +65,9 @@ void writeToFile(){
     test.push_back(en);
     test.push_back(to);
 
+    qDebug() << "skal skrive i file";
     QTextStream dataOutputStream(&file);
+    qDebug() << "skriver i file";
     // splitting up messages, seperating contents for storing purposes
     for (QByteArray qByteArray : test){
         dataOutputStream << qByteArray.mid(0, 2) + "," + qByteArray.mid(8,1) + "," +

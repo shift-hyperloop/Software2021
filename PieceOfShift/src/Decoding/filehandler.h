@@ -21,7 +21,7 @@ public:
 
 private:
 
-    void readDataFromFile();
+    void readDataFromFile(QString);
 };
 
 

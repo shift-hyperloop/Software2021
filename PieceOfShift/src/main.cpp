@@ -2,6 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QQuickStyle>
 #include "Decoding/cansplitter.h"
+#include "Decoding/filehandler.h"
 #include "Processing/datamanager.h"
 
 int main(int argc, char *argv[])
@@ -11,6 +12,9 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     CanSplitter w;
+    FileHandler t;
+    qDebug() << "begynner å kjøre filehandler";
+    t.writeToFile();
 
     QApplication app(argc, argv);
     // FileHandler fh;
