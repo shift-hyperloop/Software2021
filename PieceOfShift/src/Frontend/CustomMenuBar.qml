@@ -14,7 +14,7 @@ Item {
             x: 5
             y: 5
             height: 0.05 * window.height - 10
-            source: "Shift_Logo.png"
+            source: "../Shift_Logo.png"
             fillMode: Image.PreserveAspectFit
 
 

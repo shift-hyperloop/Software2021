@@ -12,7 +12,7 @@ SOURCES += \
         src/Processing/velocityprocessingunit.cpp
 
 OTHER_FILES += \
-    src/Frontend/*.qml \
+   # src/Frontend/*.qml \
     assets/images/*
 RESOURCES += \
     assets/images/images.qrc \
