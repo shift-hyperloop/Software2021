@@ -52,6 +52,7 @@ Item {
 
         Menu {
             title: qsTr("File")
+            font.pixelSize:  0.025 * window.height
             MenuItem { text: qsTr("&New...")
                 onTriggered: {
 
@@ -81,6 +82,7 @@ Item {
         }
         Menu {
             title: qsTr("Edit")
+            font.pixelSize:  0.025 * window.height
 
             MenuItem { text: qsTr("&Cut")
                 onTriggered: {
@@ -100,6 +102,8 @@ Item {
         }
         Menu{
             title: qsTr("View")
+            font.pixelSize:  0.025 * window.height
+
             Menu{
                 title: qsTr("Battery")
                 MenuItem{
@@ -173,6 +177,8 @@ Item {
         }
         Menu{
             title: qsTr("State indication")
+            font.pixelSize:  0.025 * window.height
+
             MenuItem { text: qsTr("Change State")
                 onTriggered: {
                     stackView.push("StateIndication.qml");
@@ -181,6 +187,8 @@ Item {
         }
         Menu {
             title: qsTr("Help")
+            font.pixelSize:  0.025 * window.height
+
             MenuItem { text: qsTr("&About")
             onTriggered: {
                 Qt.openUrlExternally("https://github.com/shift-hyperloop/Software2021");
