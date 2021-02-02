@@ -1,14 +1,23 @@
-import QtQuick 2.15
-import QtSensors 5.15
-import QtQuick 2.5
-import QtLocation 5.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.15
+import QtQuick 2.12
+import QtCharts 2.3
 
-Item {
+Page {
 
     id: item
     height: window.height * 0.95
     width: window.width
+
+    property alias detailedChart: distanceChart;
+    Keys.onPressed: { //If backspace is pressed => go back to previous page
+        if (event.key === 16777219) {
+            stackView.pop("main.qml");
+        }
+        /*
+          onBackPressed should ideally work as above, but it doesn't, so it'll have to be done
+          manually (although it's quite simple, so it's not too bad).
+          */
+    }
 
     /*
       This function will, when the front-end is connected to the C++ backend,
@@ -38,6 +47,63 @@ Item {
         }
     }
 
+    Chart {
+        id: distanceChart
+        x: 0
+        y: backButton.y + backButton.height
+        chartWidth: Math.sqrt(2) * chartview.height
+        chartHeight: Math.floor((window.height * 0.95 - backButton.height) / 2)
+        // We can use HTML coding for text apparently. This is the only way the text turns white
+        // (even though it's already defined in Chart.qml -> ValueAxis). QML is weird
+        x_axis.titleText: "<font color='white'>Time</font>"
+        y_axis.titleText: "<font color='white'>Distance</font>"
+        lineseries.name: "<font color='white'>Example: Pod Distance Covered</font>"
+        /*
+          The following function is called when the component (i.e. page) is loaded.
+          It will then iterate through the points from the previous graph (in main.qml)
+          and add all those points to this graph.
+        */
+
+        Component.onCompleted: {
+            let prv_graph = mainView.chart;
+            for (let i = 0; i < prv_graph.lineseries.count; i++) {
+                let x_point = prv_graph.lineseries.at(i).x
+                let y_point = prv_graph.lineseries.at(i).y
+                detailedChart.lineseries.append(x_point, y_point);
+            }
+        }
+
+
+        //Timer for simulating continously updated points
+        Timer {
+            running: mainView.timer.running; repeat: true; interval: 200;
+            onTriggered: {
+                update(distanceChart, mainView.counter);
+                update(someOtherChart, mainView.counter);
+            }
+
+            function update(chart, globalCounter) {
+                var distance = (Math.random() * 0.03) + 0.1;
+                var speed = (distance * 50) / 0.02;
+                globalCounter++;
+                chart.lineseries.append(globalCounter, speed)
+            }
+        }
+    }
+
+    Chart {
+        id: someOtherChart
+        x: distanceChart.x
+        y: distanceChart.chartview.y + distanceChart.chartview.height + 10
+        chartWidth: Math.sqrt(2) * chartview.height
+        chartHeight: Math.floor((window.height * 0.95 - backButton.height) / 2)
+        // We can use HTML coding for text apparently. This is the only way the text turns white
+        // (even though it's already defined in Chart.qml -> ValueAxis). QML is weird
+        x_axis.titleText: "<font color='white'>Time</font>"
+        y_axis.titleText: "<font color='white'>Acceleration</font>"
+        lineseries.name: "<font color='white'>Example: Acceleration over time</font>"
+    }
+
     Timer {
         id: updateValues
         running: true
@@ -52,8 +118,8 @@ Item {
 
     Rectangle {
         id: rect1
-        x: 0
-        y: backButton.y + backButton.height
+        x: window.width - width
+        y: 0.05 * window.height
         height: 100
         width: Math.sqrt(2) * height
         color: "grey"
@@ -72,7 +138,7 @@ Item {
 
     Rectangle {
         id: rect2
-        x: rect1.x
+        x: window.width - width
         y: rect1.y + rect1.height
         height: 100
         width: Math.sqrt(2) * height
@@ -98,7 +164,7 @@ Item {
     */
     Rectangle {
         id: rect3
-        x: rect2.x
+        x: window.width - width
         y: rect2.y + rect2.height
         height: 100
         width: Math.sqrt(2) * height
@@ -117,42 +183,52 @@ Item {
     }
 
     Image {
-        id: valveOpen
+        id: green
         source: "green.png"
+        height: 50
+        width: height
+        x: rect1.x - width
+        y: rect1.y
         opacity: 1
-        x: 200
-        y: 200
     }
 
     Image {
-        id: valveClosed
+        id: red
         source: "red.png"
+        height: 50
+        width: height
+        x: green.x
+        y: green.y + green.height
         opacity: 0.2
-        x: valveOpen.x
-        y: valveOpen.y + valveOpen.height
     }
 
     Button {
-        id: button
-        text: "Change Valve status"
-        x: valveClosed.x
-        y: valveClosed.y + valveClosed.height
+        //Change positioning of button. Right now it overlaps
+            id: button
+            text: "Change Valve status"
+            x: red.x - text.length
+            y: red.y + red.height
 
-        onClicked: {
-            if (brakesValveStatus.text === "Open") {
-                brakesValveStatus.text = "Closed";
-                valveOpen.opacity = 0.2;
-                valveClosed.opacity = 1;
-            }
-            else {
-                brakesValveStatus.text = "Open";
-                valveOpen.opacity = 1;
-                valveClosed.opacity = 0.2;
+            onClicked: {
+                if (brakesValveStatus.text === "Open") {
+                    brakesValveStatus.text = "Closed";
+                    green.opacity = 0.2;
+                    red.opacity = 1;
+                }
+                else {
+                    brakesValveStatus.text = "Open";
+                    green.opacity = 1;
+                    red.opacity = 0.2;
+                }
             }
         }
-    }
-
-
 
 
 }
+
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/

@@ -45,8 +45,8 @@ Page {
         id: detailedChart
         x: 0
         y: but1.y + but1.height
-        chartview.width: window.width - 100
-        chartview.height: window.height - but1.height - but1.y
+        chartview.width: Math.SQRT2 * height
+        chartview.height: 500
         /*
           The following function is called when the component (i.e. page) is loaded.
           It will then iterate through the points from the previous graph (in main.qml)
