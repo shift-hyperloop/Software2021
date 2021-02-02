@@ -76,7 +76,6 @@ ApplicationWindow {
                     top: parent.top
                     topMargin: 0.05 * window.height
                 }
-
                 Thermometer {
                     id: thermometer
                     anchors {
@@ -90,7 +89,6 @@ ApplicationWindow {
                     minValue: 0
                     maxValue: 50
                 }
-
                 ControlButtons {
                     id: controlButtons
                     height: 200
