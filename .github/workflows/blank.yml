@@ -44,7 +44,7 @@ jobs:
           dir: '${{ github.workspace }}/example/'
           install-deps: 'true'
           modules: 'qtcharts'
-          arch: win32_mingw53
+          arch: win64_mingw81
                   
       - name: get-cmake
         # You may pin to the exact commit or the version.
@@ -61,7 +61,7 @@ jobs:
         shell: bash
     
   Build-Mac-OS:
-    runs-on: macos-11.0
+    runs-on: macos-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v1

@@ -2,11 +2,16 @@ cmake_minimum_required(VERSION 3.10)
 
 project(PieceOfShift)
 
+# Find includes in corresponding build directories
 set(CMAKE_CXX_STANDARD 14)
-
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-set(CMAKE_AUTOUIC ON)
+if(WIN32)
+        # NOTE: CHANGE TO YOUR OWN QT PATH IF RUNNING ON WINDOWS
+        set(CMAKE_PREFIX_PATH "C:\\Qt\\5.15.2\\msvc2019_64")
+endif()
+
+# Instruct CMake to run moc automatically when needed.
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
