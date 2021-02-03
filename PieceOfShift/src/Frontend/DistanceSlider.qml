@@ -27,7 +27,7 @@ Item {
          background: Rectangle {
             x: slider.leftPadding
             y: slider.topPadding + slider.availableHeight / 2 - height / 2
-            implicitWidth: 200
+           // implicitWidth: 200
             implicitHeight: 4
             width: slider.availableWidth
             height: implicitHeight
@@ -65,7 +65,7 @@ Item {
             color: "#ededed"
             Text {
                 id: ticktext
-                text: slider.to * index / 10 + qsTr(" km")
+                text: window.width < 400  ? slider.to * index / 10: slider.to * index / 10 + qsTr(" km")
                 x: -t_metrics.width / 2
                 y: 10
                 font.pointSize: 12
