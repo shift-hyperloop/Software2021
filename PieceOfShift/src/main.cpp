@@ -3,6 +3,7 @@
 #include <QQuickStyle>
 #include "Decoding/cansplitter.h"
 #include "Processing/datamanager.h"
+#include "Decoding/decoder.h"
 
 int main(int argc, char *argv[])
 {
@@ -26,7 +27,13 @@ int main(int argc, char *argv[])
     QQuickStyle::setStyle("Material");
     engine.load(url);
 
+    Decoder decoder;
 
+    quint16 id = 0x002;
+    quint8 size = 10;
+    QByteArray array;
+
+    decoder.checkData(id, size, array);
 
     return app.exec();
 }
