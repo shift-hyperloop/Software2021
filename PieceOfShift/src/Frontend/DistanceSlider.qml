@@ -48,7 +48,7 @@ Item {
             source: "../Pod.png"
             width: 150
             fillMode: Image.PreserveAspectFit
-            x: slider.leftPadding + slider.visualPosition * (slider.availableWidth - width) - width / 2
+            x: slider.leftPadding + slider.visualPosition * (slider.availableWidth) - width / 2
             y: slider.topPadding + slider.availableHeight / 2 - height / 1.5
         }
     }
