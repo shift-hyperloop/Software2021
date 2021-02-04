@@ -37,7 +37,7 @@ void CanSplitter::splitDataToMessages()
         QByteArray data = datagram.mid(CAN_DATA_OFFSET, CAN_DATA_SIZE_SIZE);
 
         //send id, datasize and data as signal onward
-        emit checkData(id, dataSize, data);
+        emit newData(id, dataSize, data);
 
 
     }
