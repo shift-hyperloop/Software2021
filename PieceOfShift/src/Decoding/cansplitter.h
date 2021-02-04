@@ -29,7 +29,7 @@ public:
 public slots:
     void splitDataToMessages();
 signals:
-    void newData(quint16, quint8, QByteArray);
+    void checkData(quint16, quint8, QByteArray);
 
 };
 
