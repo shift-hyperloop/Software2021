@@ -82,7 +82,7 @@ ApplicationWindow {
                         right: parent.right
                         rightMargin: 20
                         top: parent.top
-                        topMargin: (window.height - (height * scale) - slider.height - (controlButtons.height * controlButtons.scale)) / 2
+                        topMargin: (panelRight.height - (height * scale) - slider.height - (controlButtons.height * controlButtons.scale)) / 2
                     }
                     scale: Math.min(window.width / 800, window.height / 450)
                     transformOrigin: Item.TopRight
@@ -95,7 +95,7 @@ ApplicationWindow {
                     width: 300
                     anchors {
                         bottom: parent.bottom
-                        bottomMargin: height * scale * 0.2
+                        bottomMargin: height * scale * 0.1
                         right: parent.right
                         rightMargin: 20
                     }
