@@ -30,3 +30,4 @@ HEADERS += \
     src/Processing/processingunit.h \
     src/Decoding/cansplitter.h \
     src/Processing/velocityprocessingunit.h
+RC_ICONS = assets/images/icon.ico
