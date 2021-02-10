@@ -95,7 +95,6 @@ ApplicationWindow {
                     width: 300
                     anchors {
                         bottom: parent.bottom
-                        bottomMargin: height * scale * 0.1
                         right: parent.right
                         rightMargin: 20
                     }
@@ -138,11 +137,11 @@ ApplicationWindow {
 
             SimpleChart {
                 id: chart
-                chartHeight: 300
-                chartWidth: 700
+                chartHeight: window.height * 0.3
+                chartWidth: window.width * 0.4
                 property var counter: 0
-                x: speedometer.width * speedometer.scale + 100
-                y: 40
+                x: speedometer.width * speedometer.scale + 20
+                y: 10
 
                 MouseArea {
                     anchors.fill: parent
