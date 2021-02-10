@@ -16,7 +16,7 @@ ApplicationWindow {
     width: 1700
     height: 900
     visible: true
-    //visibility: "FullScreen"
+    visibility: "Maximized"
     color: "#444444"
     title: "PieceOfShift"
     menuBar: CustomMenuBar{
@@ -95,7 +95,7 @@ ApplicationWindow {
                     width: 300
                     anchors {
                         bottom: parent.bottom
-                        bottomMargin: height * scale * 0.1
+                        //bottomMargin: height * scale * 0.1
                         right: parent.right
                         rightMargin: 20
                     }
@@ -143,7 +143,7 @@ ApplicationWindow {
                 property var counter: 0
                 x: speedometer.width * speedometer.scale + 100
                 y: 40
-
+                chartview.legend.visible: false
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
