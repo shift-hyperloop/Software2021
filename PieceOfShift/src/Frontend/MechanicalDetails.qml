@@ -102,6 +102,11 @@ Page {
         x_axis.titleText: "<font color='white'>Time</font>"
         y_axis.titleText: "<font color='white'>Acceleration</font>"
         lineseries.name: "<font color='white'>Example: Acceleration over time</font>"
+
+        LineSeries {
+            id: test
+
+        }
     }
 
     Timer {
@@ -205,7 +210,7 @@ Page {
     Button {
         //Change positioning of button. Right now it overlaps
             id: button
-            text: "Change Valve status"
+            text: "Click"
             x: red.x - text.length
             y: red.y + red.height
 
