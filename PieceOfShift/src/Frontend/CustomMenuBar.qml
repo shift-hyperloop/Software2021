@@ -1,3 +1,4 @@
+import Qt.labs.platform 1.1
 import QtQuick 2.12
 import QtQuick.Window 2.3
 import QtQuick.Controls 2.5
@@ -61,8 +62,21 @@ Item {
                 }
               }
             MenuItem { text: qsTr("&Open...")
+                FileDialog {
+                    id: fileDialogOpen
+                    title: "Please choose a file"
+                    fileMode: "OpenFile"
+                    acceptLabel: "Open"
+                    //folder: "" adding a folder here will make it the default open folder
+                    defaultSuffix: "txt"
+                    //selectedNameFilter.index: 0 // this is for sorting by filetype
+                    //nameFilters: ["Text files (.txt)", "CSV files (.csv)"]
+                    onAccepted: {
+                        console.log(file) // this is the path of the file
+                    }
+                }
                 onTriggered: {
-
+                    fileDialogOpen.open()
                 }
               }
             MenuItem { text: qsTr("&Save")
@@ -71,8 +85,17 @@ Item {
                 }
               }
             MenuItem { text: qsTr("Save &As...")
-                onTriggered: {
+                FolderDialog {
+                    id: folderDialog
+                    acceptLabel : "Save here"
+                    //folder: //standard folder
 
+                    onAccepted: {
+                        console.log(folder) // this is the path of the folder
+                    }
+                 }
+                onTriggered: {
+                    folderDialog.open()
                 }
               }
             MenuSeparator { }
