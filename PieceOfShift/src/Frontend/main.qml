@@ -138,8 +138,8 @@ ApplicationWindow {
 
             SimpleChart {
                 id: chart
-                chartHeight: 300
-                chartWidth: 700
+                chartHeight: window.height * 0.3
+                chartWidth: window.width * 0.4
                 property var counter: 0
                 x: speedometer.width * speedometer.scale + 100
                 y: 40
