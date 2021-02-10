@@ -122,29 +122,134 @@ Page {
 
 
     Rectangle {
-        id: rect1
+        id: brakesSection
         x: window.width - width
         y: 0.05 * window.height
-        height: 100
+        height: (window.height - y) / 3
         width: Math.sqrt(2) * height
-        color: "grey"
+        color: "transparent"
         border.color: "black"
-        border.width: 1
+        border.width: 2
+        radius: 4
         //radius: width*0.5
 
         Text {
-            id: brakesAirReservoirPressure
-            anchors.verticalCenter: parent.verticalCenter
+            id: brakes
+            anchors.top: parent.top
             anchors.horizontalCenter: parent.horizontalCenter
-            color: "black"
-            text: "Pressure"
+            color: "white"
+            text: qsTr("BRAKES")
         }
+
+        Rectangle {
+            id: valves
+            anchors.left: parent.left
+            anchors.bottom: parent.bottom
+            //x: parent.x
+            //y: parent.y + parent.height * 1/3
+            height: 0.75 * parent.height
+            width: parent.width / 3
+            color: "transparent"
+            border.color: "white"
+            border.width: 2
+            radius: 4
+
+            Text {
+                id: valveStatus
+                anchors.top: parent.top
+                anchors.horizontalCenter: parent.horizontalCenter
+                color: "white"
+                text: qsTr("Valve Status")
+            }
+
+            Image {
+                id: green
+                source: "green.png"
+                height: (parent.height - valveStatus.height - 30) / 2
+                width: height
+                anchors.horizontalCenter: parent.horizontalCenter
+                y: valveStatus.y + valveStatus.height + 6
+                opacity: 1
+            }
+
+            Image {
+                id: red
+                source: "red.png"
+                height: (parent.height - valveStatus.height - 30) / 2
+                width: height
+                anchors.horizontalCenter: parent.horizontalCenter
+                y: green.y + green.height + 2
+                opacity: 0.2
+            }
+        }
+
+        Rectangle {
+            id: brakePads
+            x: valves.x + valves.width
+            y: valves.y
+            height: 0.75 * parent.height
+            width: parent.width / 3
+            color: "transparent"
+            border.color: "white"
+            border.width: 2
+            radius: 4
+
+            Text {
+                id: tempText
+                anchors.top: parent.top
+                anchors.horizontalCenter: parent.horizontalCenter
+                color: "white"
+                text: qsTr("Pad temp.")
+            }
+
+            Text {
+                id: brakesPadTemp
+                anchors.centerIn: parent
+                color: "white"
+                text: qsTr("10C")
+            }
+        }
+
+        Rectangle {
+            id: pressure
+            x: brakePads.x + brakePads.width
+            y: valves.y
+            height: 0.75 * parent.height
+            width: parent.width / 3
+            color: "transparent"
+            border.color: "white"
+            border.width: 2
+            radius: 4
+
+            Text {
+                id: pressureText
+                anchors.top: parent.top
+                anchors.horizontalCenter: parent.horizontalCenter
+                color: "white"
+                text: qsTr("Cylinder pressure")
+            }
+
+            Text {
+                id: cylinderPressure
+                anchors.centerIn: parent
+                color: "white"
+                text: qsTr("10kPa")
+            }
+        }
+    }
+
+    Text {
+        id: brakesAirReservoirPressure
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
+        color: "black"
+        text: "Pressure"
     }
 
     Rectangle {
         id: rect2
         x: window.width - width
-        y: rect1.y + rect1.height
+        y: brakesSection.y + brakesSection.height
         height: 100
         width: Math.sqrt(2) * height
         color: "grey"
@@ -167,45 +272,7 @@ Page {
       object associated with updating the red/green images for displaying
       whether or not valves are open
     */
-    Rectangle {
-        id: rect3
-        x: window.width - width
-        y: rect2.y + rect2.height
-        height: 100
-        width: Math.sqrt(2) * height
-        color: "grey"
-        border.color: "black"
-        border.width: 1
-        //radius: width*0.5
 
-        Text {
-            id: brakesValveStatus
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.horizontalCenter: parent.horizontalCenter
-            color: "black"
-            text: "Open"
-        }
-    }
-
-    Image {
-        id: green
-        source: "green.png"
-        height: 50
-        width: height
-        x: rect1.x - width
-        y: rect1.y
-        opacity: 1
-    }
-
-    Image {
-        id: red
-        source: "red.png"
-        height: 50
-        width: height
-        x: green.x
-        y: green.y + green.height
-        opacity: 0.2
-    }
 
     Button {
         //Change positioning of button. Right now it overlaps
