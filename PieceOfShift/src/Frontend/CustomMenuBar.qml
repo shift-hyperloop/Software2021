@@ -3,8 +3,7 @@ import QtQuick.Window 2.3
 import QtQuick.Controls 2.5
 import QtQuick.Controls.Styles 1.4
 Item {
-    property alias _width: __menu.width
-    //Don't need this if we only set width in main.qml <-- Turns out we actually do
+    //property alias _width: __menu.width
     Rectangle {
         width: logoWhite_RightText.width + 5
         height: logoWhite_RightText.height + 10
@@ -32,17 +31,20 @@ Item {
         delegate: MenuBarItem {
             id: menuBarItem
             font.pixelSize: 0.025 * window.height
-            implicitHeight: 0.05 * window.height
+            height: __menu.height
             contentItem: Text {
                 text: menuBarItem.text
                 font: menuBarItem.font
                 opacity: enabled ? 1.0 : 0.3
                 color: "#ededed"
                 verticalAlignment: Text.AlignVCenter
-                height: 0.05 * window.height
+                height: __menu.height
+                anchors.verticalCenter: parent.verticalCenter
+
             }
 
             background: Rectangle {
+                id: b
                 implicitWidth: menuBarItem.implicitContentWidth
                 implicitHeight: 0.05 * window.height
                 opacity: enabled ? 0.3 : 1
@@ -55,7 +57,6 @@ Item {
             font.pixelSize:  0.025 * window.height
             MenuItem { text: qsTr("&New...")
                 onTriggered: {
-
                 }
               }
             MenuItem { text: qsTr("&Open...")
