@@ -44,7 +44,6 @@ Item {
             }
 
             background: Rectangle {
-                id: b
                 implicitWidth: menuBarItem.implicitContentWidth
                 implicitHeight: 0.05 * window.height
                 opacity: enabled ? 0.3 : 1
@@ -52,9 +51,11 @@ Item {
             }
         }
 
+
         Menu {
             title: qsTr("File")
             font.pixelSize:  0.025 * window.height
+
             MenuItem { text: qsTr("&New...")
                 onTriggered: {
                 }
@@ -104,6 +105,22 @@ Item {
         Menu{
             title: qsTr("View")
             font.pixelSize:  0.025 * window.height
+            MenuItem{
+                CheckBox{
+                    onCheckStateChanged: {
+                        if(checked){
+                           window.visibility = 5
+                        }
+                        else{
+                            window.visibility = 4
+                        }
+                        }
+                    }
+                Label{
+                    text: "Fullscreen"
+                    anchors.centerIn: parent
+                }
+            }
 
             Menu{
                 title: qsTr("Battery")
