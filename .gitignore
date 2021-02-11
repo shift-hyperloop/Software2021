@@ -11,6 +11,9 @@
 *.dylib
 
 build/*
+PieceOfShift/build/*
+.clang_complete
+.clang-format
 
 # Qt-es
 object_script.*.Release
