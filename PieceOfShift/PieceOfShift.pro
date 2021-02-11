@@ -66,3 +66,5 @@ HEADERS += \
     src/Decoding/cansplitter.h \
     src/Decoding/poddatasender.h \
     src/Processing/velocityprocessingunit.h
+
+RESOURCES +=

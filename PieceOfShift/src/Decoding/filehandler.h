@@ -17,11 +17,20 @@ public:
 
     void writeToFile();
     // void sendDataToProcessor
+    void readDataFromFile(QString);
+    void sendData();
 
 
 private:
 
-    void readDataFromFile(QString);
+public slots:
+    // QList<QByteArray> getMessages();
+
+signals:
+    void fromFileData(quint16, quint8, QByteArray);
+
+
+
 };
 
 

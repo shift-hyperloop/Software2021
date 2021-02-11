@@ -13,8 +13,8 @@ int main(int argc, char *argv[])
 
     CanSplitter w;
     FileHandler t;
-    qDebug() << "begynner å kjøre filehandler";
     t.writeToFile();
+
 
     QApplication app(argc, argv);
     // FileHandler fh;
