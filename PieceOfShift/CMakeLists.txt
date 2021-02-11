@@ -1,54 +1,52 @@
-cmake_minimum_required(VERSION 3.10)
+#
+# For basic cmake file structure see: http://doc.qt.io/qt-5/cmake-manual.html
+#
+cmake_minimum_required(VERSION 3.19)
+
 
 project(PieceOfShift)
 
+# Find includes in corresponding build directories
 set(CMAKE_CXX_STANDARD 14)
-
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
 if(WIN32)
-  # NOTE: Change to Qt Path if on Windows
-  set(CMAKE_PREFIX_PATH "C:\\Qt\\5.15.1\\msvc2019_64")
+        # NOTE: CHANGE TO YOUR OWN QT PATH IF RUNNING ON WINDOWS
+        set(CMAKE_PREFIX_PATH "C:\\Qt\\5.15.2\\msvc2019_64")
 endif()
 
-find_package(Qt5Core REQUIRED)
-find_package(Qt5Quick REQUIRED)
-find_package(Qt5Widgets REQUIRED)
-find_package(Qt5Concurrent REQUIRED)
-find_package(Qt5QuickControls2 REQUIRED)
+# Instruct CMake to run moc automatically when needed.
+set(CMAKE_AUTOMOC ON)
 
-file(GLOB_RECURSE SOURCE_FILES
-  "${PROJECT_SOURCE_DIR}/src/*.cpp"
+# Find the Qt libraries for Qt Quick/QML
+find_package(Qt5 REQUIRED Qml Quick Core Widgets Concurrent QuickControls2)
+
+# add the qml.qrc file
+qt5_add_resources(qml_QRC src/qml.qrc)
+qt5_add_resources(assets_QRC assets/images/images.qrc)
+
+# add source files
+file(GLOB_RECURSE SOURCE
+  "src/*.cpp"
   )
 
-file(GLOB_RECURSE HEADER_FILES
-  "${PROJECT_SOURCE_DIR}/src/*.h"
+file(GLOB_RECURSE HEADER
+  "src/*.h"
   )
 
-file(GLOB_RECURSE QML
-  "${PROJECT_SOURCE_DIR}/src/Frontend/*.qml"
-  )
+# Tell CMake to create the helloworld executable
+add_executable(PieceOfShift ${SOURCE} ${HEADER} ${qml_QRC} ${assets_QRC})
 
-file(GLOB_RECURSE ASSETS
-  "${PROJECT_SOURCE_DIR}/assets/*"
-  )
+# Use the Qml/Quick modules from Qt 5.
+target_link_libraries(PieceOfShift Qt5::Qml Qt5::Quick Qt5::Core Qt5::Widgets Qt5::Concurrent Qt5::QuickControls2)
 
-file(COPY ${QML}
-     DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
- file(COPY ${ASSETS}
-      DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+# post-build steps
+# copy all the Qt support files to the debug/release directories
+# You really only need the proper qt redistibution dll's/files, but this copies everything for easier development. Trim files out as needed.
+message("Copying required Qt libraries and binaries to output directory....")
+#add_custom_command(TARGET helloworld POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_PREFIX_PATH}\\bin $<TARGET_FILE_DIR:helloworld>)
 
-add_executable(PieceOfShift ${HEADER_FILES} ${SOURCE_FILES} ${QML})
+#add_custom_command(TARGET helloworld POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_PREFIX_PATH}\\plugins $<TARGET_FILE_DIR:helloworld>)
 
-target_compile_definitions(PieceOfShift
-  PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
-target_link_libraries(PieceOfShift
-  PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Concurrent Qt${QT_VERSION_MAJOR}::QuickControls2)
-
+#add_custom_command(TARGET helloworld POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_PREFIX_PATH}\\qml $<TARGET_FILE_DIR:helloworld>)

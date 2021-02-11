@@ -2,9 +2,9 @@ import Qt.labs.platform 1.1
 import QtQuick 2.12
 import QtQuick.Window 2.3
 import QtQuick.Controls 2.5
+import QtQuick.Controls.Styles 1.4
 Item {
-    property alias _width: __menu.width
-    //Don't need this if we only set width in main.qml <-- Turns out we actually do
+    //property alias _width: __menu.width
     Rectangle {
         width: logoWhite_RightText.width + 5
         height: logoWhite_RightText.height + 10
@@ -14,7 +14,7 @@ Item {
             x: 5
             y: 5
             height: 0.05 * window.height - 10
-            source: "Shift_Logo.png"
+            source: "../Shift_Logo.png"
             fillMode: Image.PreserveAspectFit
 
 
@@ -22,19 +22,43 @@ Item {
     }
     MenuBar{
         id: __menu
-        width: window.width - logoWhite_RightText.width
+        width: window.width - logoWhite_RightText.width - 5
+        x: logoWhite_RightText.width + 5
         height: 0.05 * window.height
-        x: logoWhite_RightText.width
         background: Rectangle {
             color: "#373840"
         }
+        padding: 2
+        delegate: MenuBarItem {
+            id: menuBarItem
+            font.pixelSize: 0.025 * window.height
+            height: __menu.height
+            contentItem: Text {
+                text: menuBarItem.text
+                font: menuBarItem.font
+                opacity: enabled ? 1.0 : 0.3
+                color: "#ededed"
+                verticalAlignment: Text.AlignVCenter
+                height: __menu.height
+                anchors.verticalCenter: parent.verticalCenter
 
-        Menu{
-            title: qsTr("&File")
+            }
+
+            background: Rectangle {
+                implicitWidth: menuBarItem.implicitContentWidth
+                implicitHeight: 0.05 * window.height
+                opacity: enabled ? 0.3 : 1
+                color: menuBarItem.highlighted ? "#ededed" : "transparent"
+            }
+        }
+
+
+        Menu {
+            title: qsTr("File")
+            font.pixelSize:  0.025 * window.height
 
             MenuItem { text: qsTr("&New...")
                 onTriggered: {
-
                 }
               }
             MenuItem { text: qsTr("&Open...")
@@ -82,8 +106,10 @@ Item {
               }
         }
         Menu {
-            title: qsTr("&Edit")
-            MenuItem { text: qsTr("Cu&t")
+            title: qsTr("Edit")
+            font.pixelSize:  0.025 * window.height
+
+            MenuItem { text: qsTr("&Cut")
                 onTriggered: {
 
                 }
@@ -101,6 +127,24 @@ Item {
         }
         Menu{
             title: qsTr("View")
+            font.pixelSize:  0.025 * window.height
+            MenuItem{
+                CheckBox{
+                    onCheckStateChanged: {
+                        if(checked){
+                           window.visibility = 5
+                        }
+                        else{
+                            window.visibility = 4
+                        }
+                        }
+                    }
+                Label{
+                    text: "Fullscreen"
+                    anchors.centerIn: parent
+                }
+            }
+
             Menu{
                 title: qsTr("Battery")
                 MenuItem{
@@ -174,6 +218,8 @@ Item {
         }
         Menu{
             title: qsTr("State indication")
+            font.pixelSize:  0.025 * window.height
+
             MenuItem { text: qsTr("Change State")
                 onTriggered: {
                     stackView.push("StateIndication.qml");
@@ -181,7 +227,9 @@ Item {
               }
         }
         Menu {
-            title: qsTr("&Help")
+            title: qsTr("Help")
+            font.pixelSize:  0.025 * window.height
+
             MenuItem { text: qsTr("&About")
             onTriggered: {
                 Qt.openUrlExternally("https://github.com/shift-hyperloop/Software2021");
