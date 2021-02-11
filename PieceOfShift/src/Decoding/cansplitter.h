@@ -27,9 +27,16 @@ public:
 
 //set given slots
 public slots:
-    void splitDataToMessages();
+    void start();
+
 signals:
-    void checkData(quint16, quint8, QByteArray);
+    void dataReceived(quint16& id, quint8& dataSize, QByteArray& data);
+
+private:
+
+    void splitData(const QByteArray& datagram);
+
+    bool keepRunning = false;
 
 };
 

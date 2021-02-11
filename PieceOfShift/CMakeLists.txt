@@ -34,6 +34,8 @@ file(GLOB_RECURSE HEADER
   "src/*.h"
   )
 
+include_directories("src")
+
 # Tell CMake to create the helloworld executable
 add_executable(PieceOfShift ${SOURCE} ${HEADER} ${qml_QRC} ${assets_QRC})
 

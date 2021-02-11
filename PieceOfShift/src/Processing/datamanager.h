@@ -5,6 +5,8 @@
 #include <QVector>
 #include <QtConcurrent/QtConcurrent>
 #include "processingunit.h"
+#include "Decoding/cansplitter.h"
+#include "Decoding/decoder.h"
 
 class DataManager : public QObject
 {
@@ -18,9 +20,6 @@ public slots:
     // MHave Decoder send signal to add data
     void addData(const QString& name, const DataType &dataType, const QVariant &data);
 
-    // REMOVE THIS
-    void dummyData();
-
     // This should use a Decoder slot to send command to pod
     // void sendPodCommand(PodCommand command);
 
@@ -33,6 +32,9 @@ signals:
 
 private:
     QVector<ProcessingUnit*> processingUnits;
+
+    Decoder decoder;
+    CanSplitter canSplitter;
 
 };
 
