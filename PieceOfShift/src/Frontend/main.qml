@@ -70,7 +70,6 @@ ApplicationWindow {
                 id: panelRight
                 height: window.height - slider.height - anchors.topMargin
                 width: 0.3 * window.width
-
                 anchors {
                     right: parent.right
                     top: parent.top
@@ -100,7 +99,7 @@ ApplicationWindow {
                         rightMargin: 20
                     }
                     scale: Math.min(window.width / 1600, window.height / 900)
-                    transformOrigin: Item.TopRight
+                    transformOrigin: Item.BottomRight
 
                     //y: window.height - (height + 100)
                     //x: Math.max(thermometer.x - thermometer.width - 100 - width, 0)
