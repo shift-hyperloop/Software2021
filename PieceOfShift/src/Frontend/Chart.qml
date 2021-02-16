@@ -25,19 +25,19 @@ Item {
             hoverEnabled: true
             property var mouse_x: 0
             property var mouse_y: 0
-            onEntered: {
-                hoverEnabled = false
-                parent.forceActiveFocus()
+            onEntered: { //mouseare has the signal onEntered which is needed to change the focus to the chart
+                hoverEnabled = false    //without active focus the chart wont handle hover events
+                parent.forceActiveFocus() //Two elements in the same place cant both accept hover events, so disable hover for the mousearea
             }
             onExited: {
-                hoverEnabled = true
+                hoverEnabled = true // enable hover to detect when the mouse enteres
             }
             onWheel: {
                 if((wheel.angleDelta).y > 0){
                    var p = chartview.plotArea
                    var zoom = 4/3
                     chartview.zoomIn(Qt.rect(p.x,p.y + (p.height - p.height/zoom),p.width / zoom, p.height / zoom))
-                }
+                }// create a rectangle, and make the visable area in the chartview the same size as the rectangle
                 else{
                     p = chartview.plotArea
                     zoom = 0.75
@@ -60,7 +60,7 @@ Item {
                 property int mouse_x_: chartMouseArea.mouseX
                 property int mouse_y_: chartMouseArea.mouseY
                 onTriggered: {
-                    chartview.scrollUp(chartMouseArea.mouseY - mouse_y_)
+                    chartview.scrollUp(chartMouseArea.mouseY - mouse_y_) // move the visable area of the graph according to how much you have moved the mouse
                     chartview.scrollLeft(chartMouseArea.mouseX - mouse_x_)
                     mouse_x_ = chartMouseArea.mouseX
                     mouse_y_ = chartMouseArea.mouseY
@@ -91,19 +91,17 @@ Item {
                 titleText: ""
             }
 
-            onHovered: {
-                //
-                var punkt = "(" + point.x.toFixed(2) + "," + point.y.toFixed(2) + ")";
-                _text.text = punkt;
+            onHovered: { // display the point you're hovering over on the chart by setting the content of rectangle1 to the hovered point
+                _text.text = "(" + point.x.toFixed(2) + "," + point.y.toFixed(2) + ")";
                 var p = chartview.mapToPosition(Qt.point(point.x,point.y),lineseries);
                 rectangle1.visible = true;
-                rectangle1.x = p.x;
+                rectangle1.x = p.x; //make the displayed point follow the mouse
                 rectangle1.y = p.y;
             }
 
             onPointAdded: {
                 var new_point = at(index)
-                if(new_point.x > x_axis.max){
+                if(new_point.x > x_axis.max){ // if a now point is added and it is outside the visible area, the axies will scale
                     x_axis.max = new_point.x + Math.round(new_point.x/2)
                     chartview.x_max = x_axis.max
                 }
@@ -148,7 +146,7 @@ Item {
             text: "reset"
             x: chartview.x
             y: Math.max(chartview.y, 35)
-            onClicked: {
+            onClicked: {// reset the zoom
                 x_axis.min = 0
                 y_axis.min = 0
                 x_axis.max = chartview.x_max

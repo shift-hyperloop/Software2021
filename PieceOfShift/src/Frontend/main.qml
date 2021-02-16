@@ -16,61 +16,105 @@ ApplicationWindow {
     width: 1700
     height: 900
     visible: true
-    //visibility: "FullScreen"
+    visibility: "Maximized"
     color: "#444444"
     title: "PieceOfShift"
     menuBar: CustomMenuBar{
-        width: window.width
+        /*_width: window.width - logoWhite_RightText.width
+        x: logoWhite_RightText.width + 10*/
+        id: topBar
     }
 
     StackView {
         id: stackView
         anchors.fill: parent
-
+        property var chosenState // variable for the chosen state in StateIndication.qml
 
         initialItem: Item {
-
 
             id: mainView
 
             property alias timer: timer
             property alias chart: chart;
             property alias counter: chart.counter
+            Item {
+                id: panelLeft
+                height: window.height - slider.height - anchors.topMargin
+                width: 0.3 * window.width
 
-            Image {
-                id: logoWhite_RightText
-                x: 31
-                y: 50
-                width: 250
-                source: "Shift_Logo.png"
-                fillMode: Image.PreserveAspectFit
+                anchors {
+                    left: parent.left
+                    top: parent.top
+                    topMargin: 0.05 * window.height //height of menubar is 0.05, but you cant use menuBar.height for some reason.
+                }
+
+                Speedometer {
+                    id: speedometer
+                    width: 226
+                    height: 300
+                    anchors {
+                        left: parent.left
+                        top: parent.top
+                        topMargin: 30
+                        leftMargin: 30
+                    }
+                    //speedometer has a weird bug where explicitly setting width and height turns it into a white circle
+                    //therefore, scale is used to, uh, scale
+                    scale: 0.15 + Math.min(window.width / 1600, window.height / 900)
+                    transformOrigin: Item.TopLeft
+                    minValue: 0
+                    maxValue: 600
+                }
             }
+            Item {
+                id: panelRight
+                height: window.height - slider.height - anchors.topMargin
+                width: 0.3 * window.width
+                anchors {
+                    right: parent.right
+                    top: parent.top
+                    topMargin: 0.05 * window.height
+                }
+                Thermometer {
+                    id: thermometer
+                    anchors {
+                        right: parent.right
+                        rightMargin: 20
+                        top: parent.top
+                        topMargin: (panelRight.height - (height * scale) - slider.height - (controlButtons.height * controlButtons.scale)) / 2
+                    }
+                    scale: Math.min(window.width / 800, window.height / 450)
+                    transformOrigin: Item.TopRight
+                    minValue: 0
+                    maxValue: 50
+                }
+                ControlButtons {
+                    id: controlButtons
+                    height: 200
+                    width: 300
+                    anchors {
+                        bottom: parent.bottom
+                        //bottomMargin: height * scale * 0.1
+                        right: parent.right
+                        rightMargin: 20
+                    }
+                    scale: Math.min(window.width / 1600, window.height / 900)
+                    transformOrigin: Item.BottomRight
 
-            Speedometer {
-                id: speedometer
-                x: 0
-                y: 144
-                width: 306
-                height: 320
-                minValue: 0
-                maxValue: 600
-            }
-
-            Thermometer {
-                id: thermometer
-                x: 1170
-                y: 233
-                scale: 2
-                minValue: 0
-                maxValue: 50
+                    //y: window.height - (height + 100)
+                    //x: Math.max(thermometer.x - thermometer.width - 100 - width, 0)
+                }
             }
 
             DistanceSlider{
                 id: slider
+                x: 0.025 * window.width
+                anchors {
+                    bottom: parent.bottom
+                }
+
                 minValue: 0
                 maxValue: 100
-                //x: 28
-                //y: Math.max(window.height - 60, speedometer.y + speedometer.height);
             }
 
             Timer {
@@ -78,7 +122,6 @@ ApplicationWindow {
                 interval: 200
                 running: true
                 repeat: true
-                property var distance: Math.random //What does this var do?
                 onTriggered: update();
 
                 function update(){
@@ -94,12 +137,12 @@ ApplicationWindow {
 
             SimpleChart {
                 id: chart
-                chartHeight: 300
-                chartWidth: 700
+                chartHeight: window.height * 0.3
+                chartWidth: window.width * 0.4
                 property var counter: 0
-                x: speedometer.width + 50
+                x: speedometer.width * speedometer.scale + 100
                 y: 40
-
+                chartview.legend.visible: false
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
@@ -115,21 +158,12 @@ ApplicationWindow {
                 height: 100
             }
 
-            ControlButtons{
-                height: 200
-                width: 300
-                y: window.height - (height + 100)
-                x: Math.max(window.width - (width + 30), thermometer.x + thermometer.width + 30)
-                //Buttons will stop when colliding with thermometer
+            /*Battery{
+                height:
+                width:
+                x:
+                y:
+            }*/
             }
         }
     }
-
-
-}
-
-/*##^##
-Designer {
-    D{i:0;formeditorZoom:0.8999999761581421}
-}
-##^##*/
