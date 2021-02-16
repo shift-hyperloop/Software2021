@@ -105,7 +105,6 @@ Page {
 
         LineSeries {
             id: test
-
         }
     }
 
@@ -164,7 +163,7 @@ Page {
 
             Image {
                 id: green
-                source: "green.png"
+                source: "../../assets/images/green.png"
                 height: (parent.height - valveStatus.height - 30) / 2
                 width: height
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -174,7 +173,7 @@ Page {
 
             Image {
                 id: red
-                source: "red.png"
+                source: "../../assets/images/red.png"
                 height: (parent.height - valveStatus.height - 30) / 2
                 width: height
                 anchors.horizontalCenter: parent.horizontalCenter

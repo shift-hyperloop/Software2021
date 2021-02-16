@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/">
+    <qresource prefix="/assets/images">
         <file>Shift_Logo.png</file>
         <file>Pod.png</file>
         <file>green.png</file>
