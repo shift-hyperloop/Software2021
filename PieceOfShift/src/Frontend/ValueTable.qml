@@ -1,5 +1,6 @@
 import QtQuick 2.0
-import QtQuick 2.15
+import QtQuick 2.14
+import Qt.labs.qmlmodels 1.0
 
 Item {
     width: 216
@@ -17,14 +18,37 @@ Item {
     TableView{
         width: 300
         height: 300
-        columnSpacing: 5
+        columnSpacing: 0
+        interactive: false
+        model: TableModel {
+            TableModelColumn { display: "name" }
+            TableModelColumn { display: "color" }
+                   rows: [
+                       {
+                           "name": "cat",
+                           "color": "black"
+                       },
+                       {
+                           "name": "dog",
+                           "color": "brown"
+                       },
+                       {
+                           "name": "bird",
+                           "color": "white"
+                       }
+                   ]
+               }
+
         delegate: Rectangle {
-                implicitWidth: 50
+                implicitWidth: 100
                 implicitHeight: 50
                 border.color: "#000000"
                 border.width: 2
                 Text {
-                    text: qsTr("Test2!")
+                    text: qsTr("")
+                }
+                Text {
+                    text: display
                 }
             }
     }
