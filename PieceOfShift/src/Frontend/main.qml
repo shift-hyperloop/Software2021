@@ -65,6 +65,7 @@ ApplicationWindow {
                     minValue: 0
                     maxValue: 600
                 }
+
             }
             Item {
                 id: panelRight
@@ -105,6 +106,16 @@ ApplicationWindow {
                     //x: Math.max(thermometer.x - thermometer.width - 100 - width, 0)
                 }
             }
+            Tilitmeter{
+                rollDeg: 0
+                pitchDeg: 0
+                yawDeg: 0
+                circleSize: window.height / 10
+                anchors.left: battery.left
+                anchors.leftMargin: circleSize * 1.5
+                anchors.bottom: battery.top
+                anchors.bottomMargin: circleSize
+            }
 
             DistanceSlider{
                 id: slider
@@ -115,6 +126,15 @@ ApplicationWindow {
 
                 minValue: 0
                 maxValue: 100
+            }
+            Battery{
+                id: battery
+                height:window.height / 5
+                anchors.left: parent.left
+                anchors.leftMargin: window.height / 15
+                anchors.bottom: slider.top
+                anchors.bottomMargin: height/5
+
             }
 
             Timer {
@@ -132,6 +152,7 @@ ApplicationWindow {
                     thermometer.value = Math.random() * 25 + 25;
                     chart.counter++;
                     chart.lineseries.append(chart.counter, speed);
+                    battery.charge = 1 - slider.value / 100
                 }
             }
 
@@ -157,13 +178,6 @@ ApplicationWindow {
                 width: 300
                 height: 100
             }
-
-            /*Battery{
-                height:
-                width:
-                x:
-                y:
-            }*/
             }
         }
     }

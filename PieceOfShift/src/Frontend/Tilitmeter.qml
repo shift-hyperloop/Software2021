@@ -53,20 +53,14 @@ Item {
                     }
                 }
             }
-            Text {
-                text: qsTr("Roll: " + roll.rollDeg + " deg")
-                x: roll.x + r.width / 3- circleSize
-                y: roll.y
-            }
-            Text {
-                text: qsTr("Yaw: " + yaw.yawDeg+ " deg")
-                x: yaw.x + r.width / 3 - circleSize
-                y: roll.y
-            }
-            Text {
-                text: qsTr("Pitch: " + pitch.pitchDeg+ " deg")
-                x: pitch.x + r.width / 3- circleSize
-                y: pitch.y
-            }
+
+    }
+    Text {
+        text: qsTr("Roll: " + roll.rollDeg+ " deg  "  + "Pitch: " + pitch.pitchDeg+ " deg  " + "Yaw: " + yaw.yawDeg+ " deg")
+        anchors.horizontalCenter: r.horizontalCenter
+        anchors.bottom: parent.top
+        anchors.bottomMargin: circleSize / 2 + 10
+        color: "white"
+        font.pixelSize: circleSize / 5
     }
 }

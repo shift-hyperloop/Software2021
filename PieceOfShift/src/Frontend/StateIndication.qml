@@ -68,7 +68,6 @@ Page{
 
     }
     Component.onCompleted: {
-        console.log(chosenButton)
         chosenButton = stackView.chosenState
         if(chosenButton == null){
             chosenButton = 0
