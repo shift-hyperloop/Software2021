@@ -1,6 +1,5 @@
 #include <QtConcurrent/QtConcurrent>
 #include <algorithm>
-#include "Decoding/cansplitter.h"
 #include "Decoding/decoder.h"
 #include "datamanager.h"
 #include "velocityprocessingunit.h"
