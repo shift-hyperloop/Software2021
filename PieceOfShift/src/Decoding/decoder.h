@@ -5,7 +5,6 @@
 #include <QByteArray>
 #include <QMap>
 
-#include "cansplitter.h"
 #include "../Processing/processingunit.h"
 
 static const QMap<quint16, QString> idToName = {
