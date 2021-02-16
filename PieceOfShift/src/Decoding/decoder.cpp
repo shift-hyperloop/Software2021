@@ -1,6 +1,7 @@
 #include <QtAlgorithms>
 #include <QPair>
 #include <QMap>
+#include <qdebug.h>
 
 #include "decoder.h"
 #include "cansplitter.h"
@@ -13,19 +14,16 @@ Decoder::~Decoder()
 {
 }
 
-void Decoder::checkData(quint16 &id, quint8 &dataSize, QByteArray &data)
+void Decoder::checkData(unsigned short id, unsigned char dataSize, QByteArray data)
 {
     DataType dataType = idToType.value(id);
     QString name = idToName.value(id);
 
     data.resize(dataSize);
 
-    qDebug() << dataType;
-    qDebug() << name;
-
     QPair<quint8, QByteArray> dataAndSize(dataSize, data);
 
 
-    //send data onwards to the processor
+    // Send data onwards to the processor
     emit addData(name, dataType, QVariant::fromValue(dataAndSize));
 }

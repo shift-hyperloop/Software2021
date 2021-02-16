@@ -1,5 +1,6 @@
 #include "velocityprocessingunit.h"
 #include <QPointF>
+#include <QDebug>
 
 VelocityProcessingUnit::VelocityProcessingUnit()
 {
@@ -16,7 +17,8 @@ void VelocityProcessingUnit::process(const QString& name)
     if(dataMap.value(name)->empty()) {
         return;
     }
-    VelocityStruct result = dataMap.value(name)->back().value<VelocityStruct>();
+
+    VelocityStruct result;// = dataMap.value(name)->back().value<VelocityStruct>();
     /*
      *  Do calculations on result here
      */

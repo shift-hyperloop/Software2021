@@ -7,6 +7,7 @@
 #include "processingunit.h"
 #include "Decoding/cansplitter.h"
 #include "Decoding/decoder.h"
+#include "Decoding/poddatasender.h"
 
 class DataManager : public QObject
 {
@@ -17,11 +18,14 @@ public:
 
 public slots:
 
-    // MHave Decoder send signal to add data
+    // Have Decoder send signal to add data
     void addData(const QString& name, const DataType &dataType, const QVariant &data);
 
+    // Start recieving messages
+    void startServer();
+
     // This should use a Decoder slot to send command to pod
-    // void sendPodCommand(PodCommand command);
+    void sendPodCommand(const PodMessageType& command);
 
 signals:
     // TODO: Add signals for each CAN message
@@ -35,6 +39,7 @@ private:
 
     Decoder decoder;
     CanSplitter canSplitter;
+    PodDataSender podDataSender;
 
 };
 

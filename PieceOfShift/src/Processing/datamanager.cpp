@@ -1,7 +1,7 @@
 #include <QtConcurrent/QtConcurrent>
 #include <algorithm>
-
 #include "Decoding/cansplitter.h"
+#include "Decoding/decoder.h"
 #include "datamanager.h"
 #include "velocityprocessingunit.h"
 #include "accelerationprocessingunit.h"
@@ -26,8 +26,13 @@ DataManager::DataManager()
             this, &DataManager::newAcceleration);
     connect(avu, &AccelerationVelocityUnit::newData,
             this, &DataManager::newAccelerationVelocity);
+
+
     connect(&canSplitter, &CanSplitter::dataReceived,
             &decoder, &Decoder::checkData);
+
+    connect(&decoder, &Decoder::addData,
+            this, &DataManager::addData);
 
     /* Create Decoder/DataFetcher object here and start it when signal from
      QML has been received */
@@ -49,5 +54,17 @@ void DataManager::addData(const QString& name, const DataType &dataType, const Q
                           processingUnits.end(),
                           [&dataType](auto x)
                           { return x->dataType() == dataType; });
-    QtConcurrent::run(processingUnit, &ProcessingUnit::addData, name, data);
+    //QtConcurrent::run(processingUnit, &ProcessingUnit::addData, name, data);
+    processingUnit->addData(name, data);
 }
+
+void DataManager::startServer()
+{
+    canSplitter.start();
+}
+
+void DataManager::sendPodCommand(const PodMessageType& messageType)
+{
+        podDataSender.canMessageConvertor(messageType);
+}
+

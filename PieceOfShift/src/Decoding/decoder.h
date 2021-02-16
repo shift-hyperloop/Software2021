@@ -29,7 +29,7 @@ public:
     ~Decoder();
 
 public slots:
-    void checkData(quint16 &id, quint8 &dataSize, QByteArray &data);
+    void checkData(unsigned short id, unsigned char dataSize, QByteArray data);
 
 signals:
     void addData(const QString name, const DataType dataType, const QVariant data);

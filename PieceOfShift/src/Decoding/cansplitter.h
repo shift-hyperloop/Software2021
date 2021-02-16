@@ -12,8 +12,6 @@
 #define CAN_DATA_OFFSET 12
 
 
-
-//create class
 class CanSplitter : public QObject
 {
     Q_OBJECT
@@ -21,23 +19,20 @@ public:
     CanSplitter();
     ~CanSplitter();
 
-    QUdpSocket *udpSocket = nullptr;
 
-    QString frame;
+    void start();
+    void splitData(const QByteArray& datagram);
 
 //set given slots
 public slots:
-    void start();
+    void handleDatagram();
 
 signals:
-    void dataReceived(quint16& id, quint8& dataSize, QByteArray& data);
+    void dataReceived(unsigned short id, unsigned char dataSize, QByteArray data);
 
 private:
 
-    void splitData(const QByteArray& datagram);
-
-    bool keepRunning = false;
-
+    QUdpSocket *udpSocket = nullptr;
 };
 
 #endif // CANSPLITTER_H
