@@ -1,7 +1,6 @@
 #include <QtWidgets/QApplication>
 #include <QQmlApplicationEngine>
 #include <QQuickStyle>
-#include "Decoding/cansplitter.h"
 #include "Processing/datamanager.h"
 #include "Decoding/decoder.h"
 
