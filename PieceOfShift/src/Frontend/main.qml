@@ -150,6 +150,15 @@ ApplicationWindow {
                     }
                 }
             }
+            ValueTable{
+                width: 300
+                height: 300
+                anchors {
+                    top: parent.top
+                    topMargin: 0.05 * window.height
+                    leftMargin: window.width / 2
+                }
+            }
 
             Text {
                 id: labelText
