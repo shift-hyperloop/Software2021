@@ -1,7 +1,7 @@
 #
 # For basic cmake file structure see: http://doc.qt.io/qt-5/cmake-manual.html
 #
-cmake_minimum_required(VERSION 3.19)
+cmake_minimum_required(VERSION 3.17)
 
 
 project(PieceOfShift)
@@ -9,17 +9,18 @@ project(PieceOfShift)
 # Find includes in corresponding build directories
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
+set(CMAKE_GENERATOR_PLATFORM x64)
 
 if(WIN32)
         # NOTE: CHANGE TO YOUR OWN QT PATH IF RUNNING ON WINDOWS
-        set(CMAKE_PREFIX_PATH "C:\\Qt\\5.15.2\\msvc2019_64")
+        set(CMAKE_PREFIX_PATH "C:\\Qt\\5.15.1\\msvc2019_64")
 endif()
 
 # Instruct CMake to run moc automatically when needed.
 set(CMAKE_AUTOMOC ON)
 
 # Find the Qt libraries for Qt Quick/QML
-find_package(Qt5 REQUIRED Qml Quick Core Widgets Concurrent QuickControls2)
+find_package(Qt5 REQUIRED Network Qml Quick Core Widgets Concurrent QuickControls2)
 
 # add the qml.qrc file
 qt5_add_resources(qml_QRC src/qml.qrc)
@@ -38,7 +39,7 @@ file(GLOB_RECURSE HEADER
 add_executable(PieceOfShift ${SOURCE} ${HEADER} ${qml_QRC} ${assets_QRC})
 
 # Use the Qml/Quick modules from Qt 5.
-target_link_libraries(PieceOfShift Qt5::Qml Qt5::Quick Qt5::Core Qt5::Widgets Qt5::Concurrent Qt5::QuickControls2)
+target_link_libraries(PieceOfShift Qt5::Network Qt5::Qml Qt5::Quick Qt5::Core Qt5::Widgets Qt5::Concurrent Qt5::QuickControls2)
 
 
 # post-build steps
@@ -50,4 +51,3 @@ message("Copying required Qt libraries and binaries to output directory....")
 #add_custom_command(TARGET helloworld POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_PREFIX_PATH}\\plugins $<TARGET_FILE_DIR:helloworld>)
 
 #add_custom_command(TARGET helloworld POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_PREFIX_PATH}\\qml $<TARGET_FILE_DIR:helloworld>)
-
