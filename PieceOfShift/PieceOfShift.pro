@@ -11,11 +11,10 @@ SOURCES += \
         src/Processing/datamanager.cpp \
         src/main.cpp \
         src/Processing/processingunit.cpp \
-        src/Processing/velocityprocessingunit.cpp \
-
+        src/Processing/velocityprocessingunit.cpp
 
 OTHER_FILES += \
-    src/Frontend/*.qml \
+   # src/Frontend/*.qml \
     assets/images/*
 RESOURCES += \
     assets/images/images.qrc \
@@ -27,11 +26,12 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
     
 HEADERS += \
+    src/Decoding/poddatasender.h \
     src/Decoding/decoder.h \
     src/Processing/accelerationprocessingunit.h \
     src/Processing/accelerationvelocityunit.h \
     src/Processing/datamanager.h \
     src/Processing/processingunit.h \
     src/Decoding/cansplitter.h \
-    src/Decoding/poddatasender.h \
-    src/Processing/velocityprocessingunit.h \
+    src/Processing/velocityprocessingunit.h
+RC_ICONS = assets/images/icon.ico

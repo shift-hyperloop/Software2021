@@ -12,11 +12,11 @@ Item {
 
     width: 300
     height: 300
+    x: 0
+    y: 0
 
     CircularGauge{
         id: circulargauge
-        x: 46
-        y: 24
         minimumValue: 0
         maximumValue: 500
         stepSize: 1
