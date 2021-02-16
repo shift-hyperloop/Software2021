@@ -28,7 +28,7 @@ DataManager::DataManager()
             this, &DataManager::newAccelerationVelocity);
 
 
-    connect(&canSplitter, &CanSplitter::dataReceived,
+    connect(&canServer, &CANServer::dataReceived,
             &decoder, &Decoder::checkData);
 
     connect(&decoder, &Decoder::addData,
@@ -60,11 +60,11 @@ void DataManager::addData(const QString& name, const DataType &dataType, const Q
 
 void DataManager::startServer()
 {
-    canSplitter.start();
+        canServer.start();
 }
 
-void DataManager::sendPodCommand(const PodMessageType& messageType)
+void DataManager::sendPodCommand(const PodCommand& messageType)
 {
-        podDataSender.canMessageConvertor(messageType);
+        canServer.sendPodCommand(messageType);
 }
 

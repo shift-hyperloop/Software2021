@@ -5,9 +5,8 @@
 #include <QVector>
 #include <QtConcurrent/QtConcurrent>
 #include "processingunit.h"
-#include "Decoding/cansplitter.h"
+#include "Decoding/canserver.h"
 #include "Decoding/decoder.h"
-#include "Decoding/poddatasender.h"
 
 class DataManager : public QObject
 {
@@ -25,7 +24,7 @@ public slots:
     void startServer();
 
     // This should use a Decoder slot to send command to pod
-    void sendPodCommand(const PodMessageType& command);
+    void sendPodCommand(const PodCommand& command);
 
 signals:
     // TODO: Add signals for each CAN message
@@ -38,9 +37,7 @@ private:
     QVector<ProcessingUnit*> processingUnits;
 
     Decoder decoder;
-    CanSplitter canSplitter;
-    PodDataSender podDataSender;
-
+    CANServer canServer;
 };
 
 #endif // DATAMANAGER_H
