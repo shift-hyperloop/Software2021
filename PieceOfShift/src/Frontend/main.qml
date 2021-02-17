@@ -185,7 +185,7 @@ ApplicationWindow {
                     left: parent.left
                     leftMargin: chart.x + chart.chartWidth
                 }
-                scale: 0.1 + Math.min(window.width / 1600, window.height / 900)
+                scale: Math.min(window.width / 1700, window.height / 1000)
                 transformOrigin: "TopLeft"
             }
 
