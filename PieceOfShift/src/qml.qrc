@@ -1,4 +1,3 @@
-
 <RCC>
     <qresource prefix="/">
         <file>Frontend/main.qml</file>
@@ -15,5 +14,6 @@
         <file>Frontend/Tilitmeter.qml</file>
         <file>Frontend/Semicircle.qml</file>
         <file>Frontend/StateIndication.qml</file>
+        <file>Frontend/ValueTable.qml</file>
     </qresource>
 </RCC>

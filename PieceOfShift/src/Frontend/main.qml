@@ -150,6 +150,7 @@ ApplicationWindow {
                     var speed = (distance * 50) / 0.02;
                     slider.value = slider.value + distance;
                     speedometer.value = speed;
+                    valueTable.speedValue = speed;
                     thermometer.value = Math.random() * 25 + 25;
                     chart.counter++;
                     chart.lineseries.append(chart.counter, speed);
@@ -174,6 +175,15 @@ ApplicationWindow {
                     onClicked: {
                         stackView.push("PreviewPage.qml");
                     }
+                }
+            }
+            ValueTable{
+                id: valueTable
+                anchors {
+                    top: parent.top
+                    topMargin: 0.05 * window.height
+                    left: parent.left
+                    leftMargin: chart.x + chart.chartWidth
                 }
             }
 
