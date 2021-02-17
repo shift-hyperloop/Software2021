@@ -181,7 +181,7 @@ ApplicationWindow {
                 id: valueTable
                 anchors {
                     top: parent.top
-                    topMargin: 0.05 * window.height
+                    topMargin: 0.06 * window.height
                     left: parent.left
                     leftMargin: chart.x + chart.chartWidth
                 }
