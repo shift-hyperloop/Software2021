@@ -3,53 +3,67 @@ import QtQuick 2.14
 import Qt.labs.qmlmodels 1.0
 
 Item {
-    width: 216
-    height: 215
+    property int speedValue: 10
+    width: 400
+    height: 400
     Rectangle {
         id: rectangle
-        x: 8
-        y: 8
-        width: 200
-        height: 200
+        x: 0
+        y: 0
+        anchors.fill: parent
         color: "#00000000"
         border.color: "#ffffff"
         border.width: 5
-    }
-    TableView{
-        width: 300
-        height: 300
-        columnSpacing: 0
-        interactive: false
-        model: TableModel {
-            TableModelColumn { display: "name" }
-            TableModelColumn { display: "color" }
+        TableView{
+            x: rectangle.x + rectangle.border.width
+            y: rectangle.y + rectangle.border.width
+            id: table
+            anchors.fill: parent
+            columnSpacing: 0
+            interactive: false
+            model: TableModel {
+                TableModelColumn { display: "name" }
+                TableModelColumn { display: "color" }
                    rows: [
                        {
-                           "name": "cat",
-                           "color": "black"
+                           "name": "Speed",
+                           "color": qsTr(speedValue + "km/h")
                        },
                        {
-                           "name": "dog",
-                           "color": "brown"
+                           "name": "Voltage battery 1",
+                           "color": "12"
                        },
                        {
-                           "name": "bird",
-                           "color": "white"
+                           "name": "Value Value",
+                           "color": "100"
+                       },
+                       {
+                           "name": "Bruh moments:",
+                           "color": "8"
+                       },
+                       {
+                           "name": "Crashes",
+                           "color": "0"
                        }
                    ]
-               }
+            }
 
-        delegate: Rectangle {
-                implicitWidth: 100
-                implicitHeight: 50
-                border.color: "#000000"
+            delegate: Rectangle {
+                implicitWidth: rectangle.width / table.columns
+                implicitHeight: rectangle.height / table.rows
+                border.color: "#ffffff"
+                color: "#00000000"
                 border.width: 2
                 Text {
-                    text: qsTr("")
-                }
-                Text {
+                    height: parent.height
+                    width: parent.width
                     text: display
+                    font.pixelSize: 18
+                    color: "#e3e3e3"
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter
                 }
             }
+        }
     }
 }
