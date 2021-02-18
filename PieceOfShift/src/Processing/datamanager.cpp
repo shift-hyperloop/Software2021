@@ -67,3 +67,5 @@ void DataManager::sendPodCommand(const PodCommand& messageType)
         canServer.sendPodCommand(messageType);
 }
 
+DataManager* DataManagerAccessor::_obj = nullptr;
+

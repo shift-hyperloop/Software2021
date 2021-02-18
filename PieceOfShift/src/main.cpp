@@ -6,9 +6,16 @@
 
 int main(int argc, char *argv[])
 {
-    QDirIterator it(":", QDirIterator::Subdirectories);
     // TODO: Move these to other file
-    qmlRegisterType<DataManager>("shift.datamanagement", 1, 0, "DataManager");
+
+    /* Make QML able to access dataManager from any file through DataManagerAccessor object */
+    DataManager dataManager;
+    qRegisterMetaType<DataManager*>();
+
+    DataManagerAccessor::setDataManager(&dataManager);
+    qmlRegisterType<DataManagerAccessor>("shift.datamanagement", 1, 0, "DataManagerAccessor");
+
+
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QApplication app(argc, argv);
@@ -25,14 +32,5 @@ int main(int argc, char *argv[])
 
     QQuickStyle::setStyle("Material");
     engine.load(url);
-
-    Decoder decoder;
-
-    quint16 id = 0x002;
-    quint8 size = 10;
-    QByteArray array;
-
-    decoder.checkData(id, size, array);
-
     return app.exec();
 }

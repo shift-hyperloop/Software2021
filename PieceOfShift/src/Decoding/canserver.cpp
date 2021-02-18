@@ -1,4 +1,5 @@
 #include "canserver.h"
+#include <qtcpsocket.h>
 
 CANServer::CANServer()
 {
@@ -17,7 +18,7 @@ void CANServer::start()
 
     // Connect socket to port and address
     udpSocket->bind(/* NOTE: REPLACE */1234, QUdpSocket::ShareAddress);
-    
+
     // Handle datagram read in handleDatagram function
     connect(udpSocket, &QUdpSocket::readyRead, this, &CANServer::handleIncoming);
 }
