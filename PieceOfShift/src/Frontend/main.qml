@@ -37,6 +37,17 @@ ApplicationWindow {
             property alias timer: timer
             property alias chart: chart;
             property alias counter: chart.counter
+            NetworkInfo {
+                anchors.right: parent.right
+                anchors.top: parent.top
+                z: 1
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        stackView.push("NetworkInfoPage.qml");
+                    }
+                }
+            }
             Item {
                 id: panelLeft
                 height: window.height - slider.height - anchors.topMargin
