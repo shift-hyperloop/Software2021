@@ -37,7 +37,12 @@ ApplicationWindow {
             property alias timer: timer
             property alias chart: chart;
             property alias counter: chart.counter
+            //to change networkinfo status with button
+            property alias connected: networkinfo.connected
             NetworkInfo {
+                id: networkinfo
+                connected: true
+                ping: 10
                 anchors.right: parent.right
                 anchors.top: parent.top
                 z: 1

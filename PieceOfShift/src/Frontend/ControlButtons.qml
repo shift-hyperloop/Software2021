@@ -47,6 +47,7 @@ Item {
                     hoverEnabled: true
                     onClicked: {
                         mainView.timer.start();
+                        networkinfo.connected = true;
                     }
                     onPressed: {
                         parent.color = "#aaa";
