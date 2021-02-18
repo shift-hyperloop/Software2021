@@ -33,8 +33,8 @@ Page {
     }
 
     property var pageElements: [
-        brakesAirReservoirPressure,
-        brakesCaliperTemp
+        pressureValue,
+        tempValue,
     ]
 
     Button {
@@ -133,7 +133,7 @@ Page {
         //radius: width*0.5
 
         Text {
-            id: brakes
+            id: brakesText
             anchors.top: parent.top
             anchors.horizontalCenter: parent.horizontalCenter
             color: "white"
@@ -141,7 +141,7 @@ Page {
         }
 
         Rectangle {
-            id: valves
+            id: valvesContainer
             anchors.left: parent.left
             anchors.bottom: parent.bottom
             //x: parent.x
@@ -183,9 +183,9 @@ Page {
         }
 
         Rectangle {
-            id: brakePads
-            x: valves.x + valves.width
-            y: valves.y
+            id: brakePadsContainer
+            x: valvesContainer.x + valvesContainer.width
+            y: valvesContainer.y
             height: 0.75 * parent.height
             width: parent.width / 3
             color: "transparent"
@@ -202,7 +202,7 @@ Page {
             }
 
             Text {
-                id: brakesPadTemp
+                id: tempValue
                 anchors.centerIn: parent
                 color: "white"
                 text: qsTr("10C")
@@ -210,9 +210,9 @@ Page {
         }
 
         Rectangle {
-            id: pressure
-            x: brakePads.x + brakePads.width
-            y: valves.y
+            id: pressureContainer
+            x: brakePadsContainer.x + brakePadsContainer.width
+            y: brakePadsContainer.y
             height: 0.75 * parent.height
             width: parent.width / 3
             color: "transparent"
@@ -229,7 +229,7 @@ Page {
             }
 
             Text {
-                id: cylinderPressure
+                id: pressureValue
                 anchors.centerIn: parent
                 color: "white"
                 text: qsTr("10kPa")
@@ -237,31 +237,78 @@ Page {
         }
     }
 
-    Text {
-        id: brakesAirReservoirPressure
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.horizontalCenter: parent.horizontalCenter
-        color: "black"
-        text: "Pressure"
-    }
 
     Rectangle {
-        id: rect2
+        id: suspensionSection
         x: window.width - width
         y: brakesSection.y + brakesSection.height
-        height: 100
+        height: (window.height - 0.05 * window.height) / 3
         width: Math.sqrt(2) * height
-        color: "grey"
+        color: "transparent"
         border.color: "black"
-        border.width: 1
-        //radius: width*0.5
+        border.width: 2
+        radius: 4
 
         Text {
-            id: brakesCaliperTemp
-            anchors.verticalCenter: parent.verticalCenter
+            id: suspensionText
+            anchors.top: parent.top
             anchors.horizontalCenter: parent.horizontalCenter
-            color: "black"
-            text: "Temperature"
+            color: "white"
+            text: qsTr("SUSPENSION")
+        }
+
+        Rectangle {
+            id: iBeamDistanceContainer
+            anchors.left: parent.left
+            anchors.bottom: parent.bottom
+            height: 0.75 * parent.height
+            width: parent.width / 2
+            color: "transparent"
+            border.color: "white"
+            border.width: 2
+            radius: 4
+
+            Text {
+                id: distanceText
+                anchors.top: parent.top
+                anchors.horizontalCenter: parent.horizontalCenter
+                color: "white"
+                text: qsTr("I-beam distance")
+            }
+
+            Text {
+                id: distanceValue
+                anchors.centerIn: parent
+                color: "white"
+                text: qsTr("10 units")
+            }
+        }
+
+        Rectangle {
+            id: accelerationContainer
+            x: iBeamDistanceContainer.x + iBeamDistanceContainer.width
+            y: iBeamDistanceContainer.y
+            height: 0.75 * parent.height
+            width: parent.width / 2
+            color: "transparent"
+            border.color: "white"
+            border.width: 2
+            radius: 4
+
+            Text {
+                id: accelerationText
+                anchors.top: parent.top
+                anchors.horizontalCenter: parent.horizontalCenter
+                color: "white"
+                text: qsTr("Acceleration")
+            }
+
+            Text {
+                id: accelerationValue
+                anchors.centerIn: parent
+                color: "white"
+                text: qsTr("10 m/s^2")
+            }
         }
     }
 
@@ -281,16 +328,8 @@ Page {
             y: red.y + red.height
 
             onClicked: {
-                if (brakesValveStatus.text === "Open") {
-                    brakesValveStatus.text = "Closed";
-                    green.opacity = 0.2;
-                    red.opacity = 1;
-                }
-                else {
-                    brakesValveStatus.text = "Open";
-                    green.opacity = 1;
-                    red.opacity = 0.2;
-                }
+                green.opacity = (green.opacity === 1) ? 0.2 : 1;
+                red.opacity = (red.opacity === 1) ? 0.2 : 1;
             }
         }
 
