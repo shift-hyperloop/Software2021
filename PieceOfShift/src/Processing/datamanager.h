@@ -23,10 +23,10 @@ public slots:
     void addData(const QString& name, const DataType &dataType, const QVariant &data);
 
     // Start recieving messages
-    void startServer();
+    void connectToPod();
 
     // This should use a Decoder slot to send command to pod
-    void sendPodCommand(const PodCommand& command);
+    void sendPodCommand(CANServer::PodCommand command);
 
     // Write current data to log file
     //void writeLogFile(const QString& path);

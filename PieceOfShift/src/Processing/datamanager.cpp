@@ -1,5 +1,6 @@
 #include <QtConcurrent/QtConcurrent>
 #include <algorithm>
+#include "Decoding/canserver.h"
 #include "Decoding/decoder.h"
 #include "datamanager.h"
 #include "velocityprocessingunit.h"
@@ -57,12 +58,12 @@ void DataManager::addData(const QString& name, const DataType &dataType, const Q
     processingUnit->addData(name, data);
 }
 
-void DataManager::startServer()
+void DataManager::connectToPod()
 {
-        canServer.start();
+        canServer.connectToPod();
 }
 
-void DataManager::sendPodCommand(const PodCommand& messageType)
+void DataManager::sendPodCommand(CANServer::PodCommand messageType)
 {
         canServer.sendPodCommand(messageType);
 }
