@@ -15,6 +15,9 @@ Decoder::~Decoder()
 
 void Decoder::checkData(unsigned short id, unsigned char dataSize, QByteArray data)
 {
+    if (!idToType.contains(id)) {
+        return;
+    }
     DataType dataType = idToType.value(id);
     QString name = idToName.value(id);
 

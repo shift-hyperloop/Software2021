@@ -50,6 +50,7 @@ void CANServer::handleIncoming()
         quint8 dataSize = qFromBigEndian<quint8>(datagram.mid(CAN_DATA_SIZE_OFFSET, CAN_DATA_SIZE_SIZE).toHex().toInt(&ok, 16));
         QByteArray data = datagram.mid(CAN_DATA_OFFSET, CAN_DATA_SIZE_SIZE);
 
+
         // Send id, datasize and data as signal onward
         emit dataReceived(id, dataSize, data);
     }

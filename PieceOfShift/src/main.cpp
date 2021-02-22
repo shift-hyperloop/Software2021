@@ -14,8 +14,8 @@ int main(int argc, char *argv[])
     DataManager dataManager;
 
     DataManagerAccessor::setDataManager(&dataManager);
-    qDebug() << qmlRegisterType<DataManagerAccessor>("shift.datamanagement", 1, 0, "DataManagerAccessor");
-    qDebug() << qmlRegisterType<CANServer>("shift.datamanagement", 1, 0, "PodCommand");
+    qmlRegisterType<DataManagerAccessor>("shift.datamanagement", 1, 0, "DataManagerAccessor");
+    qmlRegisterType<CANServer>("shift.datamanagement", 1, 0, "PodCommand");
 
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 

@@ -4,9 +4,7 @@
 #include <QObject>
 #include <QVector>
 #include <QtConcurrent/QtConcurrent>
-#include <qobject.h>
-#include <qobjectdefs.h>
-#include "processingunit.h"
+#include "Processing/processingunit.h"
 #include "Decoding/canserver.h"
 #include "Decoding/decoder.h"
 
@@ -29,10 +27,10 @@ public slots:
     void sendPodCommand(CANServer::PodCommand command);
 
     // Write current data to log file
-    //void writeLogFile(const QString& path);
+    void writeLogFile(const QString& path) { } // TODO: Implement
 
     // Read log file and send through pipeline
-    //void readLogFile(const QString& path);
+    void readLogFile(const QString& path) { } // TODO: Implement
 
 signals:
     // TODO: Add signals for each CAN message
@@ -40,6 +38,9 @@ signals:
     void newVelocity(const QString &name, const QVariant &velocity);
     void newAcceleration(const QVariant &a);
     void newAccelerationVelocity(const QVariant &av);
+
+    void podConnectionEstablished();
+    void podConnectionTerminated();
 
 private:
     QVector<ProcessingUnit*> processingUnits;
@@ -53,7 +54,7 @@ class DataManagerAccessor : public QObject {
     Q_PROPERTY(DataManager* dataManager READ dataManager)
 
 private:
-    static DataManager * _obj; // remember to init in the cpp file
+    static DataManager * _obj; // Initialized in .cpp
 
 public:
     DataManagerAccessor(QObject * parent = 0) : QObject(parent) {}
