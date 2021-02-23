@@ -1,7 +1,7 @@
 #
 # For basic cmake file structure see: http://doc.qt.io/qt-5/cmake-manual.html
 #
-cmake_minimum_required(VERSION 3.19)
+cmake_minimum_required(VERSION 3.17)
 
 
 project(PieceOfShift)
@@ -19,7 +19,7 @@ endif()
 set(CMAKE_AUTOMOC ON)
 
 # Find the Qt libraries for Qt Quick/QML
-find_package(Qt5 REQUIRED Qml Quick Core Widgets Concurrent QuickControls2)
+find_package(Qt5 REQUIRED Network Qml Quick Core Widgets Concurrent QuickControls2)
 
 # add the qml.qrc file
 qt5_add_resources(qml_QRC src/qml.qrc)
@@ -38,7 +38,7 @@ file(GLOB_RECURSE HEADER
 add_executable(PieceOfShift ${SOURCE} ${HEADER} ${qml_QRC} ${assets_QRC})
 
 # Use the Qml/Quick modules from Qt 5.
-target_link_libraries(PieceOfShift Qt5::Qml Qt5::Quick Qt5::Core Qt5::Widgets Qt5::Concurrent Qt5::QuickControls2)
+target_link_libraries(PieceOfShift Qt5::Network Qt5::Qml Qt5::Quick Qt5::Core Qt5::Widgets Qt5::Concurrent Qt5::QuickControls2)
 
 
 # post-build steps

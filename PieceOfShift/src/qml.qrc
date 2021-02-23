@@ -1,8 +1,13 @@
 <RCC>
     <qresource prefix="/">
         <file>Frontend/main.qml</file>
+        <file>Frontend/Battery.qml</file>
+        <file>Frontend/DetailedBatteryPage.qml</file>
+        <file>Frontend/MechanicalDetails.qml</file>
+        <file>Frontend/StateIndication.qml</file>
         <file>Frontend/Speedometer.qml</file>
         <file>Frontend/Chart.qml</file>
+        <file>Frontend/MultiLineChart.qml</file>
         <file>Frontend/Thermometer.qml</file>
         <file>Frontend/CustomMenuBar.qml</file>
         <file>Frontend/ControlButtons.qml</file>
@@ -10,7 +15,6 @@
         <file>Frontend/ExampleComponent.qml</file>
         <file>Frontend/PreviewPage.qml</file>
         <file>Frontend/SimpleChart.qml</file>
-        <file>Frontend/Battery.qml</file>
         <file>Frontend/Tilitmeter.qml</file>
         <file>Frontend/Semicircle.qml</file>
         <file>Frontend/StateIndication.qml</file>
