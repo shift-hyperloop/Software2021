@@ -13,7 +13,6 @@
         <file>Frontend/ControlButtons.qml</file>
         <file>Frontend/DistanceSlider.qml</file>
         <file>Frontend/ExampleComponent.qml</file>
-        <file>Frontend/PreviewPage.qml</file>
         <file>Frontend/SimpleChart.qml</file>
         <file>Frontend/Tilitmeter.qml</file>
         <file>Frontend/Semicircle.qml</file>
