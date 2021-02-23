@@ -1,6 +1,3 @@
-#include <QtConcurrent/QtConcurrent>
-#include <algorithm>
-#include "Decoding/decoder.h"
 #include "datamanager.h"
 #include "velocityprocessingunit.h"
 #include "accelerationprocessingunit.h"
@@ -33,6 +30,12 @@ DataManager::DataManager()
     connect(&decoder, &Decoder::addData,
             this, &DataManager::addData);
 
+    connect(&canServer, &CANServer::connectionEstablished,
+            this, &DataManager::podConnectionEstablished);
+
+    connect(&canServer, &CANServer::connectionTerminated,
+            this, &DataManager::podConnectionTerminated);
+
     /* Create Decoder/DataFetcher object here and start it when signal from
      QML has been received */
 }
@@ -53,19 +56,19 @@ void DataManager::addData(const QString& name, const DataType &dataType, const Q
                           processingUnits.end(),
                           [&dataType](auto x)
                           { return x->dataType() == dataType; });
-    //QtConcurrent::run(processingUnit, &ProcessingUnit::addData, name, data);
-    processingUnit->addData(name, data);
+    QtConcurrent::run(processingUnit, &ProcessingUnit::addData, name, data);
+    //processingUnit->addData(name, data);
 }
 
-void DataManager::startServer()
+void DataManager::connectToPod()
 {
-        canServer.start();
+        canServer.connectToPod();
 }
 
-void DataManager::sendPodCommand(const PodCommand& messageType)
+void DataManager::sendPodCommand(CANServer::PodCommand messageType)
 {
         canServer.sendPodCommand(messageType);
 }
 
-DataManager* DataManagerAccessor::_obj = nullptr;
+DataManager* DataManagerAccessor::_obj = nullptr; // Object accessed by QML, needs to be initialized since static
 

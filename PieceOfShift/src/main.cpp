@@ -1,6 +1,8 @@
 #include <QtWidgets/QApplication>
 #include <QQmlApplicationEngine>
 #include <QQuickStyle>
+#include <qqml.h>
+#include "Decoding/canserver.h"
 #include "Processing/datamanager.h"
 #include "Decoding/decoder.h"
 
@@ -10,11 +12,10 @@ int main(int argc, char *argv[])
 
     /* Make QML able to access dataManager from any file through DataManagerAccessor object */
     DataManager dataManager;
-    qRegisterMetaType<DataManager*>();
 
     DataManagerAccessor::setDataManager(&dataManager);
     qmlRegisterType<DataManagerAccessor>("shift.datamanagement", 1, 0, "DataManagerAccessor");
-
+    qmlRegisterType<CANServer>("shift.datamanagement", 1, 0, "PodCommand");
 
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
