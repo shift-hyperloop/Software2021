@@ -262,7 +262,7 @@ Page {
             anchors.left: parent.left
             anchors.bottom: parent.bottom
             height: 0.75 * parent.height
-            width: parent.width / 2
+            width: parent.width / 3
             color: "transparent"
             border.color: "white"
             border.width: 2
@@ -289,7 +289,7 @@ Page {
             x: iBeamDistanceContainer.x + iBeamDistanceContainer.width
             y: iBeamDistanceContainer.y
             height: 0.75 * parent.height
-            width: parent.width / 2
+            width: parent.width / 3
             color: "transparent"
             border.color: "white"
             border.width: 2
@@ -308,6 +308,33 @@ Page {
                 anchors.centerIn: parent
                 color: "white"
                 text: qsTr("10 m/s^2")
+            }
+        }
+
+        Rectangle {
+            id: rollContainer
+            x: accelerationContainer.x + accelerationContainer.width
+            y: accelerationContainer.y
+            height: 0.75 * parent.height
+            width: parent.width / 3
+            color: "transparent"
+            border.color: "white"
+            border.width: 2
+            radius: 4
+
+            Text {
+                id: rollText
+                anchors.top: parent.top
+                anchors.horizontalCenter: parent.horizontalCenter
+                color: "white"
+                text: qsTr("Roll")
+            }
+
+            Text {
+                id: rollValue
+                anchors.centerIn: parent
+                color: "white"
+                text: qsTr("What goes here?")
             }
         }
     }
