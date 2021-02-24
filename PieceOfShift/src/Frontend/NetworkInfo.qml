@@ -5,7 +5,7 @@ Item {
     property bool connected: true
     property int ping: 0
     width: 300
-    height: networktext.font.pixelSize + 10
+    height: networktext.font.pixelSize + 30
     Component.onCompleted: {
         connected = false;
     }
@@ -18,7 +18,19 @@ Item {
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignRight
         font.pixelSize: 16
-        anchors.right: parent.right
+        anchors.right: signalSymbol.left
         anchors.rightMargin: 10
+    }
+
+    SignalSymbol{
+        id: signalSymbol
+        height: networkinfo.height - 10
+        width: height
+        anchors.top: parent.top
+        anchors.topMargin: 5
+        anchors.right: parent.right
+        anchors.rightMargin: 5
+        z : 2
+        connection: 0 // 0 - 4
     }
 }
