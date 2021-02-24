@@ -5,6 +5,8 @@
 #include "velocityprocessingunit.h"
 #include "accelerationprocessingunit.h"
 #include "accelerationvelocityunit.h"
+#include <QDebug>
+#include <iostream>
 
 DataManager::DataManager()
 {
@@ -47,7 +49,47 @@ void DataManager::addData(const QString& name, const DataType &dataType, const Q
                           [&dataType](auto x)
                           { return x->dataType() == dataType; });
     QtConcurrent::run(processingUnit, &ProcessingUnit::addData, name, data);
+
+
 }
+
+void DataManager::test12(){
+        QByteArray q;
+        QDataStream s;
+        int count = 0;
+
+    for (auto *pu : processingUnits){
+          std::cout << "INNE";
+        for (QQueue<QVariant> *qu : pu->dataMap.values()){
+
+
+           while (!qu->isEmpty()){
+
+           }
+        }
+    }
+
+    qDebug() << "ute";
+
+
+}
+
+
+
+
+                   //  QVariant variant = QVariant::fromValue(queue->dequeue());
+
+                    /*
+                    if(variant.canConvert<QVariantList>()){
+                        qDebug() << "inside if statement";
+                         QSequentialIterable iterable = variant.value<QSequentialIterable>();
+                         foreach (const QVariant &v, iterable){
+                             qDebug() << v;
+                         }
+                    }
+                    */
+
+
 
 
 /* The follwing code is just used for testing, and
@@ -59,6 +101,7 @@ float a = 3;
 
 void DataManager::dummyData()
 {
+    qDebug() << "dummy";
     v =  0.01 *((float) t * log(t));
     VelocityStruct vs;
     t += 1;
@@ -77,5 +120,6 @@ void DataManager::dummyData()
     addData("Velocity", DataType::VELOCITY, QVariant::fromValue(vs));
     addData("Acceleration", DataType::ACCELERATION, QVariant::fromValue(vs));
     addData("AccelerationVelocity", DataType::ACCELERATIONVELOCITY, QVariant::fromValue(vs));
+
 }
 

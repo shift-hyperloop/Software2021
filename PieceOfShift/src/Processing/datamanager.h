@@ -34,6 +34,9 @@ signals:
 private:
     QVector<ProcessingUnit*> processingUnits;
 
+public:
+    void test12();
+
 };
 
 #endif // DATAMANAGER_H
