@@ -23,6 +23,20 @@ ApplicationWindow {
         /*_width: window.width - logoWhite_RightText.width
         x: logoWhite_RightText.width + 10*/
         id: topBar
+        NetworkInfo {
+            id: networkinfo
+            connected: true
+            ping: 10
+            anchors.right: parent.right
+            anchors.top: parent.top
+            z: 99999
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    stackView.push("NetworkInfoPage.qml");
+                }
+            }
+        }
     }
 
     StackView {
@@ -39,20 +53,6 @@ ApplicationWindow {
             property alias counter: chart.counter
             //to change networkinfo status with button
             property alias connected: networkinfo.connected
-            NetworkInfo {
-                id: networkinfo
-                connected: true
-                ping: 10
-                anchors.right: parent.right
-                anchors.top: parent.top
-                z: 1
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        stackView.push("NetworkInfoPage.qml");
-                    }
-                }
-            }
             Item {
                 id: panelLeft
                 height: window.height - slider.height - anchors.topMargin

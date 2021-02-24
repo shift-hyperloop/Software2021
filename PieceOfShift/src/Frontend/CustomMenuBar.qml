@@ -20,10 +20,6 @@ Item {
 
         }
     }
-    NetworkInfo {
-        anchors.right: parent.right
-
-    }
 
     MenuBar{
         id: __menu
@@ -32,9 +28,6 @@ Item {
         height: 0.05 * window.height
         background: Rectangle {
             color: "#373840"
-            NetworkInfo {
-                anchors.right: parent.right
-            }
         }
         padding: 2
         delegate: MenuBarItem {
