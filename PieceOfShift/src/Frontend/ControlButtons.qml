@@ -48,6 +48,7 @@ Item {
                     onClicked: {
                         mainView.timer.start();
                         networkinfo.connected = true;
+                        networkinfo.connectionStrength = 3
                     }
                     onPressed: {
                         parent.color = "#aaa";

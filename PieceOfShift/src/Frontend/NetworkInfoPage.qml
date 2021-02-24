@@ -16,6 +16,11 @@ Item {
            stackView.pop(null);
         }
     }
+    Item {
+        id: connectionInputs
+        visible: ! networkinfo.connected
+
+
     Rectangle{
         color: "lightgray"
         id: ipInput
@@ -70,10 +75,12 @@ Item {
         anchors.top: ipPort.top
     }
     Button{
+        id: connectButton
         text: qsTr("Connect")
         y: ipInput.y - 5
         anchors.left: ipInput.right
         anchors.leftMargin: width / 4
+        enabled: !networkinfo.connected
         onClicked: {
             console.log("IP: " + inputIP.text + " Port: " + inputPort.text)
             inputIP.clear()
@@ -81,6 +88,6 @@ Item {
         }
 
     }
-
+}
 
 }
