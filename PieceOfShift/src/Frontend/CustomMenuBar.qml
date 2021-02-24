@@ -18,8 +18,6 @@ Item {
             height: 0.05 * window.height - 10
             source: "../Shift_Logo.png"
             fillMode: Image.PreserveAspectFit
-
-
         }
     }
     MenuBar{
