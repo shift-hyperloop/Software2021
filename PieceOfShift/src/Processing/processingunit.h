@@ -42,6 +42,8 @@ public:
 
     DataType dataType() { return m_dataType; }
 
+    inline QMap<QString, QQueue<QVariant>*> getDataMap() { return dataMap; }
+
 public slots:
     // Add data to queue and start processing
     void addData(const QString &name, const QVariant &data);

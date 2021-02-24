@@ -54,23 +54,19 @@ void DataManager::addData(const QString& name, const DataType &dataType, const Q
 }
 
 void DataManager::test12(){
-        QByteArray q;
-        QDataStream s;
-        int count = 0;
+    QByteArray q;
+    QDataStream s;
+    int count = 0;
+    qDebug() << "HERE";
 
-    for (auto *pu : processingUnits){
-          std::cout << "INNE";
-        for (QQueue<QVariant> *qu : pu->dataMap.values()){
+    QMap<QString, QQueue<QVariant>> dataCopy;
 
-
-           while (!qu->isEmpty()){
-
-           }
+    for (auto *pu : processingUnits) {
+        qDebug() << pu->getDataMap().size();
+        for (QString label : pu->getDataMap().keys()){
+            dataCopy.insert(label, *pu->getDataMap().value(label));
         }
     }
-
-    qDebug() << "ute";
-
 
 }
 
