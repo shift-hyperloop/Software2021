@@ -18,49 +18,91 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
                 spacing: width * 0.1
+                Rectangle {
+                    width: circleSize
+                    height: circleSize
+                    color: "#00000000"
+                    Text {
+                        text: qsTr("Roll: " + roll.rollDeg + " °")
+                        horizontalAlignment: Text.AlignLeft
+                        anchors {
+                            left: parent.left
+                            leftMargin: circleSize * 0.15
+                            bottom: parent.top
+                            bottomMargin: 10
+                        }
+                        color: "white"
+                        font.pixelSize: circleSize / 5
+                    }
+                    Rectangle{
+                        property var rollDeg
+                        id: roll
+                        width: circleSize
+                        height: circleSize
+                        radius: 100
+                        color: "black"
+                        Semicircle{
+                            transform: Rotation{ origin.x: circleSize / 2; origin.y: circleSize / 2; angle: rollDeg}
+                        }
+                    }
+                }
+                Rectangle {
+                    width: circleSize
+                    height: circleSize
+                    color: "#00000000"
+                    Text {
+                        text: qsTr("Pitch: " + pitch.pitchDeg + " °")
+                        horizontalAlignment: Text.AlignLeft
+                        anchors {
+                            left: parent.left
+                            leftMargin: circleSize * 0.15
+                            bottom: parent.top
+                            bottomMargin: 10
+                        }
+                        color: "white"
+                        font.pixelSize: circleSize / 5
+                    }
+                    Rectangle{
+                        id: pitch
+                        property var pitchDeg
+                        width: circleSize
+                        height: circleSize
+                        radius: 100
+                        color: "black"
+                        Semicircle{
+                            transform: Rotation{ origin.x: circleSize / 2; origin.y: circleSize / 2; angle: pitchDeg}
+                        }
+                    }
+                }
+                Rectangle {
+                    width: circleSize
+                    height: circleSize
+                    color: "#00000000"
+                    Text {
+                        text: qsTr("Yaw: " + yaw.yawDeg + " °")
+                        horizontalAlignment: Text.AlignLeft
+                        anchors {
+                            left: parent.left
+                            leftMargin: circleSize * 0.15
+                            bottom: parent.top
+                            bottomMargin: 10
+                        }
 
-                Rectangle{
-                    property var rollDeg
-                    id: roll
-                    width: circleSize
-                    height: circleSize
-                    radius: 100
-                    color: "black"
-                    Semicircle{
-                        transform: Rotation{ origin.x: circleSize / 2; origin.y: circleSize / 2; angle: rollDeg}
+                        color: "white"
+                        font.pixelSize: circleSize / 5
                     }
-                }
-                Rectangle{
-                    id: pitch
-                    property var pitchDeg
-                    width: circleSize
-                    height: circleSize
-                    radius: 100
-                    color: "black"
-                    Semicircle{
-                        transform: Rotation{ origin.x: circleSize / 2; origin.y: circleSize / 2; angle: pitchDeg}
-                    }
-                }
-                Rectangle{
-                    property var yawDeg
-                    id: yaw
-                    width: circleSize
-                    height: circleSize
-                    radius: 100
-                    color: "black"
-                    Semicircle{
-                        transform: Rotation{ origin.x: circleSize / 2; origin.y: circleSize / 2; angle: yawDeg}
+                    Rectangle{
+                        property var yawDeg
+                        id: yaw
+                        width: circleSize
+                        height: circleSize
+                        radius: 100
+                        color: "black"
+                        Semicircle{
+                            transform: Rotation{ origin.x: circleSize / 2; origin.y: circleSize / 2; angle: yawDeg}
+                        }
                     }
                 }
             }
-
-    }
-    Text {
-        text: qsTr("Roll: " + roll.rollDeg+ " deg  "  + "Pitch: " + pitch.pitchDeg+ " deg  " + "Yaw: " + yaw.yawDeg+ " deg")
-        anchors.horizontalCenter: r.horizontalCenter
-        anchors.bottom: parent.top
-        anchors.bottomMargin: circleSize / 2 + 10
-        color: "white"
-        font.pixelSize: circleSize / 5
     }
 }
