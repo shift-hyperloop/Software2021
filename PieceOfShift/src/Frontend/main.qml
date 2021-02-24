@@ -23,20 +23,11 @@ ApplicationWindow {
         /*_width: window.width - logoWhite_RightText.width
         x: logoWhite_RightText.width + 10*/
         id: topBar
-        SignalSymbol{
-            id: signalSymbol
-            height: 0.05 * window.height
-            width: height
-            anchors.top: parent.top
-            anchors.right: parent.right
-            z : 2
-            connection: 0 // 0 - 4
-        }
         NetworkInfo {
             id: networkinfo
             connected: true
             ping: 10
-            anchors.right: signalSymbol.left
+            anchors.right: parent.right
             anchors.top: parent.top
             z: 2
             MouseArea {
