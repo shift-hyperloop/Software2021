@@ -7,11 +7,9 @@ Item {
     property alias connection: shapeRect.connection
     Rectangle{
         id: shapeRect
-        color: "grey"
-        height: width
-        x: 0
-        y: 0
-        property var connection: 3
+        color: "#373840"
+        anchors.fill: parent
+        property var connection
 
         Shape {
            ShapePath{
