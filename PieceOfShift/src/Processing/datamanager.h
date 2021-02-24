@@ -4,9 +4,9 @@
 #include <QObject>
 #include <QVector>
 #include <QtConcurrent/QtConcurrent>
-#include "Processing/processingunit.h"
-#include "Decoding/canserver.h"
-#include "Decoding/decoder.h"
+#include "processingunit.h"
+#include "src/Decoding/canserver.h"
+#include "src/Decoding/decoder.h"
 
 class DataManager : public QObject
 {
