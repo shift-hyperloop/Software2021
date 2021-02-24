@@ -12,8 +12,8 @@ Item {
         y: 0
         anchors.fill: parent
         color: "#00000000"
-        border.color: "#ffffff"
-        border.width: 5
+        border.color: "#ededed"
+        border.width: 3
         TableView{
             x: rectangle.x + rectangle.border.width
             y: rectangle.y + rectangle.border.width
