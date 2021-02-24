@@ -23,7 +23,7 @@ Item {
                     height: circleSize
                     color: "#00000000"
                     Text {
-                        text: qsTr("Roll: " + roll.rollDeg + " °")
+                        text: qsTr("Roll: " + roll.rollDeg + "°")
                         horizontalAlignment: Text.AlignLeft
                         anchors {
                             left: parent.left
@@ -42,7 +42,13 @@ Item {
                         radius: 100
                         color: "black"
                         Semicircle{
-                            transform: Rotation{ origin.x: circleSize / 2; origin.y: circleSize / 2; angle: rollDeg}
+                            //transform: Rotation{ origin.x: circleSize / 2; origin.y: circleSize / 2; angle: rollDeg}
+                            rotation: pitchDeg
+                            Behavior on rotation {
+                                NumberAnimation {
+                                    duration: 100
+                                }
+                            }
                         }
                     }
                 }
@@ -51,7 +57,7 @@ Item {
                     height: circleSize
                     color: "#00000000"
                     Text {
-                        text: qsTr("Pitch: " + pitch.pitchDeg + " °")
+                        text: qsTr("Pitch: " + pitch.pitchDeg + "°")
                         horizontalAlignment: Text.AlignLeft
                         anchors {
                             left: parent.left
@@ -70,7 +76,13 @@ Item {
                         radius: 100
                         color: "black"
                         Semicircle{
-                            transform: Rotation{ origin.x: circleSize / 2; origin.y: circleSize / 2; angle: pitchDeg}
+                            //transform: Rotation{ origin.x: circleSize / 2; origin.y: circleSize / 2; angle: pitchDeg
+                            rotation: pitchDeg
+                            Behavior on rotation {
+                                NumberAnimation {
+                                    duration: 100
+                                }
+                            }
                         }
                     }
                 }
@@ -79,7 +91,7 @@ Item {
                     height: circleSize
                     color: "#00000000"
                     Text {
-                        text: qsTr("Yaw: " + yaw.yawDeg + " °")
+                        text: qsTr("Yaw: " + yaw.yawDeg + "°")
                         horizontalAlignment: Text.AlignLeft
                         anchors {
                             left: parent.left
@@ -99,7 +111,13 @@ Item {
                         radius: 100
                         color: "black"
                         Semicircle{
-                            transform: Rotation{ origin.x: circleSize / 2; origin.y: circleSize / 2; angle: yawDeg}
+                            //transform: Rotation{ origin.x: circleSize / 2; origin.y: circleSize / 2; angle: yawDeg}
+                            rotation: pitchDeg
+                            Behavior on rotation {
+                                NumberAnimation {
+                                    duration: 100
+                                }
+                            }
                         }
                     }
                 }
