@@ -5,7 +5,7 @@ Item {
     property bool connected: true
     property int ping: 0
     width: 300
-    height: networktext.font.pixelSize + 30
+    height: window.height * 0.05
     Component.onCompleted: {
         connected = false;
     }
@@ -17,7 +17,7 @@ Item {
         color: connected ? "#3feb67" : "#f54838"
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignRight
-        font.pixelSize: 16
+        font.pixelSize: parent.height - 30
         anchors.right: signalSymbol.left
         anchors.rightMargin: 10
     }
