@@ -32,8 +32,13 @@ ApplicationWindow {
             z: 2
             MouseArea {
                 anchors.fill: parent
+                hoverEnabled: true
                 onClicked: {
                     stackView.push("NetworkInfoPage.qml");
+                }
+                onHoveredChanged: {
+                    parent.opacity = containsMouse ? 1.0 : 0.8;
+                    cursorShape = containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor;
                 }
             }
         }

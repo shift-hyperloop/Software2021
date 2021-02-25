@@ -37,6 +37,12 @@ Item {
             bottomPadding: 0
             selectByMouse : true
         }
+        MouseArea{
+            cursorShape: inputIP.activeFocus ? Qt.IBeamCursor : Qt.ArrowCursor;
+            enabled: false
+            anchors.fill: parent
+        }
+
     }
     Text{
         id: iplabel
@@ -64,6 +70,11 @@ Item {
             padding: 5
             bottomPadding: 0
             selectByMouse : true
+        }
+        MouseArea{
+            cursorShape: inputPort.activeFocus ? Qt.IBeamCursor : Qt.ArrowCursor;
+            enabled: false
+            anchors.fill: parent
         }
     }
     Text{

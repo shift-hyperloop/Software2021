@@ -48,9 +48,13 @@ Item {
                 timer.mouse_x_= mouseX
                 timer.mouse_y_= mouseY
                 timer.start()
+                cursorShape = Qt.ClosedHandCursor;
+
             }
             onReleased: {
                 timer.stop()
+                cursorShape = Qt.ArrowCursor;
+
             }
 
             Timer{
