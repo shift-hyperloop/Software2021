@@ -4,6 +4,7 @@ Item {
     id: networkinfo
     property bool connected: true
     property int ping: 0
+    property int connectionStrength: 0
     width: 300
     height: window.height * 0.05
     Component.onCompleted: {
@@ -31,6 +32,6 @@ Item {
         anchors.right: parent.right
         anchors.rightMargin: 5
         z : 2
-        connection: 0 // 0 - 4
+        connection: connectionStrength // 0 - 4
     }
 }
