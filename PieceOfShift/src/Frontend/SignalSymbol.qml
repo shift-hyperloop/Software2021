@@ -13,7 +13,7 @@ Item {
 
         Shape {
            ShapePath{
-               strokeColor: shapeRect.connection > 0 ? "black" : "lightgray"
+               strokeColor: shapeRect.connection > 0 ? "lightgray" : "black"
                strokeWidth: shapeRect.width/10
                startX: (shapeRect.width * 0.9) * 1/4
                startY: shapeRect.height*0.9
@@ -22,7 +22,7 @@ Item {
         }
         Shape {
            ShapePath{
-               strokeColor: shapeRect.connection > 1 ? "black" : "lightgray"
+               strokeColor: shapeRect.connection > 1 ? "lightgray" : "black"
                strokeWidth: shapeRect.width/10
                startX: (shapeRect.width * 0.9) * 2/4
                startY: shapeRect.height*0.9
@@ -31,7 +31,7 @@ Item {
         }
         Shape {
            ShapePath{
-               strokeColor: shapeRect.connection > 2 ? "black" : "lightgray"
+               strokeColor: shapeRect.connection > 2 ? "lightgray" : "black"
                strokeWidth: shapeRect.width/10
                startX: (shapeRect.width * 0.9) * 3/4
                startY: shapeRect.height*0.9
@@ -40,7 +40,7 @@ Item {
         }
         Shape {
            ShapePath{
-               strokeColor: shapeRect.connection > 3 ? "black" : "lightgray"
+               strokeColor: shapeRect.connection > 3 ? "lightgray" : "black"
                strokeWidth: shapeRect.width/10
                startX: (shapeRect.width * 0.9)
                startY: shapeRect.height*0.9
