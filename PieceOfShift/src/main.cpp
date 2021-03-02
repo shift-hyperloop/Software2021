@@ -4,7 +4,6 @@
 #include <qqml.h>
 #include "Decoding/canserver.h"
 #include "Processing/datamanager.h"
-#include "Decoding/decoder.h"
 
 int main(int argc, char *argv[])
 {
@@ -33,5 +32,6 @@ int main(int argc, char *argv[])
 
     QQuickStyle::setStyle("Material");
     engine.load(url);
+
     return app.exec();
 }
