@@ -47,6 +47,9 @@ Item {
                     hoverEnabled: true
                     onClicked: {
                         mainView.timer.start();
+                        // To test that connection status works:
+                        //networkinfo.connected = true;
+                        //networkinfo.connectionStrength = 3
                     }
                     onPressed: {
                         parent.color = "#aaa";
