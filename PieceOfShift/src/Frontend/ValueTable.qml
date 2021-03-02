@@ -6,6 +6,7 @@ Item {
     property int rowCount
     property var names: []
     property var values: []
+    property alias tableModel: tableModel
     //property alias tableWidth: width
     //property alias tableHeight: height
     width: 400

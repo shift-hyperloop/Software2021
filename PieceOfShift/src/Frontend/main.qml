@@ -185,7 +185,7 @@ ApplicationWindow {
                     var speed = (distance * 50) / 0.02;
                     slider.value = slider.value + distance;
                     speedometer.value = speed;
-                    valueTable.speedValue = speed;
+                    valueTable.tableModel.setRow(0,{"name": "Speed", "value":qsTr(speedometer.value + "km/h")})
                     thermometer.value = Math.random() * 25 + 25;
                     chart.counter++;
                     chart.lineseries.append(chart.counter, speed);
@@ -215,9 +215,8 @@ ApplicationWindow {
             ValueTable{
                 id: valueTable
                 rowCount: 5
-                property int speedValue
                 names: ["Speed","Voltage battery 1", "Value Value", "Bruh moments:", "Crashes"]
-                values: [qsTr(speedValue + "km/h"), 12, 100, 8, 0]
+                values: [qsTr(0 + "km/h"), 12, 100, 8, 0]
                 anchors {
                     top: parent.top
                     topMargin: 0.06 * window.height
