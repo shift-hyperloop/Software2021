@@ -4,12 +4,12 @@ import Qt.labs.qmlmodels 1.0
 
 Item {
     property int speedValue: 10
+    property alias tableWidth: width
+    property alias tableHeight: height
     width: 400
     height: 400
     Rectangle {
         id: rectangle
-        x: 0
-        y: 0
         anchors.fill: parent
         color: "#00000000"
         border.color: "#ededed"
