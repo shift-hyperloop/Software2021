@@ -18,6 +18,17 @@ Item {
             height: 0.05 * window.height - 10
             source: "../Shift_Logo.png"
             fillMode: Image.PreserveAspectFit
+            MouseArea{
+                hoverEnabled: true
+                anchors.fill: parent
+                onHoveredChanged: {
+                    parent.opacity = containsMouse ? 1.0 : 0.8;
+                    cursorShape = containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor;
+                }
+                onClicked: {
+                    stackView.pop(null);
+                }
+            }
         }
     }
 
