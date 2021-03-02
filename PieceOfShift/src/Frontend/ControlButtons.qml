@@ -1,8 +1,14 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.5
 import QtQuick.Layouts 1.3
+import shift.datamanagement 1.0
 
 Item {
+
+    DataManagerAccessor {
+        id: dataManager
+    }
+
     Rectangle{
         color: "#00ffffff"
         anchors.fill: parent
@@ -47,6 +53,7 @@ Item {
                     hoverEnabled: true
                     onClicked: {
                         mainView.timer.start();
+                        dataManager.dataManager.sendPodCommand(PodCommand.START);
                         // To test that connection status works:
                         //networkinfo.connected = true;
                         //networkinfo.connectionStrength = 3
@@ -99,6 +106,7 @@ Item {
                     hoverEnabled: true
                     onClicked: {
                         mainView.timer.stop();
+                        dataManager.dataManager.sendPodCommand(PodCommand.STOP);
                     }
                     onPressed: {
                         parent.color = "#aaa";
@@ -140,7 +148,7 @@ Item {
                     anchors.fill: parent
                     hoverEnabled: true
                     onClicked: {
-                        console.log("SHIT");
+                        dataManager.dataManager.sendPodCommand(PodCommand.EMERGENCY_BRAKE);
                         //valueTable.tableModel.setRow(3,{"name": "Bruh moments:", "color":valueTable.tableModel.getRow(3).color += 1})
                         //accessing a value in valuetable - should work but does not
                     }
