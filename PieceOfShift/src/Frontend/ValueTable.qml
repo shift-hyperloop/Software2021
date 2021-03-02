@@ -6,8 +6,8 @@ Item {
     property int rowCount
     property var names: []
     property var values: []
-    property alias tableWidth: width
-    property alias tableHeight: height
+    //property alias tableWidth: width
+    //property alias tableHeight: height
     width: 400
     height: 400
     Rectangle {
