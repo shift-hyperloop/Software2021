@@ -107,6 +107,9 @@ Item {
         chartview.height: page.height / 2
     }
     ValueTable{
+        rowCount: 4
+        names: ["Value 1","Value 2", "Value Value", "Value"]
+        values: [10, 12, 100, 8]
         anchors.bottom: networkChart.bottom
         anchors.right: parent.right
         height: page.height / 3

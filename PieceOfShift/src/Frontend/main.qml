@@ -200,6 +200,10 @@ ApplicationWindow {
             }
             ValueTable{
                 id: valueTable
+                rowCount: 5
+                property int speedValue
+                names: ["Speed","Voltage battery 1", "Value Value", "Bruh moments:", "Crashes"]
+                values: [qsTr(speedValue + "km/h"), 12, 100, 8, 0]
                 anchors {
                     top: parent.top
                     topMargin: 0.06 * window.height

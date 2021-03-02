@@ -3,7 +3,9 @@ import QtQuick 2.14
 import Qt.labs.qmlmodels 1.0
 
 Item {
-    property int speedValue: 10
+    property int rowCount
+    property var names: []
+    property var values: []
     width: 400
     height: 400
     Rectangle {
@@ -22,30 +24,20 @@ Item {
             columnSpacing: 0
             interactive: false
             model: TableModel {
+                id: tableModel
                 TableModelColumn { display: "name" }
-                TableModelColumn { display: "color" }
-                   rows: [
-                       {
-                           "name": "Speed",
-                           "color": qsTr(speedValue + "km/h")
-                       },
-                       {
-                           "name": "Voltage battery 1",
-                           "color": "12"
-                       },
-                       {
-                           "name": "Value Value",
-                           "color": "100"
-                       },
-                       {
-                           "name": "Bruh moments:",
-                           "color": "8"
-                       },
-                       {
-                           "name": "Crashes",
-                           "color": "0"
-                       }
-                   ]
+                TableModelColumn { display: "value" }
+                   rows: []
+            }
+            Component.onCompleted: {
+                for(var i = 0; i< rowCount; i++){
+                    tableModel.appendRow({
+                        "name" : names[i],
+                        "value" : values[i]
+                    })
+                }
+
+
             }
 
             delegate: Rectangle {
