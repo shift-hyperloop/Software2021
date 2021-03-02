@@ -6,12 +6,12 @@ Item {
     property int rowCount
     property var names: []
     property var values: []
+    property alias tableWidth: width
+    property alias tableHeight: height
     width: 400
     height: 400
     Rectangle {
         id: rectangle
-        x: 0
-        y: 0
         anchors.fill: parent
         color: "#00000000"
         border.color: "#ededed"
