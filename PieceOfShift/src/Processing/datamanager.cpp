@@ -1,6 +1,3 @@
-#include <QtConcurrent/QtConcurrent>
-#include <algorithm>
-
 #include "datamanager.h"
 #include "velocityprocessingunit.h"
 #include "accelerationprocessingunit.h"
@@ -26,6 +23,19 @@ DataManager::DataManager()
     connect(avu, &AccelerationVelocityUnit::newData,
             this, &DataManager::newAccelerationVelocity);
 
+
+    connect(&canServer, &CANServer::dataReceived,
+            &decoder, &Decoder::checkData);
+
+    connect(&decoder, &Decoder::addData,
+            this, &DataManager::addData);
+
+    connect(&canServer, &CANServer::connectionEstablished,
+            this, &DataManager::podConnectionEstablished);
+
+    connect(&canServer, &CANServer::connectionTerminated,
+            this, &DataManager::podConnectionTerminated);
+
     /* Create Decoder/DataFetcher object here and start it when signal from
      QML has been received */
 }
@@ -47,35 +57,18 @@ void DataManager::addData(const QString& name, const DataType &dataType, const Q
                           [&dataType](auto x)
                           { return x->dataType() == dataType; });
     QtConcurrent::run(processingUnit, &ProcessingUnit::addData, name, data);
+    //processingUnit->addData(name, data);
 }
 
-
-/* The follwing code is just used for testing, and
- * should be removed before production
- */
-int t = 0;
-float v = 2;
-float a = 3;
-
-void DataManager::dummyData()
+void DataManager::connectToPod()
 {
-    v =  0.01 *((float) t * log(t));
-    VelocityStruct vs;
-    t += 1;
-    vs.timeMs = t;
-    vs.velocity = v;
-    addData("Velocity", DataType::VELOCITY, QVariant::fromValue(vs));
-    a =  0.03 *((float) t * log(t));
-    AccelerationStruct as;
-    AccelerationVelocityStruct avs;
-    as.timeMs = t;
-    avs.timeMs = t;
-    vs.velocity = v;
-    as.acceleration = a;
-    avs.acceleration = a;
-    avs.velocity = v;
-    addData("Velocity", DataType::VELOCITY, QVariant::fromValue(vs));
-    addData("Acceleration", DataType::ACCELERATION, QVariant::fromValue(vs));
-    addData("AccelerationVelocity", DataType::ACCELERATIONVELOCITY, QVariant::fromValue(vs));
+        canServer.connectToPod();
 }
+
+void DataManager::sendPodCommand(CANServer::PodCommand messageType)
+{
+        canServer.sendPodCommand(messageType);
+}
+
+DataManager* DataManagerAccessor::_obj = nullptr; // Object accessed by QML, needs to be initialized since static
 

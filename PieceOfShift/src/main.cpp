@@ -1,14 +1,21 @@
 #include <QtWidgets/QApplication>
 #include <QQmlApplicationEngine>
 #include <QQuickStyle>
-#include "Decoding/cansplitter.h"
+#include <qqml.h>
+#include "Decoding/canserver.h"
 #include "Processing/datamanager.h"
 
 int main(int argc, char *argv[])
 {
-    QDirIterator it(":", QDirIterator::Subdirectories);
     // TODO: Move these to other file
-    qmlRegisterType<DataManager>("shift.datamanagement", 1, 0, "DataManager");
+
+    /* Make QML able to access dataManager from any file through DataManagerAccessor object */
+    DataManager dataManager;
+
+    DataManagerAccessor::setDataManager(&dataManager);
+    qmlRegisterType<DataManagerAccessor>("shift.datamanagement", 1, 0, "DataManagerAccessor");
+    qmlRegisterType<CANServer>("shift.datamanagement", 1, 0, "PodCommand");
+
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QApplication app(argc, argv);
@@ -25,8 +32,6 @@ int main(int argc, char *argv[])
 
     QQuickStyle::setStyle("Material");
     engine.load(url);
-
-
 
     return app.exec();
 }

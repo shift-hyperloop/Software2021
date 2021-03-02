@@ -4,8 +4,7 @@ CONFIG += c++14
 
 SOURCES += \
         src/Decoding/decoder.cpp \
-        src/Decoding/cansplitter.cpp \
-        src/Decoding/poddatasender.cpp \
+        src/Decoding/canserver.cpp \
         src/Processing/accelerationprocessingunit.cpp \
         src/Processing/accelerationvelocityunit.cpp \
         src/Processing/datamanager.cpp \
@@ -32,6 +31,9 @@ HEADERS += \
     src/Processing/accelerationvelocityunit.h \
     src/Processing/datamanager.h \
     src/Processing/processingunit.h \
+    src/Decoding/canserver.h \
+    src/Processing/velocityprocessingunit.h \
     src/Decoding/cansplitter.h \
     src/Processing/velocityprocessingunit.h
+    
 RC_ICONS = assets/images/icon.ico
