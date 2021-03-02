@@ -141,6 +141,8 @@ Item {
                     hoverEnabled: true
                     onClicked: {
                         console.log("SHIT");
+                        //valueTable.tableModel.setRow(3,{"name": "Bruh moments:", "color":valueTable.tableModel.getRow(3).color += 1})
+                        //accessing a value in valuetable - should work but does not
                     }
                     onPressed: {
                         parent.color = "#cc121e";

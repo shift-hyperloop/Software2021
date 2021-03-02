@@ -18,5 +18,8 @@
         <file>Frontend/Semicircle.qml</file>
         <file>Frontend/StateIndication.qml</file>
         <file>Frontend/ValueTable.qml</file>
+        <file>Frontend/NetworkInfo.qml</file>
+        <file>Frontend/NetworkInfoPage.qml</file>
+        <file>Frontend/SignalSymbol.qml</file>
     </qresource>
 </RCC>
