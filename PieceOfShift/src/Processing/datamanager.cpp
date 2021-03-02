@@ -62,12 +62,17 @@ void DataManager::addData(const QString& name, const DataType &dataType, const Q
 
 void DataManager::connectToPod(QString hostname, QString port)
 {
-        canServer.connectToPod(hostname, port);
+    canServer.connectToPod(hostname, port);
 }
 
 void DataManager::sendPodCommand(CANServer::PodCommand messageType)
 {
-        canServer.sendPodCommand(messageType);
+    canServer.sendPodCommand(messageType);
+}
+
+void DataManager::registerPlot(CustomPlotItem* plotItem, const QString &name)
+{
+    plotItems.insert(name, plotItem);
 }
 
 DataManager* DataManagerAccessor::_obj = nullptr; // Object accessed by QML, needs to be initialized since static

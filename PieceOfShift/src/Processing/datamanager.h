@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QVector>
 #include <QtConcurrent/QtConcurrent>
+#include "CustomPlotItem.h"
 #include "processingunit.h"
 #include "src/Decoding/canserver.h"
 #include "src/Decoding/decoder.h"
@@ -26,11 +27,13 @@ public slots:
     // This should use a Decoder slot to send command to pod
     void sendPodCommand(CANServer::PodCommand command);
 
+    void registerPlot(CustomPlotItem* plotItem, const QString& name);
+
     // Write current data to log file
-    void writeLogFile(const QString& path) { } // TODO: Implement
+    void writeLogFile(QString path) { } // TODO: Implement
 
     // Read log file and send through pipeline
-    void readLogFile(const QString& path) { } // TODO: Implement
+    void readLogFile(QString path) { } // TODO: Implement
 
 signals:
     // TODO: Add signals for each CAN message
@@ -44,6 +47,7 @@ signals:
 
 private:
     QVector<ProcessingUnit*> processingUnits;
+    QMap<QString, CustomPlotItem*> plotItems;
 
     Decoder decoder;
     CANServer canServer;

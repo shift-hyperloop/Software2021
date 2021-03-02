@@ -4,6 +4,7 @@
 #include <qqml.h>
 #include "Decoding/canserver.h"
 #include "Processing/datamanager.h"
+#include "CustomPlotItem.h"
 
 int main(int argc, char *argv[])
 {
@@ -15,6 +16,7 @@ int main(int argc, char *argv[])
     DataManagerAccessor::setDataManager(&dataManager);
     qmlRegisterType<DataManagerAccessor>("shift.datamanagement", 1, 0, "DataManagerAccessor");
     qmlRegisterType<CANServer>("shift.datamanagement", 1, 0, "PodCommand");
+    qmlRegisterType<CustomPlotItem>("CustomPlot", 1, 0, "CustomPlotItem");
 
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 

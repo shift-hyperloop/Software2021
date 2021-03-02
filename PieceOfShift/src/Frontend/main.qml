@@ -9,6 +9,7 @@ import Qt3D.Render 2.9
 import QtCharts 2.3
 import shift.datamanagement 1.0
 import QtQuick.Controls.Material 2.12
+import CustomPlot 1.0
 
 ApplicationWindow {
     Material.theme: Material.Dark
@@ -194,6 +195,7 @@ ApplicationWindow {
                     tilitMeter.yawDeg += 0.5 * Math.floor(Math.random()*3-1)
                     tilitMeter.pitchDeg += 0.5 * Math.floor(Math.random()*3-1)
 
+                    customPlot.addData(Qt.point(chart.counter, speed));
                 }
             }
 
@@ -212,6 +214,31 @@ ApplicationWindow {
                     }
                 }
             }
+            Rectangle {
+                id: ccrect
+                width: 800
+                height: 400
+                color: "#333333"
+                x: 800
+                y: 800
+
+                Rectangle {
+                    id: customRect
+                    width: parent.width - 6
+                    height: parent.height - 6
+                    x: 3
+                    y: 3
+
+
+                    CustomPlotItem {
+                        id: customPlot
+                        anchors.fill: parent
+        
+                        Component.onCompleted: initCustomPlot()
+                    }
+                }
+            }
+
             ValueTable{
                 id: valueTable
                 rowCount: 5

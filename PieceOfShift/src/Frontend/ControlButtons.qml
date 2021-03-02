@@ -142,7 +142,7 @@ Item {
             background: Rectangle{
                 border.width: 3
                 radius: 8
-                color: parent.down ? "#cc121e" : "#ff1424"
+                color: parent.down ? "#A52A2A" : "#C74C4C"
 
                 MouseArea {
                     anchors.fill: parent
@@ -153,10 +153,10 @@ Item {
                         //accessing a value in valuetable - should work but does not
                     }
                     onPressed: {
-                        parent.color = "#cc121e";
+                        parent.color = "#C74C4C";
                     }
                     onReleased: {
-                        parent.color = "#ff1424";
+                        parent.color = "#A52A2A";
                     }
                     onHoveredChanged: {
                         parent.opacity = containsMouse ? 1.0 : 0.8;
