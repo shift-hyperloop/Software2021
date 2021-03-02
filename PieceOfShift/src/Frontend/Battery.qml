@@ -1,11 +1,11 @@
 import QtQuick 2.0
 
 Item {
-    property var charge: 0.7 // how much charge is left
+    property var charge: 1 // how much charge is left, number between 1 and 0
 
     Image {
         id: batteryImg
-        source: "assets/images/battery.png"
+        source: "../battery.png"
         fillMode: Image.PreserveAspectFit
         height: parent.height
         z: 3
@@ -33,6 +33,7 @@ Item {
             anchors.top: container.top
             anchors.horizontalCenter: container.horizontalCenter
             z: 2
+
         }
         Rectangle{
             id: rectGreen

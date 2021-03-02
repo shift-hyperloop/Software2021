@@ -11,6 +11,8 @@ Item {
     property alias value: thermometer.value
     property alias style: thermometer.style
 
+
+
     Rectangle {
         id: rectangle1
         x: thermometer.width / 2
@@ -19,9 +21,21 @@ Item {
         height: 26
         color: "#cacaca"
         radius: 100
+
     }
 
     Gauge {
+
+        MouseArea{
+            id: chartMouseArea
+            anchors.fill: parent
+            hoverEnabled: true
+            cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor;
+            onClicked: {
+                stackView.push("DetailedBatteryPage.qml")
+            }
+        }
+
         value: 30
         id: thermometer
         tickmarkStepSize: thermometer.maximumValue / 10

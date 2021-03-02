@@ -4,7 +4,9 @@ import QtQuick.Window 2.3
 import QtQuick.Controls 2.5
 import QtQuick.Controls.Styles 1.4
 Item {
-    //property alias _width: __menu.width
+    property alias _width: __menu.width
+    property alias _height: __menu.height
+    //Don't need this if we only set width in main.qml <-- Turns out we actually do
     Rectangle {
         width: logoWhite_RightText.width + 5
         height: logoWhite_RightText.height + 10
@@ -16,10 +18,9 @@ Item {
             height: 0.05 * window.height - 10
             source: "../Shift_Logo.png"
             fillMode: Image.PreserveAspectFit
-
-
         }
     }
+
     MenuBar{
         id: __menu
         width: window.width - logoWhite_RightText.width - 5
@@ -130,6 +131,7 @@ Item {
             font.pixelSize:  0.025 * window.height
             MenuItem{
                 CheckBox{
+                    anchors.verticalCenter: parent.verticalCenter
                     onCheckStateChanged: {
                         if(checked){
                            window.visibility = 5
@@ -166,6 +168,35 @@ Item {
                 }
             }
             Menu{
+                title: qsTr("Network")
+            }
+
+            Menu{
+                title: qsTr("Position")
+                MenuItem{
+                    CheckBox{
+                        checked: true
+                        onCheckStateChanged: slider.visible = checked
+                        }
+                    Label{
+                            text: "Distance slider"
+                            anchors.centerIn: parent
+                        }
+                }
+                Menu{
+                    title: qsTr("Charts")
+
+                }
+            }
+            Menu{
+                title: qsTr("Rotation")
+                Menu{
+                    title: qsTr("Charts")
+
+                }
+            }
+
+            Menu{
                 title: qsTr("Speed")
                 MenuItem{
                     CheckBox{
@@ -189,30 +220,6 @@ Item {
                                 anchors.centerIn: parent
                             }
                     }
-                }
-            }
-            Menu{
-                title: qsTr("Position")
-                MenuItem{
-                    CheckBox{
-                        checked: true
-                        onCheckStateChanged: slider.visible = checked
-                        }
-                    Label{
-                            text: "Distance slider"
-                            anchors.centerIn: parent
-                        }
-                }
-                Menu{
-                    title: qsTr("Charts")
-
-                }
-            }
-            Menu{
-                title: qsTr("Rotation")
-                Menu{
-                    title: qsTr("Charts")
-
                 }
             }
         }

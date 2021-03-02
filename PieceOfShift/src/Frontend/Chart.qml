@@ -48,9 +48,13 @@ Item {
                 timer.mouse_x_= mouseX
                 timer.mouse_y_= mouseY
                 timer.start()
+                cursorShape = Qt.ClosedHandCursor;
+
             }
             onReleased: {
                 timer.stop()
+                cursorShape = Qt.ArrowCursor;
+
             }
 
             Timer{
@@ -68,29 +72,31 @@ Item {
             }
         }
 
+        ValueAxis{
+            id: y_axis
+            labelsColor: "white"
+            color: "white"
+            min: 0
+            max: 10
+            titleText: ""
+        }
+        ValueAxis{
+            id: x_axis
+            labelsColor: "white"
+            color: "white"
+            min: 0
+            max: 10
+            titleText: ""
+        }
+
         LineSeries{
             id: lineseries
             axisX: x_axis
             axisY: y_axis
             pointsVisible: true
             useOpenGL: true
-            ValueAxis{
-                id: y_axis
-                labelsColor: "white"
-                color: "white"
-                min: 0
-                max: 10
-                titleText: ""
-            }
-            ValueAxis{
-                id: x_axis
-                labelsColor: "white"
-                color: "white"
-                min: 0
-                max: 10
-                titleText: ""
-            }
 
+            //Note: the hovered rectangle will never disappear after having showed. Can fix later by using a QML Timer-object
             onHovered: { // display the point you're hovering over on the chart by setting the content of rectangle1 to the hovered point
                 _text.text = "(" + point.x.toFixed(2) + "," + point.y.toFixed(2) + ")";
                 var p = chartview.mapToPosition(Qt.point(point.x,point.y),lineseries);
@@ -100,20 +106,21 @@ Item {
             }
 
             onPointAdded: {
-                var new_point = at(index)
-                if(new_point.x > x_axis.max){ // if a now point is added and it is outside the visible area, the axies will scale
-                    x_axis.max = new_point.x + Math.round(new_point.x/2)
-                    chartview.x_max = x_axis.max
+                var new_point = at(index);
+                if (new_point.x > x_axis.max) {
+                    x_axis.max = new_point.x + Math.round(new_point.x/2);
+                    chartview.x_max = x_axis.max;
                 }
-                if(new_point.y > y_axis.max){
-                    y_axis.max = new_point.y+ Math.round(new_point.y/2)
-                    chartview.y_max = y_axis.max
+                if (new_point.y > y_axis.max) {
+                    y_axis.max = new_point.y + Math.round(new_point.y/2);
+                    chartview.y_max = y_axis.max;
                 }
                 if (new_point.y < y_axis.min) {
-                    y_axis.min = new_point.y - Math.round(new_point.y/2)
+                    y_axis.min = new_point.y - Math.round(new_point.y/2);
                 }
             }
         }
+
         Rectangle {
             id: rectangle1
             visible: false
@@ -141,25 +148,6 @@ Item {
         Keys.onDownPressed: {
             chartview.scrollDown(y_axis.max)
         }
-        Button{
-            id: but1
-            text: "reset"
-            x: chartview.x
-            y: Math.max(chartview.y, 35)
-            onClicked: {// reset the zoom
-                x_axis.min = 0
-                y_axis.min = 0
-                x_axis.max = chartview.x_max
-                y_axis.max = chartview.y_max
-            }
-        }
-        Button {
-            text: "Go back"
-            x: but1.x + but1.width
-            y: but1.y
-            onClicked: {
-                stackView.pop("main.qml");
-            }
-        }
+
     }
 }

@@ -24,6 +24,15 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
     
+DISTFILES += \
+    assets/images/* \
+    #assets/images/Shift_Logo.png \
+    src/Frontend/* \
+    src/Frontend/DetailedBatteryPage.qml
+
+
+for(f, DISTFILES):copyToDestdir($$files($${PWD}/$${f}))
+
 HEADERS += \
     src/Decoding/decoder.h \
     src/Processing/accelerationprocessingunit.h \

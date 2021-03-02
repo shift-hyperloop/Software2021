@@ -23,7 +23,39 @@ ApplicationWindow {
         /*_width: window.width - logoWhite_RightText.width
         x: logoWhite_RightText.width + 10*/
         id: topBar
+        NetworkInfo {
+            id: networkinfo
+            connected: true
+            ping: 10
+            anchors.right: parent.right
+            anchors.top: parent.top
+            z: 2
+            MouseArea {
+                anchors.fill: parent
+                hoverEnabled: true
+                onClicked: {
+                    stackView.push("NetworkInfoPage.qml");
+                }
+                onHoveredChanged: {
+                    parent.opacity = containsMouse ? 1.0 : 0.8;
+                    cursorShape = containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor;
+                }
+            }
+        }
     }
+
+    /*
+      TODO:
+        Next workshop, focus on improving the Battery-page. Look into ValueAxis for naming of axes,
+        and also look into multiple LineSeries in the same graph.
+        This is wanted for the Battery-graphs, so figure out one way to have them on top of each other
+        in a nice-looking way with clear referencing of each line.
+      NOTE:
+        ValueAxis.TitleText is the attribute that decides the naming of the axis itself (appears
+        on the lefthand or righthand side of the graph).
+        LineSeries.name is the attribute that decides what shows up in the "little square" over the graph
+        that indicates the color of that particular line/function.
+    */
 
     StackView {
         id: stackView
@@ -35,8 +67,10 @@ ApplicationWindow {
             id: mainView
 
             property alias timer: timer
-            property alias chart: chart;
+            property alias chart: chart
             property alias counter: chart.counter
+            //to change networkinfo status with button
+            property alias connected: networkinfo.connected
             Item {
                 id: panelLeft
                 height: window.height - slider.height - anchors.topMargin
@@ -65,6 +99,7 @@ ApplicationWindow {
                     minValue: 0
                     maxValue: 600
                 }
+
             }
             Item {
                 id: panelRight
@@ -105,6 +140,17 @@ ApplicationWindow {
                     //x: Math.max(thermometer.x - thermometer.width - 100 - width, 0)
                 }
             }
+            Tilitmeter{
+                id: tilitMeter
+                rollDeg: 0
+                pitchDeg: 0
+                yawDeg: 0
+                circleSize: window.height / 10
+                anchors.left: battery.left
+                anchors.leftMargin: circleSize * 1.5
+                anchors.bottom: battery.top
+                anchors.bottomMargin: circleSize
+            }
 
             DistanceSlider{
                 id: slider
@@ -116,6 +162,15 @@ ApplicationWindow {
                 minValue: 0
                 maxValue: 100
             }
+            Battery{
+                id: battery
+                height:window.height / 5
+                anchors.left: parent.left
+                anchors.leftMargin: window.height / 15
+                anchors.bottom: slider.top
+                anchors.bottomMargin: height/5
+
+            }
 
             Timer {
                 id: timer
@@ -124,14 +179,21 @@ ApplicationWindow {
                 repeat: true
                 onTriggered: update();
 
+                //Updates both the speedometer and the graph with random values (for now)
                 function update(){
                     var distance = (Math.random() * 0.03) + 0.1;
                     var speed = (distance * 50) / 0.02;
                     slider.value = slider.value + distance;
                     speedometer.value = speed;
+                    valueTable.speedValue = speed;
                     thermometer.value = Math.random() * 25 + 25;
                     chart.counter++;
                     chart.lineseries.append(chart.counter, speed);
+                    battery.charge = 1 - slider.value / 100
+                    tilitMeter.rollDeg +=  0.5 * Math.floor(Math.random()*3-1)
+                    tilitMeter.yawDeg += 0.5 * Math.floor(Math.random()*3-1)
+                    tilitMeter.pitchDeg += 0.5 * Math.floor(Math.random()*3-1)
+
                 }
             }
 
@@ -150,6 +212,21 @@ ApplicationWindow {
                     }
                 }
             }
+            ValueTable{
+                id: valueTable
+                rowCount: 5
+                property int speedValue
+                names: ["Speed","Voltage battery 1", "Value Value", "Bruh moments:", "Crashes"]
+                values: [qsTr(speedValue + "km/h"), 12, 100, 8, 0]
+                anchors {
+                    top: parent.top
+                    topMargin: 0.06 * window.height
+                    left: parent.left
+                    leftMargin: chart.x + chart.chartWidth
+                }
+                scale: Math.min(window.width / 1700, window.height / 1000)
+                transformOrigin: "TopLeft"
+            }
 
             Text {
                 id: labelText
@@ -157,13 +234,6 @@ ApplicationWindow {
                 width: 300
                 height: 100
             }
-
-            /*Battery{
-                height:
-                width:
-                x:
-                y:
-            }*/
             }
         }
     }
