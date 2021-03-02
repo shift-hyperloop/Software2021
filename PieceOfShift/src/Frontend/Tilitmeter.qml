@@ -43,7 +43,7 @@ Item {
                         color: "black"
                         Semicircle{
                             //transform: Rotation{ origin.x: circleSize / 2; origin.y: circleSize / 2; angle: rollDeg}
-                            rotation: pitchDeg
+                            rotation: rollDeg
                             Behavior on rotation {
                                 NumberAnimation {
                                     duration: 100
@@ -112,7 +112,7 @@ Item {
                         color: "black"
                         Semicircle{
                             //transform: Rotation{ origin.x: circleSize / 2; origin.y: circleSize / 2; angle: yawDeg}
-                            rotation: pitchDeg
+                            rotation: yawDeg
                             Behavior on rotation {
                                 NumberAnimation {
                                     duration: 100
