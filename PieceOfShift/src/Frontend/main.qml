@@ -23,6 +23,25 @@ ApplicationWindow {
         /*_width: window.width - logoWhite_RightText.width
         x: logoWhite_RightText.width + 10*/
         id: topBar
+        NetworkInfo {
+            id: networkinfo
+            connected: true
+            ping: 10
+            anchors.right: parent.right
+            anchors.top: parent.top
+            z: 2
+            MouseArea {
+                anchors.fill: parent
+                hoverEnabled: true
+                onClicked: {
+                    stackView.push("NetworkInfoPage.qml");
+                }
+                onHoveredChanged: {
+                    parent.opacity = containsMouse ? 1.0 : 0.8;
+                    cursorShape = containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor;
+                }
+            }
+        }
     }
 
     /*
@@ -50,6 +69,8 @@ ApplicationWindow {
             property alias timer: timer
             property alias chart: chart
             property alias counter: chart.counter
+            //to change networkinfo status with button
+            property alias connected: networkinfo.connected
             Item {
                 id: panelLeft
                 height: window.height - slider.height - anchors.topMargin
@@ -193,6 +214,10 @@ ApplicationWindow {
             }
             ValueTable{
                 id: valueTable
+                rowCount: 5
+                property int speedValue
+                names: ["Speed","Voltage battery 1", "Value Value", "Bruh moments:", "Crashes"]
+                values: [qsTr(speedValue + "km/h"), 12, 100, 8, 0]
                 anchors {
                     top: parent.top
                     topMargin: 0.06 * window.height
