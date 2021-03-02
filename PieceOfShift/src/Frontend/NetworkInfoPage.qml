@@ -1,5 +1,7 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.5
+import shift.datamanagement 1.0
+
 Item {
     id: page
     Keys.onPressed: { //If backspace is pressed => go back to previous page
@@ -9,6 +11,11 @@ Item {
         }
 
     }
+
+    DataManagerAccessor {
+        id: dataManager
+    }
+
     Button{
         text: "Go back"
         y: 50
@@ -92,9 +99,7 @@ Item {
             anchors.leftMargin: width / 4
             enabled: !networkinfo.connected
             onClicked: {
-                console.log("IP: " + inputIP.text + " Port: " + inputPort.text)
-                inputIP.clear()
-                inputPort.clear()
+                dataManager.dataManager.connectToPod(inputIP.text, inputPort.text);
             }
 
         }

@@ -60,9 +60,9 @@ void DataManager::addData(const QString& name, const DataType &dataType, const Q
     //processingUnit->addData(name, data);
 }
 
-void DataManager::connectToPod()
+void DataManager::connectToPod(QString hostname, QString port)
 {
-        canServer.connectToPod();
+        canServer.connectToPod(hostname, port);
 }
 
 void DataManager::sendPodCommand(CANServer::PodCommand messageType)

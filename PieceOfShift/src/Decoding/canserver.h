@@ -21,7 +21,7 @@ public:
     CANServer();
     ~CANServer();
 
-    void connectToPod();
+    void connectToPod(const QString& hostname, const QString& port);
 
     enum class PodCommand
     {

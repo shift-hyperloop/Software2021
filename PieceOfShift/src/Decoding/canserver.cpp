@@ -14,7 +14,7 @@ CANServer::~CANServer()
     delete m_TcpSocket;
 }
 
-void CANServer::connectToPod()
+void CANServer::connectToPod(const QString& hostname, const QString& port)
 {
     // Create socket if not exists
     if (!m_TcpSocket) {
@@ -30,7 +30,7 @@ void CANServer::connectToPod()
 
     // Connect socket to port and address if not connected
     if(m_TcpSocket->state() != QAbstractSocket::ConnectedState) {
-        m_TcpSocket->connectToHost(hostname, port, QIODevice::ReadWrite);
+        m_TcpSocket->connectToHost(hostname, port.toInt(), QIODevice::ReadWrite);
     }
 
 }

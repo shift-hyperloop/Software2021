@@ -21,7 +21,7 @@ public slots:
     void addData(const QString& name, const DataType &dataType, const QVariant &data);
 
     // Start recieving messages
-    void connectToPod();
+    void connectToPod(QString hostname, QString port);
 
     // This should use a Decoder slot to send command to pod
     void sendPodCommand(CANServer::PodCommand command);
