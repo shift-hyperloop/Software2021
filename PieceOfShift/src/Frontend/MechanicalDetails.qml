@@ -67,9 +67,7 @@ Page {
         Component.onCompleted: {
             let prv_graph = mainView.chart;
             for (let i = 0; i < prv_graph.lineseries.count; i++) {
-                let x_point = prv_graph.lineseries.at(i).x
-                let y_point = prv_graph.lineseries.at(i).y
-                detailedChart.lineseries.append(x_point, y_point);
+                detailedChart.lineseries.append(prv_graph.lineseries.at(i).x, prv_graph.lineseries.at(i).y);
             }
         }
 
@@ -163,7 +161,7 @@ Page {
 
             Image {
                 id: green
-                source: "../../assets/images/green.png"
+                source: "../green.png"
                 height: (parent.height - valveStatus.height - 30) / 2
                 width: height
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -173,7 +171,7 @@ Page {
 
             Image {
                 id: red
-                source: "../../assets/images/red.png"
+                source: "../red.png"
                 height: (parent.height - valveStatus.height - 30) / 2
                 width: height
                 anchors.horizontalCenter: parent.horizontalCenter
