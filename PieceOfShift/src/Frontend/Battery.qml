@@ -12,15 +12,15 @@ Item {
         }
         Rectangle {
             id: container
-            height: batteryImg.height * 0.3
-            width: batteryImg.width * 0.65
-            y: batteryImg.y + batteryImg.height * 0.37
+            height: batteryImg.height * 0.9
+            width: batteryImg.width * 0.9
+            y: batteryImg.y + batteryImg.height * 0.1
             z: 1
             anchors.horizontalCenter: batteryImg.horizontalCenter
         }
         Rectangle{
             id: rectRed
-            color: "#A52A2A"
+            color: "red"
             height: {
                 if( charge > 0){
                     container.height  - rectGreen.height
@@ -37,7 +37,7 @@ Item {
         }
         Rectangle{
             id: rectGreen
-            color: "#7CB06D"
+            color: "green"
             height: container.height * charge
             width: container.width
             anchors.bottom: container.bottom

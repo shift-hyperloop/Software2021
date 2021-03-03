@@ -7,7 +7,7 @@
 #include "Processing/datamanager.h"
 
 class QCustomPlot;
- 
+
 class CustomPlotItem : public QQuickPaintedItem
 {
     Q_OBJECT
@@ -36,7 +36,6 @@ private:
     QCustomPlot*         m_CustomPlot;
     QVector<double> m_X, m_Y;
     DataManagerAccessor m_DMAccessor;
-    DataManager* m_DataManager = nullptr;
  
 private slots:
     void graphClicked( QCPAbstractPlottable* plottable );

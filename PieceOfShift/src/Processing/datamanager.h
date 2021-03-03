@@ -4,10 +4,11 @@
 #include <QObject>
 #include <QVector>
 #include <QtConcurrent/QtConcurrent>
-#include "CustomPlotItem.h"
 #include "processingunit.h"
 #include "src/Decoding/canserver.h"
 #include "src/Decoding/decoder.h"
+
+class CustomPlotItem;
 
 class DataManager : public QObject
 {

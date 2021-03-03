@@ -5,6 +5,7 @@
 #include "Decoding/canserver.h"
 #include "Processing/datamanager.h"
 #include "CustomPlotItem.h"
+#include "Processing/processingunit.h"
 
 int main(int argc, char *argv[])
 {
@@ -30,7 +31,6 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(-1);
         }
     }, Qt::QueuedConnection);
-
 
     QQuickStyle::setStyle("Material");
     engine.load(url);
