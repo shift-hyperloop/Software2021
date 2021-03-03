@@ -3,7 +3,6 @@ import QtQuick 2.14
 import Qt.labs.qmlmodels 1.0
 
 Item {
-    property int rowCount
     property var names: []
     property var values: []
     property alias tableModel: tableModel
@@ -31,7 +30,7 @@ Item {
                    rows: []
             }
             Component.onCompleted: {
-                for(var i = 0; i< rowCount; i++){
+                for(var i = 0; i< names.length; i++){
                     tableModel.appendRow({
                         "name" : names[i],
                         "value" : values[i]

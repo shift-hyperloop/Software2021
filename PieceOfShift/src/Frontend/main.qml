@@ -214,7 +214,6 @@ ApplicationWindow {
             }
             ValueTable{
                 id: valueTable
-                rowCount: 5
                 names: ["Speed","Voltage battery 1", "Value Value", "Bruh moments:", "Crashes"]
                 values: [qsTr(0 + "km/h"), 12, 100, 8, 0]
                 anchors {
