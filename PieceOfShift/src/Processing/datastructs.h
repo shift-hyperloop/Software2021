@@ -4,10 +4,27 @@
 #include <QDataStream>
 #include <QVariant>
 
+/*
++---+ How to use +--+
+
+    // WRITE
+    QByteArray ba;
+    QDataStream stream(&ba, QIODevice::ReadWrite);
+    DataStructs::VCUStatus vcuStatus = {true, true, true, true, true, true, true, true, true, 10.0f, 10.0f};
+    stream << vcuStatus;
+
+    // READ
+    QDataStream stream2(&ba, QIODevice::ReadOnly);
+    DataStructs::VCUStatus vcuStatus2;
+    stream2 >> vcuStatus2;
+*/
+
 namespace DataStructs 
 {
     class DataStruct : public QObject
     {
+        protected:
+            DataStruct() {}
         friend QDataStream& operator<<(QDataStream& dataStream, const DataStruct& object)
         {
             for(int i=0; i< object.metaObject()->propertyCount(); ++i) {
@@ -18,7 +35,7 @@ namespace DataStructs
             return dataStream;
         }
 
-        friend QDataStream & operator>>(QDataStream& dataStream, const DataStruct& object) {
+        friend QDataStream & operator>>(QDataStream& dataStream, DataStruct& object) {
             QVariant var;
             for(int i=0; i < object.metaObject()->propertyCount(); ++i) {
                 if(object.metaObject()->property(i).isStored(&object)) {
@@ -30,12 +47,14 @@ namespace DataStructs
         }
     };
 
-    struct ErrorCode : public DataStruct
+    struct ErrorCode
     {
+        public:
+            ErrorCode() {}
         uint8_t error_code;
     };
 
-    struct VCUStatus : public DataStruct
+    struct VCUStatus
     {
         bool BMS_1;
         bool BMS_2;
@@ -43,67 +62,103 @@ namespace DataStructs
         bool Inverter_2;
         bool Telemetry;
         bool State_indication;
-        bool Sensor_suit_1;
-        bool Sensor_suit_2;
+        bool Sensor_suite_1;
+        bool Sensor_suite_2;
         bool VCU;
         
         float latency_CAN_0;
         float latency_CAN_1;
 
         // NOTE: Overload here as well so data from telemetry can be directly converted to struct and vice versa (for all structs really)
+        friend QDataStream& operator<<(QDataStream& dataStream, const VCUStatus& object)
+        {
+            // NOTE: Change if stream we receive is not continuous
+            dataStream << object.BMS_1
+                       << object.BMS_2
+                       << object.Inverter_1
+                       << object.Inverter_2
+                       << object.Telemetry
+                       << object.State_indication
+                       << object.Sensor_suite_1
+                       << object.Sensor_suite_2
+                       << object.VCU
+                       << object.latency_CAN_0
+                       << object.latency_CAN_1;
+
+            return dataStream;
+        }
+
+        friend QDataStream & operator>>(QDataStream& dataStream, VCUStatus& object) 
+        {
+            dataStream >> object.BMS_1
+                       >> object.BMS_2
+                       >> object.Inverter_1
+                       >> object.Inverter_2
+                       >> object.Telemetry
+                       >> object.State_indication
+                       >> object.Sensor_suite_1
+                       >> object.Sensor_suite_2
+                       >> object.VCU
+
+                       >> object.latency_CAN_0
+                       >> object.latency_CAN_1;
+
+            return dataStream;
+        }
+
     };
 
-    struct Vector3f : public DataStruct
+    struct Vector3f 
     {
         float position;			
         float speed;				
         float acceleration;			
     };
 
-    struct PodState : public DataStruct
+    struct PodState 
     {
         uint8_t state;
     };
 
 
-    struct Vector3i : public DataStruct
+    struct Vector3i 
     {
         uint32_t pitch;
         uint32_t yaw;
         uint32_t roll;
     } ;
 
-    struct Bool : public DataStruct
+    struct Bool 
     {
         bool status_0;
     };
 
-    struct Vector3b : public DataStruct
+    struct Vector3b 
     {
         bool status_0;
         bool status_1;
     };
 
 
-    struct Char : public DataStruct
+    struct Char 
     {
         uint8_t value_0;	
     } ;
 
-    struct Vector2c : public DataStruct
+    struct Vector2c 
     {
         uint8_t value_0;
         uint8_t value_1;
     };
 
-    struct Vector3c : public DataStruct
+    struct Vector3c 
     {
         uint8_t value_0;
         uint8_t value_1;
         uint8_t value_2;
     };
 
-    struct Vector16c : public DataStruct
+    struct Vector16c 
     {
         uint8_t value_0;
         uint8_t value_1;
@@ -123,34 +178,34 @@ namespace DataStructs
         uint8_t value_15;	
     };
 
-    struct Short : public DataStruct
+    struct Short 
     {
         uint16_t value_0;
     };
 
-    struct Vector2s : public DataStruct
+    struct Vector2s 
     {
         uint16_t value_0;
         uint16_t value_1;
     };
 
-    struct Int : public DataStruct
+    struct Int 
     {
         uint32_t value_0;
     };
 
-    struct Float : public DataStruct
+    struct Float 
     {
         float value_0;
     };
 
-    struct Vector2f : public DataStruct
+    struct Vector2f 
     {
         float value_0;
         float value_1;
     } ;
 
-    struct Vector4f : public DataStruct
+    struct Vector4f 
     {
         float value_0;
         float value_1;
@@ -158,7 +213,7 @@ namespace DataStructs
         float value_3;
     };
 
-    struct Vector6f : public DataStruct
+    struct Vector6f 
     {
         float value_0;
         float value_1;
@@ -168,7 +223,7 @@ namespace DataStructs
         float value_5;
     };
 
-    struct Vector8f : public DataStruct
+    struct Vector8f 
     {
         float value_0;
         float value_1;
@@ -180,7 +235,7 @@ namespace DataStructs
         float value_7;
     };
 
-    struct Vector16f : public DataStruct
+    struct Vector16f 
     {
         float value_0;
         float value_1;
@@ -220,4 +275,6 @@ Q_DECLARE_METATYPE(DataStructs::Vector3i)
 Q_DECLARE_METATYPE(DataStructs::Vector4f)
 Q_DECLARE_METATYPE(DataStructs::Vector6f)
 Q_DECLARE_METATYPE(DataStructs::Vector8f)
+
+
 
