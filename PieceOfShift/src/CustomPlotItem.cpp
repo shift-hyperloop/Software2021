@@ -1,7 +1,10 @@
 #include "CustomPlotItem.h"
 #include <QDebug>
 #include <qcolor.h>
+#include <qevent.h>
 #include <qnamespace.h>
+#include <qpalette.h>
+#include <qtooltip.h>
  
 CustomPlotItem::CustomPlotItem( QQuickItem* parent ) : QQuickPaintedItem( parent )   
     , m_CustomPlot( nullptr )
@@ -40,9 +43,11 @@ void CustomPlotItem::initCustomPlot()
  
     updateCustomPlotSize();
  
-    setupQuadraticDemo( m_CustomPlot );
+    setupGraph(m_CustomPlot);
  
     connect( m_CustomPlot, &QCustomPlot::afterReplot, this, &CustomPlotItem::onCustomReplot );
+    //connect(m_CustomPlot, &QCustomPlot::mouseMove, this, &CustomPlotItem::mouseMoveEvent);
+    connect(m_CustomPlot, &QCustomPlot::plottableClick, this, &CustomPlotItem::graphClicked);
 
     m_CustomPlot->replot();
 }
@@ -73,7 +78,7 @@ void CustomPlotItem::mouseReleaseEvent( QMouseEvent* event )
 }
  
 void CustomPlotItem::mouseMoveEvent( QMouseEvent* event )
-{
+{    
     routeMouseEvents( event );
 }
  
@@ -82,11 +87,24 @@ void CustomPlotItem::mouseDoubleClickEvent( QMouseEvent* event )
     routeMouseEvents( event );   
 }
  
-void CustomPlotItem::graphClicked( QCPAbstractPlottable* plottable )
+void CustomPlotItem::graphClicked(QCPAbstractPlottable *plottable, int dataIndex, QMouseEvent *event)
 {
+    int x = m_CustomPlot->xAxis->pixelToCoord(event->pos().x());
+    int y = m_CustomPlot->yAxis->pixelToCoord(event->pos().y());
+
+    QPalette toolTipPallete;
+    toolTipPallete.setColor(QPalette::ToolTipBase, QColor(68, 68, 68));
+    toolTipPallete.setColor(QPalette::ToolTipText, QColor(200, 200, 200));
+
+    QToolTip::showText(event->globalPos(), QString("(%1, %2)").arg(x).arg(y));
+
+    QPalette p = QToolTip::palette();
+    p.setColor(QPalette::All, QPalette::ToolTipText, QColor(220, 220, 220));
+    p.setColor(QPalette::All, QPalette::ToolTipBase, QColor(68, 68, 68));
+    QToolTip::setPalette( p );
 }
  
-void CustomPlotItem::routeMouseEvents( QMouseEvent* event )
+void CustomPlotItem::routeMouseEvents(QMouseEvent* event)
 {
     if (m_CustomPlot)
     {
@@ -94,6 +112,20 @@ void CustomPlotItem::routeMouseEvents( QMouseEvent* event )
         //QCoreApplication::sendEvent( m_CustomPlot, newEvent );
         QCoreApplication::postEvent( m_CustomPlot, newEvent );
     }
+}
+
+void CustomPlotItem::routeWheelEvents(QWheelEvent* event)
+{
+    if (m_CustomPlot)
+    {
+        QWheelEvent* newEvent = new QWheelEvent( event->pos(), event->delta(), event->buttons(), event->modifiers(), event->orientation() );
+        QCoreApplication::postEvent( m_CustomPlot, newEvent );
+    }
+}
+ 
+void CustomPlotItem::wheelEvent(QWheelEvent *event)
+{
+    routeWheelEvents( event );
 }
  
 void CustomPlotItem::updateCustomPlotSize()
@@ -110,12 +142,12 @@ void CustomPlotItem::onCustomReplot()
     update();
 }
  
-void CustomPlotItem::setupQuadraticDemo( QCustomPlot* customPlot )
+void CustomPlotItem::setupGraph( QCustomPlot* customPlot )
 {
     customPlot->addGraph();
-    customPlot->graph(0)->setPen( QPen( QColor("#0099ff")) );
+    customPlot->graph(0)->setPen(QPen( QColor("#0099ff")));
     customPlot->graph(0)->selectionDecorator()->setPen( QPen( Qt::blue, 2 ) );
-    customPlot->graph(0)->setData( m_X, m_Y );
+    customPlot->graph(0)->setData(m_X, m_Y);
  
     // give the axes some labels:
     customPlot->xAxis->setLabel("time");
@@ -138,5 +170,4 @@ void CustomPlotItem::setupQuadraticDemo( QCustomPlot* customPlot )
     customPlot->setBackground(QColor(55, 55, 55));
  
     customPlot ->setInteractions( QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables );
-    connect( customPlot, SIGNAL( plottableClick( QCPAbstractPlottable*, QMouseEvent* ) ), this, SLOT( graphClicked( QCPAbstractPlottable* ) ) );
 }

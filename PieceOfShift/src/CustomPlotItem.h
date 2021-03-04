@@ -1,6 +1,7 @@
 #pragma once
  
 #include <QtQuick>
+#include <qevent.h>
 #include <qobjectdefs.h>
 #include <qpoint.h>
 #include "include/qcustomplot/qcustomplot.h"
@@ -13,7 +14,7 @@ class CustomPlotItem : public QQuickPaintedItem
     Q_OBJECT
  
 public:
-    CustomPlotItem( QQuickItem* parent = 0 );
+    CustomPlotItem(QQuickItem* parent = 0);
     virtual ~CustomPlotItem();
  
     void paint( QPainter* painter );
@@ -23,23 +24,25 @@ public:
     Q_INVOKABLE void setDataType(QString dataType);
  
 protected:
-    void routeMouseEvents( QMouseEvent* event );
+    void routeMouseEvents(QMouseEvent* event);
+    void routeWheelEvents(QWheelEvent* event);
  
-    virtual void mousePressEvent( QMouseEvent* event );
-    virtual void mouseReleaseEvent( QMouseEvent* event );
-    virtual void mouseMoveEvent( QMouseEvent* event );
-    virtual void mouseDoubleClickEvent( QMouseEvent* event );
+    virtual void mousePressEvent(QMouseEvent* event);
+    virtual void mouseReleaseEvent(QMouseEvent* event);
+    virtual void mouseMoveEvent(QMouseEvent* event);
+    virtual void mouseDoubleClickEvent(QMouseEvent* event);
+    virtual void wheelEvent(QWheelEvent* event);
  
-    void setupQuadraticDemo( QCustomPlot* customPlot );
+    void setupGraph(QCustomPlot* customPlot);
  
 private:
-    QCustomPlot*         m_CustomPlot;
+    QCustomPlot* m_CustomPlot;
     QVector<double> m_X, m_Y;
     DataManagerAccessor m_DMAccessor;
  
 private slots:
-    void graphClicked( QCPAbstractPlottable* plottable );
+    void graphClicked(QCPAbstractPlottable *plottable, int dataIndex, QMouseEvent *event);
     void onCustomReplot();   
-    void updateCustomPlotSize();
+    void updateCustomPlotSize();    
     
 };

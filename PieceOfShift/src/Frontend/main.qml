@@ -235,7 +235,11 @@ ApplicationWindow {
                         anchors.fill: parent
         
                         Component.onCompleted: initCustomPlot()
+
+                        //ToolTip.visible: graphHovered
+                        //ToolTip.text: qsTr("Save the active project")
                     }
+
                 }
             }
 
