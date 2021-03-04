@@ -4,7 +4,7 @@ Item {
     id: networkinfo
     property bool connected: true
     property int ping: 0
-    property int connectionStrength: 0
+    property int connectionStrength: 0 //number between 0 and 4 that shows how many bars in SignalSymbol are filled
     width: 300
     height: window.height * 0.05
     Component.onCompleted: {

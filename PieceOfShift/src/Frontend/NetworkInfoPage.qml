@@ -26,7 +26,7 @@ Item {
     }
     Item {
         id: connectionInputs
-        visible: ! networkinfo.connected
+        visible: ! networkinfo.connected // the connection inputs and connect button is not visible when connected
         Rectangle{
             color: "lightgray"
             id: ipInput
@@ -38,7 +38,7 @@ Item {
             TextInput {
                 id: inputIP
                 text: "IP-adress"
-                inputMask: "000.000.000.000;_"
+                inputMask: "000.000.000.000;_" //format of the input, 0s are placeholders for numbers, . are unchangable
                 padding: 5
                 bottomPadding: 0
                 selectByMouse : true
@@ -75,7 +75,7 @@ Item {
             anchors.topMargin: height
             TextInput {
                 id: inputPort
-                validator: IntValidator{}
+                validator: IntValidator{} // you can only write numbers
                 padding: 5
                 bottomPadding: 0
                 selectByMouse : true
@@ -104,7 +104,7 @@ Item {
             y: ipInput.y - 5
             anchors.left: ipInput.right
             anchors.leftMargin: width / 4
-            enabled: !networkinfo.connected
+            enabled: !networkinfo.connected //if connected to pod the button is disabled
             onClicked: {
                 dataManager.dataManager.connectToPod(inputIP.text, inputPort.text);
             }

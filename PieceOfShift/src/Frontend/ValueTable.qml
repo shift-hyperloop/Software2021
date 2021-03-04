@@ -29,7 +29,7 @@ Item {
                 TableModelColumn { display: "value" }
                    rows: []
             }
-            Component.onCompleted: {
+            Component.onCompleted: { //adds the names and values that are deffined when the component is used
                 for(var i = 0; i< names.length; i++){
                     tableModel.appendRow({
                         "name" : names[i],

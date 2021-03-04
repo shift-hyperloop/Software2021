@@ -186,6 +186,7 @@ ApplicationWindow {
                     slider.value = slider.value + distance;
                     speedometer.value = speed;
                     valueTable.tableModel.setRow(0,{"name": "Speed", "value":qsTr(speedometer.value + "km/h")})
+                    //updating field in table with index 0
                     thermometer.value = Math.random() * 25 + 25;
                     chart.counter++;
                     chart.lineseries.append(chart.counter, speed);
@@ -214,9 +215,9 @@ ApplicationWindow {
             }
             ValueTable{
                 id: valueTable
-                names: ["Speed","Voltage battery 1", "Value Value", "Bruh moments:", "Crashes"]
-                values: [qsTr(0 + "km/h"), 12, 100, 8, 0]
-                anchors {
+                names: ["Speed","Voltage battery 1", "Value Value", "Bruh moments:", "Crashes"] // names for the values in the table
+                values: [qsTr(0 + "km/h"), 12, 100, 8, 0] // values for the table
+                anchors {                                   // indexes in names[] and values[] are corresponding
                     top: parent.top
                     topMargin: 0.06 * window.height
                     left: parent.left

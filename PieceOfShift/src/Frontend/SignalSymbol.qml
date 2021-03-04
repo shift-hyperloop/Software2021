@@ -12,7 +12,7 @@ Item {
         property var connection
 
         Shape {
-           ShapePath{
+           ShapePath{ //rectangle with height 1 / 4 of parent
                strokeColor: shapeRect.connection > 0 ? "lightgray" : "black"
                strokeWidth: shapeRect.width/10
                startX: (shapeRect.width * 0.9) * 1/4
@@ -20,7 +20,7 @@ Item {
                PathLine { x: (shapeRect.width * 0.9) * 1/4; y: shapeRect.height*3/4}
            }
         }
-        Shape {
+        Shape {//rectangle with height 2 / 4 of parent
            ShapePath{
                strokeColor: shapeRect.connection > 1 ? "lightgray" : "black"
                strokeWidth: shapeRect.width/10
@@ -29,7 +29,7 @@ Item {
                PathLine { x: (shapeRect.width * 0.9) * 2/4; y: shapeRect.height*2/4 }
            }
         }
-        Shape {
+        Shape {//rectangle with height 3 / 4 of parent
            ShapePath{
                strokeColor: shapeRect.connection > 2 ? "lightgray" : "black"
                strokeWidth: shapeRect.width/10
@@ -38,7 +38,7 @@ Item {
                PathLine { x: (shapeRect.width * 0.9) * 3/4; y: shapeRect.height * 1/4}
            }
         }
-        Shape {
+        Shape {//rectangle with height of parent
            ShapePath{
                strokeColor: shapeRect.connection > 3 ? "lightgray" : "black"
                strokeWidth: shapeRect.width/10
