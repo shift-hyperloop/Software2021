@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <QDataStream>
 #include <QVariant>
+#include <QMetaProperty>
 
 /*
 +---+ How to use +--+
@@ -21,10 +22,10 @@
 
 namespace DataStructs 
 {
-    class DataStruct : public QObject
+
+    struct DataStruct : public QObject
     {
-        protected:
-            DataStruct() {}
+        Q_OBJECT
         friend QDataStream& operator<<(QDataStream& dataStream, const DataStruct& object)
         {
             for(int i=0; i< object.metaObject()->propertyCount(); ++i) {
@@ -47,14 +48,13 @@ namespace DataStructs
         }
     };
 
-    struct ErrorCode
+    struct ErrorCode : public DataStruct
     {
-        public:
-            ErrorCode() {}
         uint8_t error_code;
     };
 
-    struct VCUStatus
+
+    struct VCUStatus : public DataStruct
     {
         bool BMS_1;
         bool BMS_2;
@@ -108,57 +108,57 @@ namespace DataStructs
 
     };
 
-    struct Vector3f 
+    struct Vector3f : public DataStruct
     {
         float position;			
         float speed;				
         float acceleration;			
     };
 
-    struct PodState 
+    struct PodState : public DataStruct
     {
         uint8_t state;
     };
 
 
-    struct Vector3i 
+    struct Vector3i : public DataStruct
     {
         uint32_t pitch;
         uint32_t yaw;
         uint32_t roll;
     } ;
 
-    struct Bool 
+    struct Bool : public DataStruct
     {
         bool status_0;
     };
 
-    struct Vector3b 
+    struct Vector3b : public DataStruct
     {
         bool status_0;
         bool status_1;
     };
 
 
-    struct Char 
+    struct Char : public DataStruct
     {
         uint8_t value_0;	
     } ;
 
-    struct Vector2c 
+    struct Vector2c : public DataStruct
     {
         uint8_t value_0;
         uint8_t value_1;
     };
 
-    struct Vector3c 
+    struct Vector3c : public DataStruct
     {
         uint8_t value_0;
         uint8_t value_1;
         uint8_t value_2;
     };
 
-    struct Vector16c 
+    struct Vector16c : public DataStruct
     {
         uint8_t value_0;
         uint8_t value_1;
@@ -178,34 +178,34 @@ namespace DataStructs
         uint8_t value_15;	
     };
 
-    struct Short 
+    struct Short : public DataStruct
     {
         uint16_t value_0;
     };
 
-    struct Vector2s 
+    struct Vector2s : public DataStruct
     {
         uint16_t value_0;
         uint16_t value_1;
     };
 
-    struct Int 
+    struct Int : public DataStruct
     {
         uint32_t value_0;
     };
 
-    struct Float 
+    struct Float : public DataStruct
     {
         float value_0;
     };
 
-    struct Vector2f 
+    struct Vector2f : public DataStruct
     {
         float value_0;
         float value_1;
     } ;
 
-    struct Vector4f 
+    struct Vector4f : public DataStruct
     {
         float value_0;
         float value_1;
@@ -213,7 +213,7 @@ namespace DataStructs
         float value_3;
     };
 
-    struct Vector6f 
+    struct Vector6f : public DataStruct
     {
         float value_0;
         float value_1;
@@ -223,7 +223,7 @@ namespace DataStructs
         float value_5;
     };
 
-    struct Vector8f 
+    struct Vector8f : public DataStruct
     {
         float value_0;
         float value_1;
@@ -235,7 +235,7 @@ namespace DataStructs
         float value_7;
     };
 
-    struct Vector16f 
+    struct Vector16f : public DataStruct
     {
         float value_0;
         float value_1;
@@ -257,24 +257,24 @@ namespace DataStructs
 
 }
 
-Q_DECLARE_METATYPE(DataStructs::ErrorCode)
-Q_DECLARE_METATYPE(DataStructs::Float)
-Q_DECLARE_METATYPE(DataStructs::Int)
-Q_DECLARE_METATYPE(DataStructs::PodState)
-Q_DECLARE_METATYPE(DataStructs::Short)
-Q_DECLARE_METATYPE(DataStructs::VCUStatus)
-Q_DECLARE_METATYPE(DataStructs::Vector16c)
-Q_DECLARE_METATYPE(DataStructs::Vector16f)
-Q_DECLARE_METATYPE(DataStructs::Vector2c)
-Q_DECLARE_METATYPE(DataStructs::Vector2f)
-Q_DECLARE_METATYPE(DataStructs::Vector2s)
-Q_DECLARE_METATYPE(DataStructs::Vector3b)
-Q_DECLARE_METATYPE(DataStructs::Vector3c)
-Q_DECLARE_METATYPE(DataStructs::Vector3f)
-Q_DECLARE_METATYPE(DataStructs::Vector3i)
-Q_DECLARE_METATYPE(DataStructs::Vector4f)
-Q_DECLARE_METATYPE(DataStructs::Vector6f)
-Q_DECLARE_METATYPE(DataStructs::Vector8f)
+//Q_DECLARE_METATYPE(ErrorCode)
+//Q_DECLARE_METATYPE(DataStructs::Float)
+//Q_DECLARE_METATYPE(DataStructs::Int)
+//Q_DECLARE_METATYPE(DataStructs::PodState)
+//Q_DECLARE_METATYPE(DataStructs::Short)
+//Q_DECLARE_METATYPE(DataStructs::VCUStatus)
+//Q_DECLARE_METATYPE(DataStructs::Vector16c)
+//Q_DECLARE_METATYPE(DataStructs::Vector16f)
+//Q_DECLARE_METATYPE(DataStructs::Vector2c)
+//Q_DECLARE_METATYPE(DataStructs::Vector2f)
+//Q_DECLARE_METATYPE(DataStructs::Vector2s)
+//Q_DECLARE_METATYPE(DataStructs::Vector3b)
+//Q_DECLARE_METATYPE(DataStructs::Vector3c)
+//Q_DECLARE_METATYPE(DataStructs::Vector3f)
+//Q_DECLARE_METATYPE(DataStructs::Vector3i)
+//Q_DECLARE_METATYPE(DataStructs::Vector4f)
+//Q_DECLARE_METATYPE(DataStructs::Vector6f)
+//Q_DECLARE_METATYPE(DataStructs::Vector8f)
 
 
 
