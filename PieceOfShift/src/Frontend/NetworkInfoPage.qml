@@ -26,7 +26,7 @@ Item {
     }
     Item {
         id: connectionInputs
-        visible: ! networkinfo.connected
+        visible: ! networkinfo.connected // the connection inputs and connect button is not visible when connected
         Rectangle{
             color: "lightgray"
             id: ipInput
@@ -38,10 +38,13 @@ Item {
             TextInput {
                 id: inputIP
                 text: "IP-adress"
-                inputMask: "000.000.000.000;_"
+                inputMask: "000.000.000.000;_" //format of the input, 0s are placeholders for numbers, . are unchangable
                 padding: 5
                 bottomPadding: 0
                 selectByMouse : true
+                height: window.height / 20
+                width: window.width / 6
+                font.pixelSize: window.height / 25
             }
             MouseArea{
                 cursorShape: inputIP.activeFocus ? Qt.IBeamCursor : Qt.ArrowCursor;
@@ -57,6 +60,7 @@ Item {
             anchors.right: ipInput.left
             anchors.rightMargin: 10
             anchors.top: ipInput.top
+            font.pixelSize: inputIP.font.pixelSize
         }
 
 
@@ -67,15 +71,17 @@ Item {
             height: inputPort.height
             border.width: 1
             anchors.right: ipInput.right
-            anchors.top: ipInput.top
-            anchors.topMargin: height * 2
+            anchors.top: ipInput.bottom
+            anchors.topMargin: height
             TextInput {
                 id: inputPort
-                validator: IntValidator{}
-                width: inputIP.width
+                validator: IntValidator{} // you can only write numbers
                 padding: 5
                 bottomPadding: 0
                 selectByMouse : true
+                width: inputIP.width
+                height: inputIP.height
+                font.pixelSize: inputIP.font.pixelSize
             }
             MouseArea{
                 cursorShape: inputPort.activeFocus ? Qt.IBeamCursor : Qt.ArrowCursor;
@@ -90,6 +96,7 @@ Item {
             anchors.right: ipPort.left
             anchors.rightMargin: 10
             anchors.top: ipPort.top
+            font.pixelSize: inputIP.font.pixelSize
         }
         Button{
             id: connectButton
@@ -97,7 +104,7 @@ Item {
             y: ipInput.y - 5
             anchors.left: ipInput.right
             anchors.leftMargin: width / 4
-            enabled: !networkinfo.connected
+            enabled: !networkinfo.connected //if connected to pod the button is disabled
             onClicked: {
                 dataManager.dataManager.connectToPod(inputIP.text, inputPort.text);
             }
@@ -112,7 +119,6 @@ Item {
         chartview.height: page.height / 2
     }
     ValueTable{
-        rowCount: 4
         names: ["Value 1","Value 2", "Value Value", "Value"]
         values: [10, 12, 100, 8]
         anchors.bottom: networkChart.bottom

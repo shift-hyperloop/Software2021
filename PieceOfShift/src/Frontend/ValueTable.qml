@@ -3,9 +3,9 @@ import QtQuick 2.14
 import Qt.labs.qmlmodels 1.0
 
 Item {
-    property int rowCount
     property var names: []
     property var values: []
+    property alias tableModel: tableModel
     //property alias tableWidth: width
     //property alias tableHeight: height
     width: 400
@@ -29,8 +29,8 @@ Item {
                 TableModelColumn { display: "value" }
                    rows: []
             }
-            Component.onCompleted: {
-                for(var i = 0; i< rowCount; i++){
+            Component.onCompleted: { //adds the names and values that are deffined when the component is used
+                for(var i = 0; i< names.length; i++){
                     tableModel.appendRow({
                         "name" : names[i],
                         "value" : values[i]

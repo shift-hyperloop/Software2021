@@ -4,9 +4,8 @@ import QtQuick.Window 2.3
 import QtQuick.Controls 2.5
 import QtQuick.Controls.Styles 1.4
 Item {
-    property alias _width: __menu.width
-    property alias _height: __menu.height
-    //Don't need this if we only set width in main.qml <-- Turns out we actually do
+   // property alias _width: __menu.width
+    //property alias _height: __menu.height
     Rectangle {
         width: logoWhite_RightText.width + 5
         height: logoWhite_RightText.height + 10
@@ -18,6 +17,17 @@ Item {
             height: 0.05 * window.height - 10
             source: "../Shift_Logo.png"
             fillMode: Image.PreserveAspectFit
+            MouseArea{ //pressing the shift logo at any point wil return you to the main page
+                hoverEnabled: true
+                anchors.fill: parent
+                onHoveredChanged: {
+                    parent.opacity = containsMouse ? 1.0 : 0.8;
+                    cursorShape = containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor;
+                }
+                onClicked: {
+                    stackView.pop(null);
+                }
+            }
         }
     }
 
@@ -134,10 +144,10 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     onCheckStateChanged: {
                         if(checked){
-                           window.visibility = 5
+                           window.visibility = 5 //fullscreen
                         }
                         else{
-                            window.visibility = 4
+                            window.visibility = 4 //maximized
                         }
                         }
                     }

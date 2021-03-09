@@ -140,8 +140,8 @@ ApplicationWindow {
                     //x: Math.max(thermometer.x - thermometer.width - 100 - width, 0)
                 }
             }
-            Tilitmeter{
-                id: tilitMeter
+            Tiltmeter{
+                id: tiltMeter
                 rollDeg: 0
                 pitchDeg: 0
                 yawDeg: 0
@@ -185,14 +185,15 @@ ApplicationWindow {
                     var speed = (distance * 50) / 0.02;
                     slider.value = slider.value + distance;
                     speedometer.value = speed;
-                    valueTable.speedValue = speed;
+                    valueTable.tableModel.setRow(0,{"name": "Speed", "value":qsTr(speedometer.value + "km/h")})
+                    //updating field in table with index 0
                     thermometer.value = Math.random() * 25 + 25;
                     chart.counter++;
                     chart.lineseries.append(chart.counter, speed);
                     battery.charge = 1 - slider.value / 100
-                    tilitMeter.rollDeg +=  0.5 * Math.floor(Math.random()*3-1)
-                    tilitMeter.yawDeg += 0.5 * Math.floor(Math.random()*3-1)
-                    tilitMeter.pitchDeg += 0.5 * Math.floor(Math.random()*3-1)
+                    tiltMeter.rollDeg +=  0.5 * Math.floor(Math.random()*3-1)
+                    tiltMeter.yawDeg += 0.5 * Math.floor(Math.random()*3-1)
+                    tiltMeter.pitchDeg += 0.5 * Math.floor(Math.random()*3-1)
 
                 }
             }
@@ -214,11 +215,9 @@ ApplicationWindow {
             }
             ValueTable{
                 id: valueTable
-                rowCount: 5
-                property int speedValue
-                names: ["Speed","Voltage battery 1", "Value Value", "Bruh moments:", "Crashes"]
-                values: [qsTr(speedValue + "km/h"), 12, 100, 8, 0]
-                anchors {
+                names: ["Speed","Voltage battery 1", "Value Value", "Bruh moments:", "Crashes"] // names for the values in the table
+                values: [qsTr(0 + "km/h"), 12, 100, 8, 0] // values for the table
+                anchors {                                   // indexes in names[] and values[] are corresponding
                     top: parent.top
                     topMargin: 0.06 * window.height
                     left: parent.left
