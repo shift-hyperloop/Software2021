@@ -153,6 +153,7 @@ void CustomPlotItem::setupGraph( QCustomPlot* customPlot, int numOfGraphs)
     for(int i = 0; i < numOfGraphs; i++){
         customPlot->addGraph();
         customPlot->graph(i)->setData(m_X, m_Y);
+        m_CustomPlot->graph(i)->setPen(QPen(QColor("#0099ff"), 2));
     }
     // give the axes some labels:
     customPlot->xAxis->setLabel("time");

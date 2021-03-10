@@ -239,6 +239,7 @@ ApplicationWindow {
         
                         Component.onCompleted: {
                             //create a customPlot item with (2) graphs, and set their colors.
+                            //any color sent to C++ will become a QColor, and vice versa.
                             initCustomPlot(2);
                             setGraphColor(0, "#2674BB")
                             setGraphColor(1, "#AE3328");
