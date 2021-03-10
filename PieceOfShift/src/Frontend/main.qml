@@ -204,7 +204,8 @@ ApplicationWindow {
                 chartWidth: window.width * 0.4
                 property var counter: 0
                 x: speedometer.width * speedometer.scale + 100
-                y: 40
+                anchors.topMargin: 0.065 * window.height - 35
+                anchors.top: parent.top
                 chartview.legend.visible: false
                 MouseArea {
                     anchors.fill: parent
@@ -215,15 +216,17 @@ ApplicationWindow {
             }
             ValueTable{
                 id: valueTable
+                //tableWidth: 0.3 * window.width
+                //tableHeight: 0.37 * window.height
                 names: ["Speed","Voltage battery 1", "Value Value", "Bruh moments:", "Crashes"] // names for the values in the table
                 values: [qsTr(0 + "km/h"), 12, 100, 8, 0] // values for the table
                 anchors {                                   // indexes in names[] and values[] are corresponding
                     top: parent.top
-                    topMargin: 0.06 * window.height
+                    topMargin: 0.065 * window.height
                     left: parent.left
                     leftMargin: chart.x + chart.chartWidth
                 }
-                scale: Math.min(window.width / 1700, window.height / 1000)
+                scale: Math.min(window.width / 1600, window.height / 1000)
                 transformOrigin: "TopLeft"
             }
 

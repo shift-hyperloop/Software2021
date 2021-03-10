@@ -3,12 +3,13 @@ import QtQuick 2.14
 import Qt.labs.qmlmodels 1.0
 
 Item {
+    id: tableItem
     property var names: []
     property var values: []
     property alias tableModel: tableModel
-    //property alias tableWidth: width
-    //property alias tableHeight: height
-    width: 400
+    //property alias tableWidth: tableItem.width
+    //property alias tableHeight: tableItem.height
+    width: 500
     height: 400
     Rectangle {
         id: rectangle
@@ -43,12 +44,13 @@ Item {
             delegate: Rectangle {
                 implicitWidth: rectangle.width / table.columns
                 implicitHeight: rectangle.height / table.rows
+                //width: rectangle.width / table.columns
+                //height: rectangle.height / table.rows
                 border.color: "#ffffff"
                 color: "#00000000"
                 border.width: 2
                 Text {
-                    height: parent.height
-                    width: parent.width
+                    anchors.fill: parent
                     text: display
                     font.pixelSize: 18
                     color: "#e3e3e3"
