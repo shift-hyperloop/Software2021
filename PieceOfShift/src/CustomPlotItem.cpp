@@ -24,26 +24,32 @@ CustomPlotItem::~CustomPlotItem()
     m_CustomPlot = nullptr;
 }
 
-void CustomPlotItem::addData(QPointF data)
+void CustomPlotItem::addData(QPointF data, int graphNum)
 {
-    m_CustomPlot->graph(0)->addData(data.x(), data.y());
+    m_CustomPlot->graph(graphNum)->addData(data.x(), data.y());
     m_CustomPlot->xAxis->setRange(data.x(), 20, Qt::AlignRight);
     //m_CustomPlot->yAxis->setRange(data.y(), 1000, Qt::AlignTop);
     m_CustomPlot->replot(); 
 }
-
+void CustomPlotItem::setGraphColor(int graphIndex, QColor color)
+{
+    //function sets graph color, and a lighter highlight color.
+    //2 is the width of the pens
+    m_CustomPlot->graph(graphIndex)->setPen(QPen(color, 2));
+    m_CustomPlot->graph(graphIndex)->selectionDecorator()->setPen( QPen(color.lighter(150), 3) );
+}
 void CustomPlotItem::setDataType(QString dataType)
 {
     m_DMAccessor.dataManager()->registerPlot(this, dataType);
 }
  
-void CustomPlotItem::initCustomPlot()
+void CustomPlotItem::initCustomPlot(int numOfGraphs)
 {
     m_CustomPlot = new QCustomPlot();
  
     updateCustomPlotSize();
  
-    setupGraph(m_CustomPlot);
+    setupGraph(m_CustomPlot, numOfGraphs);
  
     connect( m_CustomPlot, &QCustomPlot::afterReplot, this, &CustomPlotItem::onCustomReplot );
     //connect(m_CustomPlot, &QCustomPlot::mouseMove, this, &CustomPlotItem::mouseMoveEvent);
@@ -142,13 +148,12 @@ void CustomPlotItem::onCustomReplot()
     update();
 }
  
-void CustomPlotItem::setupGraph( QCustomPlot* customPlot )
+void CustomPlotItem::setupGraph( QCustomPlot* customPlot, int numOfGraphs)
 {
-    customPlot->addGraph();
-    customPlot->graph(0)->setPen(QPen( QColor("#0099ff")));
-    customPlot->graph(0)->selectionDecorator()->setPen( QPen( Qt::blue, 2 ) );
-    customPlot->graph(0)->setData(m_X, m_Y);
- 
+    for(int i = 0; i < numOfGraphs; i++){
+        customPlot->addGraph();
+        customPlot->graph(i)->setData(m_X, m_Y);
+    }
     // give the axes some labels:
     customPlot->xAxis->setLabel("time");
     customPlot->yAxis->setLabel("value");
@@ -167,7 +172,7 @@ void CustomPlotItem::setupGraph( QCustomPlot* customPlot )
     customPlot->yAxis->setTickLabelColor(Qt::lightGray);
     customPlot->xAxis->setLabelColor(Qt::lightGray);
     customPlot->yAxis->setLabelColor(Qt::lightGray);
-    customPlot->setBackground(QColor(55, 55, 55));
+    customPlot->setBackground(QColor(68, 68, 68));
  
     customPlot ->setInteractions( QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables );
 }

@@ -19,9 +19,10 @@ public:
  
     void paint( QPainter* painter );
  
-    Q_INVOKABLE void initCustomPlot(); 
-    Q_INVOKABLE void addData(QPointF data);
+    Q_INVOKABLE void initCustomPlot(int numOfGraphs);
+    Q_INVOKABLE void addData(QPointF data, int graphNum);
     Q_INVOKABLE void setDataType(QString dataType);
+    Q_INVOKABLE void setGraphColor(int graphIndex, QColor color);
  
 protected:
     void routeMouseEvents(QMouseEvent* event);
@@ -33,7 +34,7 @@ protected:
     virtual void mouseDoubleClickEvent(QMouseEvent* event);
     virtual void wheelEvent(QWheelEvent* event);
  
-    void setupGraph(QCustomPlot* customPlot);
+    void setupGraph(QCustomPlot* customPlot, int numOfGraphs);
  
 private:
     QCustomPlot* m_CustomPlot;

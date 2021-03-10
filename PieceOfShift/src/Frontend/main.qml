@@ -68,8 +68,8 @@ ApplicationWindow {
             id: mainView
 
             property alias timer: timer
-            property alias chart: chart
-            property alias counter: chart.counter
+            //property alias chart: chart
+            property alias counter: ccrect.counter
             //to change networkinfo status with button
             property alias connected: networkinfo.connected
             Item {
@@ -188,18 +188,20 @@ ApplicationWindow {
                     speedometer.value = speed;
                     valueTable.speedValue = speed;
                     thermometer.value = Math.random() * 25 + 25;
-                    chart.counter++;
-                    chart.lineseries.append(chart.counter, speed);
+                    //change from ccrect to chart to get old chart back.
+                    ccrect.counter++;
+                    //chart.lineseries.append(chart.counter, speed);
                     battery.charge = 1 - slider.value / 100
                     tilitMeter.rollDeg +=  0.5 * Math.floor(Math.random()*3-1)
                     tilitMeter.yawDeg += 0.5 * Math.floor(Math.random()*3-1)
                     tilitMeter.pitchDeg += 0.5 * Math.floor(Math.random()*3-1)
 
-                    customPlot.addData(Qt.point(chart.counter, speed));
+                    customPlot.addData(Qt.point(ccrect.counter, speed), 0);
+                    customPlot.addData(Qt.point(ccrect.counter, speed / 3), 1);
                 }
             }
 
-            SimpleChart {
+            /*SimpleChart {
                 id: chart
                 chartHeight: window.height * 0.3
                 chartWidth: window.width * 0.4
@@ -213,14 +215,16 @@ ApplicationWindow {
                         stackView.push("PreviewPage.qml");
                     }
                 }
-            }
+            }*/
             Rectangle {
                 id: ccrect
-                width: 800
-                height: 400
+                width: window.width * 0.4
+                height: window.height * 0.3
+
                 color: "#333333"
-                x: 800
-                y: 800
+                x: speedometer.width * speedometer.scale + 100
+                y: 100
+                property var counter: 0
 
                 Rectangle {
                     id: customRect
@@ -229,18 +233,24 @@ ApplicationWindow {
                     x: 3
                     y: 3
 
-
                     CustomPlotItem {
                         id: customPlot
                         anchors.fill: parent
         
-                        Component.onCompleted: initCustomPlot()
-
-                        //ToolTip.visible: graphHovered
-                        //ToolTip.text: qsTr("Save the active project")
+                        Component.onCompleted: {
+                            //create a customPlot item with (2) graphs, and set their colors.
+                            initCustomPlot(2);
+                            setGraphColor(0, "#2674BB")
+                            setGraphColor(1, "#AE3328");
+                        }
                     }
-
                 }
+                /*MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        stackView.push("PreviewPage.qml");
+                    }
+                }*/
             }
 
             ValueTable{
@@ -253,7 +263,7 @@ ApplicationWindow {
                     top: parent.top
                     topMargin: 0.06 * window.height
                     left: parent.left
-                    leftMargin: chart.x + chart.chartWidth
+                    leftMargin: ccrect.x + ccrect.width + 5
                 }
                 scale: Math.min(window.width / 1700, window.height / 1000)
                 transformOrigin: "TopLeft"
@@ -265,6 +275,6 @@ ApplicationWindow {
                 width: 300
                 height: 100
             }
-            }
         }
     }
+}

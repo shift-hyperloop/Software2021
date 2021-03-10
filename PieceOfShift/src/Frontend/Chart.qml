@@ -25,7 +25,7 @@ Item {
             hoverEnabled: true
             property var mouse_x: 0
             property var mouse_y: 0
-            onEntered: { //mouseare has the signal onEntered which is needed to change the focus to the chart
+            onEntered: { //mousearea has the signal onEntered which is needed to change the focus to the chart
                 hoverEnabled = false    //without active focus the chart wont handle hover events
                 parent.forceActiveFocus() //Two elements in the same place cant both accept hover events, so disable hover for the mousearea
             }
