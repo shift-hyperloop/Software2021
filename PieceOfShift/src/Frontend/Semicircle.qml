@@ -13,8 +13,8 @@ Shape {
 
     ShapePath {
         id: shape
-        fillColor: "blue"
-        strokeColor: "blue"
+        fillColor: "#0099ff"
+        strokeColor: "#0099ff"
         capStyle: ShapePath.FlatCap
 
         PathAngleArc { // draws semicircle
