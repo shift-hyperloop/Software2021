@@ -11,16 +11,15 @@ int main(int argc, char *argv[])
     qmlRegisterType<DataManager>("shift.datamanagement", 1, 0, "DataManager");
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
-    CanSplitter w;
-    FileHandler t;
-    t.writeToFile();
-
+ 
+    DataManager dm; 
+    dm.writeLogFile(""); 
+    dm.readLogFile(""); 
 
     QApplication app(argc, argv);
-    // FileHandler fh;
-    // fh.writeToFile();
+   
 
-
+    /*
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/Frontend/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
@@ -33,6 +32,7 @@ int main(int argc, char *argv[])
     QQuickStyle::setStyle("Material");
 
     engine.load(url);
+    */
 
 
     return app.exec();

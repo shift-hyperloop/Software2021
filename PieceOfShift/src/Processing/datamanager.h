@@ -5,6 +5,7 @@
 #include <QVector>
 #include <QtConcurrent/QtConcurrent>
 #include "processingunit.h"
+#include "src/Decoding/filehandler.h"
 
 class DataManager : public QObject
 {
@@ -12,7 +13,6 @@ class DataManager : public QObject
 public:
     DataManager();
     ~DataManager();
-
 public slots:
 
     // MHave Decoder send signal to add data
@@ -20,6 +20,9 @@ public slots:
 
     // REMOVE THIS
     void dummyData();
+
+    void writeLogFile(QString filePath);
+    void readLogFile(QString filePath);
 
     // This should use a Decoder slot to send command to pod
     // void sendPodCommand(PodCommand command);
@@ -33,9 +36,7 @@ signals:
 
 private:
     QVector<ProcessingUnit*> processingUnits;
-
-public:
-    void test12();
+    FileHandler fileHandler;
 
 };
 

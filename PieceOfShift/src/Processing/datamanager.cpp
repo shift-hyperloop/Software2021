@@ -30,6 +30,8 @@ DataManager::DataManager()
 
     /* Create Decoder/DataFetcher object here and start it when signal from
      QML has been received */
+
+    // dummyData();
 }
 
 DataManager::~DataManager()
@@ -49,41 +51,36 @@ void DataManager::addData(const QString& name, const DataType &dataType, const Q
                           [&dataType](auto x)
                           { return x->dataType() == dataType; });
     QtConcurrent::run(processingUnit, &ProcessingUnit::addData, name, data);
-
-
 }
 
-void DataManager::test12(){
-    QByteArray q;
-    QDataStream s;
-    int count = 0;
-    qDebug() << "HERE";
 
-    QMap<QString, QQueue<QVariant>> dataCopy;
+void DataManager::writeLogFile(QString path){
+    QMap<QString, QString> dataCopyMap; 
+
+    // remove test data under
+    dataCopyMap.insert("1", "two"); 
+    dataCopyMap.insert("2", "two");
+    dataCopyMap.insert("3", "three");
+
+    /* TODO
+    Need to define how to serialize custom made structs
+    QMap<QString, QQueue<QVariant>> dataCopyMap;
 
     for (auto *pu : processingUnits) {
-        qDebug() << pu->getDataMap().size();
         for (QString label : pu->getDataMap().keys()){
-            dataCopy.insert(label, *pu->getDataMap().value(label));
+            dataCopyMap.insert(label, *pu->getDataMap().value(label));
+           //  qDebug() << label;
+
         }
     }
+    */
 
+    fileHandler.writeLogFile(path, dataCopyMap); 
 }
 
-
-
-
-                   //  QVariant variant = QVariant::fromValue(queue->dequeue());
-
-                    /*
-                    if(variant.canConvert<QVariantList>()){
-                        qDebug() << "inside if statement";
-                         QSequentialIterable iterable = variant.value<QSequentialIterable>();
-                         foreach (const QVariant &v, iterable){
-                             qDebug() << v;
-                         }
-                    }
-                    */
+void DataManager::readLogFile(QString path){
+    fileHandler.readLogFile(path);
+}
 
 
 

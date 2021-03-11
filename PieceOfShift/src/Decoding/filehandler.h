@@ -6,33 +6,19 @@
 #include <QList>
 #include <QByteArray>
 
-
-
 class FileHandler : public QObject
 {
     Q_OBJECT
 public:
     FileHandler();
     ~FileHandler();
-
-    void writeToFile();
-    // void sendDataToProcessor
-    void readDataFromFile(QString);
-    void sendData();
-
+public slots:
+    void writeLogFile(QString path, QMap<QString, QString> dataCopyMap);
+    void readLogFile(QString path);
 
 private:
-
-public slots:
-    // QList<QByteArray> getMessages();
-
-signals:
-    void fromFileData(quint16, quint8, QByteArray);
-
-
+    void dummyData(QString path);
 
 };
-
-
 
 #endif // FILEHANDLER_H
