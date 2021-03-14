@@ -157,55 +157,25 @@ Item {
                 }
             }
 
-            Menu{
-                title: qsTr("Battery")
-                MenuItem{
-                    CheckBox{
-                        checked: true
-                        onCheckStateChanged: thermometer.visible = checked
-                        }
-                    Label{
-                            text: "Thermometer"
-                            anchors.centerIn: parent
-                        }
-                    Menu{
-                        title: qsTr("Charts")
-
-                    }
+            MenuItem { text: qsTr("Battery")
+                onTriggered: {
+                    stackView.push("DetailedBatteryPage.qml");
                 }
-                Menu{
-                    title: qsTr("Charts")
-                }
-            }
-            Menu{
-                title: qsTr("Network")
-            }
+              }
 
-            Menu{
-                title: qsTr("Position")
-                MenuItem{
-                    CheckBox{
-                        checked: true
-                        onCheckStateChanged: slider.visible = checked
-                        }
-                    Label{
-                            text: "Distance slider"
-                            anchors.centerIn: parent
-                        }
+            MenuItem { text: qsTr("Network")
+                onTriggered: {
+                    stackView.push("NetworkInfoPage.qml");
                 }
-                Menu{
-                    title: qsTr("Charts")
+              }
 
+            MenuItem { text: qsTr("Mechanical")
+                onTriggered: {
+                    stackView.push("MechanicalDetails.qml");
                 }
-            }
-            Menu{
-                title: qsTr("Rotation")
-                Menu{
-                    title: qsTr("Charts")
+              }
 
-                }
-            }
-
+/*
             Menu{
                 title: qsTr("Speed")
                 MenuItem{
@@ -231,7 +201,7 @@ Item {
                             }
                     }
                 }
-            }
+            }*/
         }
         Menu{
             title: qsTr("State indication")
