@@ -25,6 +25,8 @@ public:
     Q_INVOKABLE void setGraphColor(int graphIndex, QColor color);
     Q_INVOKABLE void setName(int graphIndex, QString name);
     Q_INVOKABLE void legendVisible(bool visible);
+    Q_INVOKABLE void setAxisLabels(QString xAxis, QString yAxis);
+
 protected:
     void routeMouseEvents(QMouseEvent* event);
     void routeWheelEvents(QWheelEvent* event);

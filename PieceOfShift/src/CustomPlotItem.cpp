@@ -45,8 +45,10 @@ void CustomPlotItem::legendVisible(bool visible){
 void CustomPlotItem::setName(int graphIndex, QString name){
    m_CustomPlot->graph(graphIndex)->setName(name);
    m_CustomPlot->legend->setVisible(true);
-
-
+}
+void CustomPlotItem::setAxisLabels(QString xAxis, QString yAxis){
+    m_CustomPlot->xAxis->setLabel(xAxis);
+    m_CustomPlot->yAxis->setLabel(yAxis);
 }
 void CustomPlotItem::setDataType(QString dataType)
 {
@@ -186,4 +188,5 @@ void CustomPlotItem::setupGraph( QCustomPlot* customPlot, int numOfGraphs)
     customPlot->setBackground(QColor(68, 68, 68));
  
     customPlot ->setInteractions( QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables );
+
      }
