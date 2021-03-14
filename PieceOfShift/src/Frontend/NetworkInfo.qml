@@ -1,4 +1,6 @@
 import QtQuick 2.0
+import shift.datamanagement 1.0
+import QtQuick.Controls 2.15
 
 Item {
     id: networkinfo
@@ -9,6 +11,36 @@ Item {
     height: window.height * 0.05
     Component.onCompleted: {
         connected = false;
+    }
+
+    DataManagerAccessor {
+        id: dm
+
+        dataManager.onPodConnectionEstablished: {
+            connected = true;
+            connectedDialog.open();
+        }
+
+        dataManager.onPodConnectionTerminated: {
+            connected = false;
+            terminatedDialog.open();
+        }
+    }
+
+    Dialog {
+        id: connectedDialog
+        title: "Connection Established"
+        x: -800
+        y: 500
+        standardButtons: Dialog.Ok
+    }
+
+    Dialog {
+        id: terminatedDialog
+        title: "Connection was terminated!"
+        x: -800
+        y: 500
+        standardButtons: Dialog.Ok
     }
 
     Text {

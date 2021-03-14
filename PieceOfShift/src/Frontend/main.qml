@@ -12,6 +12,7 @@ import QtQuick.Controls.Material 2.12
 
 ApplicationWindow {
     Material.theme: Material.Dark
+    Material.accent: "#0099ff"
     id: window
     width: 1700
     height: 900
