@@ -243,6 +243,7 @@ ApplicationWindow {
                             initCustomPlot(2);
                             setGraphColor(0, "#2674BB")
                             setGraphColor(1, "#AE3328");
+                            setName(0,"Speed km/h");
                         }
                     }
                 }

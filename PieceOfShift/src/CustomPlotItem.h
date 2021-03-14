@@ -23,7 +23,8 @@ public:
     Q_INVOKABLE void addData(QPointF data, int graphNum);
     Q_INVOKABLE void setDataType(QString dataType);
     Q_INVOKABLE void setGraphColor(int graphIndex, QColor color);
- 
+    Q_INVOKABLE void setName(int graphIndex, QString name);
+    Q_INVOKABLE void legendVisible(bool visible);
 protected:
     void routeMouseEvents(QMouseEvent* event);
     void routeWheelEvents(QWheelEvent* event);
