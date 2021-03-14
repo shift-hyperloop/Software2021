@@ -29,6 +29,7 @@ public slots:
     void sendPodCommand(CANServer::PodCommand command);
 
     void registerPlot(CustomPlotItem* plotItem, const QString& name);
+    void removePlot(CustomPlotItem* plotItem, const QString& name);
 
     // Write current data to log file
     void writeLogFile(QString path) { } // TODO: Implement
@@ -48,7 +49,7 @@ signals:
 
 private:
     QVector<ProcessingUnit*> processingUnits;
-    QMap<QString, CustomPlotItem*> plotItems;
+    QMap<QString, QList<CustomPlotItem*>*> plotItems;
 
     Decoder decoder;
     CANServer canServer;

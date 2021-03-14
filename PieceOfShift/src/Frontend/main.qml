@@ -241,17 +241,22 @@ ApplicationWindow {
                             //create a customPlot item with (2) graphs, and set their colors.
                             //any color sent to C++ will become a QColor, and vice versa.
                             initCustomPlot(2);
-                            setGraphColor(0, "#2674BB")
+                            setGraphColor(0, "#2674BB");
                             setGraphColor(1, "#AE3328");
+                            setDataType("Velocity");
                         }
                     }
                 }
-                /*MouseArea {
+                MouseArea{
+                    id: chartMouseArea
                     anchors.fill: parent
+                    hoverEnabled: true
+                    cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor;
                     onClicked: {
-                        stackView.push("PreviewPage.qml");
+                        //stackView.push("MovementsDetailed.qml");
+                        stackView.push("MechanicalDetails.qml");
                     }
-                }*/
+                }
             }
 
             ValueTable{

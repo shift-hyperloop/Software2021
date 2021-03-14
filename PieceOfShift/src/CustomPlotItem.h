@@ -18,6 +18,7 @@ public:
     virtual ~CustomPlotItem();
  
     void paint( QPainter* painter );
+    inline QCustomPlot* getCustomPlot() { return m_CustomPlot; }
  
     Q_INVOKABLE void initCustomPlot(int numOfGraphs);
     Q_INVOKABLE void addData(QPointF data, int graphNum);

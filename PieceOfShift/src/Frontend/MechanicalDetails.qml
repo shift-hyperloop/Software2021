@@ -1,6 +1,8 @@
 import QtQuick.Controls 2.15
 import QtQuick 2.12
 import QtCharts 2.3
+import CustomPlot 1.0
+
 
 Page {
 
@@ -47,64 +49,130 @@ Page {
         }
     }
 
-    Chart {
+    Rectangle {
         id: distanceChart
-        x: 0
-        y: backButton.y + backButton.height
-        chartWidth: Math.sqrt(2) * chartview.height
-        chartHeight: Math.floor((window.height * 0.95 - backButton.height) / 2)
-        // We can use HTML coding for text apparently. This is the only way the text turns white
-        // (even though it's already defined in Chart.qml -> ValueAxis). QML is weird
-        x_axis.titleText: "<font color='white'>Time</font>"
-        y_axis.titleText: "<font color='white'>Distance</font>"
-        lineseries.name: "<font color='white'>Example: Pod Distance Covered</font>"
-        /*
-          The following function is called when the component (i.e. page) is loaded.
-          It will then iterate through the points from the previous graph (in main.qml)
-          and add all those points to this graph.
-        */
+        width: 1000
+        height: 500
 
-        Component.onCompleted: {
-            let prv_graph = mainView.chart;
-            for (let i = 0; i < prv_graph.lineseries.count; i++) {
-                detailedChart.lineseries.append(prv_graph.lineseries.at(i).x, prv_graph.lineseries.at(i).y);
-            }
-        }
+        color: "#333333"
+        x: 100
+        y: 100
+        property var counter: 0
 
+        Rectangle {
+            id: customRect
+            width: parent.width - 6
+            height: parent.height - 6
+            x: 3
+            y: 3
 
-        //Timer for simulating continously updated points
-        Timer {
-            running: mainView.timer.running; repeat: true; interval: 200;
-            onTriggered: {
-                update(distanceChart, mainView.counter);
-                update(someOtherChart, mainView.counter);
-            }
-
-            function update(chart, globalCounter) {
-                var distance = (Math.random() * 0.03) + 0.1;
-                var speed = (distance * 50) / 0.02;
-                globalCounter++;
-                chart.lineseries.append(globalCounter, speed)
+            CustomPlotItem {
+                id: customPlot
+                anchors.fill: parent
+        
+                Component.onCompleted: {
+                    //create a customPlot item with (2) graphs, and set their colors.
+                    //any color sent to C++ will become a QColor, and vice versa.
+                    initCustomPlot(2);
+                    setGraphColor(0, "#2674BB");
+                    setGraphColor(1, "#AE3328");
+                    setDataType("Velocity");
+                }
             }
         }
     }
 
-    Chart {
-        id: someOtherChart
-        x: distanceChart.x
-        y: distanceChart.chartview.y + distanceChart.chartview.height + 10
-        chartWidth: Math.sqrt(2) * chartview.height
-        chartHeight: Math.floor((window.height * 0.95 - backButton.height) / 2)
-        // We can use HTML coding for text apparently. This is the only way the text turns white
-        // (even though it's already defined in Chart.qml -> ValueAxis). QML is weird
-        x_axis.titleText: "<font color='white'>Time</font>"
-        y_axis.titleText: "<font color='white'>Acceleration</font>"
-        lineseries.name: "<font color='white'>Example: Acceleration over time</font>"
+    Rectangle {
+        id: distanceChart2
+        width: 1000
+        height: 500
 
-        LineSeries {
-            id: test
+        color: "#333333"
+        x: 100
+        y: 700
+        property var counter: 0
+
+        Rectangle {
+            id: customRect2
+            width: parent.width - 6
+            height: parent.height - 6
+            x: 3
+            y: 3
+
+            CustomPlotItem {
+                id: customPlot2
+                anchors.fill: parent
+        
+                Component.onCompleted: {
+                    //create a customPlot item with (2) graphs, and set their colors.
+                    //any color sent to C++ will become a QColor, and vice versa.
+                    initCustomPlot(2);
+                    setGraphColor(0, "#2674BB");
+                    setGraphColor(1, "#AE3328");
+                    setDataType("Velocity");
+                }
+            }
         }
     }
+
+    //Chart {
+    //    id: distanceChart
+    //    x: 0
+    //    y: backButton.y + backButton.height
+    //    chartWidth: Math.sqrt(2) * chartview.height
+    //    chartHeight: Math.floor((window.height * 0.95 - backButton.height) / 2)
+    //    // We can use HTML coding for text apparently. This is the only way the text turns white
+    //    // (even though it's already defined in Chart.qml -> ValueAxis). QML is weird
+    //    x_axis.titleText: "<font color='white'>Time</font>"
+    //    y_axis.titleText: "<font color='white'>Distance</font>"
+    //    lineseries.name: "<font color='white'>Example: Pod Distance Covered</font>"
+    //    /*
+    //      The following function is called when the component (i.e. page) is loaded.
+    //      It will then iterate through the points from the previous graph (in main.qml)
+    //      and add all those points to this graph.
+    //    */
+//
+    //    Component.onCompleted: {
+    //        let prv_graph = mainView.chart;
+    //        for (let i = 0; i < prv_graph.lineseries.count; i++) {
+    //            detailedChart.lineseries.append(prv_graph.lineseries.at(i).x, prv_graph.lineseries.at(i).y);
+    //        }
+    //    }
+//
+//
+    //    //Timer for simulating continously updated points
+    //    Timer {
+    //        running: mainView.timer.running; repeat: true; interval: 200;
+    //        onTriggered: {
+    //            update(distanceChart, mainView.counter);
+    //            update(someOtherChart, mainView.counter);
+    //        }
+//
+    //        function update(chart, globalCounter) {
+    //            var distance = (Math.random() * 0.03) + 0.1;
+    //            var speed = (distance * 50) / 0.02;
+    //            globalCounter++;
+    //            chart.lineseries.append(globalCounter, speed)
+    //        }
+    //    }
+    //}
+
+    //Chart {
+    //    id: someOtherChart
+    //    x: distanceChart.x
+    //    y: distanceChart.chartview.y + distanceChart.chartview.height + 10
+    //    chartWidth: Math.sqrt(2) * chartview.height
+    //    chartHeight: Math.floor((window.height * 0.95 - backButton.height) / 2)
+    //    // We can use HTML coding for text apparently. This is the only way the text turns white
+    //    // (even though it's already defined in Chart.qml -> ValueAxis). QML is weird
+    //    x_axis.titleText: "<font color='white'>Time</font>"
+    //    y_axis.titleText: "<font color='white'>Acceleration</font>"
+    //    lineseries.name: "<font color='white'>Example: Acceleration over time</font>"
+//
+    //    LineSeries {
+    //        id: test
+    //    }
+    //}
 
     Timer {
         id: updateValues
