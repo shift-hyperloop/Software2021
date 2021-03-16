@@ -78,8 +78,6 @@ void DataManager::registerPlot(CustomPlotItem* plotItem, const QString &name)
         plotItemList->append(plotItem);
         plotItems.insert(name, plotItemList);
     } else {
-        QList<CustomPlotItem*>* p = plotItems.value(name);
-        int s = p->size();
         CustomPlotItem* basePlot = plotItems.value(name)->first();
         for (unsigned int i = 0; i < basePlot->getCustomPlot()->graphCount(); i++) 
         {

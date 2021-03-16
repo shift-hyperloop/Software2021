@@ -4,7 +4,9 @@
 #include <qevent.h>
 #include <qnamespace.h>
 #include <qpalette.h>
+#include <qsize.h>
 #include <qtooltip.h>
+#include <QtMath>
  
 CustomPlotItem::CustomPlotItem( QQuickItem* parent ) : QQuickPaintedItem( parent )   
     , m_CustomPlot( nullptr )
@@ -43,8 +45,19 @@ void CustomPlotItem::legendVisible(bool visible){
 }
 
 void CustomPlotItem::setName(int graphIndex, QString name){
-   m_CustomPlot->graph(graphIndex)->setName(name);
-   m_CustomPlot->legend->setVisible(true);
+    m_CustomPlot->graph(graphIndex)->setName(name);
+    QFont legendFont;
+    QSize screenRes = QGuiApplication::primaryScreen()->size();
+
+    int screenFactor = screenRes.width() / 100;
+    legendFont.setPointSize(qFloor(screenFactor >> 1));
+    m_CustomPlot->legend->setFont(legendFont);
+    m_CustomPlot->legend->setSelectedFont(legendFont);
+    m_CustomPlot->legend->setSelectableParts(QCPLegend::spItems); 
+    m_CustomPlot->legend->setIconSize(QSize(screenFactor, screenFactor));
+    m_CustomPlot->legend->setVisible(true);
+    m_CustomPlot->rescaleAxes();
+
 }
 void CustomPlotItem::setAxisLabels(QString xAxis, QString yAxis){
     m_CustomPlot->xAxis->setLabel(xAxis);
@@ -189,4 +202,4 @@ void CustomPlotItem::setupGraph( QCustomPlot* customPlot, int numOfGraphs)
  
     customPlot ->setInteractions( QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables );
 
-     }
+}
