@@ -3,12 +3,13 @@ import QtQuick 2.14
 import Qt.labs.qmlmodels 1.0
 
 Item {
-    property int rowCount
+    id: tableItem
     property var names: []
     property var values: []
-    //property alias tableWidth: width
-    //property alias tableHeight: height
-    width: 400
+    property alias tableModel: tableModel
+    //property alias tableWidth: tableItem.width
+    //property alias tableHeight: tableItem.height
+    width: 500
     height: 400
     Rectangle {
         id: rectangle
@@ -29,8 +30,8 @@ Item {
                 TableModelColumn { display: "value" }
                    rows: []
             }
-            Component.onCompleted: {
-                for(var i = 0; i< rowCount; i++){
+            Component.onCompleted: { //adds the names and values that are deffined when the component is used
+                for(var i = 0; i< names.length; i++){
                     tableModel.appendRow({
                         "name" : names[i],
                         "value" : values[i]
@@ -43,15 +44,16 @@ Item {
             delegate: Rectangle {
                 implicitWidth: rectangle.width / table.columns
                 implicitHeight: rectangle.height / table.rows
-                border.color: "#ffffff"
+                //width: rectangle.width / table.columns
+                //height: rectangle.height / table.rows
+                border.color: "#ededed"
                 color: "#00000000"
                 border.width: 2
                 Text {
-                    height: parent.height
-                    width: parent.width
+                    anchors.fill: parent
                     text: display
                     font.pixelSize: 18
-                    color: "#e3e3e3"
+                    color: "#ededed"
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
                 }

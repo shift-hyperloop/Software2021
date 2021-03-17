@@ -13,6 +13,7 @@ import CustomPlot 1.0
 
 ApplicationWindow {
     Material.theme: Material.Dark
+    Material.accent: "#0099ff"
     id: window
     width: 1700
     height: 900
@@ -20,7 +21,7 @@ ApplicationWindow {
     visibility: "Maximized"
     color: "#444444"
     title: "PieceOfShift"
-    
+
     menuBar: CustomMenuBar{
         id: topBar
         NetworkInfo {
@@ -124,7 +125,7 @@ ApplicationWindow {
                         top: parent.top
                         topMargin: (panelRight.height - (height * scale) - slider.height - (controlButtons.height * controlButtons.scale)) / 2
                     }
-                    scale: Math.min(window.width / 800, window.height / 450)
+                    scale: Math.min(window.width / 1000, window.height / 600)
                     transformOrigin: Item.TopRight
                     minValue: 0
                     maxValue: 50
@@ -143,8 +144,8 @@ ApplicationWindow {
                     transformOrigin: Item.BottomRight
                 }
             }
-            Tilitmeter{
-                id: tilitMeter
+            Tiltmeter{
+                id: tiltMeter
                 rollDeg: 0
                 pitchDeg: 0
                 yawDeg: 0
@@ -188,7 +189,8 @@ ApplicationWindow {
                     var speed = (distance * 50) / 0.02;
                     slider.value = slider.value + distance;
                     speedometer.value = speed;
-                    valueTable.speedValue = speed;
+                    valueTable.tableModel.setRow(0,{"name": "Speed", "value":qsTr(speedometer.value + "km/h")})
+                    //updating field in table with index 0
                     thermometer.value = Math.random() * 25 + 25;
                     //change from customChart to chart to get old chart back.
                     customChart.counter++;
@@ -206,7 +208,7 @@ ApplicationWindow {
                 width: window.width * 0.4
                 height: window.height * 0.3
                 anchors.right: valueTable.left
-                anchors.rightMargin: 0.05*window.width
+                anchors.rightMargin: 0.02*window.width
                 anchors.top: valueTable.top
                 property var counter: 0
                 Component.onCompleted: {
@@ -225,17 +227,17 @@ ApplicationWindow {
 
             ValueTable{
                 id: valueTable
-                rowCount: 5
-                property int speedValue
-                names: ["Speed","Voltage battery 1", "Value Value", "Bruh moments:", "Crashes"]
-                values: [qsTr(speedValue + "km/h"), 12, 100, 8, 0]
-                anchors {
+                //tableWidth: 0.3 * window.width
+                //tableHeight: 0.37 * window.height
+                names: ["Speed","Voltage battery 1", "Value Value", "Bruh moments:", "Crashes"] // names for the values in the table
+                values: [qsTr(0 + "km/h"), 12, 100, 8, 0] // values for the table
+                anchors {                                   // indexes in names[] and values[] are corresponding
                     top: parent.top
                     topMargin: 0.06 * window.height
                     right: parent.right
                     rightMargin: thermometer.width + 0.07*window.width
                 }
-                scale: Math.min(window.width / 1700, window.height / 1000)
+                scale: Math.min(window.width / 1600, window.height / 1000)
                 transformOrigin: "TopLeft"
             }
 

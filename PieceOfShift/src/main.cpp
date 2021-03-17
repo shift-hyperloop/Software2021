@@ -17,6 +17,7 @@ int main(int argc, char *argv[])
     DataManager dataManager;
 
     DataManagerAccessor::setDataManager(&dataManager);
+    qmlRegisterType<DataManager>("shift.datamanagement", 1, 0, "DataManager");
     qmlRegisterType<DataManagerAccessor>("shift.datamanagement", 1, 0, "DataManagerAccessor");
     qmlRegisterType<CANServer>("shift.datamanagement", 1, 0, "PodCommand");
     qmlRegisterType<CustomPlotItem>("CustomPlot", 1, 0, "CustomPlotItem");

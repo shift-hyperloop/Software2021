@@ -71,7 +71,6 @@ public:
     DataManagerAccessor(QObject * parent = 0) : QObject(parent) {}
     DataManager * dataManager() { return _obj; }
     static void setDataManager(DataManager* manager) { _obj = manager; }
-
     
 };
 
