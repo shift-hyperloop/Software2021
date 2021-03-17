@@ -200,6 +200,7 @@ ApplicationWindow {
                     chart.setDataType("Velocity");
                     chart.setName(0,"Speed km/h");
                     chart.setAxisLabels("Time","Speed km/h")
+                    chart.setSimpleGraph(); // disables all interactions with the chart
                 }
             }
 

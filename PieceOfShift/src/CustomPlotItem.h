@@ -28,6 +28,7 @@ public:
     Q_INVOKABLE void legendVisible(bool visible);
     Q_INVOKABLE void setAxisLabels(QString xAxis, QString yAxis);
     Q_INVOKABLE void setBackgroundColor(QColor color);
+    Q_INVOKABLE void setSimpleGraph();
 
 protected:
     void routeMouseEvents(QMouseEvent* event);

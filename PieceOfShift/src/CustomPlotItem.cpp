@@ -71,7 +71,12 @@ void CustomPlotItem::setBackgroundColor(QColor color){
     m_CustomPlot->setBackground(color);
 
 }
- 
+void CustomPlotItem::setSimpleGraph(){
+    m_CustomPlot ->setInteraction(QCP::iRangeDrag, false);
+    m_CustomPlot ->setInteraction(QCP::iRangeZoom, false);
+    m_CustomPlot ->setInteraction(QCP::iSelectPlottables, false);
+
+}
 void CustomPlotItem::initCustomPlot(int numOfGraphs)
 {
     m_CustomPlot = new QCustomPlot();
