@@ -16,7 +16,7 @@ Item {
 
     Rectangle {
         id: rectangle1
-        x: 20
+        x: parent.width/2 - 2
         y: 279
         width: 30
         height: 30
@@ -52,11 +52,9 @@ Item {
                 color: Qt.rgba((thermometer.value / thermometer.maximumValue) * 0.5 + 0.5, 0, (0.5 - (thermometer.value / thermometer.maximumValue) * 0.5), 1)
             }
             background: Rectangle {
-                implicitWidth: 16
                 radius: 8
             }
             foreground: null
-            tickmarkLabel: Text
         }
         Behavior on value {
             NumberAnimation{
