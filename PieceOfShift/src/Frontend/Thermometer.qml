@@ -17,9 +17,9 @@ Item {
     Rectangle {
         id: rectangle1
         x: 20
-        y: 280
-        width: 26
-        height: 26
+        y: 279
+        width: 30
+        height: 30
         color: "#cacaca"
         radius: 100
 
@@ -36,9 +36,10 @@ Item {
                 stackView.push("DetailedBatteryPage.qml")
             }
         }
-
-        value: 30
         id: thermometer
+        font.pixelSize: 12
+        value: 30
+
         height: 300
         width: 48
         tickmarkStepSize: thermometer.maximumValue / 10
@@ -55,6 +56,7 @@ Item {
                 radius: 8
             }
             foreground: null
+            tickmarkLabel: Text
         }
         Behavior on value {
             NumberAnimation{
