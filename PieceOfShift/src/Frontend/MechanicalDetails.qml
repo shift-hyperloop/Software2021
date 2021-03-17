@@ -334,9 +334,8 @@ Page {
         //Change positioning of button. Right now it overlaps
             id: button
             text: "Click"
-            x: red.x - text.length
-            y: red.y + red.height
-
+            y: 0.05 * window.height
+            anchors.right: brakesSection.left
             onClicked: {
                 green.opacity = (green.opacity === 1) ? 0.2 : 1;
                 red.opacity = (red.opacity === 1) ? 0.2 : 1;
