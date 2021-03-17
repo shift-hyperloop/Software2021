@@ -27,11 +27,11 @@ Item {
          background: Rectangle {
             x: slider.leftPadding
             y: slider.topPadding + slider.availableHeight / 2 - height / 2
-           // implicitWidth: 200
+            //implicitWidth: slider.height
             implicitHeight: 4
             width: slider.availableWidth
             height: implicitHeight
-            radius: 2
+            radius: 0
             color: "#999999"
         }
 /*

@@ -46,7 +46,7 @@ Item {
     Text {
         id: networktext
         height: parent.height
-        text: connected ? qsTr("Connected") + " Ping:" + ping  : qsTr("Not connected")
+        text: connected ? qsTr("Connected")  : qsTr("Not connected")
         color: connected ? "#3feb67" : "#f54838"
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignRight
