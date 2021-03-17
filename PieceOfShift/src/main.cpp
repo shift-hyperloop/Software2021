@@ -12,14 +12,10 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
  
-    DataManager dm; 
-    dm.writeLogFile(""); 
-    dm.readLogFile(""); 
-
     QApplication app(argc, argv);
    
 
-    /*
+    
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/Frontend/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
@@ -32,7 +28,7 @@ int main(int argc, char *argv[])
     QQuickStyle::setStyle("Material");
 
     engine.load(url);
-    */
+    
 
 
     return app.exec();
