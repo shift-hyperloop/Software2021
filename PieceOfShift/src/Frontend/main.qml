@@ -183,21 +183,6 @@ ApplicationWindow {
                 }
             }
 
-            /*SimpleChart {
-                id: chart
-                chartHeight: window.height * 0.3
-                chartWidth: window.width * 0.4
-                property var counter: 0
-                x: speedometer.width * speedometer.scale + 100
-                y: 40
-                chartview.legend.visible: false
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        stackView.push("PreviewPage.qml");
-                    }
-                }
-            }*/
             CustomChart{
                 id: customChart
                 redirect: "MechanicalDetails.qml"

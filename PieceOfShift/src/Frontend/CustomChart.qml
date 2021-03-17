@@ -30,7 +30,7 @@ Item {
             anchors.fill: parent
             hoverEnabled: true
             cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor;
-            enabled: redirect !=""; // if redirect is set, the graph will redirect to the redirect variable which will be a qml page
+            enabled: redirect !== ""; // if redirect is set, the graph will redirect to the redirect variable which will be a qml page
             onClicked: {
                 stackView.push(redirect);
             }
