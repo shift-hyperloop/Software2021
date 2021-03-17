@@ -20,6 +20,7 @@ ApplicationWindow {
     visibility: "Maximized"
     color: "#444444"
     title: "PieceOfShift"
+
     menuBar: CustomMenuBar{
         /*_width: window.width - logoWhite_RightText.width
         x: logoWhite_RightText.width + 10*/
@@ -119,7 +120,7 @@ ApplicationWindow {
                         top: parent.top
                         topMargin: (panelRight.height - (height * scale) - slider.height - (controlButtons.height * controlButtons.scale)) / 2
                     }
-                    scale: Math.min(window.width / 800, window.height / 450)
+                    scale: Math.min(window.width / 1000, window.height / 600)
                     transformOrigin: Item.TopRight
                     minValue: 0
                     maxValue: 50

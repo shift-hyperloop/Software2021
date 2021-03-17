@@ -46,14 +46,14 @@ Item {
                 implicitHeight: rectangle.height / table.rows
                 //width: rectangle.width / table.columns
                 //height: rectangle.height / table.rows
-                border.color: "#ffffff"
+                border.color: "#ededed"
                 color: "#00000000"
                 border.width: 2
                 Text {
                     anchors.fill: parent
                     text: display
                     font.pixelSize: 18
-                    color: "#e3e3e3"
+                    color: "#ededed"
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
                 }

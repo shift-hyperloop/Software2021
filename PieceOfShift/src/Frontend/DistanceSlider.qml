@@ -60,7 +60,7 @@ Item {
             id: tick
             width: 3
             height: width * 4
-            x: slider.x * 1.1 + ((slider.width * 0.99) * (index / (tickrepeater.model - 1)))
+            x: slider.x * 1.1 + ((slider.width) * (index / (tickrepeater.model - 1)))
             y: slider.y + slider.height / 1.95
             color: "#ededed"
             Text {
@@ -69,7 +69,10 @@ Item {
                 x: -t_metrics.width / 2
                 y: 10
                 font.pointSize: 12
+                font.family: "Roboto Condensed"
                 color: "#ededed"
+                style: Text.Outline
+                styleColor: "transparent"
             }
             TextMetrics {
                     id: t_metrics

@@ -30,8 +30,7 @@ Item {
             height: parent.height * 0.5
             contentItem: Text {
                 text: parent.text
-                font.bold: true
-                font.pixelSize: parent.height * 0.15
+                font.pointSize: parent.height * 0.15
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 elide: Text.ElideRight
@@ -83,8 +82,7 @@ Item {
             height: parent.height * 0.5
             contentItem: Text {
                 text: parent.text
-                font.bold: true
-                font.pixelSize: parent.height * 0.15
+                font.pixelSize: parent.height * 0.2
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 elide: Text.ElideRight
@@ -133,11 +131,11 @@ Item {
             height: parent.height * 0.4
             contentItem: Text {
                 text: parent.text
-                font.bold: true
                 font.pixelSize: parent.height * 0.2
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 elide: Text.ElideRight
+                renderType: Text.NativeRendering
             }
             background: Rectangle{
                 border.width: 3
