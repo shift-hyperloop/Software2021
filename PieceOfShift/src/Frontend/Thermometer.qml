@@ -40,6 +40,7 @@ Item {
         value: 30
         id: thermometer
         height: 300
+        width: 48
         tickmarkStepSize: thermometer.maximumValue / 10
         style: GaugeStyle {
             valueBar: Rectangle {
