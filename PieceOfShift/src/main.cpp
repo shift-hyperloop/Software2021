@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<CANServer>("shift.datamanagement", 1, 0, "PodCommand");
     qmlRegisterType<CustomPlotItem>("CustomPlot", 1, 0, "CustomPlotItem");
 
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    //QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QApplication app(argc, argv);
 

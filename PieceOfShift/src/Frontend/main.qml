@@ -21,8 +21,6 @@ ApplicationWindow {
     color: "#444444"
     title: "PieceOfShift"
     menuBar: CustomMenuBar{
-        /*_width: window.width - logoWhite_RightText.width
-        x: logoWhite_RightText.width + 10*/
         id: topBar
         NetworkInfo {
             id: networkinfo
@@ -44,19 +42,6 @@ ApplicationWindow {
             }
         }
     }
-
-    /*
-      TODO:
-        Next workshop, focus on improving the Battery-page. Look into ValueAxis for naming of axes,
-        and also look into multiple LineSeries in the same graph.
-        This is wanted for the Battery-graphs, so figure out one way to have them on top of each other
-        in a nice-looking way with clear referencing of each line.
-      NOTE:
-        ValueAxis.TitleText is the attribute that decides the naming of the axis itself (appears
-        on the lefthand or righthand side of the graph).
-        LineSeries.name is the attribute that decides what shows up in the "little square" over the graph
-        that indicates the color of that particular line/function.
-    */
 
     StackView {
         id: stackView
@@ -136,9 +121,6 @@ ApplicationWindow {
                     }
                     scale: Math.min(window.width / 1600, window.height / 900)
                     transformOrigin: Item.BottomRight
-
-                    //y: window.height - (height + 100)
-                    //x: Math.max(thermometer.x - thermometer.width - 100 - width, 0)
                 }
             }
             Tilitmeter{
@@ -190,7 +172,6 @@ ApplicationWindow {
                     thermometer.value = Math.random() * 25 + 25;
                     //change from ccrect to chart to get old chart back.
                     ccrect.counter++;
-                    //chart.lineseries.append(chart.counter, speed);
                     battery.charge = 1 - slider.value / 100
                     tilitMeter.rollDeg +=  0.5 * Math.floor(Math.random()*3-1)
                     tilitMeter.yawDeg += 0.5 * Math.floor(Math.random()*3-1)
@@ -201,28 +182,13 @@ ApplicationWindow {
                 }
             }
 
-            /*SimpleChart {
-                id: chart
-                chartHeight: window.height * 0.3
-                chartWidth: window.width * 0.4
-                property var counter: 0
-                x: speedometer.width * speedometer.scale + 100
-                y: 40
-                chartview.legend.visible: false
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        stackView.push("PreviewPage.qml");
-                    }
-                }
-            }*/
             Rectangle {
                 id: ccrect
                 width: window.width * 0.4
                 height: window.height * 0.3
 
                 color: "#333333"
-                x: speedometer.width * speedometer.scale + 100
+                x: speedometer.width * speedometer.scale + 200
                 y: 100
                 property var counter: 0
 
@@ -232,6 +198,7 @@ ApplicationWindow {
                     height: parent.height - 6
                     x: 3
                     y: 3
+                    
 
                     CustomPlotItem {
                         id: customPlot
