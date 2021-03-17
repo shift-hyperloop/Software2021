@@ -7,6 +7,8 @@
 #include "processingunit.h"
 #include "src/Decoding/canserver.h"
 #include "src/Decoding/decoder.h"
+#include "src/Decoding/filehandler.h"
+
 
 class DataManager : public QObject
 {
@@ -14,7 +16,6 @@ class DataManager : public QObject
 public:
     DataManager();
     ~DataManager();
-
 public slots:
 
     // Have Decoder send signal to add data
@@ -22,6 +23,9 @@ public slots:
 
     // Start recieving messages
     void connectToPod(QString hostname, QString port);
+
+    void writeLogFile(QString filePath);
+    void readLogFile(QString filePath);
 
     // This should use a Decoder slot to send command to pod
     void sendPodCommand(CANServer::PodCommand command);
@@ -44,6 +48,7 @@ signals:
 
 private:
     QVector<ProcessingUnit*> processingUnits;
+    FileHandler fileHandler;
 
     Decoder decoder;
     CANServer canServer;
