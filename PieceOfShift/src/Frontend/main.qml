@@ -191,7 +191,7 @@ ApplicationWindow {
                 width: window.width * 0.4
                 height: window.height * 0.3
                 anchors.right: valueTable.left
-                anchors.rightMargin: 0.05*window.width
+                anchors.rightMargin: 0.02*window.width
                 anchors.top: valueTable.top
                 property var counter: 0
                 Component.onCompleted: {
