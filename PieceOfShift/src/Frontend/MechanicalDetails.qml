@@ -45,6 +45,8 @@ Page {
         x: 0
         y: 0.05 * window.height
         onClicked: {
+            customPlot.remove();
+            customPlot2.remove();
             stackView.pop("main.qml");
         }
     }

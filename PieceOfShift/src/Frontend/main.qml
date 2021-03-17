@@ -20,6 +20,7 @@ ApplicationWindow {
     visibility: "Maximized"
     color: "#444444"
     title: "PieceOfShift"
+    
     menuBar: CustomMenuBar{
         /*_width: window.width - logoWhite_RightText.width
         x: logoWhite_RightText.width + 10*/
@@ -42,6 +43,13 @@ ApplicationWindow {
                     cursorShape = containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor;
                 }
             }
+        }
+    }
+
+    DataManagerAccessor {
+        id: dm
+        Component.onCompleted: {
+            dataManager.init()
         }
     }
 
@@ -196,8 +204,8 @@ ApplicationWindow {
                     tilitMeter.yawDeg += 0.5 * Math.floor(Math.random()*3-1)
                     tilitMeter.pitchDeg += 0.5 * Math.floor(Math.random()*3-1)
 
-                    customPlot.addData(Qt.point(ccrect.counter, speed), 0);
-                    customPlot.addData(Qt.point(ccrect.counter, speed / 3), 1);
+                    //customPlot.addData(Qt.point(ccrect.counter, speed), 0);
+                    //customPlot.addData(Qt.point(ccrect.counter, speed / 3), 1);
                 }
             }
 

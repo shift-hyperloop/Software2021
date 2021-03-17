@@ -27,6 +27,7 @@ public:
     Q_INVOKABLE void setName(int graphIndex, QString name);
     Q_INVOKABLE void legendVisible(bool visible);
     Q_INVOKABLE void setAxisLabels(QString xAxis, QString yAxis);
+    Q_INVOKABLE void remove();
 
 protected:
     void routeMouseEvents(QMouseEvent* event);
