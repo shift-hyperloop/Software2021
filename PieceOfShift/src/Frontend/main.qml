@@ -9,6 +9,7 @@ import Qt3D.Render 2.9
 import QtCharts 2.3
 import shift.datamanagement 1.0
 import QtQuick.Controls.Material 2.12
+import CustomPlot 1.0
 
 ApplicationWindow {
     Material.theme: Material.Dark
@@ -22,8 +23,6 @@ ApplicationWindow {
     title: "PieceOfShift"
 
     menuBar: CustomMenuBar{
-        /*_width: window.width - logoWhite_RightText.width
-        x: logoWhite_RightText.width + 10*/
         id: topBar
         NetworkInfo {
             id: networkinfo
@@ -46,31 +45,17 @@ ApplicationWindow {
         }
     }
 
-    /*
-      TODO:
-        Next workshop, focus on improving the Battery-page. Look into ValueAxis for naming of axes,
-        and also look into multiple LineSeries in the same graph.
-        This is wanted for the Battery-graphs, so figure out one way to have them on top of each other
-        in a nice-looking way with clear referencing of each line.
-      NOTE:
-        ValueAxis.TitleText is the attribute that decides the naming of the axis itself (appears
-        on the lefthand or righthand side of the graph).
-        LineSeries.name is the attribute that decides what shows up in the "little square" over the graph
-        that indicates the color of that particular line/function.
-    */
-
     StackView {
         id: stackView
         anchors.fill: parent
         property var chosenState // variable for the chosen state in StateIndication.qml
-
         initialItem: Item {
 
             id: mainView
 
             property alias timer: timer
-            property alias chart: chart
-            property alias counter: chart.counter
+            //property alias chart: chart
+            property alias counter: customChart.counter
             //to change networkinfo status with button
             property alias connected: networkinfo.connected
             Item {
@@ -137,9 +122,6 @@ ApplicationWindow {
                     }
                     scale: Math.min(window.width / 1600, window.height / 900)
                     transformOrigin: Item.BottomRight
-
-                    //y: window.height - (height + 100)
-                    //x: Math.max(thermometer.x - thermometer.width - 100 - width, 0)
                 }
             }
             Tiltmeter{
@@ -190,32 +172,41 @@ ApplicationWindow {
                     valueTable.tableModel.setRow(0,{"name": "Speed", "value":qsTr(speedometer.value + "km/h")})
                     //updating field in table with index 0
                     thermometer.value = Math.random() * 25 + 25;
-                    chart.counter++;
-                    chart.lineseries.append(chart.counter, speed);
+                    //change from customChart to chart to get old chart back.
+                    customChart.counter++;
+                    //chart.lineseries.append(chart.counter, speed);
                     battery.charge = 1 - slider.value / 100
                     tiltMeter.rollDeg +=  0.5 * Math.floor(Math.random()*3-1)
                     tiltMeter.yawDeg += 0.5 * Math.floor(Math.random()*3-1)
                     tiltMeter.pitchDeg += 0.5 * Math.floor(Math.random()*3-1)
 
+                    customChart.chart.addData(Qt.point(customChart.counter, speed), 0);
+                    customChart.chart.addData(Qt.point(customChart.counter, speed / 3), 1);
                 }
             }
 
-            SimpleChart {
-                id: chart
-                chartHeight: window.height * 0.3
-                chartWidth: window.width * 0.4
+            CustomChart{
+                id: customChart
+                redirect: "MechanicalDetails.qml"
+                width: window.width * 0.4
+                height: window.height * 0.3
+                anchors.right: valueTable.left
+                anchors.rightMargin: 0.05*window.width
+                anchors.top: valueTable.top
                 property var counter: 0
-                x: speedometer.width * speedometer.scale + 100
-                anchors.topMargin: 0.065 * window.height - 35
-                anchors.top: parent.top
-                chartview.legend.visible: false
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        stackView.push("PreviewPage.qml");
-                    }
+                Component.onCompleted: {
+                    //create a customPlot item with (2) graphs, and set their colors.
+                    //any color sent to C++ will become a QColor, and vice versa.
+                    chart.initCustomPlot(2);
+                    chart.setGraphColor(0, "#2674BB");
+                    chart.setGraphColor(1, "#AE3328");
+                    chart.setDataType("Velocity");
+                    chart.setName(0,"Speed km/h");
+                    chart.setAxisLabels("Time","Speed km/h")
+                    chart.setSimpleGraph(); // disables all interactions with the chart
                 }
             }
+
             ValueTable{
                 id: valueTable
                 //tableWidth: 0.3 * window.width
@@ -224,9 +215,9 @@ ApplicationWindow {
                 values: [qsTr(0 + "km/h"), 12, 100, 8, 0] // values for the table
                 anchors {                                   // indexes in names[] and values[] are corresponding
                     top: parent.top
-                    topMargin: 0.065 * window.height
-                    left: parent.left
-                    leftMargin: chart.x + chart.chartWidth
+                    topMargin: 0.06 * window.height
+                    right: parent.right
+                    rightMargin: thermometer.width + 0.07*window.width
                 }
                 scale: Math.min(window.width / 1600, window.height / 1000)
                 transformOrigin: "TopLeft"
@@ -238,6 +229,6 @@ ApplicationWindow {
                 width: 300
                 height: 100
             }
-            }
         }
     }
+}

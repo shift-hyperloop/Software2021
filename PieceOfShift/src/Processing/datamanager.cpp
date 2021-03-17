@@ -2,6 +2,7 @@
 #include "velocityprocessingunit.h"
 #include "accelerationprocessingunit.h"
 #include "accelerationvelocityunit.h"
+#include "CustomPlotItem.h"
 
 DataManager::DataManager()
 {
@@ -62,12 +63,37 @@ void DataManager::addData(const QString& name, const DataType &dataType, const Q
 
 void DataManager::connectToPod(QString hostname, QString port)
 {
-        canServer.connectToPod(hostname, port);
+    canServer.connectToPod(hostname, port);
 }
 
 void DataManager::sendPodCommand(CANServer::PodCommand messageType)
 {
-        canServer.sendPodCommand(messageType);
+    canServer.sendPodCommand(messageType);
+}
+
+void DataManager::registerPlot(CustomPlotItem* plotItem, const QString &name)
+{
+    if (!plotItems.contains(name)) {
+        QList<CustomPlotItem*>* plotItemList = new QList<CustomPlotItem*>();
+        plotItemList->append(plotItem);
+        plotItems.insert(name, plotItemList);
+    } else {
+        CustomPlotItem* basePlot = plotItems.value(name)->first();
+        for (unsigned int i = 0; i < basePlot->getCustomPlot()->graphCount(); i++) 
+        {
+            plotItem->getCustomPlot()->graph(i)->setData(basePlot->getCustomPlot()->graph(i)->data());
+            plotItems.value(name)->append(plotItem);
+        }
+    }
+}
+
+void DataManager::removePlot(CustomPlotItem *plotItem, const QString &name)
+{
+    if (plotItems.contains(name)) {
+        if (plotItems.value(name)->indexOf(plotItem)) {
+            plotItems.value(name)->removeOne(plotItem);
+        }
+    }
 }
 
 DataManager* DataManagerAccessor::_obj = nullptr; // Object accessed by QML, needs to be initialized since static

@@ -4,6 +4,8 @@
 #include <qqml.h>
 #include "Decoding/canserver.h"
 #include "Processing/datamanager.h"
+#include "CustomPlotItem.h"
+#include "Processing/processingunit.h"
 
 int main(int argc, char *argv[])
 {
@@ -16,8 +18,9 @@ int main(int argc, char *argv[])
     qmlRegisterType<DataManager>("shift.datamanagement", 1, 0, "DataManager");
     qmlRegisterType<DataManagerAccessor>("shift.datamanagement", 1, 0, "DataManagerAccessor");
     qmlRegisterType<CANServer>("shift.datamanagement", 1, 0, "PodCommand");
+    qmlRegisterType<CustomPlotItem>("CustomPlot", 1, 0, "CustomPlotItem");
 
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    //QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QApplication app(argc, argv);
 
@@ -29,7 +32,6 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(-1);
         }
     }, Qt::QueuedConnection);
-
 
     QQuickStyle::setStyle("Material");
     engine.load(url);

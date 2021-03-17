@@ -5,6 +5,8 @@ Page{
     // if you have previously chosen a button it will be saved in the chosenButton variable in main.qml
     // this is so that the button will still be checked when you return to this page
     property var chosenButton
+    background: Rectangle{color: "#333333"} // background color for subpages
+
     id: stateIndicationPage
     Keys.onPressed: { //If backspace is pressed => go back to previous page
         if (event.key === 16777219) {

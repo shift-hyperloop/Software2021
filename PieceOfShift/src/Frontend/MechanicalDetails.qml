@@ -1,12 +1,12 @@
 import QtQuick.Controls 2.15
 import QtQuick 2.12
 import QtCharts 2.3
+import CustomPlot 1.0
+
 
 Page {
-
     id: item
-    height: window.height * 0.95
-    width: window.width
+    background: Rectangle{color: "#333333"} // background color for subpages
 
     property alias detailedChart: distanceChart;
     Keys.onPressed: { //If backspace is pressed => go back to previous page
@@ -47,62 +47,49 @@ Page {
         }
     }
 
-    Chart {
+    CustomChart{
         id: distanceChart
-        x: 0
-        y: backButton.y + backButton.height
-        chartWidth: Math.sqrt(2) * chartview.height
-        chartHeight: Math.floor((window.height * 0.95 - backButton.height) / 2)
-        // We can use HTML coding for text apparently. This is the only way the text turns white
-        // (even though it's already defined in Chart.qml -> ValueAxis). QML is weird
-        x_axis.titleText: "<font color='white'>Time</font>"
-        y_axis.titleText: "<font color='white'>Distance</font>"
-        lineseries.name: "<font color='white'>Example: Pod Distance Covered</font>"
-        /*
-          The following function is called when the component (i.e. page) is loaded.
-          It will then iterate through the points from the previous graph (in main.qml)
-          and add all those points to this graph.
-        */
-
+        width: window.width * 0.6
+        height: window.height * 0.35
+        anchors.bottom: parent.verticalCenter
+        anchors.left: parent.left
+        anchors.leftMargin: window.width * 0.01
+        borderColor: "#222222"
+        property var counter: 0
         Component.onCompleted: {
-            let prv_graph = mainView.chart;
-            for (let i = 0; i < prv_graph.lineseries.count; i++) {
-                detailedChart.lineseries.append(prv_graph.lineseries.at(i).x, prv_graph.lineseries.at(i).y);
-            }
-        }
+            //create a customPlot item with (2) graphs, and set their colors.
+            //any color sent to C++ will become a QColor, and vice versa.
+            chart.initCustomPlot(2);
+            chart.setGraphColor(0, "#2674BB");
+            chart.setGraphColor(1, "#AE3328");
+            chart.setDataType("Velocity");
+            chart.setName(0,"Speed km/h");
+            chart.setAxisLabels("Time","Speed km/h")
+            chart.setBackgroundColor("#333333")
 
-
-        //Timer for simulating continously updated points
-        Timer {
-            running: mainView.timer.running; repeat: true; interval: 200;
-            onTriggered: {
-                update(distanceChart, mainView.counter);
-                update(someOtherChart, mainView.counter);
-            }
-
-            function update(chart, globalCounter) {
-                var distance = (Math.random() * 0.03) + 0.1;
-                var speed = (distance * 50) / 0.02;
-                globalCounter++;
-                chart.lineseries.append(globalCounter, speed)
-            }
         }
     }
 
-    Chart {
-        id: someOtherChart
-        x: distanceChart.x
-        y: distanceChart.chartview.y + distanceChart.chartview.height + 10
-        chartWidth: Math.sqrt(2) * chartview.height
-        chartHeight: Math.floor((window.height * 0.95 - backButton.height) / 2)
-        // We can use HTML coding for text apparently. This is the only way the text turns white
-        // (even though it's already defined in Chart.qml -> ValueAxis). QML is weird
-        x_axis.titleText: "<font color='white'>Time</font>"
-        y_axis.titleText: "<font color='white'>Acceleration</font>"
-        lineseries.name: "<font color='white'>Example: Acceleration over time</font>"
-
-        LineSeries {
-            id: test
+    CustomChart{
+        id: distanceChart2
+        width: window.width * 0.6
+        height: window.height * 0.35
+        anchors.top: distanceChart.bottom
+        anchors.topMargin: window.height * 0.02
+        anchors.left: parent.left
+        anchors.leftMargin: window.width * 0.01
+        borderColor: "#222222"
+        property var counter: 0
+        Component.onCompleted: {
+            //create a customPlot item with (2) graphs, and set their colors.
+            //any color sent to C++ will become a QColor, and vice versa.
+            chart.initCustomPlot(2);
+            chart.setGraphColor(0, "#2674BB");
+            chart.setGraphColor(1, "#AE3328");
+            chart.setDataType("Velocity");
+            chart.setName(0,"Speed km/h");
+            chart.setAxisLabels("Time","Speed km/h")
+            chart.setBackgroundColor("#333333")
         }
     }
 
@@ -117,7 +104,6 @@ Page {
         }
     }
 
-
     Rectangle {
         id: brakesSection
         x: window.width - width
@@ -128,7 +114,6 @@ Page {
         border.color: "black"
         border.width: 2
         radius: 4
-        //radius: width*0.5
 
         Text {
             id: brakesText
