@@ -67,6 +67,10 @@ void CustomPlotItem::setDataType(QString dataType)
 {
     m_DMAccessor.dataManager()->registerPlot(this, dataType);
 }
+void CustomPlotItem::setBackgroundColor(QColor color){
+    m_CustomPlot->setBackground(color);
+
+}
  
 void CustomPlotItem::initCustomPlot(int numOfGraphs)
 {

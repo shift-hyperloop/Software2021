@@ -5,10 +5,8 @@ import CustomPlot 1.0
 
 
 Page {
-
     id: item
-    height: window.height * 0.95
-    width: window.width
+    background: Rectangle{color: "#333333"} // background color for subpages
 
     property alias detailedChart: distanceChart;
     Keys.onPressed: { //If backspace is pressed => go back to previous page
@@ -54,10 +52,9 @@ Page {
         width: window.width * 0.6
         height: window.height * 0.35
         anchors.bottom: parent.verticalCenter
-        anchors.bottomMargin: -window.height * 0.02
         anchors.left: parent.left
         anchors.leftMargin: window.width * 0.01
-
+        borderColor: "#222222"
         property var counter: 0
         Component.onCompleted: {
             //create a customPlot item with (2) graphs, and set their colors.
@@ -68,6 +65,8 @@ Page {
             chart.setDataType("Velocity");
             chart.setName(0,"Speed km/h");
             chart.setAxisLabels("Time","Speed km/h")
+            chart.setBackgroundColor("#333333")
+
         }
     }
 
@@ -79,6 +78,7 @@ Page {
         anchors.topMargin: window.height * 0.02
         anchors.left: parent.left
         anchors.leftMargin: window.width * 0.01
+        borderColor: "#222222"
         property var counter: 0
         Component.onCompleted: {
             //create a customPlot item with (2) graphs, and set their colors.
@@ -89,6 +89,7 @@ Page {
             chart.setDataType("Velocity");
             chart.setName(0,"Speed km/h");
             chart.setAxisLabels("Time","Speed km/h")
+            chart.setBackgroundColor("#333333")
         }
     }
 

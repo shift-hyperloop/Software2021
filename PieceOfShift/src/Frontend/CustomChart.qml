@@ -5,11 +5,12 @@ Item {
     property alias ccrect: ccrect
     property alias chart: customPlot
     property var redirect: ""
+    property var borderColor: "#333333"
     Rectangle {
         id: ccrect
         width: parent.width
         height: parent.height
-        color: "#333333"
+        color: borderColor
 
 
         Rectangle {

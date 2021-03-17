@@ -1,9 +1,17 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.15
 
-Item {
+Page {
 
     id: detailedBatteryPage
+    background: Rectangle{color: "#333333"} // background color for subpages
+
+    property alias chart1: chart1;
+    property alias chart2: chart2;
+    property alias chart3: chart3;
+    property alias chart4: chart4;
+    property alias chart5: chart5;
+    property alias chart6: chart6;
 
     //If backspace is pressed => go back to previous page
     Keys.onPressed: {
