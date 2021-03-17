@@ -196,9 +196,9 @@ ApplicationWindow {
                     customChart.counter++;
                     //chart.lineseries.append(chart.counter, speed);
                     battery.charge = 1 - slider.value / 100
-                    tilitMeter.rollDeg +=  0.5 * Math.floor(Math.random()*3-1)
-                    tilitMeter.yawDeg += 0.5 * Math.floor(Math.random()*3-1)
-                    tilitMeter.pitchDeg += 0.5 * Math.floor(Math.random()*3-1)
+                    tiltMeter.rollDeg +=  0.5 * Math.floor(Math.random()*3-1)
+                    tiltMeter.yawDeg += 0.5 * Math.floor(Math.random()*3-1)
+                    tiltMeter.pitchDeg += 0.5 * Math.floor(Math.random()*3-1)
                 }
             }
 
