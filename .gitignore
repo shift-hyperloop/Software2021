@@ -12,6 +12,10 @@
 
 build/*
 PieceOfShift/build/*
+PieceOfShift/include/qcustomplot/documentation/*
+PieceOfShift/include/qcustomplot/examples/*
+PieceOfShift/include/qcustomplot/changelog.txt
+PieceOfShift/include/qcustomplot/GPL.txt
 .clang_complete
 .clang-format
 
