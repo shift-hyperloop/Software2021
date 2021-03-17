@@ -2,8 +2,6 @@
 #include "velocityprocessingunit.h"
 #include "accelerationprocessingunit.h"
 #include "accelerationvelocityunit.h"
-#include <QDebug>
-#include <iostream>
 
 DataManager::DataManager()
 {
@@ -71,19 +69,6 @@ void DataManager::sendPodCommand(CANServer::PodCommand messageType)
 {
         canServer.sendPodCommand(messageType);
 }
-
-void DataManager::writeLogFile(QString path){
-    QMap<QString, QString> dataCopyMap; 
-
-
-    fileHandler.writeLogFile(path, dataCopyMap); 
-}
-
-void DataManager::readLogFile(QString path){
-    fileHandler.readLogFile(path);
-}
-
-
 
 DataManager* DataManagerAccessor::_obj = nullptr; // Object accessed by QML, needs to be initialized since static
 

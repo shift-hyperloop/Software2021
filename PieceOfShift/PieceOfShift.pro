@@ -1,17 +1,17 @@
-QT += charts quick widgets concurrent quickcontrols2 core
+QT += charts quick widgets concurrent quickcontrols2
 
 CONFIG += c++14
 
 SOURCES += \
         src/Decoding/decoder.cpp \
         src/Decoding/canserver.cpp \
-        src/Decoding/filehandler.cpp \
         src/Processing/accelerationprocessingunit.cpp \
         src/Processing/accelerationvelocityunit.cpp \
         src/Processing/datamanager.cpp \
         src/main.cpp \
         src/Processing/processingunit.cpp \
         src/Processing/velocityprocessingunit.cpp
+
 OTHER_FILES += \
    # src/Frontend/*.qml \
     assets/images/*
@@ -35,7 +35,6 @@ for(f, DISTFILES):copyToDestdir($$files($${PWD}/$${f}))
 
 HEADERS += \
     src/Decoding/decoder.h \
-    src/Decoding/filehandler.h \
     src/Processing/accelerationprocessingunit.h \
     src/Processing/accelerationvelocityunit.h \
     src/Processing/datamanager.h \
