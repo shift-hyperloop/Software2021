@@ -28,6 +28,9 @@ public:
     Q_INVOKABLE void legendVisible(bool visible);
     Q_INVOKABLE void setAxisLabels(QString xAxis, QString yAxis);
     Q_INVOKABLE void remove();
+    Q_INVOKABLE void setBackgroundColor(QColor color);
+    Q_INVOKABLE void setSimpleGraph();
+    Q_INVOKABLE void setAxisRange(QPoint x, QPoint y);
 
 protected:
     void routeMouseEvents(QMouseEvent* event);
@@ -45,6 +48,7 @@ private:
     QCustomPlot* m_CustomPlot;
     QVector<double> m_X, m_Y;
     DataManagerAccessor m_DMAccessor;
+    int m_XSize;
  
 private slots:
     void graphClicked(QCPAbstractPlottable *plottable, int dataIndex, QMouseEvent *event);

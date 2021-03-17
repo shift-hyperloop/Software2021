@@ -2,8 +2,10 @@ import QtQuick 2.12
 import QtQuick.Controls 2.5
 import shift.datamanagement 1.0
 
-Item {
+Page {
     id: page
+    background: Rectangle{color: "#333333"} // background color for subpages
+
     Keys.onPressed: { //If backspace is pressed => go back to previous page
         if (event.key === 16777219) {
             //pop(null) implicitely pops to the first element, aka main.qml

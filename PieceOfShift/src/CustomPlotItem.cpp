@@ -31,7 +31,7 @@ CustomPlotItem::~CustomPlotItem()
 void CustomPlotItem::addData(QPointF data, int graphNum)
 {
     m_CustomPlot->graph(graphNum)->addData(data.x(), data.y());
-    m_CustomPlot->xAxis->setRange(data.x(), 20, Qt::AlignRight);
+    m_CustomPlot->xAxis->setRange(data.x(), m_XSize, Qt::AlignRight);
     //m_CustomPlot->yAxis->setRange(data.y(), 1000, Qt::AlignTop);
     m_CustomPlot->replot(); 
 }
@@ -68,7 +68,24 @@ void CustomPlotItem::setDataType(QString dataType)
 {
     QtConcurrent::run(m_DMAccessor.dataManager(), &DataManager::registerPlot, this, dataType);
 }
- 
+
+void CustomPlotItem::setAxisRange(QPoint x, QPoint y)
+{
+    m_XSize = x.y() - x.x(); 
+    m_CustomPlot->xAxis->setRange(x.x(), x.y());
+    m_CustomPlot->yAxis->setRange(y.x(), y.y());
+}
+
+void CustomPlotItem::setBackgroundColor(QColor color){
+    m_CustomPlot->setBackground(color);
+
+}
+void CustomPlotItem::setSimpleGraph(){
+    m_CustomPlot ->setInteraction(QCP::iRangeDrag, false);
+    m_CustomPlot ->setInteraction(QCP::iRangeZoom, false);
+    m_CustomPlot ->setInteraction(QCP::iSelectPlottables, false);
+
+}
 void CustomPlotItem::initCustomPlot(int numOfGraphs)
 {
     m_CustomPlot = new QCustomPlot();
@@ -181,6 +198,7 @@ void CustomPlotItem::remove()
  
 void CustomPlotItem::setupGraph( QCustomPlot* customPlot, int numOfGraphs)
 {
+    m_CustomPlot->setOpenGl(true, 4);
     for(int i = 0; i < numOfGraphs; i++){
         customPlot->addGraph();
         customPlot->graph(i)->setData(m_X, m_Y);

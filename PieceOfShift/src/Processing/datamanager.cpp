@@ -100,21 +100,32 @@ void DataManager::removePlot(CustomPlotItem *plotItem)
     }
 }
 
-int timeMs = 0;
+long timeMs = 0;
 QRandomGenerator generator(1000224242);
 void DataManager::dummyData()
 {
     //for (unsigned int i = 0; i < 1000; i++) {
     //    canServer.connectToPod("0.0.0.0", "3000");
     //}
-    QPointF data1(timeMs, generator.bounded(400));
-    QPointF data2(timeMs, generator.bounded(400));
+    if (timeMs > 1200) {
+        return;
+    }
+
+    QPointF data1;
+    if (timeMs < 1000) {
+        data1 = QPointF(timeMs, generator.bounded(5) + exp(timeMs*0.005 ));
+    } else if (timeMs < 1100) {
+        data1 = QPointF(timeMs, generator.bounded(5) + exp(1/timeMs*0.1 ));
+    } else {
+        data1 = QPointF(timeMs, 0);
+    }
+    QPointF data2(timeMs, generator.bounded(10) + 200 + 20*sin(timeMs));
     for (CustomPlotItem* plot : *plotItems.value("Velocity")) 
     {
         plot->addData(data1, 0);
         plot->addData(data2, 1);
     }
-    timeMs++;
+    timeMs += 10;
 }
 
 void DataManager::init()
@@ -122,7 +133,7 @@ void DataManager::init()
     QTimer *timer = new QTimer(this);
     timer->moveToThread(this->thread());
     connect(timer, &QTimer::timeout, this, &DataManager::dummyData);
-    timer->start(100);
+    timer->start(50);
 }
 
 DataManager* DataManagerAccessor::_obj = nullptr; // Object accessed by QML, needs to be initialized since static

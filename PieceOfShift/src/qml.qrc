@@ -20,5 +20,6 @@
         <file>Frontend/NetworkInfo.qml</file>
         <file>Frontend/NetworkInfoPage.qml</file>
         <file>Frontend/SignalSymbol.qml</file>
+        <file>Frontend/CustomChart.qml</file>
     </qresource>
 </RCC>

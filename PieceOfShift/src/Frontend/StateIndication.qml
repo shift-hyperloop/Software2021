@@ -3,6 +3,8 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.3
 Page{
     property var chosenButton
+    background: Rectangle{color: "#333333"} // background color for subpages
+
     id: stateIndicationPage
     Keys.onPressed: { //If backspace is pressed => go back to previous page
         if (event.key === 16777219) {

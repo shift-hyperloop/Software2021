@@ -9,6 +9,7 @@ project(PieceOfShift)
 # Find includes in corresponding build directories
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
+add_compile_definitions(QCUSTOMPLOT_USE_OPENGL)
 
 if(WIN32)
         # NOTE: CHANGE TO YOUR OWN QT PATH IF RUNNING ON WINDOWS
