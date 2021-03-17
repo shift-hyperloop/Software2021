@@ -69,7 +69,7 @@ ApplicationWindow {
 
             property alias timer: timer
             //property alias chart: chart
-            property alias counter: ccrect.counter
+            property alias counter: customChart.counter
             //to change networkinfo status with button
             property alias connected: networkinfo.connected
             Item {
@@ -188,16 +188,16 @@ ApplicationWindow {
                     speedometer.value = speed;
                     valueTable.speedValue = speed;
                     thermometer.value = Math.random() * 25 + 25;
-                    //change from ccrect to chart to get old chart back.
-                    ccrect.counter++;
+                    //change from customChart to chart to get old chart back.
+                    customChart.counter++;
                     //chart.lineseries.append(chart.counter, speed);
                     battery.charge = 1 - slider.value / 100
                     tilitMeter.rollDeg +=  0.5 * Math.floor(Math.random()*3-1)
                     tilitMeter.yawDeg += 0.5 * Math.floor(Math.random()*3-1)
                     tilitMeter.pitchDeg += 0.5 * Math.floor(Math.random()*3-1)
 
-                    customPlot.addData(Qt.point(ccrect.counter, speed), 0);
-                    customPlot.addData(Qt.point(ccrect.counter, speed / 3), 1);
+                    customChart.chart.addData(Qt.point(customChart.counter, speed), 0);
+                    customChart.chart.addData(Qt.point(customChart.counter, speed / 3), 1);
                 }
             }
 
@@ -216,48 +216,24 @@ ApplicationWindow {
                     }
                 }
             }*/
-            Rectangle {
-                id: ccrect
+            CustomChart{
+                id: customChart
+                redirect: "MechanicalDetails.qml"
                 width: window.width * 0.4
                 height: window.height * 0.3
-
-                color: "#333333"
-                x: speedometer.width * speedometer.scale + 100
-                y: 100
+                anchors.right: valueTable.left
+                anchors.rightMargin: 0.05*window.width
+                anchors.top: valueTable.top
                 property var counter: 0
-
-                Rectangle {
-                    id: customRect
-                    width: parent.width - 6
-                    height: parent.height - 6
-                    x: 3
-                    y: 3
-
-                    CustomPlotItem {
-                        id: customPlot
-                        anchors.fill: parent
-        
-                        Component.onCompleted: {
-                            //create a customPlot item with (2) graphs, and set their colors.
-                            //any color sent to C++ will become a QColor, and vice versa.
-                            initCustomPlot(2);
-                            setGraphColor(0, "#2674BB");
-                            setGraphColor(1, "#AE3328");
-                            setDataType("Velocity");
-                            setName(0,"Speed km/h");
-                            setAxisLabels("Time","Speed km/h")
-                        }
-                    }
-                }
-                MouseArea{
-                    id: chartMouseArea
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor;
-                    onClicked: {
-                        //stackView.push("MovementsDetailed.qml");
-                        stackView.push("MechanicalDetails.qml");
-                    }
+                Component.onCompleted: {
+                    //create a customPlot item with (2) graphs, and set their colors.
+                    //any color sent to C++ will become a QColor, and vice versa.
+                    chart.initCustomPlot(2);
+                    chart.setGraphColor(0, "#2674BB");
+                    chart.setGraphColor(1, "#AE3328");
+                    chart.setDataType("Velocity");
+                    chart.setName(0,"Speed km/h");
+                    chart.setAxisLabels("Time","Speed km/h")
                 }
             }
 
@@ -270,8 +246,8 @@ ApplicationWindow {
                 anchors {
                     top: parent.top
                     topMargin: 0.06 * window.height
-                    left: parent.left
-                    leftMargin: ccrect.x + ccrect.width + 5
+                    right: parent.right
+                    rightMargin: thermometer.width + 0.07*window.width
                 }
                 scale: Math.min(window.width / 1700, window.height / 1000)
                 transformOrigin: "TopLeft"
