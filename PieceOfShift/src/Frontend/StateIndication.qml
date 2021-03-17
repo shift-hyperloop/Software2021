@@ -2,11 +2,16 @@ import QtQuick 2.12
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.3
 Page{
+    // if you have previously chosen a button it will be saved in the chosenButton variable in main.qml
+    // this is so that the button will still be checked when you return to this page
     property var chosenButton
+    background: Rectangle{color: "#333333"} // background color for subpages
+
     id: stateIndicationPage
     Keys.onPressed: { //If backspace is pressed => go back to previous page
         if (event.key === 16777219) {
-            stackView.pop("main.qml");
+            //pop(null) pops to the first element, aka main.qml
+            stackView.pop(null);
         }
 
     }
@@ -15,7 +20,7 @@ Page{
         y: 50
         x: 25
         onClicked: {
-           stackView.pop("main.qml");
+           stackView.pop(null);
         }
     }
     Text {
@@ -68,9 +73,8 @@ Page{
 
     }
     Component.onCompleted: {
-        console.log(chosenButton)
-        chosenButton = stackView.chosenState
-        if(chosenButton == null){
+        chosenButton = stackView.chosenState // if you have previously chosen a button it will be selected
+        if(chosenButton == null){            //if not 0 will be selected
             chosenButton = 0
         }
         column.children[chosenButton].checked = true

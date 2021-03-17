@@ -1,8 +1,14 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.5
 import QtQuick.Layouts 1.3
+import shift.datamanagement 1.0
 
 Item {
+
+    DataManagerAccessor {
+        id: dataManager
+    }
+
     Rectangle{
         color: "#00ffffff"
         anchors.fill: parent
@@ -24,7 +30,6 @@ Item {
             height: parent.height * 0.5
             contentItem: Text {
                 text: parent.text
-                font.bold: true
                 font.pixelSize: parent.height * 0.15
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
@@ -47,6 +52,10 @@ Item {
                     hoverEnabled: true
                     onClicked: {
                         mainView.timer.start();
+                        dataManager.dataManager.sendPodCommand(PodCommand.START);
+                        // To test that connection status works:
+                        //networkinfo.connected = true;
+                        //networkinfo.connectionStrength = 3
                     }
                     onPressed: {
                         parent.color = "#aaa";
@@ -73,7 +82,6 @@ Item {
             height: parent.height * 0.5
             contentItem: Text {
                 text: parent.text
-                font.bold: true
                 font.pixelSize: parent.height * 0.15
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
@@ -96,6 +104,7 @@ Item {
                     hoverEnabled: true
                     onClicked: {
                         mainView.timer.stop();
+                        dataManager.dataManager.sendPodCommand(PodCommand.STOP);
                     }
                     onPressed: {
                         parent.color = "#aaa";
@@ -122,7 +131,6 @@ Item {
             height: parent.height * 0.4
             contentItem: Text {
                 text: parent.text
-                font.bold: true
                 font.pixelSize: parent.height * 0.2
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
@@ -137,7 +145,9 @@ Item {
                     anchors.fill: parent
                     hoverEnabled: true
                     onClicked: {
-                        console.log("SHIT");
+                        dataManager.dataManager.sendPodCommand(PodCommand.EMERGENCY_BRAKE);
+                        //valueTable.tableModel.setRow(3,{"name": "Bruh moments:", "color":valueTable.tableModel.getRow(3).color += 1})
+                        //accessing a value in valuetable - should work but does not
                     }
                     onPressed: {
                         parent.color = "#cc121e";

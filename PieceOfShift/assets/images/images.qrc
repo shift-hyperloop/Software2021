@@ -2,7 +2,9 @@
     <qresource prefix="/">
         <file>Shift_Logo.png</file>
         <file>Pod.png</file>
-	<file>battery.png</file>
-	<file>icon.ico</file>
+	    <file>battery.png</file>
+	    <file>icon.ico</file>
+        <file>green.png</file>
+        <file>red.png</file>
     </qresource>
 </RCC>

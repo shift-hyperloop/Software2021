@@ -1,16 +1,28 @@
 #include <QtWidgets/QApplication>
 #include <QQmlApplicationEngine>
 #include <QQuickStyle>
-#include "Decoding/cansplitter.h"
+#include <qglobal.h>
+#include <qqml.h>
+#include "Decoding/canserver.h"
 #include "Processing/datamanager.h"
+#include "CustomPlotItem.h"
+#include "Processing/processingunit.h"
+#include "qbytearray.h"
 
 int main(int argc, char *argv[])
 {
-    QDirIterator it(":", QDirIterator::Subdirectories);
     // TODO: Move these to other file
-    qmlRegisterType<DataManager>("shift.datamanagement", 1, 0, "DataManager");
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
+    /* Make QML able to access dataManager from any file through DataManagerAccessor object */
+    DataManager dataManager;
+
+    DataManagerAccessor::setDataManager(&dataManager);
+    qmlRegisterType<DataManager>("shift.datamanagement", 1, 0, "DataManager");
+    qmlRegisterType<DataManagerAccessor>("shift.datamanagement", 1, 0, "DataManagerAccessor");
+    qmlRegisterType<CANServer>("shift.datamanagement", 1, 0, "PodCommand");
+    qmlRegisterType<CustomPlotItem>("CustomPlot", 1, 0, "CustomPlotItem");
+
+    //QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
@@ -22,11 +34,8 @@ int main(int argc, char *argv[])
         }
     }, Qt::QueuedConnection);
 
-
     QQuickStyle::setStyle("Material");
     engine.load(url);
-
-
 
     return app.exec();
 }

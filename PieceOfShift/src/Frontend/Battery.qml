@@ -1,11 +1,11 @@
 import QtQuick 2.0
 
 Item {
-    property var charge: 0.7 // how much charge is left
+    property var charge: 1 // how much charge is left, number between 1 and 0
 
     Image {
         id: batteryImg
-        source: "assets/images/battery.png"
+        source: "../battery.png"
         fillMode: Image.PreserveAspectFit
         height: parent.height
         z: 3
@@ -19,13 +19,13 @@ Item {
             anchors.horizontalCenter: batteryImg.horizontalCenter
         }
         Rectangle{
-            id: rectRed
-            color: "red"
+            id: rectRed                 //red rectangle is anchored to the top and starts with height 0.
+            color: "red"                // height increases as charge decreases
             height: {
                 if( charge > 0){
                     container.height  - rectGreen.height
                 }
-                else{
+                else{                   // when charge reaches 0 the red rectangle fills the whole battery image
                     container.height
                 }
             }
@@ -33,11 +33,12 @@ Item {
             anchors.top: container.top
             anchors.horizontalCenter: container.horizontalCenter
             z: 2
+
         }
         Rectangle{
             id: rectGreen
             color: "green"
-            height: container.height * charge
+            height: container.height * charge //the green rectangle is anchored to the bottom and height decreases as charge decreases
             width: container.width
             anchors.bottom: container.bottom
             anchors.horizontalCenter: container.horizontalCenter

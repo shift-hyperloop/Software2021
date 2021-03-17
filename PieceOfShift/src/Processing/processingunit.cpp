@@ -1,4 +1,5 @@
 #include "processingunit.h"
+#include <QDebug>
 
 ProcessingUnit::~ProcessingUnit()
 {

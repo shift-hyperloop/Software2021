@@ -1,7 +1,7 @@
 #
 # For basic cmake file structure see: http://doc.qt.io/qt-5/cmake-manual.html
 #
-cmake_minimum_required(VERSION 3.19)
+cmake_minimum_required(VERSION 3.17)
 
 
 project(PieceOfShift)
@@ -9,6 +9,7 @@ project(PieceOfShift)
 # Find includes in corresponding build directories
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
+add_compile_definitions(QCUSTOMPLOT_USE_OPENGL)
 
 if(WIN32)
         # NOTE: CHANGE TO YOUR OWN QT PATH IF RUNNING ON WINDOWS
@@ -19,7 +20,7 @@ endif()
 set(CMAKE_AUTOMOC ON)
 
 # Find the Qt libraries for Qt Quick/QML
-find_package(Qt5 REQUIRED Qml Quick Core Widgets Concurrent QuickControls2)
+find_package(Qt5 REQUIRED Network Qml Quick Core Widgets Concurrent QuickControls2 PrintSupport)
 
 # add the qml.qrc file
 qt5_add_resources(qml_QRC src/qml.qrc)
@@ -28,17 +29,22 @@ qt5_add_resources(assets_QRC assets/images/images.qrc)
 # add source files
 file(GLOB_RECURSE SOURCE
   "src/*.cpp"
+  "include/qcustomplot/qcustomplot.cpp"
   )
 
 file(GLOB_RECURSE HEADER
   "src/*.h"
+  "include/qcustomplot/qcustomplot.h"
   )
+
+include_directories("src")
+include_directories("include/qcustomplot")
 
 # Tell CMake to create the helloworld executable
 add_executable(PieceOfShift ${SOURCE} ${HEADER} ${qml_QRC} ${assets_QRC})
 
 # Use the Qml/Quick modules from Qt 5.
-target_link_libraries(PieceOfShift Qt5::Qml Qt5::Quick Qt5::Core Qt5::Widgets Qt5::Concurrent Qt5::QuickControls2)
+target_link_libraries(PieceOfShift Qt5::Network Qt5::Qml Qt5::Quick Qt5::Core Qt5::Widgets Qt5::Concurrent Qt5::QuickControls2 Qt5::PrintSupport)
 
 
 # post-build steps

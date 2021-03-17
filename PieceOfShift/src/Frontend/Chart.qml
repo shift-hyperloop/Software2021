@@ -25,10 +25,10 @@ Item {
             hoverEnabled: true
             property var mouse_x: 0
             property var mouse_y: 0
-            onEntered: { //mouseare has the signal onEntered which is needed to change the focus to the chart
+            onEntered: { //mousarea has the signal onEntered which is needed to change the focus to the chart
                 hoverEnabled = false    //without active focus the chart wont handle hover events
                 parent.forceActiveFocus() //Two elements in the same place cant both accept hover events, so disable hover for the mousearea
-            }
+            }                             // the mouseareas hover has to be disabled to access the properties of lineseries onHovered{}
             onExited: {
                 hoverEnabled = true // enable hover to detect when the mouse enteres
             }
@@ -44,13 +44,17 @@ Item {
                     chartview.zoomIn(Qt.rect(p.x ,p.y + (p.height - p.height/zoom),p.width / zoom, p.height / zoom))
                 }
             }
-            onPressed: {
-                timer.mouse_x_= mouseX
-                timer.mouse_y_= mouseY
+            onPressed: {                    //when you press and hold the graph a timer starts
+                timer.mouse_x_= mouseX      //the timer constantly checks how much you have moved your mouse
+                timer.mouse_y_= mouseY      //and moves the visible area of the chart accordingly
                 timer.start()
+                cursorShape = Qt.ClosedHandCursor;
+
             }
             onReleased: {
                 timer.stop()
+                cursorShape = Qt.ArrowCursor;
+
             }
 
             Timer{
@@ -68,29 +72,31 @@ Item {
             }
         }
 
+        ValueAxis{
+            id: y_axis
+            labelsColor: "white"
+            color: "white"
+            min: 0
+            max: 10
+            titleText: ""
+        }
+        ValueAxis{
+            id: x_axis
+            labelsColor: "white"
+            color: "white"
+            min: 0
+            max: 10
+            titleText: ""
+        }
+
         LineSeries{
             id: lineseries
             axisX: x_axis
             axisY: y_axis
             pointsVisible: true
             useOpenGL: true
-            ValueAxis{
-                id: y_axis
-                labelsColor: "white"
-                color: "white"
-                min: 0
-                max: 10
-                titleText: ""
-            }
-            ValueAxis{
-                id: x_axis
-                labelsColor: "white"
-                color: "white"
-                min: 0
-                max: 10
-                titleText: ""
-            }
 
+            //Note: the hovered rectangle will never disappear after having showed. Can fix later by using a QML Timer-object
             onHovered: { // display the point you're hovering over on the chart by setting the content of rectangle1 to the hovered point
                 _text.text = "(" + point.x.toFixed(2) + "," + point.y.toFixed(2) + ")";
                 var p = chartview.mapToPosition(Qt.point(point.x,point.y),lineseries);
@@ -100,20 +106,21 @@ Item {
             }
 
             onPointAdded: {
-                var new_point = at(index)
-                if(new_point.x > x_axis.max){ // if a now point is added and it is outside the visible area, the axies will scale
-                    x_axis.max = new_point.x + Math.round(new_point.x/2)
-                    chartview.x_max = x_axis.max
+                var new_point = at(index);
+                if (new_point.x > x_axis.max) {
+                    x_axis.max = new_point.x + Math.round(new_point.x/2);
+                    chartview.x_max = x_axis.max;
                 }
-                if(new_point.y > y_axis.max){
-                    y_axis.max = new_point.y+ Math.round(new_point.y/2)
-                    chartview.y_max = y_axis.max
+                if (new_point.y > y_axis.max) {
+                    y_axis.max = new_point.y + Math.round(new_point.y/2);
+                    chartview.y_max = y_axis.max;
                 }
                 if (new_point.y < y_axis.min) {
-                    y_axis.min = new_point.y - Math.round(new_point.y/2)
+                    y_axis.min = new_point.y - Math.round(new_point.y/2);
                 }
             }
         }
+
         Rectangle {
             id: rectangle1
             visible: false
@@ -129,7 +136,7 @@ Item {
             }
         }
 
-        Keys.onLeftPressed: {
+        Keys.onLeftPressed: { //move the visible area of the graph according to the arrowkeys
             chartview.scrollLeft(x_axis.max)
         }
         Keys.onRightPressed: {
@@ -141,25 +148,6 @@ Item {
         Keys.onDownPressed: {
             chartview.scrollDown(y_axis.max)
         }
-        Button{
-            id: but1
-            text: "reset"
-            x: chartview.x
-            y: Math.max(chartview.y, 35)
-            onClicked: {// reset the zoom
-                x_axis.min = 0
-                y_axis.min = 0
-                x_axis.max = chartview.x_max
-                y_axis.max = chartview.y_max
-            }
-        }
-        Button {
-            text: "Go back"
-            x: but1.x + but1.width
-            y: but1.y
-            onClicked: {
-                stackView.pop("main.qml");
-            }
-        }
+
     }
 }

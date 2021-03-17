@@ -4,7 +4,8 @@ import QtQuick.Window 2.3
 import QtQuick.Controls 2.5
 import QtQuick.Controls.Styles 1.4
 Item {
-    //property alias _width: __menu.width
+   // property alias _width: __menu.width
+    //property alias _height: __menu.height
     Rectangle {
         width: logoWhite_RightText.width + 5
         height: logoWhite_RightText.height + 10
@@ -16,10 +17,20 @@ Item {
             height: 0.05 * window.height - 10
             source: "../Shift_Logo.png"
             fillMode: Image.PreserveAspectFit
-
-
+            MouseArea{ //pressing the shift logo at any point wil return you to the main page
+                hoverEnabled: true
+                anchors.fill: parent
+                onHoveredChanged: {
+                    parent.opacity = containsMouse ? 1.0 : 0.8;
+                    cursorShape = containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor;
+                }
+                onClicked: {
+                    stackView.pop(null);
+                }
+            }
         }
     }
+
     MenuBar{
         id: __menu
         width: window.width - logoWhite_RightText.width - 5
@@ -130,12 +141,13 @@ Item {
             font.pixelSize:  0.025 * window.height
             MenuItem{
                 CheckBox{
+                    anchors.verticalCenter: parent.verticalCenter
                     onCheckStateChanged: {
                         if(checked){
-                           window.visibility = 5
+                           window.visibility = 5 //fullscreen
                         }
                         else{
-                            window.visibility = 4
+                            window.visibility = 4 //maximized
                         }
                         }
                     }
@@ -145,26 +157,25 @@ Item {
                 }
             }
 
-            Menu{
-                title: qsTr("Battery")
-                MenuItem{
-                    CheckBox{
-                        checked: true
-                        onCheckStateChanged: thermometer.visible = checked
-                        }
-                    Label{
-                            text: "Thermometer"
-                            anchors.centerIn: parent
-                        }
-                    Menu{
-                        title: qsTr("Charts")
+            MenuItem { text: qsTr("Battery")
+                onTriggered: {
+                    stackView.push("DetailedBatteryPage.qml");
+                }
+              }
 
-                    }
+            MenuItem { text: qsTr("Network")
+                onTriggered: {
+                    stackView.push("NetworkInfoPage.qml");
                 }
-                Menu{
-                    title: qsTr("Charts")
+              }
+
+            MenuItem { text: qsTr("Mechanical")
+                onTriggered: {
+                    stackView.push("MechanicalDetails.qml");
                 }
-            }
+              }
+
+/*
             Menu{
                 title: qsTr("Speed")
                 MenuItem{
@@ -190,31 +201,7 @@ Item {
                             }
                     }
                 }
-            }
-            Menu{
-                title: qsTr("Position")
-                MenuItem{
-                    CheckBox{
-                        checked: true
-                        onCheckStateChanged: slider.visible = checked
-                        }
-                    Label{
-                            text: "Distance slider"
-                            anchors.centerIn: parent
-                        }
-                }
-                Menu{
-                    title: qsTr("Charts")
-
-                }
-            }
-            Menu{
-                title: qsTr("Rotation")
-                Menu{
-                    title: qsTr("Charts")
-
-                }
-            }
+            }*/
         }
         Menu{
             title: qsTr("State indication")

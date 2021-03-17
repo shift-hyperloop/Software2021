@@ -10,6 +10,15 @@
 *.dll
 *.dylib
 
+build/*
+PieceOfShift/build/*
+PieceOfShift/include/qcustomplot/documentation/*
+PieceOfShift/include/qcustomplot/examples/*
+PieceOfShift/include/qcustomplot/changelog.txt
+PieceOfShift/include/qcustomplot/GPL.txt
+.clang_complete
+.clang-format
+
 # Qt-es
 object_script.*.Release
 object_script.*.Debug
@@ -96,4 +105,5 @@ PieceOfShift/pieceOfShift.vcxproj.filters
 .vs/testProject/v16/.suo
 *.sqlite
 .vs/pieceOfShift/v16/.suo
-
+build/*
+build/

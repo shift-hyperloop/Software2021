@@ -1,10 +1,11 @@
-#include <QtConcurrent/QtConcurrent>
-#include <algorithm>
-
 #include "datamanager.h"
 #include "velocityprocessingunit.h"
 #include "accelerationprocessingunit.h"
 #include "accelerationvelocityunit.h"
+#include "CustomPlotItem.h"
+#include <qpoint.h>
+#include <qrandom.h>
+#include <qthread.h>
 
 DataManager::DataManager()
 {
@@ -25,6 +26,20 @@ DataManager::DataManager()
             this, &DataManager::newAcceleration);
     connect(avu, &AccelerationVelocityUnit::newData,
             this, &DataManager::newAccelerationVelocity);
+
+
+    connect(&canServer, &CANServer::dataReceived,
+            &decoder, &Decoder::checkData);
+
+    connect(&decoder, &Decoder::addData,
+            this, &DataManager::addData);
+
+    connect(&canServer, &CANServer::connectionEstablished,
+            this, &DataManager::podConnectionEstablished);
+
+    connect(&canServer, &CANServer::connectionTerminated,
+            this, &DataManager::podConnectionTerminated);
+
 
     /* Create Decoder/DataFetcher object here and start it when signal from
      QML has been received */
@@ -47,35 +62,79 @@ void DataManager::addData(const QString& name, const DataType &dataType, const Q
                           [&dataType](auto x)
                           { return x->dataType() == dataType; });
     QtConcurrent::run(processingUnit, &ProcessingUnit::addData, name, data);
+    //processingUnit->addData(name, data);
 }
 
+void DataManager::connectToPod(QString hostname, QString port)
+{
+    canServer.connectToPod(hostname, port);
+}
 
-/* The follwing code is just used for testing, and
- * should be removed before production
- */
-int t = 0;
-float v = 2;
-float a = 3;
+void DataManager::sendPodCommand(CANServer::PodCommand messageType)
+{
+    canServer.sendPodCommand(messageType);
+}
 
+void DataManager::registerPlot(CustomPlotItem* plotItem, const QString &name)
+{
+    if (!plotItems.contains(name)) {
+        QList<CustomPlotItem*>* plotItemList = new QList<CustomPlotItem*>();
+        plotItemList->append(plotItem);
+        plotItems.insert(name, plotItemList);
+    } else {
+        CustomPlotItem* basePlot = plotItems.value(name)->first();
+        for (unsigned int i = 0; i < basePlot->getCustomPlot()->graphCount(); i++) 
+        {
+            plotItem->getCustomPlot()->graph(i)->setData(basePlot->getCustomPlot()->graph(i)->data());       
+        }
+        plotItems.value(name)->append(plotItem);
+    }
+}
+
+void DataManager::removePlot(CustomPlotItem *plotItem)
+{
+    for (QString name : plotItems.keys()) {
+        if (plotItems.value(name)->indexOf(plotItem)) {
+            plotItems.value(name)->removeOne(plotItem);
+        }
+    }
+}
+
+long timeMs = 0;
+QRandomGenerator generator(1000224242);
 void DataManager::dummyData()
 {
-    v =  0.01 *((float) t * log(t));
-    VelocityStruct vs;
-    t += 1;
-    vs.timeMs = t;
-    vs.velocity = v;
-    addData("Velocity", DataType::VELOCITY, QVariant::fromValue(vs));
-    a =  0.03 *((float) t * log(t));
-    AccelerationStruct as;
-    AccelerationVelocityStruct avs;
-    as.timeMs = t;
-    avs.timeMs = t;
-    vs.velocity = v;
-    as.acceleration = a;
-    avs.acceleration = a;
-    avs.velocity = v;
-    addData("Velocity", DataType::VELOCITY, QVariant::fromValue(vs));
-    addData("Acceleration", DataType::ACCELERATION, QVariant::fromValue(vs));
-    addData("AccelerationVelocity", DataType::ACCELERATIONVELOCITY, QVariant::fromValue(vs));
+    //for (unsigned int i = 0; i < 1000; i++) {
+    //    canServer.connectToPod("0.0.0.0", "3000");
+    //}
+    if (timeMs > 1200) {
+        return;
+    }
+
+    QPointF data1;
+    if (timeMs < 1000) {
+        data1 = QPointF(timeMs, generator.bounded(5) + exp(timeMs*0.005 ));
+    } else if (timeMs < 1100) {
+        data1 = QPointF(timeMs, generator.bounded(5) + exp(1/timeMs*0.1 ));
+    } else {
+        data1 = QPointF(timeMs, 0);
+    }
+    QPointF data2(timeMs, generator.bounded(10) + 200 + 20*sin(timeMs));
+    for (CustomPlotItem* plot : *plotItems.value("Velocity")) 
+    {
+        plot->addData(data1, 0);
+        plot->addData(data2, 1);
+    }
+    timeMs += 10;
 }
+
+void DataManager::init()
+{
+    QTimer *timer = new QTimer(this);
+    timer->moveToThread(this->thread());
+    connect(timer, &QTimer::timeout, this, &DataManager::dummyData);
+    timer->start(50);
+}
+
+DataManager* DataManagerAccessor::_obj = nullptr; // Object accessed by QML, needs to be initialized since static
 
