@@ -49,73 +49,46 @@ Page {
         }
     }
 
-    Rectangle {
+    CustomChart{
         id: distanceChart
-        width: 1000
-        height: 500
+        width: window.width * 0.6
+        height: window.height * 0.35
+        anchors.bottom: parent.verticalCenter
+        anchors.bottomMargin: -window.height * 0.02
+        anchors.left: parent.left
+        anchors.leftMargin: window.width * 0.01
 
-        color: "#333333"
-        x: 100
-        y: 100
         property var counter: 0
-
-        Rectangle {
-            id: customRect
-            width: parent.width - 6
-            height: parent.height - 6
-            x: 3
-            y: 3
-
-            CustomPlotItem {
-                id: customPlot
-                anchors.fill: parent
-        
-                Component.onCompleted: {
-                    //create a customPlot item with (2) graphs, and set their colors.
-                    //any color sent to C++ will become a QColor, and vice versa.
-                    initCustomPlot(2);
-                    setGraphColor(0, "#2674BB");
-                    setGraphColor(1, "#AE3328");
-                    setDataType("Velocity");
-                    setName(0,"Speed km/h");
-                    setAxisLabels("Time","Speed km/h")
-                }
-            }
+        Component.onCompleted: {
+            //create a customPlot item with (2) graphs, and set their colors.
+            //any color sent to C++ will become a QColor, and vice versa.
+            chart.initCustomPlot(2);
+            chart.setGraphColor(0, "#2674BB");
+            chart.setGraphColor(1, "#AE3328");
+            chart.setDataType("Velocity");
+            chart.setName(0,"Speed km/h");
+            chart.setAxisLabels("Time","Speed km/h")
         }
     }
 
-    Rectangle {
+    CustomChart{
         id: distanceChart2
-        width: 1000
-        height: 500
-
-        color: "#333333"
-        x: 100
-        y: 700
+        width: window.width * 0.6
+        height: window.height * 0.35
+        anchors.top: distanceChart.bottom
+        anchors.topMargin: window.height * 0.02
+        anchors.left: parent.left
+        anchors.leftMargin: window.width * 0.01
         property var counter: 0
-
-        Rectangle {
-            id: customRect2
-            width: parent.width - 6
-            height: parent.height - 6
-            x: 3
-            y: 3
-
-            CustomPlotItem {
-                id: customPlot2
-                anchors.fill: parent
-        
-                Component.onCompleted: {
-                    //create a customPlot item with (2) graphs, and set their colors.
-                    //any color sent to C++ will become a QColor, and vice versa.
-                    initCustomPlot(2);
-                    setGraphColor(0, "#2674BB");
-                    setGraphColor(1, "#AE3328");
-                    setDataType("Velocity");
-                    setName(0,"Speed km/h");
-                    setAxisLabels("Time","Speed km/h")
-                }
-            }
+        Component.onCompleted: {
+            //create a customPlot item with (2) graphs, and set their colors.
+            //any color sent to C++ will become a QColor, and vice versa.
+            chart.initCustomPlot(2);
+            chart.setGraphColor(0, "#2674BB");
+            chart.setGraphColor(1, "#AE3328");
+            chart.setDataType("Velocity");
+            chart.setName(0,"Speed km/h");
+            chart.setAxisLabels("Time","Speed km/h")
         }
     }
 
