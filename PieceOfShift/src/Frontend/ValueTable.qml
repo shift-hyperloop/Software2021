@@ -9,14 +9,14 @@ Item {
     property alias tableModel: tableModel
     //property alias tableWidth: tableItem.width
     //property alias tableHeight: tableItem.height
-    width: 500
-    height: 400
+    width: 400
+    height: 500
     Rectangle {
         id: rectangle
         anchors.fill: parent
         color: "#00000000"
         border.color: "#ededed"
-        border.width: 3
+        border.width: 2
         TableView{
             x: rectangle.x + rectangle.border.width
             y: rectangle.y + rectangle.border.width
@@ -37,8 +37,6 @@ Item {
                         "value" : values[i]
                     })
                 }
-
-
             }
 
             delegate: Rectangle {
@@ -48,11 +46,11 @@ Item {
                 //height: rectangle.height / table.rows
                 border.color: "#ededed"
                 color: "#00000000"
-                border.width: 2
+                border.width: 1
                 Text {
                     anchors.fill: parent
                     text: display
-                    font.pixelSize: 18
+                    font.pixelSize: 15
                     color: "#ededed"
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter

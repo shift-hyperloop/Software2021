@@ -23,7 +23,7 @@ Item {
         color: "#cacaca"
         radius: 100
         anchors.left: parent.left
-        anchors.leftMargin: t_metrics.width + 20
+        anchors.leftMargin: thermometer.width * 0.2
     }
 
     Gauge {
@@ -57,16 +57,21 @@ Item {
                 radius: 8
             }
             foreground: null
+            tickmark: Item {
+                implicitWidth: 5
+                implicitHeight: 1
+
+                Rectangle {
+                    width: parent.width
+                    height: parent.height
+                    color: "#ededed"
+                }
+            }
         }
         Behavior on value {
             NumberAnimation{
                 duration: 100
             }
-        }
-        TextMetrics {
-                id: t_metrics
-                font: thermometer.font
-                text: thermometer.text
         }
     }
     //the circle at the bottom

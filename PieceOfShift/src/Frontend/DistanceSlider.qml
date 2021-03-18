@@ -28,11 +28,11 @@ Item {
             x: slider.leftPadding
             y: slider.topPadding + slider.availableHeight / 2 - height / 2
             //implicitWidth: slider.height
-            implicitHeight: 4
+            implicitHeight: 6
             width: slider.availableWidth
             height: implicitHeight
             radius: 0
-            color: "#999999"
+            color: "#ededed"
         }
 /*
         handle: Rectangle {
@@ -60,7 +60,7 @@ Item {
             id: tick
             width: 3
             height: width * 4
-            x: slider.x * 1.1 + ((slider.width) * (index / (tickrepeater.model - 1)))
+            x: (slider.width - 15) * (index / (tickrepeater.model - 1)) + 6
             y: slider.y + slider.height / 1.95
             color: "#ededed"
             Text {

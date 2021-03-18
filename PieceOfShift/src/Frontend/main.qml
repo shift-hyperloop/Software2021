@@ -96,12 +96,12 @@ ApplicationWindow {
                     anchors {
                         left: parent.left
                         top: parent.top
-                        topMargin: 30
-                        leftMargin: 30
+                        topMargin: 0.04 * window.height
+                        leftMargin: 0.04 * window.width
                     }
                     //speedometer has a weird bug where explicitly setting width and height turns it into a white circle
                     //therefore, scale is used to, uh, scale
-                    scale: 0.15 + Math.min(window.width / 1600, window.height / 900)
+                    scale: 0.20 + Math.min(window.width / 1600, window.height / 900)
                     transformOrigin: Item.TopLeft
                     minValue: 0
                     maxValue: 600
@@ -123,7 +123,7 @@ ApplicationWindow {
                         right: parent.right
                         rightMargin: 20
                         top: parent.top
-                        topMargin: (panelRight.height - (height * scale) - slider.height - (controlButtons.height * controlButtons.scale)) / 2
+                        topMargin: (panelRight.height - (height * scale) - slider.height - (controlButtons.height * controlButtons.scale))
                     }
                     scale: Math.min(window.width / 1000, window.height / 600)
                     transformOrigin: Item.TopRight
@@ -195,19 +195,19 @@ ApplicationWindow {
                     customChart.counter++;
                     //chart.lineseries.append(chart.counter, speed);
                     battery.charge = 1 - slider.value / 100
-                    tilitMeter.rollDeg +=  0.5 * Math.floor(Math.random()*3-1)
-                    tilitMeter.yawDeg += 0.5 * Math.floor(Math.random()*3-1)
-                    tilitMeter.pitchDeg += 0.5 * Math.floor(Math.random()*3-1)
+                    tiltMeter.rollDeg +=  0.5 * Math.floor(Math.random()*3-1)
+                    tiltMeter.yawDeg += 0.5 * Math.floor(Math.random()*3-1)
+                    tiltMeter.pitchDeg += 0.5 * Math.floor(Math.random()*3-1)
                 }
             }
 
             CustomChart{
                 id: customChart
                 redirect: "MechanicalDetails.qml"
-                width: window.width * 0.4
-                height: window.height * 0.3
+                width: window.width * 0.35
+                height: window.height * 0.25
                 anchors.right: valueTable.left
-                anchors.rightMargin: 0.02*window.width
+                anchors.rightMargin: 0.03*window.width
                 anchors.top: valueTable.top
                 property var counter: 0
                 Component.onCompleted: {
@@ -226,13 +226,11 @@ ApplicationWindow {
 
             ValueTable{
                 id: valueTable
-                //tableWidth: 0.3 * window.width
-                //tableHeight: 0.37 * window.height
                 names: ["Speed","Voltage battery 1", "Value Value", "Bruh moments:", "Crashes"] // names for the values in the table
                 values: [qsTr(0 + "km/h"), 12, 100, 8, 0] // values for the table
                 anchors {                                   // indexes in names[] and values[] are corresponding
                     top: parent.top
-                    topMargin: 0.06 * window.height
+                    topMargin: 0.09 * window.height
                     right: parent.right
                     rightMargin: thermometer.width + 0.07*window.width
                 }
