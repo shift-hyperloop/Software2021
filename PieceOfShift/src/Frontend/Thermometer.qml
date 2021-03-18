@@ -3,7 +3,8 @@ import QtQuick.Extras 1.4
 import QtQuick.Controls.Styles 1.2
 
 Item {
-    width: 55
+    id: item1
+    width: 60
     height: 310
     opacity: 1
 
@@ -16,13 +17,13 @@ Item {
 
     Rectangle {
         id: rectangle1
-        x: parent.width/2 - 2
         y: 279
         width: 30
         height: 30
         color: "#cacaca"
         radius: 100
-
+        anchors.left: parent.left
+        anchors.leftMargin: t_metrics.width + 20
     }
 
     Gauge {
@@ -37,11 +38,12 @@ Item {
             }
         }
         id: thermometer
+        x: 0
+        y: 0
         font.pixelSize: 12
         value: 30
-
-        height: 300
-        width: 48
+        height: 302
+        width: 60
         tickmarkStepSize: thermometer.maximumValue / 10
         style: GaugeStyle {
             valueBar: Rectangle {
@@ -61,6 +63,11 @@ Item {
                 duration: 100
             }
         }
+        TextMetrics {
+                id: t_metrics
+                font: thermometer.font
+                text: thermometer.text
+        }
     }
     //the circle at the bottom
     Rectangle {
@@ -77,6 +84,6 @@ Item {
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:2}
+    D{i:0;formeditorZoom:6}
 }
 ##^##*/

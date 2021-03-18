@@ -153,7 +153,6 @@ ApplicationWindow {
                 anchors.leftMargin: window.height / 15
                 anchors.bottom: slider.top
                 anchors.bottomMargin: height/5
-
             }
 
             Timer {

@@ -78,7 +78,7 @@ Item {
                     id: t_metrics
                     font: ticktext.font
                     text: ticktext.text
-                }
+            }
         }
 
     }
