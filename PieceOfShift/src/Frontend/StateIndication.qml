@@ -2,6 +2,8 @@ import QtQuick 2.12
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.3
 Page{
+    property var stateIndicationStates: ["Off", "State 1", "State 2", "State 3", "State 4"];
+
     // if you have previously chosen a button it will be saved in the chosenButton variable in main.qml
     // this is so that the button will still be checked when you return to this page
     property var chosenButton
@@ -17,15 +19,15 @@ Page{
     }
     Button{
         text: "Go back"
-        y: 50
-        x: 25
+        x: window.width * 0.01
+        y: 0.05 * window.height
         onClicked: {
            stackView.pop(null);
         }
     }
     Text {
         text: qsTr("Choose a state")
-        font.pointSize: 20
+        font.pixelSize: window.width / 50
         color: "white"
         anchors.horizontalCenter: parent.horizontalCenter
         y: parent.height * 0.1
@@ -33,44 +35,19 @@ Page{
     }
     ColumnLayout{
         id: column
-        anchors.centerIn: parent
-        RadioButton{
-            text: "Off"
-            checked: true
-            onClicked: {
-                chosenButton = 0
-                stackView.chosenState = chosenButton
+        anchors.centerIn: parent 
+        spacing: window.height  / 15
+        Repeater{
+            model: stateIndicationStates.length
+            RadioButton{
+                text: stateIndicationStates[index]
+                font.pixelSize: window.width / 75
+                onClicked: {
+                    chosenButton = index
+                    stackView.chosenState = chosenButton
+                }
             }
         }
-        RadioButton{
-            text: "State 1"
-            onClicked: {
-                chosenButton = 1
-                stackView.chosenState = chosenButton
-            }
-        }
-        RadioButton{
-            text: "State 2"
-            onClicked: {
-                chosenButton = 2
-                stackView.chosenState = chosenButton
-            }
-        }
-        RadioButton{
-            text: "State 3"
-            onClicked: {
-                chosenButton = 3
-                stackView.chosenState = chosenButton
-            }
-        }
-        RadioButton{
-            text: "State 4"
-            onClicked: {
-                chosenButton = 4
-                stackView.chosenState = chosenButton
-            }
-        }
-
     }
     Component.onCompleted: {
         chosenButton = stackView.chosenState // if you have previously chosen a button it will be selected
