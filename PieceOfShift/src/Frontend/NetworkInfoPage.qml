@@ -20,8 +20,8 @@ Page {
 
     Button{
         text: "Go back"
-        y: 50
-        x: 25
+        x: window.width * 0.01
+        y: 0.05 * window.height
         onClicked: {
            stackView.pop(null);
         }

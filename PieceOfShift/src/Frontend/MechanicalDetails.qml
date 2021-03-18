@@ -40,7 +40,7 @@ Page {
     Button {
         id: backButton
         text: "Go Back"
-        x: 0
+        x: window.width * 0.01
         y: 0.05 * window.height
         onClicked: {
             distanceChart.chart.remove();
