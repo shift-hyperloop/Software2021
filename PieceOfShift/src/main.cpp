@@ -1,11 +1,13 @@
 #include <QtWidgets/QApplication>
 #include <QQmlApplicationEngine>
 #include <QQuickStyle>
+#include <qglobal.h>
 #include <qqml.h>
 #include "Decoding/canserver.h"
 #include "Processing/datamanager.h"
 #include "CustomPlotItem.h"
 #include "Processing/processingunit.h"
+#include "qbytearray.h"
 
 int main(int argc, char *argv[])
 {
@@ -21,7 +23,6 @@ int main(int argc, char *argv[])
     qmlRegisterType<CustomPlotItem>("CustomPlot", 1, 0, "CustomPlotItem");
 
     //QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-
     QApplication app(argc, argv);
 
     QQmlApplicationEngine engine;

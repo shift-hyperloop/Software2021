@@ -1,10 +1,12 @@
 #include "CustomPlotItem.h"
+#include "Processing/datamanager.h"
 #include <QDebug>
 #include <qcolor.h>
 #include <qevent.h>
 #include <qnamespace.h>
 #include <qpalette.h>
 #include <qsize.h>
+#include <qtconcurrentrun.h>
 #include <qtooltip.h>
 #include <QtMath>
  
@@ -29,7 +31,7 @@ CustomPlotItem::~CustomPlotItem()
 void CustomPlotItem::addData(QPointF data, int graphNum)
 {
     m_CustomPlot->graph(graphNum)->addData(data.x(), data.y());
-    m_CustomPlot->xAxis->setRange(data.x(), 20, Qt::AlignRight);
+    m_CustomPlot->xAxis->setRange(data.x(), m_XSize, Qt::AlignRight);
     //m_CustomPlot->yAxis->setRange(data.y(), 1000, Qt::AlignTop);
     m_CustomPlot->replot(); 
 }
@@ -50,14 +52,13 @@ void CustomPlotItem::setName(int graphIndex, QString name){
     QSize screenRes = QGuiApplication::primaryScreen()->size();
 
     int screenFactor = screenRes.width() / 100;
-    legendFont.setPointSize(qFloor(screenFactor >> 1));
+    legendFont.setPointSize(screenFactor >> 1);
     m_CustomPlot->legend->setFont(legendFont);
     m_CustomPlot->legend->setSelectedFont(legendFont);
     m_CustomPlot->legend->setSelectableParts(QCPLegend::spItems); 
     m_CustomPlot->legend->setIconSize(QSize(screenFactor, screenFactor));
     m_CustomPlot->legend->setVisible(true);
     m_CustomPlot->rescaleAxes();
-
 }
 void CustomPlotItem::setAxisLabels(QString xAxis, QString yAxis){
     m_CustomPlot->xAxis->setLabel(xAxis);
@@ -65,8 +66,16 @@ void CustomPlotItem::setAxisLabels(QString xAxis, QString yAxis){
 }
 void CustomPlotItem::setDataType(QString dataType)
 {
-    m_DMAccessor.dataManager()->registerPlot(this, dataType);
+    QtConcurrent::run(m_DMAccessor.dataManager(), &DataManager::registerPlot, this, dataType);
 }
+
+void CustomPlotItem::setAxisRange(QPoint x, QPoint y)
+{
+    m_XSize = x.y() - x.x(); 
+    m_CustomPlot->xAxis->setRange(x.x(), x.y());
+    m_CustomPlot->yAxis->setRange(y.x(), y.y());
+}
+
 void CustomPlotItem::setBackgroundColor(QColor color){
     m_CustomPlot->setBackground(color);
 
@@ -181,9 +190,15 @@ void CustomPlotItem::onCustomReplot()
 {
     update();
 }
+
+void CustomPlotItem::remove()
+{
+    m_DMAccessor.dataManager()->removePlot(this);
+}
  
 void CustomPlotItem::setupGraph( QCustomPlot* customPlot, int numOfGraphs)
 {
+    m_CustomPlot->setOpenGl(true, 4);
     for(int i = 0; i < numOfGraphs; i++){
         customPlot->addGraph();
         customPlot->graph(i)->setData(m_X, m_Y);

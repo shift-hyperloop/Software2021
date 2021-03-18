@@ -45,6 +45,26 @@ ApplicationWindow {
         }
     }
 
+    DataManagerAccessor {
+        id: dm
+        Component.onCompleted: {
+            dataManager.init()
+        }
+    }
+
+    /*
+      TODO:
+        Next workshop, focus on improving the Battery-page. Look into ValueAxis for naming of axes,
+        and also look into multiple LineSeries in the same graph.
+        This is wanted for the Battery-graphs, so figure out one way to have them on top of each other
+        in a nice-looking way with clear referencing of each line.
+      NOTE:
+        ValueAxis.TitleText is the attribute that decides the naming of the axis itself (appears
+        on the lefthand or righthand side of the graph).
+        LineSeries.name is the attribute that decides what shows up in the "little square" over the graph
+        that indicates the color of that particular line/function.
+    */
+
     StackView {
         id: stackView
         anchors.fill: parent
@@ -175,12 +195,9 @@ ApplicationWindow {
                     customChart.counter++;
                     //chart.lineseries.append(chart.counter, speed);
                     battery.charge = 1 - slider.value / 100
-                    tiltMeter.rollDeg +=  0.5 * Math.floor(Math.random()*3-1)
-                    tiltMeter.yawDeg += 0.5 * Math.floor(Math.random()*3-1)
-                    tiltMeter.pitchDeg += 0.5 * Math.floor(Math.random()*3-1)
-
-                    customChart.chart.addData(Qt.point(customChart.counter, speed), 0);
-                    customChart.chart.addData(Qt.point(customChart.counter, speed / 3), 1);
+                    tilitMeter.rollDeg +=  0.5 * Math.floor(Math.random()*3-1)
+                    tilitMeter.yawDeg += 0.5 * Math.floor(Math.random()*3-1)
+                    tilitMeter.pitchDeg += 0.5 * Math.floor(Math.random()*3-1)
                 }
             }
 
@@ -197,6 +214,7 @@ ApplicationWindow {
                     //create a customPlot item with (2) graphs, and set their colors.
                     //any color sent to C++ will become a QColor, and vice versa.
                     chart.initCustomPlot(2);
+                    chart.setAxisRange(Qt.point(0, 100), Qt.point(0, 200));
                     chart.setGraphColor(0, "#2674BB");
                     chart.setGraphColor(1, "#AE3328");
                     chart.setDataType("Velocity");

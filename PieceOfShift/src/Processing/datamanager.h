@@ -17,7 +17,12 @@ public:
     DataManager();
     ~DataManager();
 
+
 public slots:
+
+    void dummyData();
+
+    void init();
 
     // Have Decoder send signal to add data
     void addData(const QString& name, const DataType &dataType, const QVariant &data);
@@ -29,7 +34,7 @@ public slots:
     void sendPodCommand(CANServer::PodCommand command);
 
     void registerPlot(CustomPlotItem* plotItem, const QString& name);
-    void removePlot(CustomPlotItem* plotItem, const QString& name);
+    void removePlot(CustomPlotItem* plotItem);
 
     // Write current data to log file
     void writeLogFile(QString path) { } // TODO: Implement

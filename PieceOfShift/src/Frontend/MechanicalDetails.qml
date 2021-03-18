@@ -43,11 +43,13 @@ Page {
         x: 0
         y: 0.05 * window.height
         onClicked: {
+            distanceChart.chart.remove();
+            distanceChart2.chart.remove();
             stackView.pop("main.qml");
         }
     }
 
-    CustomChart{
+    CustomChart {
         id: distanceChart
         width: window.width * 0.6
         height: window.height * 0.35
@@ -60,6 +62,7 @@ Page {
             //create a customPlot item with (2) graphs, and set their colors.
             //any color sent to C++ will become a QColor, and vice versa.
             chart.initCustomPlot(2);
+            chart.setAxisRange(Qt.point(0, 100), Qt.point(0, 200));
             chart.setGraphColor(0, "#2674BB");
             chart.setGraphColor(1, "#AE3328");
             chart.setDataType("Velocity");
@@ -70,7 +73,7 @@ Page {
         }
     }
 
-    CustomChart{
+    CustomChart {
         id: distanceChart2
         width: window.width * 0.6
         height: window.height * 0.35
@@ -84,6 +87,7 @@ Page {
             //create a customPlot item with (2) graphs, and set their colors.
             //any color sent to C++ will become a QColor, and vice versa.
             chart.initCustomPlot(2);
+            chart.setAxisRange(Qt.point(0, 1000), Qt.point(0, 500));
             chart.setGraphColor(0, "#2674BB");
             chart.setGraphColor(1, "#AE3328");
             chart.setDataType("Velocity");
@@ -334,9 +338,8 @@ Page {
         //Change positioning of button. Right now it overlaps
             id: button
             text: "Click"
-            x: red.x - text.length
-            y: red.y + red.height
-
+            y: 0.05 * window.height
+            anchors.right: brakesSection.left
             onClicked: {
                 green.opacity = (green.opacity === 1) ? 0.2 : 1;
                 red.opacity = (red.opacity === 1) ? 0.2 : 1;
