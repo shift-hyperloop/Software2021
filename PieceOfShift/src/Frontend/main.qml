@@ -197,7 +197,14 @@ ApplicationWindow {
                     //change from customChart to chart to get old chart back.
                     customChart.counter++;
                     //chart.lineseries.append(chart.counter, speed);
-                    battery.charge = 1 - slider.value / 100
+                    if(battery.charge>0){
+                        battery.charge = 1 - slider.value / 100
+                    }
+                    else{
+                        battery.charge=0
+                    }
+
+
                     tiltMeter.rollDeg +=  0.5 * Math.floor(Math.random()*3-1)
                     tiltMeter.yawDeg += 0.5 * Math.floor(Math.random()*3-1)
                     tiltMeter.pitchDeg += 0.5 * Math.floor(Math.random()*3-1)
@@ -229,8 +236,8 @@ ApplicationWindow {
 
             ValueTable{
                 id: valueTable
-                names: ["Speed","Voltage battery 1", "Value Value", "Bruh moments:", "Crashes", "Value", "Value"] // names for the values in the table
-                values: [qsTr(speedometer.value + " km/h"), 12, 100, 8, 0, 0, 0] // values for the table
+                names: ["Speed","Voltage battery 1", "Value Value", "Bruh moments:", "Crashes", "Battery Charge", "Pod temperature", "Value"] // names for the values in the table
+                values: [qsTr(speedometer.value + "km/h"), 12, 100, 8, 0, qsTr(Math.round(battery.charge*100,1) + " %"), qsTr(Math.round(thermometer.value,1) + " \xB0 C"), 0] // values for the table
                 anchors {                                   // indexes in names[] and values[] are corresponding
                     top: parent.top
                     topMargin: 0.09 * window.height
