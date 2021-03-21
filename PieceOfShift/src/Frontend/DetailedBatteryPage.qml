@@ -20,6 +20,15 @@ Page {
         }
     }
 
+    Component.onDestruction:  {
+            chart1.chart.remove();
+            chart2.chart.remove();
+            chart3.chart.remove();
+            chart4.chart.remove();
+            chart5.chart.remove();
+            chart6.chart.remove();
+    }
+
     Rectangle {
         id: rect1
         y: 0.05 * window.height
@@ -77,12 +86,6 @@ Page {
         x: but1.x + but1.width
         y: but1.y
         onClicked: {
-            chart1.chart.remove();
-            chart2.chart.remove();
-            chart3.chart.remove();
-            chart4.chart.remove();
-            chart5.chart.remove();
-            chart6.chart.remove();
             stackView.pop("main.qml");
         }
     }
