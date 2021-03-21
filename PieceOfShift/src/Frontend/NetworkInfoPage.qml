@@ -44,9 +44,9 @@ Page {
                 padding: 5
                 bottomPadding: 0
                 selectByMouse : true
-                height: window.height / 20
-                width: window.width / 6
-                font.pixelSize: window.height / 25
+                height: window.height / 25
+                width: window.width / 7
+                font.pixelSize: window.height / 30
             }
             MouseArea{
                 cursorShape: inputIP.activeFocus ? Qt.IBeamCursor : Qt.ArrowCursor;
@@ -103,6 +103,7 @@ Page {
         Button{
             id: connectButton
             text: qsTr("Connect")
+            font.pixelSize: inputIP.font.pixelSize * 0.8
             y: ipInput.y - 5
             anchors.left: ipInput.right
             anchors.leftMargin: width / 4

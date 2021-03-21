@@ -123,7 +123,8 @@ ApplicationWindow {
                         right: parent.right
                         rightMargin: 20
                         top: parent.top
-                        topMargin: (panelRight.height - (height * scale) - slider.height - (controlButtons.height * controlButtons.scale))
+                        topMargin: 0.01*window.height
+                        //topMargin: (panelRight.height - (height * scale) - slider.height - (controlButtons.height * controlButtons.scale)) / 2
                     }
                     scale: Math.min(window.width / 1000, window.height / 600)
                     transformOrigin: Item.TopRight
@@ -132,10 +133,12 @@ ApplicationWindow {
                 }
                 ControlButtons {
                     id: controlButtons
-                    height: 200
-                    width: 300
+
+                    height: window.height/3.5
+                    y: window.height - slider.height - height - 0.025*window.height
+                    width: window.width / 6.5
                     anchors {
-                        bottom: parent.bottom
+                        //bottom: parent.bottom
                         //bottomMargin: height * scale * 0.1
                         right: parent.right
                         rightMargin: 20

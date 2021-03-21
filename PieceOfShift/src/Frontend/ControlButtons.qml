@@ -18,19 +18,56 @@ Item {
         anchors.topMargin: 0
         border.width: 0
         radius: 10
+        Button{
+            id: b0
+            text: "Engage High Voltage"
+            anchors.top: parent.top
+            anchors.right: parent.right
+            anchors.rightMargin: 10
+            implicitWidth: parent.width - 20
+            height: parent.height * 2/7
+            contentItem: Text {
+                text: parent.text
+                font.pixelSize: parent.height * 0.2
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                elide: Text.ElideRight
+            }
+            background: Rectangle{
+                border.width: 3
+                radius: 8
+                color: parent.down ? "#ffa126" : "#e0942f"
 
+                MouseArea {
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    onClicked: {
+                        //send command to pod
+                    }
+                    onPressed: {
+                        parent.color = "#e0942f";
+                    }
+                    onReleased: {
+                        parent.color = "#ffa126";
+                    }
+                    onHoveredChanged: {
+                        parent.opacity = containsMouse ? 1.0 : 0.8;
+                        cursorShape = containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor;
+                    }
+                }
+            }
+        }
         Button{
             id: b1
             text: "Start"
             anchors.left: parent.left
-            anchors.top: parent.top
+            anchors.top: b0.bottom
             anchors.leftMargin: 10
-            anchors.topMargin: 10
             width: parent.width * 0.47
-            height: parent.height * 0.5
+            height: parent.height * 2/7
             contentItem: Text {
                 text: parent.text
-                font.pixelSize: parent.height * 0.15
+                font.pixelSize: parent.height * 0.2
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 elide: Text.ElideRight
@@ -75,14 +112,13 @@ Item {
             x: 300
             text: "Stop"
             anchors.right: parent.right
-            anchors.top: parent.top
+            anchors.top: b0.bottom
             anchors.rightMargin: 10
-            anchors.topMargin: 10
             width: parent.width * 0.45
-            height: parent.height * 0.5
+            height: parent.height * 2/7
             contentItem: Text {
                 text: parent.text
-                font.pixelSize: parent.height * 0.15
+                font.pixelSize: parent.height * 0.2
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 elide: Text.ElideRight
@@ -122,13 +158,12 @@ Item {
         Button{
             x: 10
             y: 269
+            height: parent.height * 0.35
             text: "Emergency Stop"
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 19
+            anchors.top: b1.bottom
             anchors.right: parent.right
             anchors.rightMargin: 10
             implicitWidth: parent.width - 20
-            height: parent.height * 0.4
             contentItem: Text {
                 text: parent.text
                 font.pixelSize: parent.height * 0.2
