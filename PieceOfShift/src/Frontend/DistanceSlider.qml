@@ -65,11 +65,10 @@ Item {
             color: "#ededed"
             Text {
                 id: ticktext
-                text: window.width < 400  ? slider.to * index / 10: slider.to * index / 10 + qsTr(" km")
+                text: window.width < 400  ? slider.to * index / 10: slider.to * index / 10 + qsTr(" m")
                 x: -t_metrics.width / 2
                 y: 10
                 font.pointSize: 12
-                font.family: "Roboto Condensed"
                 color: "#ededed"
                 style: Text.Outline
                 styleColor: "transparent"

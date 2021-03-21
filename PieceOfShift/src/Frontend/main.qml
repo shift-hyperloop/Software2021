@@ -134,9 +134,9 @@ ApplicationWindow {
                 ControlButtons {
                     id: controlButtons
 
-                    height: window.height/3.5
-                    y: window.height - slider.height - height - 0.025*window.height
+                    height: window.height / 4
                     width: window.width / 6.5
+                    y: window.height - slider.height - height - (0.025 * window.height)
                     anchors {
                         //bottom: parent.bottom
                         //bottomMargin: height * scale * 0.1
@@ -167,7 +167,7 @@ ApplicationWindow {
                 }
 
                 minValue: 0
-                maxValue: 100
+                maxValue: 168
             }
             Battery{
                 id: battery
