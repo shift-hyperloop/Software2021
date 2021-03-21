@@ -114,12 +114,21 @@ Page {
 
         }
     }
-    Chart{
+    CustomChart{
         id: networkChart
-        anchors.right: parent.left
+        anchors.left: parent.left
         anchors.top: parent.verticalCenter
-        chartview.width: page.width / 2
-        chartview.height: page.height / 2
+        anchors.leftMargin: window.width * 0.01
+        width: page.width / 2
+        height: page.height / 2.5
+        Component.onCompleted: {
+            chart.initCustomPlot(1);
+            chart.setAxisRange(Qt.point(0, 100), Qt.point(0, 200));
+            chart.setGraphColor(0, "#2674BB");
+            chart.setDataType("");
+            chart.setName(0,"");
+            chart.setAxisLabels("","")
+        }
     }
     ValueTable{
         names: ["Value 1","Value 2", "Value Value", "Value"]
