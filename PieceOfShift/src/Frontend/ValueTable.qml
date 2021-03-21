@@ -31,11 +31,11 @@ Item {
                 model: names.length
 
                 Rectangle {
-                width: rectangle.width / table.columns - border.width
-                height: rectangle.height / table.rows - border.width
-                border.color: "#ededed"
-                color: "#00000000"
-                border.width: 1
+                    width: rectangle.width / table.columns - border.width
+                    height: rectangle.height / table.rows - border.width
+                    border.color: "#ededed"
+                    color: "#00000000"
+                    border.width: 1
 
                     Text {
                         anchors {
@@ -54,7 +54,7 @@ Item {
                             fill: parent
                         }
                         text: values[index]
-                        font.pixelSize: 18
+                        font.pixelSize: 20
                         color: "#ededed"
                         verticalAlignment: Text.AlignVCenter
                         horizontalAlignment: Text.AlignHCenter

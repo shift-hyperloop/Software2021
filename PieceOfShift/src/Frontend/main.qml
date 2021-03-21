@@ -136,7 +136,7 @@ ApplicationWindow {
 
                     height: window.height / 4
                     width: window.width / 6.5
-                    y: window.height - slider.height - height - (0.025 * window.height)
+                    y: window.height - slider.height - height - (0.04 * window.height)
                     anchors {
                         //bottom: parent.bottom
                         //bottomMargin: height * scale * 0.1
@@ -229,8 +229,8 @@ ApplicationWindow {
 
             ValueTable{
                 id: valueTable
-                names: ["Speed","Voltage battery 1", "Value Value", "Bruh moments:", "Crashes", "Value", "Value", "Value"] // names for the values in the table
-                values: [qsTr(speedometer.value + "km/h"), 12, 100, 8, 0, 0, 0, 0] // values for the table
+                names: ["Speed","Voltage battery 1", "Value Value", "Bruh moments:", "Crashes", "Value", "Value"] // names for the values in the table
+                values: [qsTr(speedometer.value + " km/h"), 12, 100, 8, 0, 0, 0] // values for the table
                 anchors {                                   // indexes in names[] and values[] are corresponding
                     top: parent.top
                     topMargin: 0.09 * window.height
