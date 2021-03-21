@@ -3,6 +3,7 @@
 #include "accelerationprocessingunit.h"
 #include "accelerationvelocityunit.h"
 #include "CustomPlotItem.h"
+#include <qdebug.h>
 #include <qpoint.h>
 #include <qrandom.h>
 #include <qthread.h>
@@ -104,8 +105,8 @@ void DataManager::registerPlot(CustomPlotItem* plotItem, const QString &name)
 void DataManager::removePlot(CustomPlotItem *plotItem)
 {
     for (QString name : plotItems.keys()) {
-        if (plotItems.value(name)->indexOf(plotItem)) {
-            if (plotItems.value(name)->size() == 0) {
+        if (plotItems.value(name)->contains(plotItem)) {
+            if (plotItems.value(name)->size() == 1) {
                 plotItems.remove(name);
                 return;
             }
@@ -144,9 +145,11 @@ void DataManager::dummyData()
     if (plotItems.value("Voltage")) {
         for (CustomPlotItem* plot : *plotItems.value("Voltage")) 
         { 
-            plot->addData(vdat1, 0);
-            plot->addData(vdat2, 1);
-            plot->addData(vdat3, 2);
+            if (plot->getCustomPlot()->graphCount() > 0) {
+                plot->addData(vdat1, 0);
+                plot->addData(vdat2, 1);
+                plot->addData(vdat3, 2);
+            }
         }
     }
     plotData.addData("Voltage", 0, vdat1);

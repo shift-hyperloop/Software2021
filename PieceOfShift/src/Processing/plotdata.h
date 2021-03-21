@@ -3,6 +3,9 @@
 #include <QVector>
 #include <QMap>
 #include <QPointF>
+#include <QVariant>
+#include <qvariant.h>
+#include <qvector.h>
 
 class PlotData
 {
@@ -23,9 +26,9 @@ public:
     void insertEmpty(const QString& key)
     {
         QVector<double>* x = new QVector<double>();
-        QVector<double>* y = new QVector<double>();
-        QPair<QVector<double>*, QVector<double>*> pair(x, y);
-        QList<QPair<QVector<double>*, QVector<double>*>>* list = new QList<QPair<QVector<double>*, QVector<double>*>>;
+        QVector<QVariant>* y = new QVector<QVariant>();
+        QPair<QVector<double>*, QVector<QVariant>*> pair(x, y);
+        QList<QPair<QVector<double>*, QVector<QVariant>*>>* list = new QList<QPair<QVector<double>*, QVector<QVariant>*>>;
         list->append(pair);
         m_Data.insert(key, list);
     }
@@ -36,10 +39,10 @@ public:
 
         if (m_Data.value(key)->size() == graphNum) {
             QVector<double>* xVec = new QVector<double>();
-            QVector<double>* yVec = new QVector<double>();
+            QVector<QVariant>* yVec = new QVector<QVariant>();
             xVec->append(x);
             yVec->append(y);
-            QPair<QVector<double>*, QVector<double>*> pair(xVec, yVec);
+            QPair<QVector<double>*, QVector<QVariant>*> pair(xVec, yVec);
             m_Data.value(key)->append(pair);
             return;
         }
@@ -55,7 +58,7 @@ public:
 
     void remove(const QString& key)
     {
-        QList<QPair<QVector<double>*, QVector<double>*>>* list = m_Data.value(key);
+        QList<QPair<QVector<double>*, QVector<QVariant>*>>* list = m_Data.value(key);
         for (auto pair : *list)
         {
             delete pair.first;
@@ -72,7 +75,11 @@ public:
 
     QVector<double> getYValues(const QString& key, int graphNum)
     {
-        return *m_Data.value(key)->at(graphNum).second;
+        QVector<double> list;
+        for (QVariant v : *m_Data.value(key)->at(graphNum).second) {
+            list.append(v.value<double>());
+        }
+        return list;
     }
 
     bool hasKey(const QString& key)
@@ -80,6 +87,8 @@ public:
         return m_Data.contains(key);
     }
 
+    inline QList<QString> getDataTypes() { return m_Data.keys(); }
+
 private:
-    QMap<QString, QList<QPair<QVector<double>*, QVector<double>*>>*> m_Data;
+    QMap<QString, QList<QPair<QVector<double>*, QVector<QVariant>*>>*> m_Data;
 };

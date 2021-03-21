@@ -64,6 +64,7 @@ void CustomPlotItem::setAxisLabels(QString xAxis, QString yAxis){
     m_CustomPlot->xAxis->setLabel(xAxis);
     m_CustomPlot->yAxis->setLabel(yAxis);
 }
+
 void CustomPlotItem::setDataType(QString dataType)
 {
     QtConcurrent::run(m_DMAccessor.dataManager(), &DataManager::registerPlot, this, dataType);
