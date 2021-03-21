@@ -121,9 +121,9 @@ ApplicationWindow {
                     id: thermometer
                     anchors {
                         right: parent.right
-                        rightMargin: 20
+                        rightMargin: window.width*0.025 - width*0.3
                         top: parent.top
-                        topMargin: 0.01*window.height
+                        topMargin: 0.04*window.height
                         //topMargin: (panelRight.height - (height * scale) - slider.height - (controlButtons.height * controlButtons.scale)) / 2
                     }
                     scale: Math.min(window.width / 1000, window.height / 600)
@@ -141,7 +141,7 @@ ApplicationWindow {
                         //bottom: parent.bottom
                         //bottomMargin: height * scale * 0.1
                         right: parent.right
-                        rightMargin: 20
+                        rightMargin: window.width*0.025
                     }
                     scale: Math.min(window.width / 1600, window.height / 900)
                     transformOrigin: Item.BottomRight
@@ -153,8 +153,8 @@ ApplicationWindow {
                 pitchDeg: 0
                 yawDeg: 0
                 circleSize: window.height / 10
-                anchors.left: battery.left
-                anchors.leftMargin: circleSize * 1.5
+                anchors.left: parent.left
+                anchors.leftMargin:1.9*circleSize + window.width*0.025
                 anchors.bottom: battery.top
                 anchors.bottomMargin: circleSize
             }
@@ -173,7 +173,7 @@ ApplicationWindow {
                 id: battery
                 height:window.height / 5
                 anchors.left: parent.left
-                anchors.leftMargin: window.height / 15
+                anchors.leftMargin: 0.025 * window.width
                 anchors.bottom: slider.top
                 anchors.bottomMargin: height/5
             }
