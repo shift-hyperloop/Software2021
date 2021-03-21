@@ -52,20 +52,46 @@ Item {
             y: slider.topPadding + slider.availableHeight / 2 - height / 1.5
         }
     }
-    //creates tickmarks and tick labels
+    //alternative method for tickmarks, creates 10 tickmarks evenly
+    /*
+    Repeater{
+            id: tickrepeater
+            model: 11
+            Rectangle {
+                id: tick
+                width: 3
+                height: width * 4
+                x: (slider.width - 15) * (index / (tickrepeater.model - 1)) + 6
+                y: slider.y + slider.height / 1.95
+                color: "#ededed"
+                Text {
+                    id: ticktext
+                    text: window.width < 400  ? slider.to * index / 10: slider.to * index / 10 + qsTr(" m")
+                    x: -t_metrics.width / 2
+                    y: 10
+                    font.pointSize: 12
+                }
+                TextMetrics {
+                        id: t_metrics
+                        font: ticktext.font
+                        text: ticktext.text
+                }
+            }
+        }*/
+    //creates tickmarks and tick labels, every 10th meter
     Repeater{
         id: tickrepeater
-        model: 11
+        model: Math.round(slider.to / 10)
         Rectangle {
             id: tick
             width: 3
             height: width * 4
-            x: (slider.width - 15) * (index / (tickrepeater.model - 1)) + 6
+            x: 6 + (((slider.width - 15) / 168) * index * 10)
             y: slider.y + slider.height / 1.95
             color: "#ededed"
             Text {
                 id: ticktext
-                text: window.width < 400  ? slider.to * index / 10: slider.to * index / 10 + qsTr(" m")
+                text: window.width < 400  ? 10 * index: 10 * index + qsTr(" m")
                 x: -t_metrics.width / 2
                 y: 10
                 font.pointSize: 12
@@ -78,6 +104,30 @@ Item {
                     font: ticktext.font
                     text: ticktext.text
             }
+        }
+    }
+    //creates the last tickmark
+    Rectangle {
+        id: endTick
+        width: 3
+        height: width * 4
+        x: 6 + (slider.width - 15)
+        y: slider.y + slider.height / 1.95
+        color: "#ededed"
+        Text {
+            id: endticktext
+            text: window.width < 400  ? slider.to : slider.to + qsTr(" m")
+            x: -endt_metrics.width / 2
+            y: 10
+            font.pointSize: 12
+            color: "#ededed"
+            style: Text.Outline
+            styleColor: "transparent"
+        }
+        TextMetrics {
+                id: endt_metrics
+                font: endticktext.font
+                text: endticktext.text
         }
     }
     //creates ticks for the checkmarks marked in the actual tunnel, with 15m spacing. Change 15 to something else for other tunnels, etc.
