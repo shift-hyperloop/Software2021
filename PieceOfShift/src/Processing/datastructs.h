@@ -255,8 +255,13 @@ namespace DataStructs
         float value_15;
     };
 
+//    QList<QPair> dataStructs;
+//    dataStructs << QPair("Vector16f", Vector16f);
+
+
 }
 
+/*
 Q_DECLARE_METATYPE(ErrorCode)
 Q_DECLARE_METATYPE(DataStructs::Float)
 Q_DECLARE_METATYPE(DataStructs::Int)
@@ -275,6 +280,6 @@ Q_DECLARE_METATYPE(DataStructs::Vector3i)
 Q_DECLARE_METATYPE(DataStructs::Vector4f)
 Q_DECLARE_METATYPE(DataStructs::Vector6f)
 Q_DECLARE_METATYPE(DataStructs::Vector8f)
-
+*/
 
 

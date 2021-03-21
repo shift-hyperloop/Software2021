@@ -22,14 +22,35 @@ struct AccelerationVelocityStruct {
     int timeMs;
 };
 
-Q_DECLARE_METATYPE(VelocityStruct)
-Q_DECLARE_METATYPE(AccelerationStruct)
-Q_DECLARE_METATYPE(AccelerationVelocityStruct)
+Q_DECLARE_METATYPE(VelocityStruct);
+Q_DECLARE_METATYPE(AccelerationStruct);
+Q_DECLARE_METATYPE(AccelerationVelocityStruct);
+
 
 enum DataType {
     VELOCITY,
     ACCELERATION,
-    ACCELERATIONVELOCITY
+    ACCELERATIONVELOCITY,
+    ERROR,
+    VCUSTATUS,
+    VECTOR3F,
+    PODSTATE,
+    VECTOR3I,
+    BOOL,
+    VECTOR3B,
+    CHAR,
+    VECTOR2C,
+    VECTOR3C,
+    VECTOR16C,
+    SHORT,
+    VECTOR2S,
+    INT,
+    FLOAT,
+    VECTOR2F,
+    VECTOR4F,
+    VECTOR6F,
+    VECTOR8F,
+    VECTOR16F
 };
 
 class ProcessingUnit : public QObject {

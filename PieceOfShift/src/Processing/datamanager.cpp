@@ -9,11 +9,11 @@ DataManager::DataManager()
     /* Create and append all processing units here,
      * maybe refactor to separate function
      */
-    VelocityProcessingUnit* vpu = new VelocityProcessingUnit();
+//    VelocityProcessingUnit* vpu = new VelocityProcessingUnit();
 //    processingUnits.append(vpu);
-    AccelerationProcessingUnit* apu = new AccelerationProcessingUnit();
+//    AccelerationProcessingUnit* apu = new AccelerationProcessingUnit();
 //    processingUnits.append(apu);
-    AccelerationVelocityUnit* avu = new AccelerationVelocityUnit();
+//    AccelerationVelocityUnit* avu = new AccelerationVelocityUnit();
 //    processingUnits.append(avu);
 
     // Connect newData signal to corresponding DataManager signal
@@ -51,26 +51,144 @@ DataManager::~DataManager()
 
 void DataManager::addData(const QString& name, const DataType &dataType, const QVariant &data)
 {
-    /*
-    // WRITE
-    QByteArray ba;
-    QDataStream stream(&ba, QIODevice::ReadWrite);
-    DataStructs::VCUStatus vcuStatus = {true, true, true, true, true, true, true, true, true, 10.0f, 10.0f};
-    stream << vcuStatus;
-    */
 
-    QByteArray vectorData = data.value<QVariantList>().first().value<QPair<uchar, QByteArray>>().second;
-    QDataStream stream(&vectorData, QIODevice::ReadWrite);
-    DataStructs::DataStruct dataStrict = DataStructs::DataStruct::findChild(&name, Qt::FindChildrenRecursively);
 
-    // Find processing unit with correct data type and add data
-//    ProcessingUnit* processingUnit =
-//            *std::find_if(processingUnits.begin(),
-//                          processingUnits.end(),
-//                          [&dataType](auto x)
-//                          { return x->dataType() == dataType; });
-//    QtConcurrent::run(processingUnit, &ProcessingUnit::addData, name, data);
-    //processingUnit->addData(name, data);
+    if (dataType == ERROR) {
+        QByteArray errorData = data.value<QVariantList>().first().value<QPair<uchar, QByteArray>>().second;;
+        QDataStream stream(&errorData, QIODevice::ReadWrite);
+        DataStructs::VCUStatus* errorStatus = reinterpret_cast<DataStructs::VCUStatus*>(errorData.data());
+        stream << errorStatus;
+    }
+
+    if (dataType == VCUSTATUS) {
+        QByteArray vectorData = data.value<QVariantList>().first().value<QPair<uchar, QByteArray>>().second;;
+        QDataStream stream(&vectorData, QIODevice::ReadWrite);
+        DataStructs::VCUStatus* vcuStatus = reinterpret_cast<DataStructs::VCUStatus*>(vectorData.data());
+        stream << vcuStatus;
+    }
+
+    if (dataType == VECTOR3F) {
+        QByteArray vectorData = data.value<QVariantList>().first().value<QPair<uchar, QByteArray>>().second;;
+        QDataStream stream(&vectorData, QIODevice::ReadWrite);
+        DataStructs::VCUStatus* vectorStatus = reinterpret_cast<DataStructs::VCUStatus*>(vectorData.data());
+        stream << vectorStatus;
+    }
+
+    if (dataType == PODSTATE) {
+        QByteArray vectorData = data.value<QVariantList>().first().value<QPair<uchar, QByteArray>>().second;;
+        QDataStream stream(&vectorData, QIODevice::ReadWrite);
+        DataStructs::VCUStatus* vcuStatus = reinterpret_cast<DataStructs::VCUStatus*>(vectorData.data());
+        stream << vcuStatus;
+    }
+
+    if (dataType == VECTOR3I) {
+        QByteArray vectorData = data.value<QVariantList>().first().value<QPair<uchar, QByteArray>>().second;;
+        QDataStream stream(&vectorData, QIODevice::ReadWrite);
+        DataStructs::VCUStatus* vcuStatus = reinterpret_cast<DataStructs::VCUStatus*>(vectorData.data());
+        stream << vcuStatus;
+    }
+
+    if (dataType == BOOL) {
+        QByteArray vectorData = data.value<QVariantList>().first().value<QPair<uchar, QByteArray>>().second;;
+        QDataStream stream(&vectorData, QIODevice::ReadWrite);
+        DataStructs::VCUStatus* vcuStatus = reinterpret_cast<DataStructs::VCUStatus*>(vectorData.data());
+        stream << vcuStatus;
+    }
+
+    if (dataType == VECTOR3B) {
+        QByteArray vectorData = data.value<QVariantList>().first().value<QPair<uchar, QByteArray>>().second;;
+        QDataStream stream(&vectorData, QIODevice::ReadWrite);
+        DataStructs::VCUStatus* vcuStatus = reinterpret_cast<DataStructs::VCUStatus*>(vectorData.data());
+        stream << vcuStatus;
+    }
+
+    if (dataType == CHAR) {
+        QByteArray vectorData = data.value<QVariantList>().first().value<QPair<uchar, QByteArray>>().second;;
+        QDataStream stream(&vectorData, QIODevice::ReadWrite);
+        DataStructs::VCUStatus* vcuStatus = reinterpret_cast<DataStructs::VCUStatus*>(vectorData.data());
+        stream << vcuStatus;
+    }
+
+    if (dataType == VECTOR2C) {
+        QByteArray vectorData = data.value<QVariantList>().first().value<QPair<uchar, QByteArray>>().second;;
+        QDataStream stream(&vectorData, QIODevice::ReadWrite);
+        DataStructs::VCUStatus* vcuStatus = reinterpret_cast<DataStructs::VCUStatus*>(vectorData.data());
+        stream << vcuStatus;
+    }
+
+    if (dataType == VECTOR3C) {
+        QByteArray vectorData = data.value<QVariantList>().first().value<QPair<uchar, QByteArray>>().second;;
+        QDataStream stream(&vectorData, QIODevice::ReadWrite);
+        DataStructs::VCUStatus* vcuStatus = reinterpret_cast<DataStructs::VCUStatus*>(vectorData.data());
+        stream << vcuStatus;
+    }
+
+    if (dataType == VECTOR16C) {
+        QByteArray vectorData = data.value<QVariantList>().first().value<QPair<uchar, QByteArray>>().second;;
+        QDataStream stream(&vectorData, QIODevice::ReadWrite);
+        DataStructs::VCUStatus* vcuStatus = reinterpret_cast<DataStructs::VCUStatus*>(vectorData.data());
+        stream << vcuStatus;
+    }
+
+    if (dataType == SHORT) {
+        QByteArray vectorData = data.value<QVariantList>().first().value<QPair<uchar, QByteArray>>().second;;
+        QDataStream stream(&vectorData, QIODevice::ReadWrite);
+        DataStructs::VCUStatus* vcuStatus = reinterpret_cast<DataStructs::VCUStatus*>(vectorData.data());
+        stream << vcuStatus;
+    }
+
+    if (dataType == VECTOR2S) {
+        QByteArray vectorData = data.value<QVariantList>().first().value<QPair<uchar, QByteArray>>().second;;
+        QDataStream stream(&vectorData, QIODevice::ReadWrite);
+        DataStructs::VCUStatus* vcuStatus = reinterpret_cast<DataStructs::VCUStatus*>(vectorData.data());
+        stream << vcuStatus;
+    }
+
+    if (dataType == INT) {
+        QByteArray vectorData = data.value<QVariantList>().first().value<QPair<uchar, QByteArray>>().second;;
+        QDataStream stream(&vectorData, QIODevice::ReadWrite);
+        DataStructs::VCUStatus* vcuStatus = reinterpret_cast<DataStructs::VCUStatus*>(vectorData.data());
+        stream << vcuStatus;
+    }
+
+    if (dataType == FLOAT) {
+        QByteArray vectorData = data.value<QVariantList>().first().value<QPair<uchar, QByteArray>>().second;;
+        QDataStream stream(&vectorData, QIODevice::ReadWrite);
+        DataStructs::VCUStatus* vcuStatus = reinterpret_cast<DataStructs::VCUStatus*>(vectorData.data());
+        stream << vcuStatus;
+    }
+
+    if (dataType == VECTOR2F) {
+        QByteArray vectorData = data.value<QVariantList>().first().value<QPair<uchar, QByteArray>>().second;;
+        QDataStream stream(&vectorData, QIODevice::ReadWrite);
+        DataStructs::VCUStatus* vcuStatus = reinterpret_cast<DataStructs::VCUStatus*>(vectorData.data());
+        stream << vcuStatus;
+    }
+    if (dataType == VECTOR4F) {
+        QByteArray vectorData = data.value<QVariantList>().first().value<QPair<uchar, QByteArray>>().second;;
+        QDataStream stream(&vectorData, QIODevice::ReadWrite);
+        DataStructs::VCUStatus* vcuStatus = reinterpret_cast<DataStructs::VCUStatus*>(vectorData.data());
+        stream << vcuStatus;
+    }
+    if (dataType == VECTOR6F) {
+        QByteArray vectorData = data.value<QVariantList>().first().value<QPair<uchar, QByteArray>>().second;;
+        QDataStream stream(&vectorData, QIODevice::ReadWrite);
+        DataStructs::VCUStatus* vcuStatus = reinterpret_cast<DataStructs::VCUStatus*>(vectorData.data());
+        stream << vcuStatus;
+    }
+    if (dataType == VECTOR8F) {
+        QByteArray vectorData = data.value<QVariantList>().first().value<QPair<uchar, QByteArray>>().second;;
+        QDataStream stream(&vectorData, QIODevice::ReadWrite);
+        DataStructs::VCUStatus* vcuStatus = reinterpret_cast<DataStructs::VCUStatus*>(vectorData.data());
+        stream << vcuStatus;
+    }
+    if (dataType == VECTOR16F) {
+        QByteArray vectorData = data.value<QVariantList>().first().value<QPair<uchar, QByteArray>>().second;;
+        QDataStream stream(&vectorData, QIODevice::ReadWrite);
+        DataStructs::VCUStatus* vcuStatus = reinterpret_cast<DataStructs::VCUStatus*>(vectorData.data());
+        stream << vcuStatus;
+    }
+
 }
 
 void DataManager::connectToPod(QString hostname, QString port)
