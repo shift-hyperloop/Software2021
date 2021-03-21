@@ -7,6 +7,7 @@
 #include "processingunit.h"
 #include "src/Decoding/canserver.h"
 #include "src/Decoding/decoder.h"
+#include "Processing/plotdata.h"
 
 class CustomPlotItem;
 
@@ -55,6 +56,7 @@ signals:
 private:
     QVector<ProcessingUnit*> processingUnits;
     QMap<QString, QList<CustomPlotItem*>*> plotItems;
+    PlotData plotData;
 
     Decoder decoder;
     CANServer canServer;
