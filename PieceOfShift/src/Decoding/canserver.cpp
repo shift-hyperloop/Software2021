@@ -58,6 +58,8 @@ void CANServer::handleIncoming()
 
 void CANServer::sendPodCommand(const PodCommand& type)
 {
+    if (!m_TcpSocket) return;
+    
     if (m_TcpSocket->state() != QAbstractSocket::ConnectedState) {
         // NOTE: DO SOMETHING HERE
         return;

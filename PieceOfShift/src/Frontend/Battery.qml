@@ -19,13 +19,13 @@ Item {
             anchors.horizontalCenter: batteryImg.horizontalCenter
         }
         Rectangle{
-            id: rectRed
-            color: "red"
+            id: rectRed                 //red rectangle is anchored to the top and starts with height 0.
+            color: "red"                // height increases as charge decreases
             height: {
                 if( charge > 0){
                     container.height  - rectGreen.height
                 }
-                else{
+                else{                   // when charge reaches 0 the red rectangle fills the whole battery image
                     container.height
                 }
             }
@@ -38,7 +38,7 @@ Item {
         Rectangle{
             id: rectGreen
             color: "green"
-            height: container.height * charge
+            height: container.height * charge //the green rectangle is anchored to the bottom and height decreases as charge decreases
             width: container.width
             anchors.bottom: container.bottom
             anchors.horizontalCenter: container.horizontalCenter

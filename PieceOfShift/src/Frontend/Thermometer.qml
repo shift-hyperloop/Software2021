@@ -3,8 +3,10 @@ import QtQuick.Extras 1.4
 import QtQuick.Controls.Styles 1.2
 
 Item {
-    width: 55
-    height: 195
+    id: item1
+    width: 60
+    height: 310
+    opacity: 1
 
     property alias minValue: thermometer.minimumValue
     property alias maxValue: thermometer.maximumValue
@@ -15,13 +17,13 @@ Item {
 
     Rectangle {
         id: rectangle1
-        x: thermometer.width / 2
-        y: thermometer.height * 0.9
-        width: 26
-        height: 26
+        y: 279
+        width: 30
+        height: 30
         color: "#cacaca"
         radius: 100
-
+        anchors.left: parent.left
+        anchors.leftMargin: thermometer.width * 0.2
     }
 
     Gauge {
@@ -35,21 +37,35 @@ Item {
                 stackView.push("DetailedBatteryPage.qml")
             }
         }
-
-        value: 30
         id: thermometer
+        x: 0
+        y: 0
+        font.pixelSize: 12
+        value: 30
+        height: 302
+        width: 60
         tickmarkStepSize: thermometer.maximumValue / 10
         style: GaugeStyle {
             valueBar: Rectangle {
-                implicitWidth: 12
-                radius: 6
+                implicitWidth: 16
+                radius: 8
                 //change color of bar with value B)
                 //change to #c11c1c if color changing is removed
                 color: Qt.rgba((thermometer.value / thermometer.maximumValue) * 0.5 + 0.5, 0, (0.5 - (thermometer.value / thermometer.maximumValue) * 0.5), 1)
             }
             background: Rectangle {
-                implicitWidth: 12
-                radius: 6
+                radius: 8
+            }
+            foreground: null
+            tickmark: Item {
+                implicitWidth: 5
+                implicitHeight: 1
+
+                Rectangle {
+                    width: parent.width
+                    height: parent.height
+                    color: "#ededed"
+                }
             }
         }
         Behavior on value {
@@ -73,6 +89,6 @@ Item {
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:10}
+    D{i:0;formeditorZoom:6}
 }
 ##^##*/

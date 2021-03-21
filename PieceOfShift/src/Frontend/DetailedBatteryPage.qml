@@ -1,9 +1,11 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.15
 
-Item {
+Page {
 
     id: detailedBatteryPage
+    background: Rectangle{color: "#333333"} // background color for subpages
+
     property alias chart1: chart1;
     property alias chart2: chart2;
     property alias chart3: chart3;
@@ -18,21 +20,13 @@ Item {
         }
     }
 
-    function update(allLineseries, globalCounter) {
-        globalCounter++;
-        for (let i = 0; i < allLineseries.length; i++) {
-            allLineseries[i].append(globalCounter++, (i+1) * 5);
-        }
-    }
-
-    function resetChartAxes(charts) {
-        charts.forEach(chart => {
-            const currentLineseries = chart.lineseries;
-            chart.x_axis.min = 0;
-            chart.y_axis.min = 0;
-            chart.x_axis.max = currentLineseries.at(currentLineseries.length - 1).x - 20;
-            chart.y_axis.max = currentLineseries.at(currentLineseries.length - 1).y - 40;
-        });
+    Component.onDestruction:  {
+            chart1.chart.remove();
+            chart2.chart.remove();
+            chart3.chart.remove();
+            chart4.chart.remove();
+            chart5.chart.remove();
+            chart6.chart.remove();
     }
 
     Rectangle {
@@ -100,127 +94,129 @@ Item {
     //This is the amount of vertical height that's "left" when taking elements above into account
     property var remainingWindowHeight: window.height - 0.05 * window.height - but1.height - rect1.height
 
-    MultiLineChart {
+    CustomChart {
         id: chart1
-        x: 0
-        y: but1.y + but1.height
-        chartview.width: Math.floor(window.width / 2)
-        chartview.height: Math.floor(remainingWindowHeight / 3)
-        // Voltages? Idk ask Bendik
-        lineseries1.name: "<font color='white'>V1</font>"
-        lineseries2.name: "<font color='white'>V2</font>"
-        lineseries3.name: "<font color='white'>V3</font>"
-        x_axis.titleText: "<font color='white'>Time</font>"
-        y_axis.titleText: "<font color='white'>Voltage</font>"
-
-
-        //Timer for simulating continously updated points
-        Timer {
-            running: mainView.timer.running; repeat: true; interval: 50;
-            onTriggered: {
-                // allLineseries is a variable in MultiLineChart.qml which is a list of every LineSeries, e.g.
-                // all the individual lines on the actual graph. So we update every line in the same graph
-                update(chart1.allLineseries, mainView.counter);
-                //update(chart2, mainView.counter);
-                //update(chart3, mainView.counter);
-                //update(chart4, mainView.counter);
-                //update(chart5, mainView.counter);
-                //update(chart6, mainView.counter);
-            }
+        width: Math.floor(window.width / 2)
+        height: Math.floor(remainingWindowHeight / 3)
+        anchors.left: parent.left
+        anchors.top: but1.bottom
+        property var counter: 0
+        Component.onCompleted: {
+            chart.initCustomPlot(3);
+            chart.setGraphColor(0, "#2674BB");
+            chart.setGraphColor(1, "#AE3328");
+            chart.setGraphColor(2, "#FC37AB");
+            chart.setDataType("Voltage");
+            chart.setName(0,"V1");
+            chart.setName(1,"V2");
+            chart.setName(2,"V2");
+            chart.setAxisLabels("Time","Voltage")
+            chart.setAxisRange(Qt.point(0, 100), Qt.point(0, 100));
         }
     }
 
-    Chart {
+    CustomChart {
         id: chart2
-        x: chart1.chartview.width
-        y: but1.y + but1.height
-        chartview.width: Math.floor(window.width / 2)
-        chartview.height: Math.floor(remainingWindowHeight / 3)
-        x_axis.titleText: "<font color='white'>Time</font>"
-        y_axis.titleText: "<font color='white'>Temperature</font>"
-
-
-        //Timer for simulating continously updated points
-        Timer {
-            running: mainView.timer.running; repeat: true; interval: 200;
-            onTriggered: {
-            }
+        width: Math.floor(window.width / 2)
+        height: Math.floor(remainingWindowHeight / 3)
+        anchors.top: but1.bottom
+        anchors.left: chart1.right
+        property var counter: 0
+        Component.onCompleted: {
+            chart.initCustomPlot(3);
+            chart.setGraphColor(0, "#2674BB");
+            chart.setGraphColor(1, "#AE3328");
+            chart.setGraphColor(2, "#FC37AB");
+            chart.setDataType("Voltage");
+            chart.setName(0,"V1");
+            chart.setName(1,"V2");
+            chart.setName(2,"V2");
+            chart.setAxisLabels("Time","Voltage")
+            chart.setAxisRange(Qt.point(0, 100), Qt.point(0, 100));
         }
     }
 
-    Chart {
+    CustomChart {
         id: chart3
-        x: 0
-        y: chart1.y + chart1.chartview.height
-        chartview.width: Math.floor(window.width / 2)
-        chartview.height: Math.floor(remainingWindowHeight / 3)
-        x_axis.titleText: "<font color='white'>Time</font>"
-        y_axis.titleText: "<font color='white'>Blabla</font>"
-
-
-        //Timer for simulating continously updated points
-        Timer {
-            running: mainView.timer.running; repeat: true; interval: 200;
-            onTriggered: {
-            }
-
+        width: Math.floor(window.width / 2)
+        height: Math.floor(remainingWindowHeight / 3)
+        anchors.top: chart1.bottom
+        anchors.left: parent.left
+        property var counter: 0
+        Component.onCompleted: {
+            chart.initCustomPlot(3);
+            chart.setGraphColor(0, "#2674BB");
+            chart.setGraphColor(1, "#AE3328");
+            chart.setGraphColor(2, "#FC37AB");
+            chart.setDataType("Voltage");
+            chart.setName(0,"V1");
+            chart.setName(1,"V2");
+            chart.setName(2,"V2");
+            chart.setAxisLabels("Time","Voltage")
+            chart.setAxisRange(Qt.point(0, 100), Qt.point(0, 100));
         }
     }
-
-    Chart {
+    
+    CustomChart {
         id: chart4
-        x: chart1.chartview.width
-        y: chart1.y + chart1.chartview.height
-        chartview.width: Math.floor(window.width / 2)
-        chartview.height: Math.floor(remainingWindowHeight / 3)
-        x_axis.titleText: "<font color='white'>TBD</font>"
-        y_axis.titleText: "<font color='white'>TBD</font>"
-
-
-        //Timer for simulating continously updated points
-        Timer {
-            running: mainView.timer.running; repeat: true; interval: 200;
-            onTriggered: {
-            }
-
+        width: Math.floor(window.width / 2)
+        height: Math.floor(remainingWindowHeight / 3)
+        anchors.top: chart2.bottom
+        anchors.left: chart3.right
+        property var counter: 0
+        Component.onCompleted: {
+            chart.initCustomPlot(3);
+            chart.setGraphColor(0, "#2674BB");
+            chart.setGraphColor(1, "#AE3328");
+            chart.setGraphColor(2, "#FC37AB");
+            chart.setDataType("Voltage");
+            chart.setName(0,"V1");
+            chart.setName(1,"V2");
+            chart.setName(2,"V2");
+            chart.setAxisLabels("Time","Voltage")
+            chart.setAxisRange(Qt.point(0, 100), Qt.point(0, 100));
         }
     }
 
-    Chart {
+    CustomChart {
         id: chart5
-        x: 0
-        y: chart1.y + chart1.chartview.height + chart3.chartview.height
-        chartview.width: Math.floor(window.width / 2)
-        chartview.height: Math.floor(remainingWindowHeight / 3)
-        x_axis.titleText: "<font color='white'>TBD</font>"
-        y_axis.titleText: "<font color='white'>TBD</font>"
-
-
-        //Timer for simulating continously updated points
-        Timer {
-            running: mainView.timer.running; repeat: true; interval: 200;
-            onTriggered: {
-            }
-
+        width: Math.floor(window.width / 2)
+        height: Math.floor(remainingWindowHeight / 3)
+        anchors.top: chart3.bottom
+        anchors.left: parent.left
+        property var counter: 0
+        Component.onCompleted: {
+            chart.initCustomPlot(3);
+            chart.setGraphColor(0, "#2674BB");
+            chart.setGraphColor(1, "#AE3328");
+            chart.setGraphColor(2, "#FC37AB");
+            chart.setDataType("Voltage");
+            chart.setName(0,"V1");
+            chart.setName(1,"V2");
+            chart.setName(2,"V2");
+            chart.setAxisLabels("Time","Voltage")
+            chart.setAxisRange(Qt.point(0, 100), Qt.point(0, 100));
         }
     }
 
-    Chart {
+    CustomChart {
         id: chart6
-        x: chart1.chartview.width
-        y: chart1.y + chart1.chartview.height + chart3.chartview.height
-        chartview.width: Math.floor(window.width / 2)
-        chartview.height: Math.floor(remainingWindowHeight / 3)
-        x_axis.titleText: "<font color='white'>TBD</font>"
-        y_axis.titleText: "<font color='white'>TBD</font>"
-
-
-        //Timer for simulating continously updated points
-        Timer {
-            running: mainView.timer.running; repeat: true; interval: 200;
-            onTriggered: {
-            }
-
+        width: Math.floor(window.width / 2)
+        height: Math.floor(remainingWindowHeight / 3)
+        anchors.top: chart4.bottom
+        anchors.left: chart5.right
+        property var counter: 0
+        Component.onCompleted: {
+            chart.initCustomPlot(3);
+            chart.setGraphColor(0, "#2674BB");
+            chart.setGraphColor(1, "#AE3328");
+            chart.setGraphColor(2, "#FC37AB");
+            chart.setDataType("Voltage");
+            chart.setName(0,"V1");
+            chart.setName(1,"V2");
+            chart.setName(2,"V2");
+            chart.setAxisLabels("Time","Voltage")
+            chart.setAxisRange(Qt.point(0, 100), Qt.point(0, 100));
         }
     }
 

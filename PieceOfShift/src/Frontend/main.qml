@@ -9,9 +9,11 @@ import Qt3D.Render 2.9
 import QtCharts 2.3
 import shift.datamanagement 1.0
 import QtQuick.Controls.Material 2.12
+import CustomPlot 1.0
 
 ApplicationWindow {
     Material.theme: Material.Dark
+    Material.accent: "#0099ff"
     id: window
     width: 1700
     height: 900
@@ -19,9 +21,8 @@ ApplicationWindow {
     visibility: "Maximized"
     color: "#444444"
     title: "PieceOfShift"
+
     menuBar: CustomMenuBar{
-        /*_width: window.width - logoWhite_RightText.width
-        x: logoWhite_RightText.width + 10*/
         id: topBar
         NetworkInfo {
             id: networkinfo
@@ -44,6 +45,13 @@ ApplicationWindow {
         }
     }
 
+    DataManagerAccessor {
+        id: dm
+        Component.onCompleted: {
+            dataManager.init()
+        }
+    }
+
     /*
       TODO:
         Next workshop, focus on improving the Battery-page. Look into ValueAxis for naming of axes,
@@ -61,14 +69,13 @@ ApplicationWindow {
         id: stackView
         anchors.fill: parent
         property var chosenState // variable for the chosen state in StateIndication.qml
-
         initialItem: Item {
 
             id: mainView
 
             property alias timer: timer
-            property alias chart: chart
-            property alias counter: chart.counter
+            //property alias chart: chart
+            property alias counter: customChart.counter
             //to change networkinfo status with button
             property alias connected: networkinfo.connected
             Item {
@@ -89,12 +96,12 @@ ApplicationWindow {
                     anchors {
                         left: parent.left
                         top: parent.top
-                        topMargin: 30
-                        leftMargin: 30
+                        topMargin: 0.04 * window.height
+                        leftMargin: 0.04 * window.width
                     }
                     //speedometer has a weird bug where explicitly setting width and height turns it into a white circle
                     //therefore, scale is used to, uh, scale
-                    scale: 0.15 + Math.min(window.width / 1600, window.height / 900)
+                    scale: 0.20 + Math.min(window.width / 1600, window.height / 900)
                     transformOrigin: Item.TopLeft
                     minValue: 0
                     maxValue: 600
@@ -116,32 +123,32 @@ ApplicationWindow {
                         right: parent.right
                         rightMargin: 20
                         top: parent.top
-                        topMargin: (panelRight.height - (height * scale) - slider.height - (controlButtons.height * controlButtons.scale)) / 2
+                        topMargin: 0.01*window.height
+                        //topMargin: (panelRight.height - (height * scale) - slider.height - (controlButtons.height * controlButtons.scale)) / 2
                     }
-                    scale: Math.min(window.width / 800, window.height / 450)
+                    scale: Math.min(window.width / 1000, window.height / 600)
                     transformOrigin: Item.TopRight
                     minValue: 0
                     maxValue: 50
                 }
                 ControlButtons {
                     id: controlButtons
-                    height: 200
-                    width: 300
+
+                    height: window.height/3.5
+                    y: window.height - slider.height - height - 0.025*window.height
+                    width: window.width / 6.5
                     anchors {
-                        bottom: parent.bottom
+                        //bottom: parent.bottom
                         //bottomMargin: height * scale * 0.1
                         right: parent.right
                         rightMargin: 20
                     }
                     scale: Math.min(window.width / 1600, window.height / 900)
                     transformOrigin: Item.BottomRight
-
-                    //y: window.height - (height + 100)
-                    //x: Math.max(thermometer.x - thermometer.width - 100 - width, 0)
                 }
             }
-            Tilitmeter{
-                id: tilitMeter
+            Tiltmeter{
+                id: tiltMeter
                 rollDeg: 0
                 pitchDeg: 0
                 yawDeg: 0
@@ -169,7 +176,6 @@ ApplicationWindow {
                 anchors.leftMargin: window.height / 15
                 anchors.bottom: slider.top
                 anchors.bottomMargin: height/5
-
             }
 
             Timer {
@@ -186,52 +192,55 @@ ApplicationWindow {
                     slider.value = slider.value + distance;
                     speedometer.value = speed;
                     valueTable.tableModel.setRow(0,{"name": "Speed", "value":qsTr(speedometer.value + "km/h")})
+                    //updating field in table with index 0
                     thermometer.value = Math.random() * 25 + 25;
-                    chart.counter++;
-                    chart.lineseries.append(chart.counter, speed);
+                    //change from customChart to chart to get old chart back.
+                    customChart.counter++;
+                    //chart.lineseries.append(chart.counter, speed);
                     battery.charge = 1 - slider.value / 100
-                    tilitMeter.rollDeg +=  0.5 * Math.floor(Math.random()*3-1)
-                    tilitMeter.yawDeg += 0.5 * Math.floor(Math.random()*3-1)
-                    tilitMeter.pitchDeg += 0.5 * Math.floor(Math.random()*3-1)
-
+                    tiltMeter.rollDeg +=  0.5 * Math.floor(Math.random()*3-1)
+                    tiltMeter.yawDeg += 0.5 * Math.floor(Math.random()*3-1)
+                    tiltMeter.pitchDeg += 0.5 * Math.floor(Math.random()*3-1)
                 }
             }
 
-            SimpleChart {
-                id: chart
-                chartHeight: window.height * 0.3
-                chartWidth: window.width * 0.4
+            CustomChart{
+                id: customChart
+                redirect: "MechanicalDetails.qml"
+                width: window.width * 0.35
+                height: window.height * 0.25
+                anchors.right: valueTable.left
+                anchors.rightMargin: 0.03*window.width
+                anchors.top: valueTable.top
                 property var counter: 0
-                x: speedometer.width * speedometer.scale + 100
-                y: 40
-                chartview.legend.visible: false
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        stackView.push("PreviewPage.qml");
-                    }
+                Component.onCompleted: {
+                    //create a customPlot item with (2) graphs, and set their colors.
+                    //any color sent to C++ will become a QColor, and vice versa.
+                    chart.initCustomPlot(2);
+                    chart.setAxisRange(Qt.point(0, 100), Qt.point(0, 200));
+                    chart.setGraphColor(0, "#2674BB");
+                    chart.setGraphColor(1, "#AE3328");
+                    chart.setDataType("Velocity");
+                    chart.setName(0,"Speed km/h");
+                    chart.setAxisLabels("Time","Speed km/h")
+                    chart.setSimpleGraph(); // disables all interactions with the chart
                 }
             }
+
             ValueTable{
                 id: valueTable
-                names: ["Speed","Voltage battery 1", "Value Value", "Bruh moments:", "Crashes"]
-                values: [qsTr(0 + "km/h"), 12, 100, 8, 0]
-                anchors {
+                names: ["Speed","Voltage battery 1", "Value Value", "Bruh moments:", "Crashes"] // names for the values in the table
+                values: [qsTr(0 + "km/h"), 12, 100, 8, 0] // values for the table
+                anchors {                                   // indexes in names[] and values[] are corresponding
                     top: parent.top
-                    topMargin: 0.06 * window.height
-                    left: parent.left
-                    leftMargin: chart.x + chart.chartWidth
+                    topMargin: 0.09 * window.height
+                    right: parent.right
+                    rightMargin: thermometer.width + 0.07*window.width
                 }
-                scale: Math.min(window.width / 1700, window.height / 1000)
+                scale: Math.min(window.width / 1600, window.height / 1000)
                 transformOrigin: "TopLeft"
             }
 
-            Text {
-                id: labelText
-                color: "white"
-                width: 300
-                height: 100
-            }
-            }
         }
     }
+}
