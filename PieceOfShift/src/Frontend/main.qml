@@ -189,7 +189,7 @@ ApplicationWindow {
                 function update(){
                     var distance = (Math.random() * 0.03) + 0.1;
                     var speed = (distance * 50) / 0.02;
-                    slider.value = slider.value + distance;
+                    slider.value = slider.value + distance * 10;
                     speedometer.value = speed;
                     //valueTable.tableModel.setRow(0,{"name": "Speed", "value":qsTr(speedometer.value + "km/h")})
                     //updating field in table with index 0

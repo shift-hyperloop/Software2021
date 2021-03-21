@@ -79,7 +79,37 @@ Item {
                     text: ticktext.text
             }
         }
-
+    }
+    //creates ticks for the checkmarks marked in the actual tunnel, with 15m spacing. Change 15 to something else for other tunnels, etc.
+    //ticks turn green when distance > ticks distance.
+    //TODO: Add an array that shows which checkmarks have been passed, turn tick green if chechmark has been passed
+    Repeater {
+        id: checkmarkRepeater
+        model: Math.round(slider.to / 15) + 1
+        Rectangle {
+            id: checkmark
+            width: 3
+            height: width * 4
+            x: 6 + (((slider.width - 15) / 168) * index * 15)
+            //x: (slider.width - 15) * (index / (checkmarkRepeater.model - 1)) + 6
+            y: slider.y + slider.height / 1.95 - 15
+            color: slider.value > 15 * index ? "#12aa34" : "#ededed"
+            Text {
+                id: checkText
+                text: window.width < 400  ? 15 * index: 15 * index + qsTr(" m")
+                x: -t_metrics2.width / 2
+                y: -15
+                font.pointSize: 10
+                color: "#ededed"
+                style: Text.Outline
+                styleColor: "transparent"
+            }
+            TextMetrics {
+                    id: t_metrics2
+                    font: checkText.font
+                    text: checkText.text
+            }
+        }
     }
 }
 
