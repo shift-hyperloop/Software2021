@@ -20,6 +20,15 @@ Page {
         }
     }
 
+    Component.onDestruction:  {
+            chart1.chart.remove();
+            chart2.chart.remove();
+            chart3.chart.remove();
+            chart4.chart.remove();
+            chart5.chart.remove();
+            chart6.chart.remove();
+    }
+
     Rectangle {
         id: rect1
         y: 0.05 * window.height
@@ -102,6 +111,7 @@ Page {
             chart.setName(1,"V2");
             chart.setName(2,"V2");
             chart.setAxisLabels("Time","Voltage")
+            chart.setAxisRange(Qt.point(0, 100), Qt.point(0, 100));
         }
     }
 
@@ -122,6 +132,7 @@ Page {
             chart.setName(1,"V2");
             chart.setName(2,"V2");
             chart.setAxisLabels("Time","Voltage")
+            chart.setAxisRange(Qt.point(0, 100), Qt.point(0, 100));
         }
     }
 
@@ -142,6 +153,7 @@ Page {
             chart.setName(1,"V2");
             chart.setName(2,"V2");
             chart.setAxisLabels("Time","Voltage")
+            chart.setAxisRange(Qt.point(0, 100), Qt.point(0, 100));
         }
     }
     
@@ -162,6 +174,7 @@ Page {
             chart.setName(1,"V2");
             chart.setName(2,"V2");
             chart.setAxisLabels("Time","Voltage")
+            chart.setAxisRange(Qt.point(0, 100), Qt.point(0, 100));
         }
     }
 
@@ -182,6 +195,7 @@ Page {
             chart.setName(1,"V2");
             chart.setName(2,"V2");
             chart.setAxisLabels("Time","Voltage")
+            chart.setAxisRange(Qt.point(0, 100), Qt.point(0, 100));
         }
     }
 
@@ -202,6 +216,7 @@ Page {
             chart.setName(1,"V2");
             chart.setName(2,"V2");
             chart.setAxisLabels("Time","Voltage")
+            chart.setAxisRange(Qt.point(0, 100), Qt.point(0, 100));
         }
     }
 

@@ -241,12 +241,6 @@ ApplicationWindow {
                 transformOrigin: "TopLeft"
             }
 
-            Text {
-                id: labelText
-                color: "white"
-                width: 300
-                height: 100
-            }
         }
     }
 }
