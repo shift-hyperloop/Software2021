@@ -241,8 +241,8 @@ ApplicationWindow {
                     right: parent.right
                     rightMargin: thermometer.width + 0.07*window.width
                 }
-                //scale: Math.min(window.width / 1600, window.height / 1000)
-                transformOrigin: "TopLeft"
+                width: window.width/ 4.5
+                height: window.height / 2
             }
 
         }
