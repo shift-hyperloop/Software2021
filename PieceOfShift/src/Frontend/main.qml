@@ -239,11 +239,10 @@ ApplicationWindow {
                     top: parent.top
                     topMargin: 0.09 * window.height
                     right: parent.right
-                    rightMargin: thermometer.width + 0.07*window.width
+                    rightMargin: thermometer.width + 0.03*window.width
                 }
                 width: window.width / 3.5
                 height: width * 4/5
-                transformOrigin: "TopLeft"
             }
 
         }
