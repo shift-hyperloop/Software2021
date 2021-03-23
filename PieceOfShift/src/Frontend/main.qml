@@ -91,18 +91,15 @@ ApplicationWindow {
 
                 Speedometer {
                     id: speedometer
-                    width: 226
-                    height: 300
+                    width: window.width/5
+                    height: width //dont change!
                     anchors {
                         left: parent.left
                         top: parent.top
                         topMargin: 0.04 * window.height
                         leftMargin: 0.04 * window.width
                     }
-                    //speedometer has a weird bug where explicitly setting width and height turns it into a white circle
-                    //therefore, scale is used to, uh, scale
-                    scale: 0.20 + Math.min(window.width / 1600, window.height / 900)
-                    transformOrigin: Item.TopLeft
+
                     minValue: 0
                     maxValue: 600
                 }
@@ -143,7 +140,7 @@ ApplicationWindow {
                         right: parent.right
                         rightMargin: window.width*0.025
                     }
-                    scale: Math.min(window.width / 1600, window.height / 900)
+                    //scale: Math.min(window.width / 1600, window.height / 900)
                     transformOrigin: Item.BottomRight
                 }
             }

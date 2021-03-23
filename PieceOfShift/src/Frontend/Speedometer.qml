@@ -10,16 +10,12 @@ Item {
     property alias value: circulargauge.value
     property alias style: circulargauge.style
 
-    width: 300
-    height: 300
-    x: 0
-    y: 0
-
     CircularGauge{
         id: circulargauge
         minimumValue: 0
         maximumValue: 500
         stepSize: 1
+        anchors.fill: parent
         style: CircularGaugeStyle {
             labelStepSize: 100
             tickmarkStepSize: 50
