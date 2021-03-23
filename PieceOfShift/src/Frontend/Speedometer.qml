@@ -26,10 +26,11 @@ Item {
                 color: "#0099ff"
             }
             foreground: Rectangle {
-                width: outerRadius * 0.1
+                width: Math.round(outerRadius * 0.1)
                 height: width
-                radius: width / 2
-                color: "#ededed"
+                radius: Math.round(width / 2)
+                //circle sometimes fills entire component, to be fixed. TODO: find out why it happens. For now, the circle in the middle is invisible
+                color: "#00ededed"
                 anchors.centerIn: parent
             }
             //change the color and style of text, plus make it red at high values
@@ -58,7 +59,6 @@ Item {
                 duration: 200
             }
         }
-
     }
 
     Text {

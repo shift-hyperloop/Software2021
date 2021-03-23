@@ -91,15 +91,14 @@ ApplicationWindow {
 
                 Speedometer {
                     id: speedometer
-                    width: window.width/5
-                    height: width //dont change!
+                    width: Math.round(window.width / 6) //round, because speedometer is very picky and doesnt like uneven widths.
+                    height: width //width and height have to be equal!! (+- some margin but idk why you'd want an elliptical gauge)
                     anchors {
                         left: parent.left
                         top: parent.top
                         topMargin: 0.04 * window.height
                         leftMargin: window.width*0.025
                     }
-
                     minValue: 0
                     maxValue: 600
                 }
@@ -118,9 +117,9 @@ ApplicationWindow {
                     id: thermometer
                     anchors {
                         right: parent.right
-                        rightMargin: window.width*0.025 - width*0.3
+                        rightMargin: window.width * 0.025 - width * 0.3
                         top: parent.top
-                        topMargin: 0.04*window.height
+                        topMargin: 0.04 * window.height
                         //topMargin: (panelRight.height - (height * scale) - slider.height - (controlButtons.height * controlButtons.scale)) / 2
                     }
                     //scale: Math.min(window.width / 1000, window.height / 600)
@@ -140,7 +139,6 @@ ApplicationWindow {
                         right: parent.right
                         rightMargin: window.width*0.025
                     }
-                    //scale: Math.min(window.width / 1600, window.height / 900)
                     transformOrigin: Item.BottomRight
                 }
             }
@@ -151,7 +149,7 @@ ApplicationWindow {
                 yawDeg: 0
                 circleSize: window.height / 10
                 anchors.left: parent.left
-                anchors.leftMargin:1.9*circleSize + window.width*0.025
+                anchors.leftMargin: 1.9*circleSize + window.width*0.025
                 anchors.bottom: battery.top
                 anchors.bottomMargin: circleSize
             }
@@ -168,7 +166,7 @@ ApplicationWindow {
             }
             Battery{
                 id: battery
-                height:window.height / 5
+                height: window.height / 5
                 anchors.left: parent.left
                 anchors.leftMargin: 0.025 * window.width
                 anchors.bottom: slider.top
@@ -198,7 +196,7 @@ ApplicationWindow {
                         battery.charge = 1 - slider.value / 100
                     }
                     else{
-                        battery.charge=0
+                        battery.charge = 0
                     }
 
 
@@ -241,7 +239,8 @@ ApplicationWindow {
                     right: parent.right
                     rightMargin: thermometer.width + 0.07*window.width
                 }
-                //scale: Math.min(window.width / 1600, window.height / 1000)
+                width: window.width / 3.5
+                height: width * 4/5
                 transformOrigin: "TopLeft"
             }
 
