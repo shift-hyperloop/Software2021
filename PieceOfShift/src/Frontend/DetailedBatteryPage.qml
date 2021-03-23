@@ -82,9 +82,12 @@ Page {
     }
     Button {
         id: but2
-        text: "Previous Page"
+        text: "Go back"
         x: but1.x + but1.width
         y: but1.y
+        height: window.height * 0.07
+        width: window.width * 0.07
+        font.pixelSize: window.height * 0.02
         onClicked: {
             stackView.pop("main.qml");
         }

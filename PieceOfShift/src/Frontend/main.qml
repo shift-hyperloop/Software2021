@@ -97,7 +97,7 @@ ApplicationWindow {
                         left: parent.left
                         top: parent.top
                         topMargin: 0.04 * window.height
-                        leftMargin: 0.04 * window.width
+                        leftMargin: window.width*0.025
                     }
 
                     minValue: 0
