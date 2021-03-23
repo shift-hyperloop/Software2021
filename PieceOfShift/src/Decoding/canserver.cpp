@@ -73,10 +73,12 @@ void CANServer::sendPodCommand(const PodCommand& type)
     // MessageID determines which signal to send to the pod
     case PodCommand::EMERGENCY_BRAKE: // emergencyBrake (AA3) -> 2723
         frameID= QByteArray::number(0x3C1);
+        //remove debug
         qDebug("emergency brake pressed");
         break;
     case PodCommand::START: // start braking (DA1) -> 3489
         frameID= QByteArray::number(0x3C2);
+        //remove debug
         qDebug("start pressed");
         break;
     case PodCommand::STOP: //  regular braking (DA2) --> 3490
