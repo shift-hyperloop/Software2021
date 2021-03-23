@@ -9,8 +9,6 @@ Item {
     //property alias tableModel: tableModel
     //property alias tableWidth: tableItem.width
     //property alias tableHeight: tableItem.height
-    //width: 400
-    //height: 500
 
     Rectangle {
         id: rectangle
