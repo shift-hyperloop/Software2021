@@ -26,7 +26,7 @@ Item {
             height: parent.height / 3
             contentItem: Text {
                 text: parent.text
-                font.pixelSize: parent.height * 0.2
+                font.pixelSize: window.width / 90
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 elide: Text.ElideRight

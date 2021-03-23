@@ -44,7 +44,7 @@ Item {
                             fill: parent
                         }
                         text: names[index]
-                        font.pixelSize: 15
+                        font.pixelSize: window.width / 110
                         color: "#ededed"
                     }
                     Text {
@@ -52,7 +52,7 @@ Item {
                             fill: parent
                         }
                         text: values[index]
-                        font.pixelSize: 20
+                        font.pixelSize: window.width / 90
                         color: "#ededed"
                         verticalAlignment: Text.AlignVCenter
                         horizontalAlignment: Text.AlignHCenter

@@ -94,7 +94,7 @@ Item {
                 text: window.width < 400  ? 10 * index: 10 * index + qsTr(" m")
                 x: -t_metrics.width / 2
                 y: 10
-                font.pointSize: 12
+                font.pointSize: window.width / 110
                 color: "#ededed"
                 style: Text.Outline
                 styleColor: "transparent"
@@ -119,7 +119,7 @@ Item {
             text: window.width < 400  ? slider.to : slider.to + qsTr(" m")
             x: -endt_metrics.width / 2
             y: 10
-            font.pointSize: 12
+            font.pointSize: window.width / 110
             color: "#ededed"
             style: Text.Outline
             styleColor: "transparent"
@@ -149,7 +149,7 @@ Item {
                 text: window.width < 400  ? 15 * index: 15 * index + qsTr(" m")
                 x: -t_metrics2.width / 2
                 y: -15
-                font.pointSize: 10
+                font.pointSize: window.width / 140
                 color: "#ededed"
                 style: Text.Outline
                 styleColor: "transparent"

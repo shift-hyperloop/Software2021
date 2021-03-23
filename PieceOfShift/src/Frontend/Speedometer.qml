@@ -68,14 +68,25 @@ Item {
         color: "#ededed"
         text: qsTr(circulargauge.value + "km/h")
         anchors.verticalCenter: parent.verticalCenter
-        font.pixelSize: 18
         horizontalAlignment: Text.AlignHCenter
-        anchors.verticalCenterOffset: 99
-        anchors.horizontalCenterOffset: 1
+        anchors.verticalCenterOffset: 90
         anchors.horizontalCenter: circulargauge.horizontalCenter
         styleColor: "#ededed"
-        minimumPointSize: 18
-        minimumPixelSize: 18
-        font.family: "Arial"
+        font.pixelSize: window.width / 90
+        font.bold: true
+    }
+    Text {
+        id: speedometerValueTextMetersPerSecond
+        x: circulargauge.scale * circulargauge.x + 126
+        y: circulargauge.scale * circulargauge.y + 249
+        color: "#ededed"
+        text: qsTr(Math.round(circulargauge.value / 3.6) + "m/s")
+        anchors.verticalCenter: parent.verticalCenter
+        horizontalAlignment: Text.AlignHCenter
+        anchors.verticalCenterOffset: 115
+        anchors.horizontalCenter: circulargauge.horizontalCenter
+        styleColor: "#ededed"
+        font.pixelSize: window.width / 110
+        font.bold: false
     }
 }
