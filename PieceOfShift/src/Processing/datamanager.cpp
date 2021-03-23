@@ -2,8 +2,10 @@
 #include "velocityprocessingunit.h"
 #include "accelerationprocessingunit.h"
 #include "accelerationvelocityunit.h"
-#include "CustomPlotItem.h"
+#include "customplotitem.h"
+#include "datastructs.h"
 #include <qdebug.h>
+#include <qobject.h>
 #include <qpoint.h>
 #include <qrandom.h>
 #include <qthread.h>
@@ -54,19 +56,31 @@ DataManager::~DataManager()
     }
 }
 
-void DataManager::addData(const QString& name, const DataType &dataType, const QVariant &data)
+void DataManager::addData(unsigned int timeMs, const QString& name, const DataType &dataType, QByteArray data)
 {
-    // Find processing unit with correct data type and add data
-    ProcessingUnit* processingUnit =
-            *std::find_if(processingUnits.begin(),
-                          processingUnits.end(),
-                          [&dataType](auto x)
-                          { return x->dataType() == dataType; });
-    QtConcurrent::run(processingUnit, &ProcessingUnit::addData, name, data);
-    //processingUnit->addData(name, data);
+    QDataStream dataStream(&data, QIODevice::ReadWrite);
 
-    // ADD TO PLOT DATA IF IS PLOT DATA
-    // plotData.value(name).first->append(data)
+    if (dataType == DataType::INT32) {
+        DataStructs::Int* dataStruct = new DataStructs::Int();
+        dataStream >> *dataStruct;
+        float data = dataStruct->value_0;
+        addPlotData(name, timeMs, data);
+    } else if (dataType == DataType::FLOAT) {
+        // ...
+        DataStructs::Float* dataStruct = new DataStructs::Float();
+        emit newData(name, *dataStruct); // If not plot data, emit to QML
+    }
+}
+
+void DataManager::addPlotData(const QString& name, unsigned int timeMs, float data)
+{
+    // !REMEMBER TO ADD FUNCTIONALITY FOR MULTIPLE GRAPHS (AND ALSO IF WE HAVE A GRAPH WITH CUSTOMIZABLE DATA)
+    plotData.addData(name, 0, QPointF(timeMs, data));
+    if (plotItems.contains(name)) {
+        for (CustomPlotItem* plot : *plotItems.value(name)) {
+            plot->addData(QPointF(timeMs, data), 0);
+        }
+    }
 }
 
 void DataManager::connectToPod(QString hostname, QString port)
@@ -123,38 +137,19 @@ void DataManager::dummyData()
         return;
     }
 
-    QPointF data1;
+    int vel;
     if (timeMs < 1000) {
-        data1 = QPointF(timeMs, generator.bounded(5) + exp(timeMs*0.005 ));
+        vel = generator.bounded(5) + exp(timeMs*0.005 );
     } else if (timeMs < 1100) {
-        data1 = QPointF(timeMs, generator.bounded(5) + exp(1/timeMs*0.1 ));
+        vel = generator.bounded(5) + exp(1/timeMs*0.1 );
     } else {
-        data1 = QPointF(timeMs, 0);
+        vel = 0;
     }
-    QPointF data2(timeMs, generator.bounded(10) + 200 + 20*sin(timeMs));
-    for (CustomPlotItem* plot : *plotItems.value("Velocity")) 
-    {
-        plot->addData(data1, 0);
-        plot->addData(data2, 1);
-        plotData.addData("Velocity", 0, data1);
-        plotData.addData("Velocity", 1, data2);
-    }
-    QPointF vdat1 = QPointF(timeMs, generator.bounded(5) + exp(1/(timeMs + 1)));
-    QPointF vdat2 = QPointF(timeMs, generator.bounded(5) + 2*exp(1/(timeMs + 1)));
-    QPointF vdat3 = QPointF(timeMs, generator.bounded(5) + 3*exp(1/(timeMs + 1)));
-    if (plotItems.value("Voltage")) {
-        for (CustomPlotItem* plot : *plotItems.value("Voltage")) 
-        { 
-            if (plot->getCustomPlot()->graphCount() > 0) {
-                plot->addData(vdat1, 0);
-                plot->addData(vdat2, 1);
-                plot->addData(vdat3, 2);
-            }
-        }
-    }
-    plotData.addData("Voltage", 0, vdat1);
-    plotData.addData("Voltage", 1, vdat2);
-    plotData.addData("Voltage", 2, vdat3);
+    QByteArray data;
+    QDataStream stream(&data, QIODevice::ReadWrite);
+
+    stream << vel;
+    canServer.dataReceived(timeMs, 0x333, 4, data);
     timeMs += 10;
 }
 

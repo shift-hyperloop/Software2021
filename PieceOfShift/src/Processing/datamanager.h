@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QVector>
 #include <QtConcurrent/QtConcurrent>
+#include "Processing/datastructs.h"
 #include "processingunit.h"
 #include "src/Decoding/canserver.h"
 #include "src/Decoding/decoder.h"
@@ -26,7 +27,7 @@ public slots:
     void init();
 
     // Have Decoder send signal to add data
-    void addData(const QString& name, const DataType &dataType, const QVariant &data);
+    void addData(unsigned int timeMs, const QString& name, const DataType &dataType, QByteArray data);
 
     // Start recieving messages
     void connectToPod(QString hostname, QString port);
@@ -53,7 +54,12 @@ signals:
     void podConnectionEstablished();
     void podConnectionTerminated();
 
+    void newData(const QString& name, const DataStructs::DataStruct& value);
+
 private:
+
+    void addPlotData(const QString& name, unsigned int timeMs, float data);
+
     QVector<ProcessingUnit*> processingUnits;
     QMap<QString, QList<CustomPlotItem*>*> plotItems;
     PlotData plotData;

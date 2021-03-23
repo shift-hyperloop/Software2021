@@ -10,12 +10,14 @@
 static const QMap<quint16, QString> idToName = {
   {0x001, "Speed"},
   {0x002, "Emergency Brake"},
+  {0x333, "Velocity"},
   /* ... */
 };
 
 static const QMap<quint16, DataType> idToType = {
-  {0x001, VELOCITY},
-  {0x002, ACCELERATION},
+  {0x001, INT32},
+  {0x002, UINT32},
+  {0x333, INT32}
   /* ... */
 };
 
@@ -28,10 +30,10 @@ public:
     ~Decoder();
 
 public slots:
-    void checkData(unsigned short id, unsigned char dataSize, QByteArray data);
+    void checkData(unsigned int timeMs, unsigned short id, unsigned char dataSize, QByteArray data);
 
 signals:
-    void addData(const QString name, const DataType dataType, const QVariant data);
+    void addData(unsigned int timeMs, const QString name, const DataType dataType, QByteArray data);
 };
 
 

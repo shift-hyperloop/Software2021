@@ -1,4 +1,4 @@
-#include "CustomPlotItem.h"
+#include "customplotitem.h"
 #include "Processing/datamanager.h"
 #include <QDebug>
 #include <qcolor.h>
@@ -199,7 +199,7 @@ void CustomPlotItem::remove()
  
 void CustomPlotItem::setupGraph( QCustomPlot* customPlot, int numOfGraphs)
 {
-    m_CustomPlot->setOpenGl(true, 4);
+    //m_CustomPlot->setOpenGl(true, 4);
     for(int i = 0; i < numOfGraphs; i++){
         customPlot->addGraph();
         customPlot->graph(i)->setData(m_X, m_Y);

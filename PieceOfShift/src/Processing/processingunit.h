@@ -5,6 +5,7 @@
 #include <QQueue>
 #include <QMap>
 #include <QThread>
+#include <qvector.h>
 
 struct VelocityStruct {
     double velocity;
@@ -27,9 +28,16 @@ Q_DECLARE_METATYPE(AccelerationStruct)
 Q_DECLARE_METATYPE(AccelerationVelocityStruct)
 
 enum DataType {
-    VELOCITY,
-    ACCELERATION,
-    ACCELERATIONVELOCITY
+    UINT8,
+    INT8,
+    UINT16,
+    INT16,
+    UINT32,
+    INT32,
+    FLOAT,
+    DOUBLE,
+    VECTOR_3I,
+    VECTOR_3F,
 };
 
 class ProcessingUnit : public QObject {

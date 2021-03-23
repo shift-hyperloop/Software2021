@@ -1,11 +1,12 @@
 #include "accelerationprocessingunit.h"
+#include "Processing/processingunit.h"
 #include <QPointF>
 
 
 
 AccelerationProcessingUnit::AccelerationProcessingUnit()
 {
-    m_dataType = ACCELERATION;
+    m_dataType = INT32;
 }
 
 AccelerationProcessingUnit::~AccelerationProcessingUnit()

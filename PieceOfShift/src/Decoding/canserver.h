@@ -7,11 +7,13 @@
 #include <QTcpSocket>
 #include <qobjectdefs.h>
 
-#define CAN_ID_OFFSET 0
+#define CAN_TIMESTAMP_OFFSET 0
+#define CAN_TIMESTAMP_SIZE 4
+#define CAN_ID_OFFSET 4
 #define CAN_ID_SIZE 2
-#define CAN_DATA_SIZE_OFFSET 8
+#define CAN_DATA_SIZE_OFFSET 6
 #define CAN_DATA_SIZE_SIZE 1
-#define CAN_DATA_OFFSET 12
+#define CAN_DATA_OFFSET 7
 
 class CANServer : public QObject
 {
@@ -40,7 +42,7 @@ private slots:
     void socketStateChanged(const QAbstractSocket::SocketState& state);
 
 signals:
-    void dataReceived(unsigned short id, unsigned char dataSize, QByteArray data);
+    void dataReceived(int timeMs, unsigned short id, unsigned char dataSize, QByteArray data);
     void connectionEstablished();
     void connectionTerminated();
 
