@@ -50,7 +50,7 @@ Item {
         color: connected ? "#3feb67" : "#f54838"
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignRight
-        font.pixelSize: parent.height - 30
+        font.pixelSize: window.width/110
         anchors.right: signalSymbol.left
         anchors.rightMargin: 10
     }
