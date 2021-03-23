@@ -123,7 +123,7 @@ ApplicationWindow {
                         topMargin: 0.04*window.height
                         //topMargin: (panelRight.height - (height * scale) - slider.height - (controlButtons.height * controlButtons.scale)) / 2
                     }
-                    scale: Math.min(window.width / 1000, window.height / 600)
+                    //scale: Math.min(window.width / 1000, window.height / 600)
                     transformOrigin: Item.TopRight
                     minValue: 0
                     maxValue: 50
@@ -131,8 +131,8 @@ ApplicationWindow {
                 ControlButtons {
                     id: controlButtons
 
-                    height: window.height / 4
-                    width: window.width / 6.5
+                    height: window.height / 3.5
+                    width: window.width / 5
                     y: window.height - slider.height - height - (0.04 * window.height)
                     anchors {
                         //bottom: parent.bottom
@@ -241,7 +241,7 @@ ApplicationWindow {
                     right: parent.right
                     rightMargin: thermometer.width + 0.07*window.width
                 }
-                scale: Math.min(window.width / 1600, window.height / 1000)
+                //scale: Math.min(window.width / 1600, window.height / 1000)
                 transformOrigin: "TopLeft"
             }
 
