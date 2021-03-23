@@ -4,8 +4,6 @@ import QtQuick.Controls.Styles 1.2
 
 Item {
     id: item1
-    width: 60
-    height: 310
     opacity: 1
 
     property alias minValue: thermometer.minimumValue
@@ -17,17 +15,16 @@ Item {
 
     Rectangle {
         id: rectangle1
-        y: 279
-        width: 30
-        height: 30
+        y: parent.height * 0.87
+        width: thermometer.width / 2.5
+        height: width
         color: "#cacaca"
         radius: 100
         anchors.left: parent.left
-        anchors.leftMargin: thermometer.width * 0.2
+        anchors.leftMargin: parent.width * 0.1
     }
 
     Gauge {
-
         MouseArea{
             id: chartMouseArea
             anchors.fill: parent
@@ -40,26 +37,26 @@ Item {
         id: thermometer
         x: 0
         y: 0
-        font.pixelSize: 12
+        font.pixelSize: 0.04 * thermometer.height
         value: 30
-        height: 302
-        width: 60
+        height: parent.height * 0.95
+        width: parent.width
         tickmarkStepSize: thermometer.maximumValue / 10
         style: GaugeStyle {
             valueBar: Rectangle {
-                implicitWidth: 16
-                radius: 8
+                implicitWidth: thermometer.width / 4
+                radius: thermometer.width / 8
                 //change color of bar with value B)
                 //change to #c11c1c if color changing is removed
                 color: Qt.rgba((thermometer.value / thermometer.maximumValue) * 0.5 + 0.5, 0, (0.5 - (thermometer.value / thermometer.maximumValue) * 0.5), 1)
             }
             background: Rectangle {
-                radius: 8
+                radius: thermometer.width / 8
             }
             foreground: null
             tickmark: Item {
-                implicitWidth: 5
-                implicitHeight: 1
+                implicitWidth: parent.width / 15
+                implicitHeight: implicitWidth / 5
 
                 Rectangle {
                     width: parent.width

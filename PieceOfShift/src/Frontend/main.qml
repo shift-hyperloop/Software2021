@@ -115,6 +115,8 @@ ApplicationWindow {
                 }
                 Thermometer {
                     id: thermometer
+                    width: window.width / 15
+                    height: 4 * width
                     anchors {
                         right: parent.right
                         rightMargin: window.width * 0.025 - width * 0.3
