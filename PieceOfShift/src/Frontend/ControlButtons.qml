@@ -40,7 +40,7 @@ Item {
                     anchors.fill: parent
                     hoverEnabled: true
                     onClicked: {
-                        //send command to pod
+                        dataManager.dataManager.sendPodCommand(PodCommand.HIGH_VOLTAGE);
                     }
                     onPressed: {
                         parent.color = "#e0942f";

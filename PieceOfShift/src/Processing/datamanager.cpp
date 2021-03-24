@@ -2,7 +2,7 @@
 #include "velocityprocessingunit.h"
 #include "accelerationprocessingunit.h"
 #include "accelerationvelocityunit.h"
-#include "CustomPlotItem.h"
+#include "src/CustomPlotItem.h"
 #include <qpoint.h>
 #include <qrandom.h>
 #include <qthread.h>

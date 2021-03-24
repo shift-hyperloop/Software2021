@@ -72,13 +72,16 @@ void CANServer::sendPodCommand(const PodCommand& type)
     switch(type){
     // MessageID determines which signal to send to the pod
     case PodCommand::EMERGENCY_BRAKE: // emergencyBrake (AA3) -> 2723
-        frameID= QByteArray::number(0xAA3);
+        frameID= QByteArray::number(0x3C1);
         break;
     case PodCommand::START: // start braking (DA1) -> 3489
-        frameID= QByteArray::number(0xDA1);
+        frameID= QByteArray::number(0x3C2);
         break;
     case PodCommand::STOP: //  regular braking (DA2) --> 3490
-        frameID= QByteArray::number(0xDA2);
+        frameID= QByteArray::number(0x0C3);
+        break;
+    case PodCommand::HIGH_VOLTAGE:
+        frameID= QByteArray::number(0x3C3);
         break;
     }
     m_TcpSocket->write(frameID, frameID.length());
