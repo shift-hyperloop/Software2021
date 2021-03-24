@@ -27,7 +27,8 @@ public:
     {
         EMERGENCY_BRAKE,
         START,
-        STOP
+        STOP,
+        HIGH_VOLTAGE
     };
     Q_ENUMS(PodCommand)
 

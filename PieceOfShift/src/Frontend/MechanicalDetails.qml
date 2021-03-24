@@ -18,6 +18,10 @@ Page {
           manually (although it's quite simple, so it's not too bad).
           */
     }
+    Component.onDestruction:  {
+        distanceChart.chart.remove();
+        distanceChart2.chart.remove();
+    }
 
     /*
       This function will, when the front-end is connected to the C++ backend,
@@ -40,11 +44,12 @@ Page {
     Button {
         id: backButton
         text: "Go Back"
-        x: 0
+        x: window.width * 0.01
         y: 0.05 * window.height
+        height: window.height * 0.07
+        width: window.width * 0.07
+        font.pixelSize: window.height * 0.02
         onClicked: {
-            distanceChart.chart.remove();
-            distanceChart2.chart.remove();
             stackView.pop("main.qml");
         }
     }

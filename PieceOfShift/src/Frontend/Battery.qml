@@ -9,11 +9,19 @@ Item {
         fillMode: Image.PreserveAspectFit
         height: parent.height
         z: 3
+        MouseArea{
+            anchors.fill: parent
+            hoverEnabled: true
+            cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor;
+            onClicked: {
+                stackView.push("DetailedBatteryPage.qml")
+            }
+        }
         }
         Rectangle {
             id: container
-            height: batteryImg.height * 0.9
-            width: batteryImg.width * 0.9
+            height: batteryImg.height * 0.88
+            width: batteryImg.width * 0.88
             y: batteryImg.y + batteryImg.height * 0.1
             z: 1
             anchors.horizontalCenter: batteryImg.horizontalCenter

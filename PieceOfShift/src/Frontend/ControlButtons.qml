@@ -4,33 +4,71 @@ import QtQuick.Layouts 1.3
 import shift.datamanagement 1.0
 
 Item {
-
     DataManagerAccessor {
         id: dataManager
     }
 
-    Rectangle{
+    Rectangle {
+        id: buttons
         color: "#00ffffff"
         anchors.fill: parent
-        anchors.rightMargin: 0
-        anchors.bottomMargin: 0
-        anchors.leftMargin: 0
-        anchors.topMargin: 0
         border.width: 0
-        radius: 10
+        Button{
+            id: b0
+            text: "Engage High Voltage"
+            anchors {
+                top: parent.top
+                right: parent.right
+                rightMargin: 10
+            }
 
+            width: parent.width - 20
+            height: parent.height / 3
+            contentItem: Text {
+                text: parent.text
+                font.pixelSize: window.width / 90
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                elide: Text.ElideRight
+            }
+            background: Rectangle{
+                border.width: 3
+                radius: 8
+                color: parent.down ? "#ffa126" : "#e0942f"
+
+                MouseArea {
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    onClicked: {
+                        dataManager.dataManager.sendPodCommand(PodCommand.HIGH_VOLTAGE);
+                    }
+                    onPressed: {
+                        parent.color = "#e0942f";
+                    }
+                    onReleased: {
+                        parent.color = "#ffa126";
+                    }
+                    onHoveredChanged: {
+                        parent.opacity = containsMouse ? 1.0 : 0.8;
+                        cursorShape = containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor;
+                    }
+                }
+            }
+        }
         Button{
             id: b1
             text: "Start"
-            anchors.left: parent.left
-            anchors.top: parent.top
-            anchors.leftMargin: 10
-            anchors.topMargin: 10
-            width: parent.width * 0.47
-            height: parent.height * 0.5
+            anchors {
+                left: parent.left
+                top: parent.top
+                leftMargin: 10
+                topMargin: b0.height - 5
+            }
+            width: parent.width * 0.455
+            height: parent.height / 3
             contentItem: Text {
                 text: parent.text
-                font.pixelSize: parent.height * 0.15
+                font.pixelSize: parent.height * 0.2
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 elide: Text.ElideRight
@@ -72,17 +110,19 @@ Item {
         }
         Button{
             id: b2
-            x: 300
             text: "Stop"
-            anchors.right: parent.right
-            anchors.top: parent.top
-            anchors.rightMargin: 10
-            anchors.topMargin: 10
-            width: parent.width * 0.45
-            height: parent.height * 0.5
+            anchors {
+                right: parent.right
+                top: parent.top
+                rightMargin: 10
+                topMargin: b0.height - 5
+            }
+
+            width: parent.width * 0.455
+            height: parent.height / 3
             contentItem: Text {
                 text: parent.text
-                font.pixelSize: parent.height * 0.15
+                font.pixelSize: parent.height * 0.2
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 elide: Text.ElideRight
@@ -120,15 +160,17 @@ Item {
             }
         }
         Button{
-            x: 10
-            y: 269
+            height: parent.height / 3
+            width: parent.width - 20
             text: "Emergency Stop"
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 19
-            anchors.right: parent.right
-            anchors.rightMargin: 10
-            implicitWidth: parent.width - 20
-            height: parent.height * 0.4
+            anchors {
+                top: b0.bottom
+                left: parent.left
+                leftMargin: 10
+                topMargin: b1.height - 10
+            }
+
+
             contentItem: Text {
                 text: parent.text
                 font.pixelSize: parent.height * 0.2

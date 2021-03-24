@@ -32,7 +32,7 @@ Item {
                             bottomMargin: 10
                         }
                         color: "white"
-                        font.pixelSize: circleSize / 5
+                        font.pixelSize: window.width / 110
                     }
                     Rectangle{
                         property var rollDeg
@@ -66,7 +66,7 @@ Item {
                             bottomMargin: 10
                         }
                         color: "white"
-                        font.pixelSize: circleSize / 5
+                        font.pixelSize: window.width / 110
                     }
                     Rectangle{
                         id: pitch
@@ -101,7 +101,7 @@ Item {
                         }
 
                         color: "white"
-                        font.pixelSize: circleSize / 5
+                        font.pixelSize: window.width / 110
                     }
                     Rectangle{
                         property var yawDeg

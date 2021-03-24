@@ -20,8 +20,11 @@ Page {
 
     Button{
         text: "Go back"
-        y: 50
-        x: 25
+        x: window.width * 0.01
+        y: 0.05 * window.height
+        height: window.height * 0.07
+        width: window.width * 0.07
+        font.pixelSize: window.height * 0.02
         onClicked: {
            stackView.pop(null);
         }
@@ -44,9 +47,9 @@ Page {
                 padding: 5
                 bottomPadding: 0
                 selectByMouse : true
-                height: window.height / 20
-                width: window.width / 6
-                font.pixelSize: window.height / 25
+                height: window.height / 25
+                width: window.width / 7
+                font.pixelSize: window.height / 30
             }
             MouseArea{
                 cursorShape: inputIP.activeFocus ? Qt.IBeamCursor : Qt.ArrowCursor;
@@ -103,6 +106,7 @@ Page {
         Button{
             id: connectButton
             text: qsTr("Connect")
+            font.pixelSize: inputIP.font.pixelSize * 0.8
             y: ipInput.y - 5
             anchors.left: ipInput.right
             anchors.leftMargin: width / 4
@@ -113,12 +117,21 @@ Page {
 
         }
     }
-    Chart{
+    CustomChart{
         id: networkChart
-        anchors.right: parent.left
+        anchors.left: parent.left
         anchors.top: parent.verticalCenter
-        chartview.width: page.width / 2
-        chartview.height: page.height / 2
+        anchors.leftMargin: window.width * 0.01
+        width: page.width / 2
+        height: page.height / 2.5
+        Component.onCompleted: {
+            chart.initCustomPlot(1);
+            chart.setAxisRange(Qt.point(0, 100), Qt.point(0, 200));
+            chart.setGraphColor(0, "#2674BB");
+            chart.setDataType("");
+            chart.setName(0,"");
+            chart.setAxisLabels("","")
+        }
     }
     ValueTable{
         names: ["Value 1","Value 2", "Value Value", "Value"]

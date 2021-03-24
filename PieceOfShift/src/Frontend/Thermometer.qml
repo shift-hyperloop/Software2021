@@ -3,8 +3,7 @@ import QtQuick.Extras 1.4
 import QtQuick.Controls.Styles 1.2
 
 Item {
-    width: 55
-    height: 310
+    id: item1
     opacity: 1
 
     property alias minValue: thermometer.minimumValue
@@ -16,17 +15,16 @@ Item {
 
     Rectangle {
         id: rectangle1
-        x: parent.width/2 - 2
-        y: 279
-        width: 30
-        height: 30
+        y: parent.height * 0.87 
+        width: thermometer.width / 2.5
+        height: width
         color: "#cacaca"
         radius: 100
-
+        anchors.left: parent.left
+        anchors.leftMargin: parent.width * 0.1
     }
 
     Gauge {
-
         MouseArea{
             id: chartMouseArea
             anchors.fill: parent
@@ -37,24 +35,41 @@ Item {
             }
         }
         id: thermometer
-        font.pixelSize: 12
+        x: -13
+        y: -15
+        font.pixelSize: 0.04 * thermometer.height
         value: 30
-
-        height: 300
-        width: 48
+        height: parent.height * 0.95
+        width: parent.width
         tickmarkStepSize: thermometer.maximumValue / 10
         style: GaugeStyle {
             valueBar: Rectangle {
-                implicitWidth: 16
-                radius: 8
+                x: 15
+                y: 15
+                implicitWidth: thermometer.width / 4
+                radius: thermometer.width / 8
                 //change color of bar with value B)
                 //change to #c11c1c if color changing is removed
                 color: Qt.rgba((thermometer.value / thermometer.maximumValue) * 0.5 + 0.5, 0, (0.5 - (thermometer.value / thermometer.maximumValue) * 0.5), 1)
             }
             background: Rectangle {
-                radius: 8
+                x: 15
+                y: 15
+                radius: thermometer.width / 8
             }
             foreground: null
+            tickmark: Item {
+                implicitWidth: parent.width / 15
+                implicitHeight: implicitWidth / 5
+
+                Rectangle {
+                    x: 15
+                    y: 15
+                    width: parent.width
+                    height: parent.height
+                    color: "#ededed"
+                }
+            }
         }
         Behavior on value {
             NumberAnimation{
@@ -77,6 +92,6 @@ Item {
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:2}
+    D{i:0;formeditorZoom:6}
 }
 ##^##*/
