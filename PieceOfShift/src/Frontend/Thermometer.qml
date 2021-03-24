@@ -15,7 +15,7 @@ Item {
 
     Rectangle {
         id: rectangle1
-        y: parent.height * 0.87
+        y: parent.height * 0.87 
         width: thermometer.width / 2.5
         height: width
         color: "#cacaca"
@@ -35,8 +35,8 @@ Item {
             }
         }
         id: thermometer
-        x: 0
-        y: 0
+        x: -13
+        y: -15
         font.pixelSize: 0.04 * thermometer.height
         value: 30
         height: parent.height * 0.95
@@ -44,6 +44,8 @@ Item {
         tickmarkStepSize: thermometer.maximumValue / 10
         style: GaugeStyle {
             valueBar: Rectangle {
+                x: 15
+                y: 15
                 implicitWidth: thermometer.width / 4
                 radius: thermometer.width / 8
                 //change color of bar with value B)
@@ -51,6 +53,8 @@ Item {
                 color: Qt.rgba((thermometer.value / thermometer.maximumValue) * 0.5 + 0.5, 0, (0.5 - (thermometer.value / thermometer.maximumValue) * 0.5), 1)
             }
             background: Rectangle {
+                x: 15
+                y: 15
                 radius: thermometer.width / 8
             }
             foreground: null
@@ -59,6 +63,8 @@ Item {
                 implicitHeight: implicitWidth / 5
 
                 Rectangle {
+                    x: 15
+                    y: 15
                     width: parent.width
                     height: parent.height
                     color: "#ededed"
