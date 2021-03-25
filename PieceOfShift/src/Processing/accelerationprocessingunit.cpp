@@ -6,7 +6,7 @@
 
 AccelerationProcessingUnit::AccelerationProcessingUnit()
 {
-    m_dataType = INT32;
+    m_dataType = DataType::INT32;
 }
 
 AccelerationProcessingUnit::~AccelerationProcessingUnit()

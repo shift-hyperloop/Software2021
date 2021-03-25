@@ -30,8 +30,12 @@ Q_DECLARE_METATYPE(VelocityStruct);
 Q_DECLARE_METATYPE(AccelerationStruct);
 Q_DECLARE_METATYPE(AccelerationVelocityStruct);
 
-enum DataType
+enum class DataType
 {
+    ERROR_CODE,
+    VCU_STATUS,
+    POD_STATE,
+    BOOL,
     UINT8,
     INT8,
     UINT16,
@@ -42,6 +46,20 @@ enum DataType
     DOUBLE,
     VECTOR_3I,
     VECTOR_3F,
+    VECTOR_3B,
+    CHAR,
+    VECTOR_2C,
+    VECTOR_3C,
+    VECTOR_16C,
+    SHORT,
+    VECTOR_2S,
+    VECTOR_2F,
+    VECTOR_4F,
+    VECTOR_6F,
+    VECTOR_8F,
+    VECTOR_16F
+
+
 };
 
 class ProcessingUnit : public QObject

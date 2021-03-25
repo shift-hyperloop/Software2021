@@ -62,10 +62,8 @@ private:
 
     QVector<ProcessingUnit *> processingUnits;
     QMap<QString, QList<CustomPlotItem *> *> plotItems;
-<<<<<<< HEAD
-    == == == =
-                 PlotData plotData;
->>>>>>> 540394cd5d062cbfe2738d4aec611bae5fe91fb9
+
+    PlotData plotData;
 
     Decoder decoder;
     CANServer canServer;

@@ -15,9 +15,9 @@ static const QMap<quint16, QString> idToName = {
 };
 
 static const QMap<quint16, DataType> idToType = {
-  {0x001, INT32},
-  {0x002, UINT32},
-  {0x333, INT32}
+  {0x001, DataType::INT32},
+  {0x002, DataType::UINT32},
+  {0x333, DataType::INT32}
   /* ... */
 };
 
