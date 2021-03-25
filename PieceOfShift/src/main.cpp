@@ -1,9 +1,13 @@
 #include <QtWidgets/QApplication>
 #include <QQmlApplicationEngine>
 #include <QQuickStyle>
+#include <qglobal.h>
 #include <qqml.h>
 #include "Decoding/canserver.h"
 #include "Processing/datamanager.h"
+#include "customplotitem.h"
+#include "Processing/processingunit.h"
+#include "qbytearray.h"
 
 int main(int argc, char *argv[])
 {
@@ -13,11 +17,12 @@ int main(int argc, char *argv[])
     DataManager dataManager;
 
     DataManagerAccessor::setDataManager(&dataManager);
+    qmlRegisterType<DataManager>("shift.datamanagement", 1, 0, "DataManager");
     qmlRegisterType<DataManagerAccessor>("shift.datamanagement", 1, 0, "DataManagerAccessor");
     qmlRegisterType<CANServer>("shift.datamanagement", 1, 0, "PodCommand");
+    qmlRegisterType<CustomPlotItem>("CustomPlot", 1, 0, "CustomPlotItem");
 
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-
+    //QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
@@ -28,7 +33,6 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(-1);
         }
     }, Qt::QueuedConnection);
-
 
     QQuickStyle::setStyle("Material");
     engine.load(url);

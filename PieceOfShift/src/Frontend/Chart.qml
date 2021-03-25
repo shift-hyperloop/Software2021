@@ -25,10 +25,10 @@ Item {
             hoverEnabled: true
             property var mouse_x: 0
             property var mouse_y: 0
-            onEntered: { //mouseare has the signal onEntered which is needed to change the focus to the chart
+            onEntered: { //mousarea has the signal onEntered which is needed to change the focus to the chart
                 hoverEnabled = false    //without active focus the chart wont handle hover events
                 parent.forceActiveFocus() //Two elements in the same place cant both accept hover events, so disable hover for the mousearea
-            }
+            }                             // the mouseareas hover has to be disabled to access the properties of lineseries onHovered{}
             onExited: {
                 hoverEnabled = true // enable hover to detect when the mouse enteres
             }
@@ -44,9 +44,9 @@ Item {
                     chartview.zoomIn(Qt.rect(p.x ,p.y + (p.height - p.height/zoom),p.width / zoom, p.height / zoom))
                 }
             }
-            onPressed: {
-                timer.mouse_x_= mouseX
-                timer.mouse_y_= mouseY
+            onPressed: {                    //when you press and hold the graph a timer starts
+                timer.mouse_x_= mouseX      //the timer constantly checks how much you have moved your mouse
+                timer.mouse_y_= mouseY      //and moves the visible area of the chart accordingly
                 timer.start()
                 cursorShape = Qt.ClosedHandCursor;
 
@@ -136,7 +136,7 @@ Item {
             }
         }
 
-        Keys.onLeftPressed: {
+        Keys.onLeftPressed: { //move the visible area of the graph according to the arrowkeys
             chartview.scrollLeft(x_axis.max)
         }
         Keys.onRightPressed: {

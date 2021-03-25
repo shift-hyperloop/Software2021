@@ -10,7 +10,7 @@ Item {
         id:r
         property var circleSize
         anchors.centerIn: parent
-        color: "grey"
+        color: "#87CEEB"
         width: parent.width
         height: parent.height
 

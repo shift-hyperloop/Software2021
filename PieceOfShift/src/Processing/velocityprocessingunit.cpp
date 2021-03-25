@@ -4,7 +4,7 @@
 
 VelocityProcessingUnit::VelocityProcessingUnit()
 {
-    m_dataType = VELOCITY;
+    m_dataType = INT32;
 }
 
 VelocityProcessingUnit::~VelocityProcessingUnit()

@@ -2,8 +2,10 @@ import QtQuick 2.12
 import QtQuick.Controls 2.5
 import shift.datamanagement 1.0
 
-Item {
+Page {
     id: page
+    background: Rectangle{color: "#333333"} // background color for subpages
+
     Keys.onPressed: { //If backspace is pressed => go back to previous page
         if (event.key === 16777219) {
             //pop(null) implicitely pops to the first element, aka main.qml
@@ -18,15 +20,15 @@ Item {
 
     Button{
         text: "Go back"
-        y: 50
-        x: 25
+        x: window.width * 0.01
+        y: 0.05 * window.height
         onClicked: {
            stackView.pop(null);
         }
     }
     Item {
         id: connectionInputs
-        visible: ! networkinfo.connected
+        visible: ! networkinfo.connected // the connection inputs and connect button is not visible when connected
         Rectangle{
             color: "lightgray"
             id: ipInput
@@ -38,13 +40,13 @@ Item {
             TextInput {
                 id: inputIP
                 text: "IP-adress"
-                inputMask: "000.000.000.000;_"
+                inputMask: "000.000.000.000;_" //format of the input, 0s are placeholders for numbers, . are unchangable
                 padding: 5
                 bottomPadding: 0
                 selectByMouse : true
-                height: window.height / 20
-                width: window.width / 6
-                font.pixelSize: window.height / 25
+                height: window.height / 25
+                width: window.width / 7
+                font.pixelSize: window.height / 30
             }
             MouseArea{
                 cursorShape: inputIP.activeFocus ? Qt.IBeamCursor : Qt.ArrowCursor;
@@ -75,7 +77,7 @@ Item {
             anchors.topMargin: height
             TextInput {
                 id: inputPort
-                validator: IntValidator{}
+                validator: IntValidator{} // you can only write numbers
                 padding: 5
                 bottomPadding: 0
                 selectByMouse : true
@@ -101,10 +103,11 @@ Item {
         Button{
             id: connectButton
             text: qsTr("Connect")
+            font.pixelSize: inputIP.font.pixelSize * 0.8
             y: ipInput.y - 5
             anchors.left: ipInput.right
             anchors.leftMargin: width / 4
-            enabled: !networkinfo.connected
+            enabled: !networkinfo.connected //if connected to pod the button is disabled
             onClicked: {
                 dataManager.dataManager.connectToPod(inputIP.text, inputPort.text);
             }

@@ -191,12 +191,33 @@ namespace DataStructs
 
     struct Int : public DataStruct
     {
+        Q_OBJECT
+        public:
         uint32_t value_0;
+
+        friend QDataStream& operator<<(QDataStream& dataStream, const Int& object)
+        {
+            // NOTE: Change if stream we receive is not continuous
+            dataStream << object.value_0;
+            return dataStream;
+        }
+
+        friend QDataStream & operator>>(QDataStream& dataStream, Int& object) 
+        {
+            dataStream >> object.value_0;
+
+            return dataStream;
+        }
     };
 
     struct Float : public DataStruct
     {
         float value_0;
+    };
+
+    struct Double : public DataStruct
+    {
+        double value_0;
     };
 
     struct Vector2f : public DataStruct

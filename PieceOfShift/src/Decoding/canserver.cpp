@@ -2,6 +2,7 @@
 #include <QDataStream>
 #include <qabstractsocket.h>
 #include <qdebug.h>
+#include <qglobal.h>
 
 
 CANServer::CANServer()
@@ -48,16 +49,19 @@ void CANServer::handleIncoming()
         // Define area of datagram as id, datasize and data
         quint16 id = qFromBigEndian<quint16>(datagram.mid(CAN_ID_OFFSET, CAN_ID_SIZE).toHex().toInt(&ok, 16));
         quint8 dataSize = qFromBigEndian<quint8>(datagram.mid(CAN_DATA_SIZE_OFFSET, CAN_DATA_SIZE_SIZE).toHex().toInt(&ok, 16));
-        QByteArray data = datagram.mid(CAN_DATA_OFFSET, CAN_DATA_SIZE_SIZE);
+        quint32 timeMs = datagram.mid(CAN_TIMESTAMP_OFFSET, CAN_TIMESTAMP_SIZE).toInt(); 
+        QByteArray data = datagram.mid(CAN_DATA_OFFSET, dataSize);
 
 
         // Send id, datasize and data as signal onward
-        emit dataReceived(id, dataSize, data);
+        emit dataReceived(timeMs, id, dataSize, data);
     }
 }
 
 void CANServer::sendPodCommand(const PodCommand& type)
 {
+    if (!m_TcpSocket) return;
+    
     if (m_TcpSocket->state() != QAbstractSocket::ConnectedState) {
         // NOTE: DO SOMETHING HERE
         return;

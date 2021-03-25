@@ -1,11 +1,12 @@
 #include "accelerationvelocityunit.h"
+#include "Processing/processingunit.h"
 #include <QDebug>
 #include <QPointF>
 
 
 AccelerationVelocityUnit::AccelerationVelocityUnit()
 {
-    m_dataType = ACCELERATIONVELOCITY;
+    m_dataType = INT32;
 }
 
 AccelerationVelocityUnit::~AccelerationVelocityUnit() {
