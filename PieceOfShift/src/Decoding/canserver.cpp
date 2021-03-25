@@ -65,23 +65,21 @@ void CANServer::sendPodCommand(const PodCommand& type)
         return;
     }
     QByteArray frameID;
-    // Call from visualizer for a messageID (int)
-    // Using dummy data in switch case
-    // TODO change this
+    QDataStream ds(&frameID, QIODevice::ReadWrite);
 
     switch(type){
     // MessageID determines which signal to send to the pod
     case PodCommand::EMERGENCY_BRAKE: // emergencyBrake (AA3) -> 2723
-        frameID= QByteArray::number(0x3C1);
+        ds << 0x3C1;
         break;
     case PodCommand::START: // start braking (DA1) -> 3489
-        frameID= QByteArray::number(0x3C2);
+        ds << 0x3C2;
         break;
     case PodCommand::STOP: //  regular braking (DA2) --> 3490
-        frameID= QByteArray::number(0x0C3);
+        ds << 0x0C3;
         break;
     case PodCommand::HIGH_VOLTAGE:
-        frameID= QByteArray::number(0x3C3);
+        ds << 0x3C3;
         break;
     }
     m_TcpSocket->write(frameID, frameID.length());
