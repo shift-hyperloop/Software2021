@@ -4,7 +4,9 @@
 #include "accelerationvelocityunit.h"
 #include "customplotitem.h"
 #include "datastructs.h"
+#include <math.h>
 #include <qdebug.h>
+#include <qlist.h>
 #include <qobject.h>
 #include <qpoint.h>
 #include <qrandom.h>
@@ -190,12 +192,12 @@ void DataManager::addData(unsigned int timeMs, const QString &name, const DataTy
 void DataManager::addPlotData(const QString &name, unsigned int timeMs, float data)
 {
     // !REMEMBER TO ADD FUNCTIONALITY FOR MULTIPLE GRAPHS (AND ALSO IF WE HAVE A GRAPH WITH CUSTOMIZABLE DATA)
-    plotData.addData(name, 0, QPointF(timeMs, data));
+    plotData.addData(name, QPointF(timeMs, data));
     if (plotItems.contains(name))
     {
-        for (CustomPlotItem *plot : *plotItems.value(name))
+        for (QPair<CustomPlotItem*, int> plot : *plotItems.value(name))
         {
-            plot->addData(QPointF(timeMs, data), 0);
+            plot.first->addData(QPointF(timeMs, data), plot.second);
         }
     }
 }
@@ -210,19 +212,18 @@ void DataManager::sendPodCommand(CANServer::PodCommand messageType)
     canServer.sendPodCommand(messageType);
 }
 
-void DataManager::registerPlot(CustomPlotItem *plotItem, const QString &name)
+void DataManager::registerGraph(CustomPlotItem *plotItem, const QString &name, int graphIndex)
 {
     if (!plotItems.contains(name))
     {
-        QList<CustomPlotItem *> *plotItemList = new QList<CustomPlotItem *>();
-        plotItemList->append(plotItem);
-        plotItems.insert(name, plotItemList);
+        QPair<CustomPlotItem*, int> item(plotItem, graphIndex);
+        QList<QPair<CustomPlotItem*, int>>* list = new QList<QPair<CustomPlotItem*, int>>();
+        list->append(item);
+        plotItems.insert(name, list);
+
         if (plotData.hasKey(name))
         {
-            for (unsigned int i = 0; i < plotItem->getCustomPlot()->graphCount(); i++)
-            {
-                plotItem->getCustomPlot()->graph(i)->setData(plotData.getXValues(name, i), plotData.getYValues(name, i));
-            }
+            plotItem->getCustomPlot()->graph(graphIndex)->setData(plotData.getXValues(name), plotData.getYValues(name));
         }
         else
         {
@@ -233,9 +234,9 @@ void DataManager::registerPlot(CustomPlotItem *plotItem, const QString &name)
     {
         for (unsigned int i = 0; i < plotItem->getCustomPlot()->graphCount(); i++)
         {
-            plotItem->getCustomPlot()->graph(i)->setData(plotData.getXValues(name, i), plotData.getYValues(name, i));
+            plotItem->getCustomPlot()->graph(graphIndex)->setData(plotData.getXValues(name), plotData.getYValues(name));
         }
-        plotItems.value(name)->append(plotItem);
+        plotItems.value(name)->append(QPair<CustomPlotItem*, int>(plotItem, graphIndex));
     }
 }
 
@@ -243,14 +244,14 @@ void DataManager::removePlot(CustomPlotItem *plotItem)
 {
     for (QString name : plotItems.keys())
     {
-        if (plotItems.value(name)->contains(plotItem))
-        {
-            if (plotItems.value(name)->size() == 1)
-            {
+        for (QPair<CustomPlotItem*, int> pair : *plotItems.value(name)) {
+            if (pair.first == plotItem) {
+                plotItems.value(name)->removeOne(pair); //TODO: Tets that this actually removes pair
+            }
+            if (plotItems.value(name)->size() == 0) {
                 plotItems.remove(name);
                 return;
             }
-            plotItems.value(name)->removeOne(plotItem);
         }
     }
 }
@@ -259,29 +260,45 @@ long timeMs = 0;
 QRandomGenerator generator(1000224242);
 void DataManager::dummyData()
 {
-    if (timeMs > 1200)
+    if (timeMs > 1500)
     {
         return;
     }
 
     int vel;
-    if (timeMs < 1000)
-    {
-        vel = generator.bounded(5) + exp(timeMs * 0.005);
-    }
-    else if (timeMs < 1100)
-    {
-        vel = generator.bounded(5) + exp(1 / timeMs * 0.1);
-    }
-    else
-    {
-        vel = 0;
-    }
+    int acc;
+    int vol1, vol2, vol3;
+    vol1 = 240*exp(-0.0051*timeMs);
+    vol2 = 235*exp(-0.0042*timeMs);
+    vol3 = 284*exp(-0.0052*timeMs);
+
+    vel = timeMs * exp(-0.004*timeMs);
+    acc = 0.2 * timeMs * exp(-0.004*timeMs);
+
     QByteArray data;
     QDataStream stream(&data, QIODevice::ReadWrite);
-
     stream << vel;
+
+    QByteArray data2;
+    QDataStream stream2(&data2, QIODevice::ReadWrite);
+    stream2 << acc;
+
+    QByteArray data3, data4, data5;
+    QDataStream stream3(&data3, QIODevice::ReadWrite);
+    QDataStream stream4(&data4, QIODevice::ReadWrite);
+    QDataStream stream5(&data5, QIODevice::ReadWrite);
+
+    stream3 << vol1;
+    stream4 << vol2;
+    stream5 << vol3;
+
     canServer.dataReceived(timeMs, 0x333, 4, data);
+    canServer.dataReceived(timeMs, 0x334, 4, data2);
+
+    canServer.dataReceived(timeMs, 0x335, 4, data3);
+    canServer.dataReceived(timeMs, 0x336, 4, data4);
+    canServer.dataReceived(timeMs, 0x337, 4, data5);
+
     timeMs += 10;
 }
 

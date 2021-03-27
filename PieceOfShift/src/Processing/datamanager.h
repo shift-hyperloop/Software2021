@@ -36,7 +36,7 @@ public slots:
     // This should use a Decoder slot to send command to pod
     void sendPodCommand(CANServer::PodCommand command);
 
-    void registerPlot(CustomPlotItem *plotItem, const QString &name);
+    void registerGraph(CustomPlotItem *plotItem, const QString &name, int graphIndex);
     void removePlot(CustomPlotItem *plotItem);
 
     // Write current data to log file
@@ -60,8 +60,7 @@ signals:
 private:
     void addPlotData(const QString &name, unsigned int timeMs, float data);
 
-    QVector<ProcessingUnit *> processingUnits;
-    QMap<QString, QList<CustomPlotItem *> *> plotItems;
+    QMap<QString, QList<QPair<CustomPlotItem*, int>>*> plotItems;
 
     PlotData plotData;
 

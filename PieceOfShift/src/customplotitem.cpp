@@ -46,7 +46,7 @@ void CustomPlotItem::legendVisible(bool visible){
     m_CustomPlot->legend->setVisible(visible);
 }
 
-void CustomPlotItem::setName(int graphIndex, QString name){
+void CustomPlotItem::setGraphName(int graphIndex, QString name){
     m_CustomPlot->graph(graphIndex)->setName(name);
     QFont legendFont;
     QSize screenRes = QGuiApplication::primaryScreen()->size();
@@ -59,15 +59,12 @@ void CustomPlotItem::setName(int graphIndex, QString name){
     m_CustomPlot->legend->setIconSize(QSize(screenFactor, screenFactor));
     m_CustomPlot->legend->setVisible(true);
     m_CustomPlot->rescaleAxes();
+
+    QtConcurrent::run(m_DMAccessor.dataManager(), &DataManager::registerGraph, this, name, graphIndex);
 }
 void CustomPlotItem::setAxisLabels(QString xAxis, QString yAxis){
     m_CustomPlot->xAxis->setLabel(xAxis);
     m_CustomPlot->yAxis->setLabel(yAxis);
-}
-
-void CustomPlotItem::setDataType(QString dataType)
-{
-    QtConcurrent::run(m_DMAccessor.dataManager(), &DataManager::registerPlot, this, dataType);
 }
 
 void CustomPlotItem::setAxisRange(QPoint x, QPoint y)
@@ -204,6 +201,7 @@ void CustomPlotItem::setupGraph( QCustomPlot* customPlot, int numOfGraphs)
         customPlot->addGraph();
         customPlot->graph(i)->setData(m_X, m_Y);
         m_CustomPlot->graph(i)->setPen(QPen(QColor("#0099ff"), 2));
+        m_CustomPlot->graph(i)->setScatterStyle(QCPScatterStyle::ssCircle); // TODO: Make scatter style into function to change from QML
     }
     // give the axes some labels:
     customPlot->xAxis->setLabel("time");

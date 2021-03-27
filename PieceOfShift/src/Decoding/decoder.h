@@ -11,13 +11,21 @@ static const QMap<quint16, QString> idToName = {
   {0x001, "Speed"},
   {0x002, "Emergency Brake"},
   {0x333, "Velocity"},
+  {0x334, "Acceleration"},
+  {0x335, "Voltage1"},
+  {0x336, "Voltage2"},
+  {0x337, "Voltage3"},
   /* ... */
 };
 
 static const QMap<quint16, DataType> idToType = {
   {0x001, DataType::INT32},
   {0x002, DataType::UINT32},
-  {0x333, DataType::INT32}
+  {0x333, DataType::INT32},
+  {0x334, DataType::INT32},
+  {0x335, DataType::INT32},
+  {0x336, DataType::INT32},
+  {0x337, DataType::INT32},
   /* ... */
 };
 

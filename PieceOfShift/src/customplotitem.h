@@ -22,9 +22,8 @@ public:
  
     Q_INVOKABLE void initCustomPlot(int numOfGraphs);
     Q_INVOKABLE void addData(QPointF data, int graphNum);
-    Q_INVOKABLE void setDataType(QString dataType);
     Q_INVOKABLE void setGraphColor(int graphIndex, QColor color);
-    Q_INVOKABLE void setName(int graphIndex, QString name);
+    Q_INVOKABLE void setGraphName(int graphIndex, QString name);
     Q_INVOKABLE void legendVisible(bool visible);
     Q_INVOKABLE void setAxisLabels(QString xAxis, QString yAxis);
     Q_INVOKABLE void remove();
