@@ -30,6 +30,10 @@ public:
     Q_INVOKABLE void setBackgroundColor(QColor color);
     Q_INVOKABLE void setSimpleGraph();
     Q_INVOKABLE void setAxisRange(QPoint x, QPoint y);
+    Q_INVOKABLE void setLineVisibility(bool visible, int graphIndex);
+    Q_INVOKABLE void setDotVisibility(bool visible, int graphIndex);
+    Q_INVOKABLE int addGraph();
+    Q_INVOKABLE inline void replot() { m_CustomPlot->replot(); }
 
 protected:
     void routeMouseEvents(QMouseEvent* event);

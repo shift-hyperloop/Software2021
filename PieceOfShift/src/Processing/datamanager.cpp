@@ -58,6 +58,7 @@ DataManager::~DataManager()
 
 void DataManager::addData(unsigned int timeMs, const QString &name, const DataType &dataType, QByteArray data)
 {
+    if (!plotData.hasKey(name)) emit newDataName(name);
     QDataStream dataStream(&data, QIODevice::ReadWrite);
 
     if (dataType == DataType::INT32)
@@ -214,6 +215,8 @@ void DataManager::sendPodCommand(CANServer::PodCommand messageType)
 
 void DataManager::registerGraph(CustomPlotItem *plotItem, const QString &name, int graphIndex)
 {
+    if (!plotData.hasKey(name)) emit newDataName(name);
+
     if (!plotItems.contains(name))
     {
         QPair<CustomPlotItem*, int> item(plotItem, graphIndex);
