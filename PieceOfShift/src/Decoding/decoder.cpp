@@ -2,7 +2,6 @@
 #include <QPair>
 #include <QMap>
 #include <qdebug.h>
-#include "Processing/processingunit.h"
 #include "Processing/datastructs.h"
 #include "decoder.h"
 

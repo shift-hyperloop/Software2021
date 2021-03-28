@@ -20,6 +20,38 @@
     stream2 >> vcuStatus2;
 */
 
+enum class DataType
+{
+    ERROR_CODE,
+    VCU_STATUS,
+    POD_STATE,
+    BOOL,
+    UINT8,
+    INT8,
+    UINT16,
+    INT16,
+    UINT32,
+    INT32,
+    FLOAT,
+    DOUBLE,
+    VECTOR_3I,
+    VECTOR_3F,
+    VECTOR_3B,
+    CHAR,
+    VECTOR_2C,
+    VECTOR_3C,
+    VECTOR_16C,
+    SHORT,
+    VECTOR_2S,
+    VECTOR_2F,
+    VECTOR_4F,
+    VECTOR_6F,
+    VECTOR_8F,
+    VECTOR_16F
+
+
+};
+
 namespace DataStructs 
 {
 

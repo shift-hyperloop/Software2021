@@ -1,7 +1,4 @@
 #include "datamanager.h"
-#include "velocityprocessingunit.h"
-#include "accelerationprocessingunit.h"
-#include "accelerationvelocityunit.h"
 #include "customplotitem.h"
 #include "datastructs.h"
 #include <math.h>

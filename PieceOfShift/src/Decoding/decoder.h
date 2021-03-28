@@ -4,8 +4,8 @@
 #include <QObject>
 #include <QByteArray>
 #include <QMap>
+#include "Processing/datastructs.h"
 
-#include "../Processing/processingunit.h"
 
 static const QMap<quint16, QString> idToName = {
   {0x001, "Speed"},

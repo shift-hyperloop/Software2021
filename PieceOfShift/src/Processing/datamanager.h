@@ -5,7 +5,6 @@
 #include <QVector>
 #include <QtConcurrent/QtConcurrent>
 #include "Processing/datastructs.h"
-#include "processingunit.h"
 #include "src/Decoding/canserver.h"
 #include "src/Decoding/decoder.h"
 #include "Processing/plotdata.h"
