@@ -93,14 +93,16 @@ Page {
         width: window.width * 0.1
         height: window.height * 0.05
         y: window.height * 0.8 + 150
-        x: colorDisp.width + dropDown.width * 2 + 160
-        text: "Add Plot"
+        x: window.width * 0.4 + 10
+        text: "Add Graph"
 
         onClicked: {
             var graphIndex = ccChart.chart.addGraph();
             ccChart.chart.setGraphColor(graphIndex, colorDialog.color);
             ccChart.chart.setGraphName(graphIndex, dropDown.currentText);
-            ccChart.chart.setDotVisibility(true, graphIndex);
+            graphType.currentText == "Line" ? ccChart.chart.setDotVisibility(false, graphIndex) : ccChart.chart.setDotVisibility(true, graphIndex);
+            graphType.currentText == "Scatter" ? ccChart.chart.setLineVisibility(false, graphIndex) : ccChart.chart.setLineVisibility(true, graphIndex) ;
+
             ccChart.chart.replot();
         }
 
@@ -118,5 +120,22 @@ Page {
             ccChart.chart.initCustomPlot(0)
         }
     }
+
+    ComboBox {
+        id: graphType
+        width: window.width * 0.1
+        height: window.height * 0.05
+        y: window.height * 0.8 + 150
+        x: colorDisp.width + dropDown.width * 2 + 160
+        textRole: "text"
+        valueRole: "value"
+
+        model: ListModel {
+            id: graphTypes   
+            ListElement {text: "Line"}
+            ListElement {text: "LineDot"}
+            ListElement {text: "Scatter"}
+        }
+    } 
 
 }

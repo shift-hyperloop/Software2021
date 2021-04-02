@@ -192,7 +192,6 @@ void DataManager::addData(unsigned int timeMs, const QString &name, const DataTy
 
 void DataManager::addPlotData(const QString &name, unsigned int timeMs, float data)
 {
-    // !REMEMBER TO ADD FUNCTIONALITY FOR MULTIPLE GRAPHS (AND ALSO IF WE HAVE A GRAPH WITH CUSTOMIZABLE DATA)
     plotData.addData(name, QPointF(timeMs, data));
     if (plotItems.contains(name))
     {
@@ -249,7 +248,7 @@ void DataManager::removePlot(CustomPlotItem *plotItem)
     {
         for (QPair<CustomPlotItem*, int> pair : *plotItems.value(name)) {
             if (pair.first == plotItem) {
-                plotItems.value(name)->removeOne(pair); //TODO: Tets that this actually removes pair
+                plotItems.value(name)->removeOne(pair); //TODO: Test that this actually removes pair
             }
             if (plotItems.value(name)->size() == 0) {
                 plotItems.remove(name);
