@@ -175,6 +175,12 @@ Item {
                 }
               }
 
+            MenuItem { text: qsTr("Custom Chart")
+                onTriggered: {
+                    stackView.push("CustomizableChartPage.qml");
+                }
+              }
+
 /*
             Menu{
                 title: qsTr("Speed")

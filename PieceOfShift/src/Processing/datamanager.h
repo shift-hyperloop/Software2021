@@ -16,6 +16,7 @@ class CustomPlotItem;
 class DataManager : public QObject
 {
     Q_OBJECT
+
 public:
     DataManager();
     ~DataManager();
@@ -44,6 +45,8 @@ public slots:
     // Read log file and send through pipeline
     void readLogFile(QString path) {} // TODO: Implement
 
+    inline QList<QString> getAllDataNames() { return plotData.names(); }
+
 signals:
     // TODO: Add signals for each CAN message
     // TODO: Add signals for each data type
@@ -55,6 +58,7 @@ signals:
     void podConnectionTerminated();
 
     void newData(const QString &name, const DataStructs::DataStruct &value);
+    void newDataName(const QString& name);
 
 private:
     void addPlotData(const QString &name, unsigned int timeMs, float data);

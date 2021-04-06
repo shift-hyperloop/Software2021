@@ -49,6 +49,8 @@ public:
         m_Data.remove(key);
     }
 
+    inline QList<QString> names() { return m_Data.keys(); }
+
     QVector<double> getXValues(const QString& key)
     {
         return *m_Data.value(key).first;
