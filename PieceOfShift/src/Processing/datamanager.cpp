@@ -5,10 +5,6 @@
 #include <qdebug.h>
 #include <qlist.h>
 #include <qobject.h>
-#include "velocityprocessingunit.h"
-#include "accelerationprocessingunit.h"
-#include "accelerationvelocityunit.h"
-#include "src/CustomPlotItem.h"
 #include <qpoint.h>
 #include <qrandom.h>
 #include <qthread.h>
@@ -18,20 +14,6 @@ DataManager::DataManager()
     /* Create and append all processing units here,
      * maybe refactor to separate function
      */
-    //    VelocityProcessingUnit* vpu = new VelocityProcessingUnit();
-    //    processingUnits.append(vpu);
-    //    AccelerationProcessingUnit* apu = new AccelerationProcessingUnit();
-    //    processingUnits.append(apu);
-    //    AccelerationVelocityUnit* avu = new AccelerationVelocityUnit();
-    //    processingUnits.append(avu);
-
-    // Connect newData signal to corresponding DataManager signal
-    //    connect(vpu, &VelocityProcessingUnit::newData,
-    //            this, &DataManager::newVelocity);
-    //    connect(apu, &AccelerationProcessingUnit::newData,
-    //            this, &DataManager::newAcceleration);
-    //    connect(avu, &AccelerationVelocityUnit::newData,
-    //            this, &DataManager::newAccelerationVelocity);
 
     connect(&canServer, &CANServer::dataReceived,
             &decoder, &Decoder::checkData);
