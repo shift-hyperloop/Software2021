@@ -3,6 +3,9 @@
 #include <QVector>
 #include <QMap>
 #include <QPointF>
+#include <QVariant>
+#include <qvariant.h>
+#include <qvector.h>
 
 class PlotData
 {
@@ -10,69 +13,56 @@ public:
 
     ~PlotData()
     {
-        for (auto list : m_Data.values())
+        for (auto pair : m_Data.values())
         {
-            for (auto pair : *list) {
-                delete pair.first;
-                delete pair.second;
-            }
-            delete list;
+            delete pair.first;
+            delete pair.second;
         }
     }
 
     void insertEmpty(const QString& key)
     {
         QVector<double>* x = new QVector<double>();
-        QVector<double>* y = new QVector<double>();
-        QPair<QVector<double>*, QVector<double>*> pair(x, y);
-        QList<QPair<QVector<double>*, QVector<double>*>>* list = new QList<QPair<QVector<double>*, QVector<double>*>>;
-        list->append(pair);
-        m_Data.insert(key, list);
+        QVector<QVariant>* y = new QVector<QVariant>();
+        QPair<QVector<double>*, QVector<QVariant>*> pair(x, y);
+        m_Data.insert(key, pair);
     }
 
-    void addData(const QString& key, int graphNum, double x, double y)
+    void addData(const QString& key, double x, QVariant y)
     {
         if (!m_Data.contains(key)) insertEmpty(key);
 
-        if (m_Data.value(key)->size() == graphNum) {
-            QVector<double>* xVec = new QVector<double>();
-            QVector<double>* yVec = new QVector<double>();
-            xVec->append(x);
-            yVec->append(y);
-            QPair<QVector<double>*, QVector<double>*> pair(xVec, yVec);
-            m_Data.value(key)->append(pair);
-            return;
-        }
-
-        m_Data.value(key)->at(graphNum).first->append(x); // Append x data to graphNum
-        m_Data.value(key)->at(graphNum).second->append(y); // Append y data to graphNum
+        m_Data.value(key).first->append(x);
+        m_Data.value(key).second->append(y);
     }
 
-    void addData(const QString& key, int graphNum, const QPointF& point)
+    void addData(const QString& key, const QPointF& point)
     {
-        addData(key, graphNum, point.x(), point.y());
+        addData(key, point.x(), point.y());
     }
 
     void remove(const QString& key)
     {
-        QList<QPair<QVector<double>*, QVector<double>*>>* list = m_Data.value(key);
-        for (auto pair : *list)
-        {
-            delete pair.first;
-            delete pair.second;
-        }
+        QPair<QVector<double>*, QVector<QVariant>*> pair = m_Data.value(key);
+        delete pair.first;
+        delete pair.second;
         m_Data.remove(key);
-        delete list;
     }
 
-    QVector<double> getXValues(const QString& key, int graphNum)
+    inline QList<QString> names() { return m_Data.keys(); }
+
+    QVector<double> getXValues(const QString& key)
     {
-        return *m_Data.value(key)->at(graphNum).first;
+        return *m_Data.value(key).first;
     }
 
-    QVector<double> getYValues(const QString& key, int graphNum)
+    QVector<double> getYValues(const QString& key)
     {
-        return *m_Data.value(key)->at(graphNum).second;
+        QVector<double> list;
+        for (QVariant v : *m_Data.value(key).second) {
+            list.append(v.value<double>());
+        }
+        return list;
     }
 
     bool hasKey(const QString& key)
@@ -80,6 +70,8 @@ public:
         return m_Data.contains(key);
     }
 
+    inline QList<QString> getDataTypes() { return m_Data.keys(); }
+
 private:
-    QMap<QString, QList<QPair<QVector<double>*, QVector<double>*>>*> m_Data;
+    QMap<QString, QPair<QVector<double>*, QVector<QVariant>*>> m_Data;
 };

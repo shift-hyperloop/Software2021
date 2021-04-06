@@ -2,7 +2,7 @@
 #include <QPair>
 #include <QMap>
 #include <qdebug.h>
-
+#include "Processing/datastructs.h"
 #include "decoder.h"
 
 // NOTE: This was commented so the project would build
@@ -13,7 +13,7 @@ Decoder::~Decoder()
 {
 }
 
-void Decoder::checkData(unsigned short id, unsigned char dataSize, QByteArray data)
+void Decoder::checkData(unsigned int timeMs, unsigned short id, unsigned char dataSize, QByteArray data)
 {
     if (!idToType.contains(id)) {
         return;
@@ -21,11 +21,6 @@ void Decoder::checkData(unsigned short id, unsigned char dataSize, QByteArray da
     DataType dataType = idToType.value(id);
     QString name = idToName.value(id);
 
-    data.resize(dataSize);
-
-    QPair<quint8, QByteArray> dataAndSize(dataSize, data);
-
-
     // Send data onwards to the processor
-    emit addData(name, dataType, QVariant::fromValue(dataAndSize));
+    emit addData(timeMs, name, dataType, data);
 }
