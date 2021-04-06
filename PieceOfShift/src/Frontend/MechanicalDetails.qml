@@ -46,6 +46,9 @@ Page {
         text: "Go Back"
         x: window.width * 0.01
         y: 0.05 * window.height
+        height: window.height * 0.07
+        width: window.width * 0.07
+        font.pixelSize: window.height * 0.02
         onClicked: {
             stackView.pop("main.qml");
         }

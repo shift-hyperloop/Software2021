@@ -5,6 +5,10 @@
 #include <qdebug.h>
 #include <qlist.h>
 #include <qobject.h>
+#include "velocityprocessingunit.h"
+#include "accelerationprocessingunit.h"
+#include "accelerationvelocityunit.h"
+#include "src/CustomPlotItem.h"
 #include <qpoint.h>
 #include <qrandom.h>
 #include <qthread.h>

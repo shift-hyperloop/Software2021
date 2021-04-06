@@ -69,7 +69,7 @@ Page {
 
 
 
-    Button {
+    /*Button {              //not needed anymore?
         id: but1
         text: "Reset Graph"
         x: 0
@@ -79,12 +79,15 @@ Page {
             const charts = [chart2, chart3, chart4, chart5, chart6];
             resetChartAxes(charts);
         }
-    }
+    }*/
     Button {
         id: but2
-        text: "Previous Page"
-        x: but1.x + but1.width
-        y: but1.y
+        text: "Go back"
+        x: window.width * 0.01
+        y: 0.05 * window.height
+        height: window.height * 0.07
+        width: window.width * 0.07
+        font.pixelSize: window.height * 0.02
         onClicked: {
             stackView.pop("main.qml");
         }
@@ -92,14 +95,14 @@ Page {
 
 
     //This is the amount of vertical height that's "left" when taking elements above into account
-    property var remainingWindowHeight: window.height - 0.05 * window.height - but1.height - rect1.height
+    property var remainingWindowHeight: window.height - 0.05 * window.height - but2.height - rect1.height
 
     CustomChart {
         id: chart1
         width: Math.floor(window.width / 2)
         height: Math.floor(remainingWindowHeight / 3)
         anchors.left: parent.left
-        anchors.top: but1.bottom
+        anchors.top: but2.bottom
         property var counter: 0
         Component.onCompleted: {
             chart.initCustomPlot(3);
@@ -118,7 +121,7 @@ Page {
         id: chart2
         width: Math.floor(window.width / 2)
         height: Math.floor(remainingWindowHeight / 3)
-        anchors.top: but1.bottom
+        anchors.top: but2.bottom
         anchors.left: chart1.right
         property var counter: 0
         Component.onCompleted: {

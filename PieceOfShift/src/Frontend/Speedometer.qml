@@ -10,16 +10,12 @@ Item {
     property alias value: circulargauge.value
     property alias style: circulargauge.style
 
-    width: 300
-    height: 300
-    x: 0
-    y: 0
-
     CircularGauge{
         id: circulargauge
         minimumValue: 0
         maximumValue: 500
         stepSize: 1
+        anchors.fill: parent
         style: CircularGaugeStyle {
             labelStepSize: 100
             tickmarkStepSize: 50
@@ -30,10 +26,11 @@ Item {
                 color: "#0099ff"
             }
             foreground: Rectangle {
-                width: outerRadius * 0.1
+                width: Math.round(outerRadius * 0.1)
                 height: width
-                radius: width / 2
-                color: "#ededed"
+                radius: Math.round(width / 2)
+                //circle sometimes fills entire component, to be fixed. TODO: find out why it happens. For now, the circle in the middle is invisible
+                color: "#00ededed"
                 anchors.centerIn: parent
             }
             //change the color and style of text, plus make it red at high values
@@ -62,7 +59,6 @@ Item {
                 duration: 200
             }
         }
-
     }
 
     Text {
@@ -72,14 +68,25 @@ Item {
         color: "#ededed"
         text: qsTr(circulargauge.value + "km/h")
         anchors.verticalCenter: parent.verticalCenter
-        font.pixelSize: 18
         horizontalAlignment: Text.AlignHCenter
-        anchors.verticalCenterOffset: 99
-        anchors.horizontalCenterOffset: 1
+        anchors.verticalCenterOffset: 90
         anchors.horizontalCenter: circulargauge.horizontalCenter
         styleColor: "#ededed"
-        minimumPointSize: 18
-        minimumPixelSize: 18
-        font.family: "Arial"
+        font.pixelSize: window.width / 90
+        font.bold: true
+    }
+    Text {
+        id: speedometerValueTextMetersPerSecond
+        x: circulargauge.scale * circulargauge.x + 126
+        y: circulargauge.scale * circulargauge.y + 249
+        color: "#ededed"
+        text: qsTr(Math.round(circulargauge.value / 3.6) + "m/s")
+        anchors.verticalCenter: parent.verticalCenter
+        horizontalAlignment: Text.AlignHCenter
+        anchors.verticalCenterOffset: 115
+        anchors.horizontalCenter: circulargauge.horizontalCenter
+        styleColor: "#ededed"
+        font.pixelSize: window.width / 110
+        font.bold: false
     }
 }

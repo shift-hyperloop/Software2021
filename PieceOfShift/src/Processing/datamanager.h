@@ -7,7 +7,7 @@
 #include "Processing/datastructs.h"
 #include "src/Decoding/canserver.h"
 #include "src/Decoding/decoder.h"
-#include "Processing/plotdata.h"
+#include "src/Processing/plotdata.h"
 
 class CustomPlotItem;
 

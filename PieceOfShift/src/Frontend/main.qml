@@ -91,18 +91,14 @@ ApplicationWindow {
 
                 Speedometer {
                     id: speedometer
-                    width: 226
-                    height: 300
+                    width: Math.round(window.width / 6) //round, because speedometer is very picky and doesnt like uneven widths.
+                    height: width //width and height have to be equal!! (+- some margin but idk why you'd want an elliptical gauge)
                     anchors {
                         left: parent.left
                         top: parent.top
                         topMargin: 0.04 * window.height
-                        leftMargin: 0.04 * window.width
+                        leftMargin: window.width*0.025
                     }
-                    //speedometer has a weird bug where explicitly setting width and height turns it into a white circle
-                    //therefore, scale is used to, uh, scale
-                    scale: 0.20 + Math.min(window.width / 1600, window.height / 900)
-                    transformOrigin: Item.TopLeft
                     minValue: 0
                     maxValue: 600
                 }
@@ -119,14 +115,16 @@ ApplicationWindow {
                 }
                 Thermometer {
                     id: thermometer
+                    width: window.width / 15
+                    height: 4 * width
                     anchors {
                         right: parent.right
-                        rightMargin: 20
+                        rightMargin: window.width * 0.025 - width * 0.3
                         top: parent.top
-                        topMargin: 0.01*window.height
+                        topMargin: 0.04 * window.height
                         //topMargin: (panelRight.height - (height * scale) - slider.height - (controlButtons.height * controlButtons.scale)) / 2
                     }
-                    scale: Math.min(window.width / 1000, window.height / 600)
+                    //scale: Math.min(window.width / 1000, window.height / 600)
                     transformOrigin: Item.TopRight
                     minValue: 0
                     maxValue: 50
@@ -134,16 +132,15 @@ ApplicationWindow {
                 ControlButtons {
                     id: controlButtons
 
-                    height: window.height/3.5
-                    y: window.height - slider.height - height - 0.025*window.height
-                    width: window.width / 6.5
+                    height: window.height / 3.5
+                    width: window.width / 5
+                    y: window.height - slider.height - height - (0.04 * window.height)
                     anchors {
                         //bottom: parent.bottom
                         //bottomMargin: height * scale * 0.1
                         right: parent.right
-                        rightMargin: 20
+                        rightMargin: window.width*0.025
                     }
-                    scale: Math.min(window.width / 1600, window.height / 900)
                     transformOrigin: Item.BottomRight
                 }
             }
@@ -153,8 +150,8 @@ ApplicationWindow {
                 pitchDeg: 0
                 yawDeg: 0
                 circleSize: window.height / 10
-                anchors.left: battery.left
-                anchors.leftMargin: circleSize * 1.5
+                anchors.left: parent.left
+                anchors.leftMargin: 1.9*circleSize + window.width*0.025
                 anchors.bottom: battery.top
                 anchors.bottomMargin: circleSize
             }
@@ -167,13 +164,13 @@ ApplicationWindow {
                 }
 
                 minValue: 0
-                maxValue: 100
+                maxValue: 168
             }
             Battery{
                 id: battery
-                height:window.height / 5
+                height: window.height / 5
                 anchors.left: parent.left
-                anchors.leftMargin: window.height / 15
+                anchors.leftMargin: 0.025 * window.width
                 anchors.bottom: slider.top
                 anchors.bottomMargin: height/5
             }
@@ -189,15 +186,22 @@ ApplicationWindow {
                 function update(){
                     var distance = (Math.random() * 0.03) + 0.1;
                     var speed = (distance * 50) / 0.02;
-                    slider.value = slider.value + distance;
+                    slider.value = slider.value + distance * 10;
                     speedometer.value = speed;
-                    valueTable.tableModel.setRow(0,{"name": "Speed", "value":qsTr(speedometer.value + "km/h")})
+                    //valueTable.tableModel.setRow(0,{"name": "Speed", "value":qsTr(speedometer.value + "km/h")})
                     //updating field in table with index 0
                     thermometer.value = Math.random() * 25 + 25;
                     //change from customChart to chart to get old chart back.
                     customChart.counter++;
                     //chart.lineseries.append(chart.counter, speed);
-                    battery.charge = 1 - slider.value / 100
+                    if(battery.charge>0){
+                        battery.charge = 1 - slider.value / 100
+                    }
+                    else{
+                        battery.charge = 0
+                    }
+
+
                     tiltMeter.rollDeg +=  0.5 * Math.floor(Math.random()*3-1)
                     tiltMeter.yawDeg += 0.5 * Math.floor(Math.random()*3-1)
                     tiltMeter.pitchDeg += 0.5 * Math.floor(Math.random()*3-1)
@@ -229,16 +233,16 @@ ApplicationWindow {
 
             ValueTable{
                 id: valueTable
-                names: ["Speed","Voltage battery 1", "Value Value", "Bruh moments:", "Crashes"] // names for the values in the table
-                values: [qsTr(0 + "km/h"), 12, 100, 8, 0] // values for the table
+                names: ["Speed","Voltage battery 1", "Value Value", "Bruh moments:", "Crashes", "Battery Charge", "Pod temperature", "Value"] // names for the values in the table
+                values: [qsTr(speedometer.value + "km/h"), 12, 100, 8, 0, qsTr(Math.round(battery.charge*100,1) + " %"), qsTr(Math.round(thermometer.value,1) + " \xB0 C"), 0] // values for the table
                 anchors {                                   // indexes in names[] and values[] are corresponding
                     top: parent.top
                     topMargin: 0.09 * window.height
                     right: parent.right
-                    rightMargin: thermometer.width + 0.07*window.width
+                    rightMargin: thermometer.width + 0.03*window.width
                 }
-                scale: Math.min(window.width / 1600, window.height / 1000)
-                transformOrigin: "TopLeft"
+                width: window.width / 3.5
+                height: width * 4/5
             }
 
         }
