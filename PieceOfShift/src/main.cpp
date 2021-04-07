@@ -6,7 +6,6 @@
 #include "Decoding/canserver.h"
 #include "Processing/datamanager.h"
 #include "CustomPlotItem.h"
-#include "Processing/processingunit.h"
 #include "qbytearray.h"
 
 int main(int argc, char *argv[])

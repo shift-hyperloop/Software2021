@@ -14,11 +14,11 @@ FileHandler::FileHandler() {}
 FileHandler::~FileHandler() {}
 
 // Reads a file from given path
+// TODO fix serialization 
 void FileHandler::readLogFile(QString path) {
 
     QFile file(path);
 
-    QMap<QString, QString> map;
     QDataStream in(&file);
 
     // Setting version in case there is change with Qt serialization
@@ -29,14 +29,13 @@ void FileHandler::readLogFile(QString path) {
 
     // TODO 
     // De-serialize map/ sending onwards
-    in >> map;
+   //  in >> map;
 
     qDebug() << "File finished reading";
 }
 
 
-// TODO 
-// QMap should be QMap<QString, QQueue<QVariant>> dataCopyMap, also change in header file
+// TODO fix serialization 
 void FileHandler::writeLogFile(QString path) {
 
     QFile file(path);
@@ -49,7 +48,7 @@ void FileHandler::writeLogFile(QString path) {
     // Setting version in case there is change with Qt serialization
     QDataStream out(&file);
     out.setVersion(QDataStream::Qt_5_12);
-    out << dataCopyMap;
+   //  out << dataCopyMap;
 
 
     qDebug() << "File has been written with path: " << path;
