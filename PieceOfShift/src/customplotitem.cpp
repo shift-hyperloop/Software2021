@@ -1,4 +1,4 @@
-#include "CustomPlotItem.h"
+#include "customplotitem.h"
 #include "Processing/datamanager.h"
 #include <QDebug>
 #include <qcolor.h>
@@ -46,7 +46,7 @@ void CustomPlotItem::legendVisible(bool visible){
     m_CustomPlot->legend->setVisible(visible);
 }
 
-void CustomPlotItem::setName(int graphIndex, QString name){
+void CustomPlotItem::setGraphName(int graphIndex, QString name){
     m_CustomPlot->graph(graphIndex)->setName(name);
     QFont legendFont;
     QSize screenRes = QGuiApplication::primaryScreen()->size();
@@ -59,14 +59,12 @@ void CustomPlotItem::setName(int graphIndex, QString name){
     m_CustomPlot->legend->setIconSize(QSize(screenFactor, screenFactor));
     m_CustomPlot->legend->setVisible(true);
     m_CustomPlot->rescaleAxes();
+
+    m_DMAccessor.dataManager()->registerGraph(this, name, graphIndex);
 }
 void CustomPlotItem::setAxisLabels(QString xAxis, QString yAxis){
     m_CustomPlot->xAxis->setLabel(xAxis);
     m_CustomPlot->yAxis->setLabel(yAxis);
-}
-void CustomPlotItem::setDataType(QString dataType)
-{
-    QtConcurrent::run(m_DMAccessor.dataManager(), &DataManager::registerPlot, this, dataType);
 }
 
 void CustomPlotItem::setAxisRange(QPoint x, QPoint y)
@@ -168,7 +166,7 @@ void CustomPlotItem::routeWheelEvents(QWheelEvent* event)
     if (m_CustomPlot)
     {
         QWheelEvent* newEvent = new QWheelEvent( event->pos(), event->delta(), event->buttons(), event->modifiers(), event->orientation() );
-        QCoreApplication::postEvent( m_CustomPlot, newEvent );
+        QCoreApplication::postEvent( m_CustomPlot, newEvent);
     }
 }
  
@@ -194,6 +192,18 @@ void CustomPlotItem::onCustomReplot()
 void CustomPlotItem::remove()
 {
     m_DMAccessor.dataManager()->removePlot(this);
+}
+
+void CustomPlotItem::setLineVisibility(bool visible, int graphIndex)
+{
+    visible ? m_CustomPlot->graph(graphIndex)->setLineStyle(QCPGraph::LineStyle::lsLine) 
+            : m_CustomPlot->graph(graphIndex)->setLineStyle(QCPGraph::LineStyle::lsNone);
+}
+
+void CustomPlotItem::setDotVisibility(bool visible, int graphIndex)
+{
+    visible ? m_CustomPlot->graph(graphIndex)->setScatterStyle(QCPScatterStyle::ssCircle)
+            : m_CustomPlot->graph(graphIndex)->setScatterStyle(QCPScatterStyle::ssNone);
 }
  
 void CustomPlotItem::setupGraph( QCustomPlot* customPlot, int numOfGraphs)
@@ -226,4 +236,10 @@ void CustomPlotItem::setupGraph( QCustomPlot* customPlot, int numOfGraphs)
  
     customPlot ->setInteractions( QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables );
 
+}
+
+int CustomPlotItem::addGraph()
+{
+    m_CustomPlot->addGraph();
+    return m_CustomPlot->graphCount() - 1;
 }

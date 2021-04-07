@@ -224,8 +224,8 @@ ApplicationWindow {
                     chart.setAxisRange(Qt.point(0, 100), Qt.point(0, 200));
                     chart.setGraphColor(0, "#2674BB");
                     chart.setGraphColor(1, "#AE3328");
-                    chart.setDataType("Velocity");
-                    chart.setName(0,"Speed km/h");
+                    chart.setGraphName(0,"Velocity");
+                    chart.setGraphName(1,"Acceleration");
                     chart.setAxisLabels("Time","Speed km/h")
                     chart.setSimpleGraph(); // disables all interactions with the chart
                 }

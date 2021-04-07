@@ -1,8 +1,10 @@
 #include "datamanager.h"
-#include "velocityprocessingunit.h"
-#include "accelerationprocessingunit.h"
-#include "accelerationvelocityunit.h"
-#include "src/CustomPlotItem.h"
+#include "customplotitem.h"
+#include "datastructs.h"
+#include <math.h>
+#include <qdebug.h>
+#include <qlist.h>
+#include <qobject.h>
 #include <qpoint.h>
 #include <qrandom.h>
 #include <qthread.h>
@@ -12,21 +14,6 @@ DataManager::DataManager()
     /* Create and append all processing units here,
      * maybe refactor to separate function
      */
-    VelocityProcessingUnit* vpu = new VelocityProcessingUnit();
-    processingUnits.append(vpu);
-    AccelerationProcessingUnit* apu = new AccelerationProcessingUnit();
-    processingUnits.append(apu);
-    AccelerationVelocityUnit* avu = new AccelerationVelocityUnit();
-    processingUnits.append(avu);
-
-    // Connect newData signal to corresponding DataManager signal
-    connect(vpu, &VelocityProcessingUnit::newData,
-            this, &DataManager::newVelocity);
-    connect(apu, &AccelerationProcessingUnit::newData,
-            this, &DataManager::newAcceleration);
-    connect(avu, &AccelerationVelocityUnit::newData,
-            this, &DataManager::newAccelerationVelocity);
-
 
     connect(&canServer, &CANServer::dataReceived,
             &decoder, &Decoder::checkData);
@@ -40,7 +27,6 @@ DataManager::DataManager()
     connect(&canServer, &CANServer::connectionTerminated,
             this, &DataManager::podConnectionTerminated);
 
-
     /* Create Decoder/DataFetcher object here and start it when signal from
      QML has been received */
 }
@@ -48,24 +34,155 @@ DataManager::DataManager()
 DataManager::~DataManager()
 {
     // Delete all processing units on destruction to avoid memory leak
-    for (auto processingUnit : processingUnits) {
-        delete processingUnit;
+    //    for (auto processingUnit : processingUnits) {
+    //        delete processingUnit;
+    //    }
+}
+
+void DataManager::addData(unsigned int timeMs, const QString &name, const DataType &dataType, QByteArray data)
+{
+    if (!plotData.hasKey(name)) emit newDataName(name);
+    QDataStream dataStream(&data, QIODevice::ReadWrite);
+
+    if (dataType == DataType::INT32)
+    {
+        DataStructs::Int *dataStruct = new DataStructs::Int();
+        dataStream >> *dataStruct;
+        float data = dataStruct->value_0;
+        addPlotData(name, timeMs, data);
+    }
+    else if (dataType == DataType::ERROR_CODE)
+    {
+        DataStructs::ErrorCode *dataStruct = new DataStructs::ErrorCode();
+        dataStream >> *dataStruct;
+        emit newData(name, *dataStruct);
+    }
+    else if (dataType == DataType::VCU_STATUS)
+    {
+        DataStructs::VCUStatus *dataStruct = new DataStructs::VCUStatus();
+        dataStream >> *dataStruct;
+        emit newData(name, *dataStruct);
+    }
+    else if (dataType == DataType::VECTOR_3F)
+    {
+        DataStructs::Vector3f *dataStruct = new DataStructs::Vector3f();
+        dataStream >> *dataStruct;
+        emit newData(name, *dataStruct);
+    }
+    else if (dataType == DataType::POD_STATE)
+    {
+        DataStructs::PodState *dataStruct = new DataStructs::PodState();
+        dataStream >> *dataStruct;
+        emit newData(name, *dataStruct);
+    }
+    else if (dataType == DataType::VECTOR_3I)
+    {
+        DataStructs::Vector3i *dataStruct = new DataStructs::Vector3i();
+        dataStream >> *dataStruct;
+        emit newData(name, *dataStruct);
+    }
+    else if (dataType == DataType::BOOL)
+    {
+        DataStructs::Bool *dataStruct = new DataStructs::Bool();
+        dataStream >> *dataStruct;
+        emit newData(name, *dataStruct);
+    }
+    else if (dataType == DataType::VECTOR_3B)
+    {
+        DataStructs::Vector3b *dataStruct = new DataStructs::Vector3b();
+        dataStream >> *dataStruct;
+        emit newData(name, *dataStruct);
+    }
+    else if (dataType == DataType::CHAR)
+    {
+        DataStructs::Char *dataStruct = new DataStructs::Char();
+        dataStream >> *dataStruct;
+        emit newData(name, *dataStruct);
+    }
+    else if (dataType == DataType::VECTOR_2C)
+    {
+        DataStructs::Vector2c *dataStruct = new DataStructs::Vector2c();
+        dataStream >> *dataStruct;
+        emit newData(name, *dataStruct);
+    }
+    else if (dataType == DataType::VECTOR_3C)
+    {
+        DataStructs::Vector3c *dataStruct = new DataStructs::Vector3c();
+        dataStream >> *dataStruct;
+        emit newData(name, *dataStruct);
+    }
+    else if (dataType == DataType::VECTOR_16C)
+    {
+        DataStructs::Vector16c *dataStruct = new DataStructs::Vector16c();
+        dataStream >> *dataStruct;
+        emit newData(name, *dataStruct);
+    }
+    else if (dataType == DataType::SHORT)
+    {
+        DataStructs::Short *dataStruct = new DataStructs::Short();
+        dataStream >> *dataStruct;
+        emit newData(name, *dataStruct);
+    }
+    else if (dataType == DataType::VECTOR_2S)
+    {
+        DataStructs::Vector2s *dataStruct = new DataStructs::Vector2s();
+        dataStream >> *dataStruct;
+        emit newData(name, *dataStruct);
+    }
+    else if (dataType == DataType::FLOAT)
+    {
+        DataStructs::Float *dataStruct = new DataStructs::Float();
+        dataStream >> *dataStruct;
+        emit newData(name, *dataStruct);
+    }
+    else if (dataType == DataType::DOUBLE)
+    {
+        DataStructs::Double *dataStruct = new DataStructs::Double();
+        dataStream >> *dataStruct;
+        emit newData(name, *dataStruct);
+    }
+    else if (dataType == DataType::VECTOR_2F)
+    {
+        DataStructs::Vector2f *dataStruct = new DataStructs::Vector2f();
+        dataStream >> *dataStruct;
+        emit newData(name, *dataStruct);
+    }
+    else if (dataType == DataType::VECTOR_4F)
+    {
+        DataStructs::Vector2f *dataStruct = new DataStructs::Vector2f();
+        dataStream >> *dataStruct;
+        emit newData(name, *dataStruct);
+    }
+    else if (dataType == DataType::VECTOR_6F)
+    {
+        DataStructs::Vector2f *dataStruct = new DataStructs::Vector2f();
+        dataStream >> *dataStruct;
+        emit newData(name, *dataStruct);
+    }
+    else if (dataType == DataType::VECTOR_8F)
+    {
+        DataStructs::Vector2f *dataStruct = new DataStructs::Vector2f();
+        dataStream >> *dataStruct;
+        emit newData(name, *dataStruct);
+    }
+    else if (dataType == DataType::VECTOR_16F)
+    {
+        DataStructs::Vector2f *dataStruct = new DataStructs::Vector2f();
+        dataStream >> *dataStruct;
+        emit newData(name, *dataStruct);
     }
 }
 
-void DataManager::addData(const QString& name, const DataType &dataType, const QVariant &data)
+void DataManager::addPlotData(const QString &name, unsigned int timeMs, float data)
 {
-    // Find processing unit with correct data type and add data
-    ProcessingUnit* processingUnit =
-            *std::find_if(processingUnits.begin(),
-                          processingUnits.end(),
-                          [&dataType](auto x)
-                          { return x->dataType() == dataType; });
-    QtConcurrent::run(processingUnit, &ProcessingUnit::addData, name, data);
-    //processingUnit->addData(name, data);
-
-    // ADD TO PLOT DATA IF IS PLOT DATA
-    // plotData.value(name).first->append(data)
+    plotData.addData(name, QPointF(timeMs, data));
+    if (plotItems.contains(name))
+    {
+        for (QPair<CustomPlotItem*, int> plot : *plotItems.value(name))
+        {
+            plot.first->addData(QPointF(timeMs, data), plot.second);
+        }
+    }
 }
 
 void DataManager::connectToPod(QString hostname, QString port)
@@ -78,38 +195,48 @@ void DataManager::sendPodCommand(CANServer::PodCommand messageType)
     canServer.sendPodCommand(messageType);
 }
 
-void DataManager::registerPlot(CustomPlotItem* plotItem, const QString &name)
+void DataManager::registerGraph(CustomPlotItem *plotItem, const QString &name, int graphIndex)
 {
-    if (!plotItems.contains(name)) {
-        QList<CustomPlotItem*>* plotItemList = new QList<CustomPlotItem*>();
-        plotItemList->append(plotItem);
-        plotItems.insert(name, plotItemList);
-        if (plotData.hasKey(name)) {
-            for (unsigned int i = 0; i < plotItem->getCustomPlot()->graphCount(); i++) 
-            {
-                plotItem->getCustomPlot()->graph(i)->setData(plotData.getXValues(name, i), plotData.getYValues(name, i));       
-            }
-        } else {
+    if (!plotData.hasKey(name)) emit newDataName(name);
+
+    if (!plotItems.contains(name))
+    {
+        QPair<CustomPlotItem*, int> item(plotItem, graphIndex);
+        QList<QPair<CustomPlotItem*, int>>* list = new QList<QPair<CustomPlotItem*, int>>();
+        list->append(item);
+        plotItems.insert(name, list);
+
+        if (plotData.hasKey(name))
+        {
+            plotItem->getCustomPlot()->graph(graphIndex)->setData(plotData.getXValues(name), plotData.getYValues(name));
+        }
+        else
+        {
             plotData.insertEmpty(name);
         }
-    } else {
-        for (unsigned int i = 0; i < plotItem->getCustomPlot()->graphCount(); i++) 
+    }
+    else
+    {
+        for (unsigned int i = 0; i < plotItem->getCustomPlot()->graphCount(); i++)
         {
-            plotItem->getCustomPlot()->graph(i)->setData(plotData.getXValues(name, i), plotData.getYValues(name, i));       
+            plotItem->getCustomPlot()->graph(graphIndex)->setData(plotData.getXValues(name), plotData.getYValues(name));
         }
-        plotItems.value(name)->append(plotItem);
+        plotItems.value(name)->append(QPair<CustomPlotItem*, int>(plotItem, graphIndex));
     }
 }
 
 void DataManager::removePlot(CustomPlotItem *plotItem)
 {
-    for (QString name : plotItems.keys()) {
-        if (plotItems.value(name)->indexOf(plotItem)) {
+    for (QString name : plotItems.keys())
+    {
+        for (QPair<CustomPlotItem*, int> pair : *plotItems.value(name)) {
+            if (pair.first == plotItem) {
+                plotItems.value(name)->removeOne(pair); //TODO: Test that this actually removes pair
+            }
             if (plotItems.value(name)->size() == 0) {
                 plotItems.remove(name);
                 return;
             }
-            plotItems.value(name)->removeOne(plotItem);
         }
     }
 }
@@ -118,40 +245,45 @@ long timeMs = 0;
 QRandomGenerator generator(1000224242);
 void DataManager::dummyData()
 {
-    if (timeMs > 1200) {
+    if (timeMs > 1500)
+    {
         return;
     }
 
-    QPointF data1;
-    if (timeMs < 1000) {
-        data1 = QPointF(timeMs, generator.bounded(5) + exp(timeMs*0.005 ));
-    } else if (timeMs < 1100) {
-        data1 = QPointF(timeMs, generator.bounded(5) + exp(1/timeMs*0.1 ));
-    } else {
-        data1 = QPointF(timeMs, 0);
-    }
-    QPointF data2(timeMs, generator.bounded(10) + 200 + 20*sin(timeMs));
-    for (CustomPlotItem* plot : *plotItems.value("Velocity")) 
-    {
-        plot->addData(data1, 0);
-        plot->addData(data2, 1);
-        plotData.addData("Velocity", 0, data1);
-        plotData.addData("Velocity", 1, data2);
-    }
-    QPointF vdat1 = QPointF(timeMs, generator.bounded(5) + exp(1/(timeMs + 1)));
-    QPointF vdat2 = QPointF(timeMs, generator.bounded(5) + 2*exp(1/(timeMs + 1)));
-    QPointF vdat3 = QPointF(timeMs, generator.bounded(5) + 3*exp(1/(timeMs + 1)));
-    if (plotItems.value("Voltage")) {
-        for (CustomPlotItem* plot : *plotItems.value("Voltage")) 
-        { 
-            plot->addData(vdat1, 0);
-            plot->addData(vdat2, 1);
-            plot->addData(vdat3, 2);
-        }
-    }
-    plotData.addData("Voltage", 0, vdat1);
-    plotData.addData("Voltage", 1, vdat2);
-    plotData.addData("Voltage", 2, vdat3);
+    int vel;
+    int acc;
+    int vol1, vol2, vol3;
+    vol1 = 240*exp(-0.0051*timeMs);
+    vol2 = 235*exp(-0.0042*timeMs);
+    vol3 = 284*exp(-0.0052*timeMs);
+
+    vel = timeMs * exp(-0.004*timeMs);
+    acc = 0.2 * timeMs * exp(-0.004*timeMs);
+
+    QByteArray data;
+    QDataStream stream(&data, QIODevice::ReadWrite);
+    stream << vel;
+
+    QByteArray data2;
+    QDataStream stream2(&data2, QIODevice::ReadWrite);
+    stream2 << acc;
+
+    QByteArray data3, data4, data5;
+    QDataStream stream3(&data3, QIODevice::ReadWrite);
+    QDataStream stream4(&data4, QIODevice::ReadWrite);
+    QDataStream stream5(&data5, QIODevice::ReadWrite);
+
+    stream3 << vol1;
+    stream4 << vol2;
+    stream5 << vol3;
+
+    canServer.dataReceived(timeMs, 0x333, 4, data);
+    canServer.dataReceived(timeMs, 0x334, 4, data2);
+
+    canServer.dataReceived(timeMs, 0x335, 4, data3);
+    canServer.dataReceived(timeMs, 0x336, 4, data4);
+    canServer.dataReceived(timeMs, 0x337, 4, data5);
+
     timeMs += 10;
 }
 
@@ -163,5 +295,4 @@ void DataManager::init()
     timer->start(50);
 }
 
-DataManager* DataManagerAccessor::_obj = nullptr; // Object accessed by QML, needs to be initialized since static
-
+DataManager *DataManagerAccessor::_obj = nullptr; // Object accessed by QML, needs to be initialized since static

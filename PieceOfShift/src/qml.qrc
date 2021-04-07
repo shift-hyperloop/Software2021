@@ -21,5 +21,6 @@
         <file>Frontend/NetworkInfoPage.qml</file>
         <file>Frontend/SignalSymbol.qml</file>
         <file>Frontend/CustomChart.qml</file>
+        <file>Frontend/CustomizableChartPage.qml</file>
     </qresource>
 </RCC>

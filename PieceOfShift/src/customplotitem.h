@@ -22,15 +22,18 @@ public:
  
     Q_INVOKABLE void initCustomPlot(int numOfGraphs);
     Q_INVOKABLE void addData(QPointF data, int graphNum);
-    Q_INVOKABLE void setDataType(QString dataType);
     Q_INVOKABLE void setGraphColor(int graphIndex, QColor color);
-    Q_INVOKABLE void setName(int graphIndex, QString name);
+    Q_INVOKABLE void setGraphName(int graphIndex, QString name);
     Q_INVOKABLE void legendVisible(bool visible);
     Q_INVOKABLE void setAxisLabels(QString xAxis, QString yAxis);
     Q_INVOKABLE void remove();
     Q_INVOKABLE void setBackgroundColor(QColor color);
     Q_INVOKABLE void setSimpleGraph();
     Q_INVOKABLE void setAxisRange(QPoint x, QPoint y);
+    Q_INVOKABLE void setLineVisibility(bool visible, int graphIndex);
+    Q_INVOKABLE void setDotVisibility(bool visible, int graphIndex);
+    Q_INVOKABLE int addGraph();
+    Q_INVOKABLE inline void replot() { m_CustomPlot->replot(); }
 
 protected:
     void routeMouseEvents(QMouseEvent* event);
