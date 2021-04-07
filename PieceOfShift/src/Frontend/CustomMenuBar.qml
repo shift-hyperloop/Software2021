@@ -141,6 +141,7 @@ Item {
             font.pixelSize:  0.025 * window.height
             MenuItem{
                 CheckBox{
+                    id:fullscreen
                     anchors.verticalCenter: parent.verticalCenter
                     onCheckStateChanged: {
                         if(checked){
@@ -151,6 +152,17 @@ Item {
                         }
                         }
                     }
+                onTriggered: {
+                    if(!fullscreen.checked){
+                        window.visibility = 5 //fullscreen
+                        fullscreen.checked = true;
+                    }
+                    else{
+                        window.visibility = 4 //maximized
+                        fullscreen.checked = false;
+                    }
+                }
+
                 Label{
                     text: "Fullscreen"
                     anchors.centerIn: parent
