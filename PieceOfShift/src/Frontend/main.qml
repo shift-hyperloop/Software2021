@@ -127,7 +127,7 @@ ApplicationWindow {
                     //scale: Math.min(window.width / 1000, window.height / 600)
                     transformOrigin: Item.TopRight
                     minValue: 0
-                    maxValue: 50
+                    maxValue: 100
                 }
                 ControlButtons {
                     id: controlButtons
