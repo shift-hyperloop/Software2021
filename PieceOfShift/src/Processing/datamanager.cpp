@@ -83,6 +83,17 @@ void DataManager::addPlotData(const QString& name, unsigned int timeMs, float da
     }
 }
 
+void DataManager::readLogFile(QString path) {
+    fileHandler.readLogFile(path); 
+}
+
+
+void DataManager::writeLogFile(QString path) {
+    // serialzie dataMap
+    fileHandler.writeLogFile(path); 
+
+}
+
 void DataManager::connectToPod(QString hostname, QString port)
 {
     canServer.connectToPod(hostname, port);

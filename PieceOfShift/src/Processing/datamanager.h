@@ -8,6 +8,7 @@
 #include "processingunit.h"
 #include "src/Decoding/canserver.h"
 #include "src/Decoding/decoder.h"
+#include "src/Decoding/filehandler.h"
 #include "Processing/plotdata.h"
 
 class CustomPlotItem;
@@ -39,10 +40,10 @@ public slots:
     void removePlot(CustomPlotItem* plotItem);
 
     // Write current data to log file
-    void writeLogFile(QString path) { } // TODO: Implement
+    void writeLogFile(QString path); // TODO: Implement
 
     // Read log file and send through pipeline
-    void readLogFile(QString path) { } // TODO: Implement
+    void readLogFile(QString path);// TODO: Implement
 
 signals:
     // TODO: Add signals for each CAN message
@@ -66,6 +67,7 @@ private:
 
     Decoder decoder;
     CANServer canServer;
+    FileHandler fileHandler;
 };
 
 class DataManagerAccessor : public QObject {
