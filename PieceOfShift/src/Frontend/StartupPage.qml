@@ -5,8 +5,6 @@ import QtQuick.Dialogs 1.3
 Page{
 
     id: stateIndicationPage
-
-
     Button{
         text: "Go back"
         x: window.width * 0.01
@@ -21,6 +19,7 @@ Page{
     property var names : ["Engage High Voltage", "Other Startup Protocol","Start" ]
 
     Button{
+        id:highVoltageButton
         text: "Engage High Voltage"
         height: window.height * 0.11
         width: window.width * 0.35
@@ -28,11 +27,12 @@ Page{
         x: window.width / 5
         y: window.height / 15 * 3
         onClicked: {
-            //startupStatus.itemAt(index).status = 2
-            //startupStatusText.itemAt(index).status = 2
+
+            highVoltageStatus.status = 2;
         }
     }
     Rectangle{
+        id:highVoltageStatus
         height: window.height*0.1
         width: height
         radius: height
@@ -49,21 +49,22 @@ Page{
             }
 
         }
-        x: window.width / 5 + window.width * 0.35 + window.width * 0.1
-        y: window.height / 15 * 6 + window.height * 0.11 / 2 - height/2
+
+        x: highVoltageButton.x + window.width * 0.35 + window.width * 0.1
+        anchors.verticalCenter: highVoltageButton.verticalCenter
 
         border.width: window.height*0.005
 
     }
     Text{
-        property int status: 0
-        x: window.width / 5 + window.width * 0.35 +  window.height*0.1+ window.width * 0.1 * 1.5
-        y: window.height / 15 * 3 + window.height * 0.11 / 2 - height/2
+        id:highVoltageStatusText
+        x: highVoltageStatus.x+ window.width * 0.1
+        anchors.verticalCenter: highVoltageStatus.verticalCenter
         text: {
-            if(status === 0){
+            if(highVoltageStatus.status === 0){
                "Disengaged"
             }
-            else if(status === 1 ){
+            else if(highVoltageStatus.status === 1 ){
                "Pending response"
             }
             else{
@@ -75,6 +76,7 @@ Page{
     }
 
     Button{
+        id:startUpProtocolButton
         text: "Other Startup Protocol"
         height: window.height * 0.11
         width: window.width * 0.35
@@ -82,12 +84,12 @@ Page{
         x: window.width / 5
         y: window.height / 15 * 6
         onClicked: {
-            //startupStatus.itemAt(index).status = 2
-            //startupStatusText.itemAt(index).status = 2
+            startupProtocolStatus.status = 2
         }
     }
 
     Rectangle{
+        id:startupProtocolStatus
         height: window.height*0.1
         width: height
         radius: height
@@ -104,8 +106,8 @@ Page{
             }
 
         }
-        x: window.width / 5 + window.width * 0.35 + window.width * 0.1
-        y: window.height / 15 * 3 + window.height * 0.11 / 2 - height/2
+        anchors.horizontalCenter: highVoltageStatus.horizontalCenter
+        anchors.verticalCenter: startUpProtocolButton.verticalCenter
 
         border.width: window.height*0.005
 
@@ -113,14 +115,14 @@ Page{
 
 
     Text{
-        property int status: 0
-        x: window.width / 5 + window.width * 0.35 +  window.height*0.1+ window.width * 0.1 * 1.5
-        y: window.height / 15 * 6 + window.height * 0.11 / 2 - height/2
+        id:startupProtocolStatusText
+        anchors.horizontalCenter: highVoltageStatusText.horizontalCenter
+        anchors.verticalCenter: startUpProtocolButton.verticalCenter
         text: {
-            if(status === 0){
+            if(startupProtocolStatus.status === 0){
                "Disengaged"
             }
-            else if(status === 1 ){
+            else if(startupProtocolStatus.status === 1 ){
                "Pending response"
             }
             else{
@@ -131,6 +133,7 @@ Page{
         color: "white"
     }
     Button{
+        id:startButton
         text: "Start"
         height: window.height * 0.11
         width: window.width * 0.35
@@ -138,12 +141,12 @@ Page{
         x: window.width / 5
         y: window.height / 15 * 9
         onClicked: {
-            //startupStatus.itemAt(index).status = 2
-            //startupStatusText.itemAt(index).status = 2
+            startStatus.status = 2
         }
     }
 
     Rectangle{
+        id:startStatus
         height: window.height*0.1
         width: height
         radius: height
@@ -160,22 +163,22 @@ Page{
             }
 
         }
-        x: window.width / 5 + window.width * 0.35 + window.width * 0.1
-        y: window.height / 15 * 9 + window.height * 0.11 / 2 - height/2
+        anchors.horizontalCenter: highVoltageStatus.horizontalCenter
+        anchors.verticalCenter: startButton.verticalCenter
 
         border.width: window.height*0.005
 
     }
 
     Text{
-        property int status: 0
-        x: window.width / 5 + window.width * 0.35 +  window.height*0.1+ window.width * 0.1 * 1.5
-        y: window.height / 15 * 9 + window.height * 0.11 / 2 - height/2
+        id:startStatusText
+        anchors.horizontalCenter: highVoltageStatusText.horizontalCenter
+        anchors.verticalCenter: startStatus.verticalCenter
         text: {
-            if(status === 0){
+            if(startStatus.status === 0){
                "Disengaged"
             }
-            else if(status === 1 ){
+            else if(startStatus.status === 1 ){
                "Pending response"
             }
             else{
