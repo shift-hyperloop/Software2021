@@ -3,7 +3,6 @@ import QtQuick.Extras 1.4
 import QtQuick.Controls 2.5
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Window 2.3
-import QtDataVisualization 1.3
 import Qt3D.Core 2.9
 import Qt3D.Render 2.9
 import QtCharts 2.3
