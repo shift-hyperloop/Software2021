@@ -27,10 +27,23 @@ Page{
         x: window.width / 5
         y: window.height / 15 * 3
         onClicked: {
-
+            if(highVoltageStatus.status == 0){
+                highVoltageMessage.open()
+            }
+        }
+    }
+    MessageDialog {
+        id: highVoltageMessage
+        title: "High Voltage"
+        icon: StandardIcon.Warning
+        text: "Are you sure you want to engage high voltage ?"
+        standardButtons: StandardButton.Yes | StandardButton.Abort
+        onYes: {
+            // code for sending command to pod
             highVoltageStatus.status = 2;
         }
     }
+
     Rectangle{
         id:highVoltageStatus
         height: window.height*0.1
@@ -84,7 +97,20 @@ Page{
         x: window.width / 5
         y: window.height / 15 * 6
         onClicked: {
-            startupProtocolStatus.status = 2
+            if(startupProtocolStatus.status == 0){
+                startUpProtocolMessage.open()
+            }
+        }
+    }
+    MessageDialog {
+        id: startUpProtocolMessage
+        title: "Other Startup Protocol"
+        icon: StandardIcon.Warning
+        text: "Are you sure you want to do the other statup protocol ?"
+        standardButtons: StandardButton.Yes | StandardButton.Abort
+        onYes: {
+            // code for sending command to pod
+            startupProtocolStatus.status = 2;
         }
     }
 
@@ -141,7 +167,20 @@ Page{
         x: window.width / 5
         y: window.height / 15 * 9
         onClicked: {
-            startStatus.status = 2
+            if(startStatus.status == 0){
+                startMessage.open()
+            }
+        }
+    }
+    MessageDialog {
+        id: startMessage
+        title: "Start"
+        icon: StandardIcon.Warning
+        text: "Are you sure you want to start the pod ?"
+        standardButtons: StandardButton.Yes | StandardButton.Abort
+        onYes: {
+            // code for sending command to pod
+            startStatus.status = 2;
         }
     }
 
