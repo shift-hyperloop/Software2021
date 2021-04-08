@@ -154,11 +154,9 @@ Item {
                     }
                 onTriggered: {
                     if(!fullscreen.checked){
-                        window.visibility = 5 //fullscreen
                         fullscreen.checked = true;
                     }
                     else{
-                        window.visibility = 4 //maximized
                         fullscreen.checked = false;
                     }
                 }
