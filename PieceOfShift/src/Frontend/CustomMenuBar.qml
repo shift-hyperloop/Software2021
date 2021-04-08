@@ -232,6 +232,7 @@ Item {
               }
         }
         Menu {
+            id: menuHelp
             title: qsTr("Help")
             font.pixelSize:  0.025 * window.height
 

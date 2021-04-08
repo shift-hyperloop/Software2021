@@ -23,6 +23,19 @@ ApplicationWindow {
 
     menuBar: CustomMenuBar{
         id: topBar
+        Rectangle {
+            id: menuDivider
+            width: 2
+            height: 0.05 * window.height
+            color: "#ededed"
+            opacity: 0.8
+            anchors {
+                top: parent.top
+                left: parent.left
+                leftMargin: window.width * 0.37
+            }
+        }
+
         NetworkInfo {
             id: networkinfo
             connected: true
@@ -41,6 +54,16 @@ ApplicationWindow {
                     cursorShape = containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor;
                 }
             }
+        }
+        PodState {
+            id: podState
+            currentState: 2
+            anchors {
+                top: parent.top
+                left: menuDivider.right
+                leftMargin: window.width * 0.01
+            }
+            z: 2
         }
     }
 
