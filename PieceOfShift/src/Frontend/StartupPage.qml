@@ -20,73 +20,170 @@ Page{
     }
     property var names : ["Engage High Voltage", "Other Startup Protocol","Start" ]
 
-    Repeater{
-        id: startupButtons
-        model: names.length
-        Button{
-            text: names[index]
-            height: window.height * 0.11
-            width: window.width * 0.35
-            font.pixelSize: window.height * 0.05
-            x: window.width / 5
-            y: window.height / 15 * (3 + 3*index)
-            onClicked: {
-                startupStatus.itemAt(index).status = 2
-                startupStatusText.itemAt(index).status = 2
-            }
-        }
-
-    }
-    Repeater{
-        id: startupStatus
-        model: names.length
-
-        Rectangle{
-            height: window.height*0.1
-            width: height
-            radius: height
-            property int status: 0
-            color: {
-                if(status === 0){
-                   "red"
-                }
-                else if(status === 1 ){
-                   "yellow"
-                }
-                else{
-                    "green"
-                }
-
-            }
-            x: window.width / 5 + window.width * 0.35 + window.width * 0.1
-            y: window.height / 15 * (3 + 3*index) + window.height * 0.11 / 2 - height/2
-
-            border.width: window.height*0.005
-
+    Button{
+        text: "Engage High Voltage"
+        height: window.height * 0.11
+        width: window.width * 0.35
+        font.pixelSize: window.height * 0.05
+        x: window.width / 5
+        y: window.height / 15 * 3
+        onClicked: {
+            //startupStatus.itemAt(index).status = 2
+            //startupStatusText.itemAt(index).status = 2
         }
     }
-    Repeater{
-        id: startupStatusText
-        model: names.length
-        Text{
-            property int status: 0
-            x: window.width / 5 + window.width * 0.35 +  window.height*0.1+ window.width * 0.1 * 1.5
-            y: window.height / 15 * (3 + 3*index) + window.height * 0.11 / 2 - height/2
-            text: {
-                if(status === 0){
-                   "Disengaged"
-                }
-                else if(status === 1 ){
-                   "Pending response"
-                }
-                else{
-                    "Engaged"
-                }
+    Rectangle{
+        height: window.height*0.1
+        width: height
+        radius: height
+        property int status: 0
+        color: {
+            if(status === 0){
+               "red"
             }
-            font.pixelSize: window.height * 0.02
-            color: "white"
-        }
+            else if(status === 1 ){
+               "yellow"
+            }
+            else{
+                "green"
+            }
 
+        }
+        x: window.width / 5 + window.width * 0.35 + window.width * 0.1
+        y: window.height / 15 * 6 + window.height * 0.11 / 2 - height/2
+
+        border.width: window.height*0.005
+
+    }
+    Text{
+        property int status: 0
+        x: window.width / 5 + window.width * 0.35 +  window.height*0.1+ window.width * 0.1 * 1.5
+        y: window.height / 15 * 3 + window.height * 0.11 / 2 - height/2
+        text: {
+            if(status === 0){
+               "Disengaged"
+            }
+            else if(status === 1 ){
+               "Pending response"
+            }
+            else{
+                "Engaged"
+            }
+        }
+        font.pixelSize: window.height * 0.02
+        color: "white"
+    }
+
+    Button{
+        text: "Other Startup Protocol"
+        height: window.height * 0.11
+        width: window.width * 0.35
+        font.pixelSize: window.height * 0.05
+        x: window.width / 5
+        y: window.height / 15 * 6
+        onClicked: {
+            //startupStatus.itemAt(index).status = 2
+            //startupStatusText.itemAt(index).status = 2
+        }
+    }
+
+    Rectangle{
+        height: window.height*0.1
+        width: height
+        radius: height
+        property int status: 0
+        color: {
+            if(status === 0){
+               "red"
+            }
+            else if(status === 1 ){
+               "yellow"
+            }
+            else{
+                "green"
+            }
+
+        }
+        x: window.width / 5 + window.width * 0.35 + window.width * 0.1
+        y: window.height / 15 * 3 + window.height * 0.11 / 2 - height/2
+
+        border.width: window.height*0.005
+
+    }
+
+
+    Text{
+        property int status: 0
+        x: window.width / 5 + window.width * 0.35 +  window.height*0.1+ window.width * 0.1 * 1.5
+        y: window.height / 15 * 6 + window.height * 0.11 / 2 - height/2
+        text: {
+            if(status === 0){
+               "Disengaged"
+            }
+            else if(status === 1 ){
+               "Pending response"
+            }
+            else{
+                "Engaged"
+            }
+        }
+        font.pixelSize: window.height * 0.02
+        color: "white"
+    }
+    Button{
+        text: "Start"
+        height: window.height * 0.11
+        width: window.width * 0.35
+        font.pixelSize: window.height * 0.05
+        x: window.width / 5
+        y: window.height / 15 * 9
+        onClicked: {
+            //startupStatus.itemAt(index).status = 2
+            //startupStatusText.itemAt(index).status = 2
+        }
+    }
+
+    Rectangle{
+        height: window.height*0.1
+        width: height
+        radius: height
+        property int status: 0
+        color: {
+            if(status === 0){
+               "red"
+            }
+            else if(status === 1 ){
+               "yellow"
+            }
+            else{
+                "green"
+            }
+
+        }
+        x: window.width / 5 + window.width * 0.35 + window.width * 0.1
+        y: window.height / 15 * 9 + window.height * 0.11 / 2 - height/2
+
+        border.width: window.height*0.005
+
+    }
+
+    Text{
+        property int status: 0
+        x: window.width / 5 + window.width * 0.35 +  window.height*0.1+ window.width * 0.1 * 1.5
+        y: window.height / 15 * 9 + window.height * 0.11 / 2 - height/2
+        text: {
+            if(status === 0){
+               "Disengaged"
+            }
+            else if(status === 1 ){
+               "Pending response"
+            }
+            else{
+                "Engaged"
+            }
+        }
+        font.pixelSize: window.height * 0.02
+        color: "white"
     }
 
 }
