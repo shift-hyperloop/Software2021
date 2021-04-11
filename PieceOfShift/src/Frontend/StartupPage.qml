@@ -3,8 +3,8 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.3
 import QtQuick.Dialogs 1.3
 Page{
-
     id: stateIndicationPage
+    property var passwordAccepted: false
     Button{
         text: "Go back"
         x: window.width * 0.01
@@ -27,7 +27,7 @@ Page{
         x: window.width / 5
         y: window.height / 15 * 3
         onClicked: {
-            if(highVoltageStatus.status == 0){
+            if(highVoltageStatus.status == 0 && passwordAccepted){
                 highVoltageMessage.open()
             }
         }
@@ -40,6 +40,7 @@ Page{
         standardButtons: StandardButton.Yes | StandardButton.Abort
         onYes: {
             // code for sending command to pod
+            // also need some backend verification, so that you cant press start before engage high voltage
             highVoltageStatus.status = 2;
         }
     }
@@ -97,7 +98,7 @@ Page{
         x: window.width / 5
         y: window.height / 15 * 6
         onClicked: {
-            if(startupProtocolStatus.status == 0){
+            if(startupProtocolStatus.status == 0 && passwordAccepted){
                 startUpProtocolMessage.open()
             }
         }
@@ -167,7 +168,7 @@ Page{
         x: window.width / 5
         y: window.height / 15 * 9
         onClicked: {
-            if(startStatus.status == 0){
+            if(startStatus.status == 0 && passwordAccepted){
                 startMessage.open()
             }
         }
@@ -226,6 +227,70 @@ Page{
         }
         font.pixelSize: window.height * 0.02
         color: "white"
+    }
+
+    Rectangle{
+        color: "lightgray"
+        id: authorization
+        width: passwordInput.width
+        height: passwordInput.height
+        border.width: 1
+
+        anchors.left: passwordLabel.right
+        anchors.top: startButton.bottom
+        anchors.topMargin: height
+        TextInput {
+            id: passwordInput
+            padding: 5
+            bottomPadding: 0
+            selectByMouse : true
+            height: window.height / 25
+            width: window.width / 7
+            font.pixelSize: window.height / 30
+            echoMode: TextInput.Password
+        }
+        MouseArea{
+            cursorShape: authorization.activeFocus ? Qt.IBeamCursor : Qt.ArrowCursor;
+            enabled: false
+            anchors.fill: parent
+        }
+    }
+    Text{
+        id: passwordLabel
+        text: "Password for authorizating button use: "
+        color: "white"
+        anchors.left: startButton.left
+        anchors.top: authorization.top
+        font.pixelSize: passwordInput.font.pixelSize
+    }
+    Button{
+        anchors.left: authorization.right
+        anchors.leftMargin: window.width * 0.01
+        anchors.verticalCenter: passwordLabel.verticalCenter
+        text: "validate"
+        font.pixelSize: window.height / 30
+        onClicked: {
+            if(passwordInput.text == "ElonMusk"){ //replace with better password validation
+                passwordAccepted = true;
+                passwordAcceptedText.visible = true
+                passwordAcceptedText.text = "Password Accepted"
+                passwordAcceptedText.color = "green"
+
+            }
+            else{
+                passwordAcceptedText.visible = true
+                passwordAcceptedText.text = "Incorrect password"
+                passwordAcceptedText.color = "red"
+            }
+
+          passwordInput.clear()
+        }
+    }
+    Text {
+        id: passwordAcceptedText
+        visible: false
+        anchors.left: passwordLabel.left
+        anchors.top: passwordLabel.bottom
     }
 
 }
