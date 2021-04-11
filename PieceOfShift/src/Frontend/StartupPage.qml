@@ -21,10 +21,10 @@ Page{
     Button{
         id:highVoltageButton
         text: "Engage High Voltage"
-        height: window.height * 0.11
-        width: window.width * 0.35
-        font.pixelSize: window.height * 0.05
-        x: window.width / 5
+        height: window.height * 0.08
+        width: window.width * 0.23
+        font.pixelSize: window.height * 0.03
+        x: window.width / 10
         y: window.height / 15 * 3
         onClicked: {
             if(highVoltageStatus.status == 0 && passwordAccepted){
@@ -64,7 +64,7 @@ Page{
 
         }
 
-        x: highVoltageButton.x + window.width * 0.35 + window.width * 0.1
+        x: highVoltageButton.x + highVoltageButton.width + window.width * 0.05
         anchors.verticalCenter: highVoltageButton.verticalCenter
 
         border.width: window.height*0.005
@@ -92,10 +92,10 @@ Page{
     Button{
         id:startUpProtocolButton
         text: "Other Startup Protocol"
-        height: window.height * 0.11
-        width: window.width * 0.35
-        font.pixelSize: window.height * 0.05
-        x: window.width / 5
+        height: highVoltageButton.height
+        width: highVoltageButton.width
+        font.pixelSize: highVoltageButton.font.pixelSize
+        x: highVoltageButton.x
         y: window.height / 15 * 6
         onClicked: {
             if(startupProtocolStatus.status == 0 && passwordAccepted){
@@ -162,10 +162,10 @@ Page{
     Button{
         id:startButton
         text: "Start"
-        height: window.height * 0.11
-        width: window.width * 0.35
-        font.pixelSize: window.height * 0.05
-        x: window.width / 5
+        height: highVoltageButton.height
+        width: highVoltageButton.width
+        font.pixelSize: highVoltageButton.font.pixelSize
+        x: highVoltageButton.x
         y: window.height / 15 * 9
         onClicked: {
             if(startStatus.status == 0 && passwordAccepted){
@@ -268,7 +268,7 @@ Page{
         anchors.leftMargin: window.width * 0.01
         anchors.verticalCenter: passwordLabel.verticalCenter
         text: "validate"
-        font.pixelSize: window.height / 30
+        font.pixelSize: window.height / 40
         onClicked: {
             if(passwordInput.text == "ElonMusk"){ //replace with better password validation
                 passwordAccepted = true;
@@ -291,6 +291,19 @@ Page{
         visible: false
         anchors.left: passwordLabel.left
         anchors.top: passwordLabel.bottom
+    }
+    ValueTable{
+        id: valueTable
+        names: ["Voltage 1","Voltage 2", "Voltage 3", "Voltage 4", "Temperature 1", "Temperature 2", "Current 1", "Current 2"] // names for the values in the table
+        values: [0,0,0,0,0,0,0,0] // values for the table
+        anchors {                                   // indexes in names[] and values[] are corresponding
+            top: parent.top
+            topMargin: 0.09 * window.height
+            right: parent.right
+            rightMargin: thermometer.width + 0.03*window.width
+        }
+        width: window.width / 3.5
+        height: width * 4/5
     }
 
 }
