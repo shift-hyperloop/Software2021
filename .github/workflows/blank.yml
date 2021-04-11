@@ -30,35 +30,6 @@ jobs:
           cmake ..
           make
         shell: bash
-        
-  Build-Windows:
-    runs-on: windows-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v1
-      
-      - name: Install Qt
-        uses: jurplel/install-qt-action@v2
-        with:
-          version: '5.15.2'
-          dir: '${{ github.workspace }}/example/'
-          install-deps: 'true'
-          modules: 'qtcharts'
-          arch: win64_mingw81
-                  
-      - name: get-cmake
-        # You may pin to the exact commit or the version.
-        # uses: lukka/get-cmake@ce884ff4748bc525a2177d60e239360355738b4d
-        uses: lukka/get-cmake@v3.19.2
-        
-      - name: Build Application
-        run: |
-          cd PieceOfShift
-          mkdir build
-          cd build
-          cmake .. -G "MinGW Makefiles"
-          make
-        shell: bash
     
   Build-Mac-OS:
     runs-on: macos-latest
@@ -87,3 +58,113 @@ jobs:
           cmake ..
           make
         shell: bash
+        
+  Build-Windows:
+    
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: '5.15.2'
+          dir: '${{ github.workspace }}/example/'
+          install-deps: 'true'
+          modules: 'qtcharts'
+          arch: win64_mingw81
+                  
+      - name: get-cmake
+        # You may pin to the exact commit or the version.
+        # uses: lukka/get-cmake@ce884ff4748bc525a2177d60e239360355738b4d
+        uses: lukka/get-cmake@v3.19.2
+        
+      - name: Set up MinGW
+        uses: egor-tensin/setup-mingw@v2
+        with:
+          platform: x64
+          
+      - name: Build Application
+       
+        run: |
+          cd PieceOfShift
+          mkdir build
+          cd build
+          cmake -DCMAKE_BUILD_TYPE=Release .. -G "MinGW Makefiles"
+          make
+          mkdir ../Release
+          cp POS.exe ../Release/
+          ls
+          windeployqt --qmldir ../src/Frontend ../Release/POS.exe --compiler-runtime
+          cd ../Release
+          7z a -r -tzip POS-x86_64-${{ github.run_id }}.zip *
+          ls
+          realpath .
+        shell: bash
+
+      - uses: actions/upload-artifact@v1
+        id: upload_artifact
+        with:
+          path: PieceOfShift/Release/POS-x86_64-${{ github.run_id }}.zip
+          name: POS-x86_64-${{ github.run_id }}
+
+  release:
+    if: contains(github.ref, 'tags/v')
+    runs-on: windows-latest
+    needs: Build-Windows
+
+    steps:
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1.0.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false
+
+    - name: Store Release url
+      run: |
+        echo "${{ steps.create_release.outputs.upload_url }}" > ./upload_url
+
+    - uses: actions/upload-artifact@v1
+      with:
+        path: ./upload_url
+        name: upload_url
+
+  publish:
+    if: contains(github.ref, 'tags/v')
+    runs-on: ubuntu-latest
+    needs: release
+
+    steps:
+    - name: Download artifact
+      uses: actions/download-artifact@v1
+      with:
+        name: POS-x86_64-${{ github.run_id }}
+        path: ./
+
+    - name: Download URL
+      uses: actions/download-artifact@v1
+      with:
+        name: upload_url
+        path: ./
+    - id: set_upload_url
+      run: |
+        upload_url=`cat ./upload_url`
+        echo ::set-output name=upload_url::$upload_url
+        ls
+
+    - name: Upload to Release
+      id: upload_to_release
+      uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.set_upload_url.outputs.upload_url }}
+        asset_path: ./POS-x86_64-${{ github.run_id }}.zip
+        asset_name: POS-x86_64-${{ github.run_id }}.zip
+        asset_content_type: application/zip
