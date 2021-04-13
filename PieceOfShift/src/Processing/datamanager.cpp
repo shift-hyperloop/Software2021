@@ -43,6 +43,7 @@ void DataManager::addData(unsigned int timeMs, const QString &name, const DataTy
 {
     if (!plotData.hasKey(name)) emit newDataName(name);
     QDataStream dataStream(&data, QIODevice::ReadWrite);
+    dataStream.setByteOrder(QDataStream::LittleEndian);
 
     if (dataType == DataType::INT32)
     {
