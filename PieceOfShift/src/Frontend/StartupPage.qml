@@ -2,9 +2,11 @@ import QtQuick 2.12
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.3
 import QtQuick.Dialogs 1.3
-Page{
+Page{ //Password for activating buttons is "ElonMusk"
+    //if the user has written the correct password, the buttons can be pressed. the buttons opens a MessageDialog that makes you confirm your choise.
+    //code for sending information to the pod should therefore be written in the onYes{} function of the buttons corresponding MessageDialog
     id: stateIndicationPage
-    property var passwordAccepted: false
+    property var passwordAccepted: false // this should be stored somewhere else since now it resets when the page is opened
     Button{
         text: "Go back"
         x: window.width * 0.01
@@ -16,9 +18,8 @@ Page{
            stackView.pop(null);
         }
     }
-    property var names : ["Engage High Voltage", "Other Startup Protocol","Start" ]
 
-    Button{
+    Button{                                //there is probably a more efficient way to do this with a repeater, but this way it is simpler to give the buttons and MessageDialogs their onclicked functions
         id:highVoltageButton
         text: "Engage High Voltage"
         height: window.height * 0.08
@@ -39,8 +40,8 @@ Page{
         text: "Are you sure you want to engage high voltage ?"
         standardButtons: StandardButton.Yes | StandardButton.Abort
         onYes: {
-            // code for sending command to pod
-            // also need some backend verification, so that you cant press start before engage high voltage
+            // code for sending command to pod should go here
+            // also need some backend verification, so that you cant press "start" before "engage high voltage"
             highVoltageStatus.status = 2;
         }
     }
@@ -61,7 +62,6 @@ Page{
             else{
                 "green"
             }
-
         }
 
         x: highVoltageButton.x + highVoltageButton.width + window.width * 0.05
@@ -110,7 +110,7 @@ Page{
         text: "Are you sure you want to do the other statup protocol ?"
         standardButtons: StandardButton.Yes | StandardButton.Abort
         onYes: {
-            // code for sending command to pod
+            // code for sending command to pod should go here
             startupProtocolStatus.status = 2;
         }
     }
@@ -180,7 +180,7 @@ Page{
         text: "Are you sure you want to start the pod ?"
         standardButtons: StandardButton.Yes | StandardButton.Abort
         onYes: {
-            // code for sending command to pod
+            // code for sending command to pod should go here
             startStatus.status = 2;
         }
     }
@@ -270,7 +270,7 @@ Page{
         text: "validate"
         font.pixelSize: window.height / 40
         onClicked: {
-            if(passwordInput.text == "ElonMusk"){ //replace with better password validation
+            if(passwordInput.text == "ElonMusk"){ //replace with better password validation ?
                 passwordAccepted = true;
                 passwordAcceptedText.visible = true
                 passwordAcceptedText.text = "Password Accepted"
@@ -297,13 +297,12 @@ Page{
         names: ["Voltage 1","Voltage 2", "Voltage 3", "Voltage 4", "Temperature 1", "Temperature 2", "Current 1", "Current 2"] // names for the values in the table
         values: [0,0,0,0,0,0,0,0] // values for the table
         anchors {                                   // indexes in names[] and values[] are corresponding
-            top: parent.top
-            topMargin: 0.09 * window.height
+            top: highVoltageButton.top
+            //topMargin: 0.09 * window.height
             right: parent.right
-            rightMargin: thermometer.width + 0.03*window.width
+            rightMargin: 0.03*window.width
         }
         width: window.width / 3.5
         height: width * 4/5
     }
-
 }

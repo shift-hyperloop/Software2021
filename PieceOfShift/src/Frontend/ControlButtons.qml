@@ -163,6 +163,7 @@ Item {
             height: parent.height / 3
             width: parent.width - 20
             text: "Emergency Stop"
+            id: emergencyStopButton
             anchors {
                 top: b0.bottom
                 left: parent.left
@@ -184,12 +185,17 @@ Item {
                 color: parent.down ? "#cc121e" : "#ff1424"
 
                 MouseArea {
+                    id: emergencyStopMouseArea
                     anchors.fill: parent
                     hoverEnabled: true
                     onClicked: {
                         dataManager.dataManager.sendPodCommand(PodCommand.EMERGENCY_BRAKE);
-                        //valueTable.tableModel.setRow(3,{"name": "Bruh moments:", "color":valueTable.tableModel.getRow(3).color += 1})
-                        //accessing a value in valuetable - should work but does not
+                    }
+                    Action {
+                        shortcut: "Ctrl+Shift+s" // shortcut for emergency stop
+                        onTriggered: {
+                            dataManager.dataManager.sendPodCommand(PodCommand.EMERGENCY_BRAKE); // this code will run when the keyboard shortcut is presset
+                        }
                     }
                     onPressed: {
                         parent.color = "#cc121e";
@@ -201,10 +207,12 @@ Item {
                         parent.opacity = containsMouse ? 1.0 : 0.8;
                         cursorShape = containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor;
                     }
+
                 }
             }
         }
     }
+
 }
 
 /*##^##
