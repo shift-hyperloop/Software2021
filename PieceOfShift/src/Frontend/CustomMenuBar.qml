@@ -117,24 +117,15 @@ Item {
               }
         }
         Menu {
-            title: qsTr("Edit")
+            title: qsTr("Startup")
             font.pixelSize:  0.025 * window.height
 
-            MenuItem { text: qsTr("&Cut")
+            MenuItem { text: qsTr("Start Pod")
                 onTriggered: {
-
+                    stackView.push("StartupPage.qml");
                 }
               }
-            MenuItem { text: qsTr("&Copy")
-                onTriggered: {
 
-                }
-              }
-            MenuItem { text: qsTr("&Paste")
-                onTriggered: {
-
-                }
-             }
         }
         Menu{
             title: qsTr("View")

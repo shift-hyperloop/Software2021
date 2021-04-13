@@ -23,5 +23,6 @@
         <file>Frontend/CustomChart.qml</file>
         <file>Frontend/CustomizableChartPage.qml</file>
         <file>Frontend/PodState.qml</file>
+        <file>Frontend/StartupPage.qml</file>
     </qresource>
 </RCC>
