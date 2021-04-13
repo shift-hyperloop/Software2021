@@ -196,6 +196,15 @@ ApplicationWindow {
                 anchors.bottom: slider.top
                 anchors.bottomMargin: height/5
             }
+            Text{
+                id: batteryText
+                text: Math.round(battery.charge*100) + "%"
+                font.pixelSize: window.width / 110
+                anchors.top: battery.bottom
+                anchors.topMargin: window.height*0.01
+                x: battery.x + battery.height/4 - width/2
+                color: "white"
+            }
 
             Timer {
                 id: timer
