@@ -43,10 +43,15 @@ Item {
 
         // This component creates a fixed number of repetitive, sub-components (in this case rectangles)
         Repeater {
+            id: repeater
             // This attribute specifies the number of components to create
             model: parent.columns * parent.rows
             // Here we create columns * rows number of Rectangle-components
             Rectangle {
+                id: rect
+                width: Math.floor((parent.width - 20) / parent.columns)
+                height: Math.floor((parent.height - 20) / parent.rows)
+                color: "red"
                 states: [
                     State {
                         name: "very hot"
@@ -59,12 +64,20 @@ Item {
                     State {
                         name: "hot"
                         PropertyChanges { target: rect; color: "#FFBB00"}
+                    },
+                    State {
+                        name: "not so hot"
+                        PropertyChanges { target: rect; color: "#FFFF00"}
+                    },
+                    State {
+                        name: "error"
+                        PropertyChanges { target: rect; color: "#910000"}
                     }
                 ]
-                id: rect
-                width: Math.floor((parent.width - 20) / parent.columns)
-                height: Math.floor((parent.height - 20) / parent.rows)
-                color: "red"
+
+                transitions: Transition {
+                    ColorAnimation { duration: 2000 }
+                }
                 border {
                     color: {
                         return "black";
@@ -84,10 +97,12 @@ Item {
         id: timer
         running: true
         repeat: true
-        interval: 1000
+        interval: 2000
         onTriggered: {
-
+            const stateList = ['very hot', 'slightly hot', 'hot', 'not so hot', 'error'];
+            for (let i = 0; i < repeater.count; i++) {
+                repeater.itemAt(i).state = stateList[Math.floor(Math.random() * stateList.length)]
+            }
         }
     }
-
 }
