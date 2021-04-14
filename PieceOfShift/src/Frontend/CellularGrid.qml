@@ -47,16 +47,15 @@ Item {
             model: parent.columns * parent.rows
             // Here we create columns * rows number of Rectangle-components
             Rectangle {
-
                 states: [
                     State {
                         name: "very hot"
                         PropertyChanges { target: rect; color: "#FF0000"}
-                    }
+                    },
                     State {
                         name: "slightly hot"
                         PropertyChanges { target: rect; color: "#FF8800"}
-                    }
+                    },
                     State {
                         name: "hot"
                         PropertyChanges { target: rect; color: "#FFBB00"}
