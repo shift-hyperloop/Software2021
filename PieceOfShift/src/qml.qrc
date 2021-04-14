@@ -9,6 +9,10 @@
         <file>Frontend/Chart.qml</file>
         <file>Frontend/MultiLineChart.qml</file>
         <file>Frontend/Thermometer.qml</file>
+        <file>Frontend/CellularGrid.qml</file>
+        <file>Frontend/BatteryGridPage.qml</file>
+        <file>Frontend/Cell.qml</file>
+        <file>Frontend/CreateDynamicGrid.js</file>
         <file>Frontend/CustomMenuBar.qml</file>
         <file>Frontend/ControlButtons.qml</file>
         <file>Frontend/DistanceSlider.qml</file>

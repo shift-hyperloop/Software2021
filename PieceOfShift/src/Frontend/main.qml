@@ -36,6 +36,7 @@ ApplicationWindow {
                 hoverEnabled: true
                 onClicked: {
                     stackView.push("NetworkInfoPage.qml");
+                    //stackView.push("CellularGrid.qml");
                 }
                 onHoveredChanged: {
                     parent.opacity = containsMouse ? 1.0 : 0.8;
@@ -211,6 +212,7 @@ ApplicationWindow {
             CustomChart{
                 id: customChart
                 redirect: "MechanicalDetails.qml"
+                //redirect: "CellularGrid.qml"
                 width: window.width * 0.35
                 height: window.height * 0.25
                 anchors.right: valueTable.left

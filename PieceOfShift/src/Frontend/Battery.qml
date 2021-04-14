@@ -14,7 +14,7 @@ Item {
             hoverEnabled: true
             cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor;
             onClicked: {
-                stackView.push("DetailedBatteryPage.qml")
+                stackView.push("CellularGrid.qml")
             }
         }
         }
