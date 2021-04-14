@@ -198,11 +198,21 @@ ApplicationWindow {
             }
             Battery{
                 id: battery
-                height: window.height / 5
+                height: window.height / 4
                 anchors.left: parent.left
                 anchors.leftMargin: 0.025 * window.width
                 anchors.bottom: slider.top
                 anchors.bottomMargin: height/5
+            }
+            ValueTable{
+             id: batteryCells
+             anchors.bottom: battery.bottom
+             x: battery.x + battery.height/1.5
+            // anchors.leftMargin: window.width * 0.01
+             height: battery.height
+             width: window.width / 3.5
+             names: ["Max voltage", "Max battery temperature", "Minumum voltage", "Minumum battery temperature","Average voltage", "Average battery temperature"]
+             values: [0,0,0,0,0,0]
             }
             Text{
                 id: batteryText
