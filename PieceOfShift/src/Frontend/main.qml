@@ -151,7 +151,7 @@ ApplicationWindow {
                     minValue: 0
                     maxValue: 100
                 }
-                ControlButtons {
+              /* ControlButtons {
                     id: controlButtons
 
                     height: window.height / 3.5
@@ -164,7 +164,15 @@ ApplicationWindow {
                         rightMargin: window.width*0.025
                     }
                     transformOrigin: Item.BottomRight
-                }
+                } */
+
+
+            }
+            ControlButtons{
+                anchors.bottom: slider.top
+                anchors.right: parent.right
+                anchors.rightMargin: window.width * 0.025
+
             }
             Tiltmeter{
                 id: tiltMeter
