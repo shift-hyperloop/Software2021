@@ -4,10 +4,7 @@ import QtQuick.Dialogs 1.3
 
 Item {
     id: cGrid
-
-    // Ideally, anchors would be used instead of x-/y-positioning. But anchors didn't work, so I CBA
-    // to spend time fixing this right now
-    // Note: might be because of the menu-bar
+    
     TextField {
         id: rowText
         placeholderText: qsTr("Enter rows")
@@ -16,9 +13,6 @@ Item {
         validator: IntValidator {bottom: 1; top: 50;}
         focus: true
         text: qsTr("9")
-        // For some annoying ass reason, anchors aren't working (QML I hate you so much)
-        //anchors.top: parent.top
-        //anchors.left: parent.left
         visible: false
     }
 
@@ -100,11 +94,9 @@ Item {
         repeat: true
         interval: 200
         onTriggered: {
-            const stateList = ['very hot', 'slightly hot', 'hot', 'not so hot', 'error'];
             for (let i = 0; i < repeater.count; i++) {
                 let temperature = Math.floor(Math.random() * 60) + 60;
                 repeater.itemAt(i).temperature = temperature;
-                // stateList[Math.floor(Math.random() * stateList.length)];
                 repeater.itemAt(i).state = (temperature < 30) ?
                             'error' : (temperature < 60) ?
                             'not so hot' : (temperature < 90) ?
