@@ -13,11 +13,21 @@ Page {
            stackView.pop(null);
         }
     }
+
     ValueTable{
-        names: ["Value 1","Value 2", "Value Value", "Value"]
-        values: [10, 12, 100, 8]
+        id:limTemperatures
+        names: ["Temperature 1","Temperature 2", "Temperature 3", "Temperature 4"]
+        values: [30, 40, 50, 60]
         anchors.centerIn: parent
         height: inverterPage.height / 3
         width: inverterPage.width / 3
+    }
+    Text{
+        anchors.bottom: limTemperatures.top
+        anchors.bottomMargin: window.height * 0.01
+        anchors.horizontalCenter: limTemperatures.horizontalCenter
+        text: "Lim Temperatures"
+        color: "white"
+        font.pixelSize: window.height * 0.05
     }
 }
