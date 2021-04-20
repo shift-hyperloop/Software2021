@@ -52,6 +52,7 @@ Item {
                 width: Math.floor((parent.width - 20) / parent.columns)
                 height: Math.floor((parent.height - 20) / parent.rows)
                 color: "red"
+                property var temperature: 50
                 states: [
                     State {
                         name: "very hot"
@@ -76,7 +77,7 @@ Item {
                 ]
 
                 transitions: Transition {
-                    ColorAnimation { duration: 2000 }
+                    ColorAnimation { duration: 800 }
                 }
                 border {
                     color: {
@@ -86,7 +87,7 @@ Item {
                 }
 
                 Text {
-                    text: rect.Positioner.index + "\u00b0"
+                    text: rect.temperature + "\u00b0" + "C"
                     anchors.centerIn: parent
                 }
             }
@@ -97,11 +98,18 @@ Item {
         id: timer
         running: true
         repeat: true
-        interval: 2000
+        interval: 200
         onTriggered: {
             const stateList = ['very hot', 'slightly hot', 'hot', 'not so hot', 'error'];
             for (let i = 0; i < repeater.count; i++) {
-                repeater.itemAt(i).state = stateList[Math.floor(Math.random() * stateList.length)]
+                let temperature = Math.floor(Math.random() * 60) + 60;
+                repeater.itemAt(i).temperature = temperature;
+                // stateList[Math.floor(Math.random() * stateList.length)];
+                repeater.itemAt(i).state = (temperature < 30) ?
+                            'error' : (temperature < 60) ?
+                            'not so hot' : (temperature < 90) ?
+                            'hot' : (temperature < 120) ?
+                            'slightly hot' : 'very hot';
             }
         }
     }
