@@ -82,9 +82,7 @@ Item {
                     ColorAnimation { duration: 800 }
                 }
                 border {
-                    color: {
-                        return "black";
-                    }
+                    color: "black"
                     width: 2
                 }
 
