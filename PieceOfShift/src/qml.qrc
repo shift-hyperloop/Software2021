@@ -24,5 +24,6 @@
         <file>Frontend/CustomizableChartPage.qml</file>
         <file>Frontend/PodState.qml</file>
         <file>Frontend/StartupPage.qml</file>
+        <file>Frontend/InverterPage.qml</file>
     </qresource>
 </RCC>
