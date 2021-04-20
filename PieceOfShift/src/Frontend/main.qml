@@ -136,8 +136,8 @@ ApplicationWindow {
                     topMargin: 0.05 * window.height
                 }
                 Thermometer {
-                    id: thermometer
-                    width: window.width / 15
+                    id: thermometerBattery
+                    width: window.width / 20
                     height: 4 * width
                     anchors {
                         right: parent.right
@@ -150,7 +150,26 @@ ApplicationWindow {
                     transformOrigin: Item.TopRight
                     minValue: 0
                     maxValue: 100
+                    measuredTemp: "Battery:"
                 }
+                Thermometer {
+                    id: thermometerAmbient
+                    width: window.width / 20
+                    height: 4 * width
+                    anchors {
+                        right: thermometerBattery.right
+                        rightMargin: window.width * 0.040
+                        top: parent.top
+                        topMargin: 0.04 * window.height
+                        //topMargin: (panelRight.height - (height * scale) - slider.height - (controlButtons.height * controlButtons.scale)) / 2
+                    }
+                    //scale: Math.min(window.width / 1000, window.height / 600)
+                    transformOrigin: Item.TopRight
+                    minValue: 0
+                    maxValue: 50
+                    measuredTemp: "Ambient:"
+                }
+
                 ControlButtons {
                     id: controlButtons
 
@@ -221,7 +240,8 @@ ApplicationWindow {
                     speedometer.value = speed;
                     //valueTable.tableModel.setRow(0,{"name": "Speed", "value":qsTr(speedometer.value + "km/h")})
                     //updating field in table with index 0
-                    thermometer.value = Math.random() * 25 + 25;
+                    thermometerAmbient.value = Math.random() * 25 + 25;
+                    thermometerBattery.value = Math.random() * 10 + 25;
                     //change from customChart to chart to get old chart back.
                     customChart.counter++;
                     //chart.lineseries.append(chart.counter, speed);
@@ -264,15 +284,15 @@ ApplicationWindow {
 
             ValueTable{
                 id: valueTable
-                names: ["Speed","Voltage battery 1", "Value Value", "Bruh moments:", "Crashes", "Battery Charge", "Pod temperature", "Value"] // names for the values in the table
-                values: [qsTr(speedometer.value + "km/h"), 12, 100, 8, 0, qsTr(Math.round(battery.charge*100,1) + " %"), qsTr(Math.round(thermometer.value,1) + " \xB0 C"), 0] // values for the table
+                names: ["Speed","Voltage battery 1", "Value Value", "Bruh moments:", "Crashes", "Battery Charge", "Ambient temperature", "Value"] // names for the values in the table
+                values: [qsTr(speedometer.value + "km/h"), 12, 100, 8, 0, qsTr(Math.round(battery.charge*100,1) + " %"), qsTr(Math.round(thermometerAmbient.value,1) + " \xB0 C"), 0] // values for the table
                 anchors {                                   // indexes in names[] and values[] are corresponding
                     top: parent.top
                     topMargin: 0.09 * window.height
                     right: parent.right
-                    rightMargin: thermometer.width + 0.03*window.width
+                    rightMargin: thermometerAmbient.width * 2 + 0.03 * window.width
                 }
-                width: window.width / 3.5
+                width: window.width / 4
                 height: width * 4/5
             }
 

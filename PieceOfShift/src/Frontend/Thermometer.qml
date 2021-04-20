@@ -10,18 +10,19 @@ Item {
     property alias maxValue: thermometer.maximumValue
     property alias value: thermometer.value
     property alias style: thermometer.style
+    property var measuredTemp: "0"
 
 
 
     Rectangle {
         id: rectangle1
-        y: parent.height * 0.87
+        y: parent.height * 0.88
         width: thermometer.width / 2.5
         height: width
         color: "#cacaca"
         radius: 100
-        anchors.left: parent.left
-        anchors.leftMargin: parent.width * 0.17
+        anchors.right: parent.right
+        anchors.rightMargin: thermometer.width * 0.41 - thermometer.width * (maxValue / 950)
     }
 
     Gauge {
@@ -35,8 +36,6 @@ Item {
             }
         }
         id: thermometer
-        x: -13
-        y: -15
         font.pixelSize: 0.04 * thermometer.height
         value: 0
         height: parent.height * 0.95
@@ -44,8 +43,6 @@ Item {
         tickmarkStepSize: thermometer.maximumValue / 10
         style: GaugeStyle {
             valueBar: Rectangle {
-                x: 15
-                y: 15
                 implicitWidth: thermometer.width / 4
                 radius: thermometer.width / 8
                 //change color of bar with value B)
@@ -57,23 +54,9 @@ Item {
                 //color: Qt.rgba(r,  0.8 - ((Math.abs(r - 0.5) / 0.5)), 1 - r)
             }
             background: Rectangle {
-                x: 15
-                y: 15
                 radius: thermometer.width / 8
             }
             foreground: null
-            tickmark: Item {
-                implicitWidth: parent.width / 15
-                implicitHeight: implicitWidth / 5
-
-                Rectangle {
-                    x: 15
-                    y: 15
-                    width: parent.width
-                    height: parent.height
-                    color: "#ededed"
-                }
-            }
         }
         Behavior on value {
             NumberAnimation{
@@ -91,6 +74,33 @@ Item {
         anchors.verticalCenter: rectangle1.verticalCenter
         anchors.horizontalCenter: rectangle1.horizontalCenter
 
+    }
+    Text {
+        id: tempNumber
+        color: "#ededed"
+        text: qsTr(Math.round(thermometer.value) + "°")
+        horizontalAlignment: Text.AlignHCenter
+        anchors {
+            horizontalCenter: rectangle.horizontalCenter
+            top: parent.bottom
+        }
+        styleColor: "#ededed"
+        font.pixelSize: window.width / 90
+        font.bold: true
+    }
+    Text {
+        id: tempName
+        color: "#ededed"
+        text: measuredTemp
+        horizontalAlignment: Text.AlignHCenter
+        anchors {
+            bottom: parent.top
+            right: parent.right
+            rightMargin: thermometer.width * 0.5
+        }
+        styleColor: "#ededed"
+        font.pixelSize: window.width / 110
+        font.bold: true
     }
 
 }
