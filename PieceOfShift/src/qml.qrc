@@ -25,5 +25,6 @@
         <file>Frontend/PodState.qml</file>
         <file>Frontend/StartupPage.qml</file>
         <file>Frontend/VCUChecklist.qml</file>
+        <file>Frontend/InverterPage.qml</file>
     </qresource>
 </RCC>

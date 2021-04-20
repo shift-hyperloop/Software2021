@@ -163,10 +163,14 @@ Item {
                     stackView.push("DetailedBatteryPage.qml");
                 }
               }
-
-            MenuItem { text: qsTr("Network")
+            MenuItem { text: qsTr("Custom Chart")
                 onTriggered: {
-                    stackView.push("NetworkInfoPage.qml");
+                    stackView.push("CustomizableChartPage.qml");
+                }
+              }
+            MenuItem { text: qsTr("Inverter")
+                onTriggered: {
+                    stackView.push("InverterPage.qml");
                 }
               }
 
@@ -175,12 +179,12 @@ Item {
                     stackView.push("MechanicalDetails.qml");
                 }
               }
-
-            MenuItem { text: qsTr("Custom Chart")
+            MenuItem { text: qsTr("Network")
                 onTriggered: {
-                    stackView.push("CustomizableChartPage.qml");
+                    stackView.push("NetworkInfoPage.qml");
                 }
               }
+
 
 /*
             Menu{
