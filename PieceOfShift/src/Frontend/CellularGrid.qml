@@ -19,6 +19,7 @@ Item {
         // For some annoying ass reason, anchors aren't working (QML I hate you so much)
         //anchors.top: parent.top
         //anchors.left: parent.left
+        visible: false
     }
 
     TextField {
@@ -28,6 +29,7 @@ Item {
         y: rowText.y
         validator: IntValidator {bottom: 1; top: 50;}
         text: qsTr("20")
+        visible: false
     }
 
     Grid {
