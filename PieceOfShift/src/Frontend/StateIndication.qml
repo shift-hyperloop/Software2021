@@ -33,13 +33,15 @@ Page{
         font.pixelSize: window.width / 50
         color: "white"
         anchors.horizontalCenter: parent.horizontalCenter
-        y: parent.height * 0.1
+        anchors.top: borderRectangle.top
+        anchors.topMargin: window.height * 0.05
 
     }
     ColumnLayout{
         id: column
         anchors.centerIn: parent 
         spacing: window.height  / 15
+
         Repeater{
             model: stateIndicationStates.length
             RadioButton{
@@ -52,6 +54,15 @@ Page{
             }
         }
     }
+    Rectangle{
+        id: borderRectangle
+        anchors.centerIn: column
+        width: column.width * 4
+        height: column.height*1.5
+        border.width: window.width * 0.01
+        color: "transparent"
+    }
+
     Component.onCompleted: {
         chosenButton = stackView.chosenState // if you have previously chosen a button it will be selected
         if(chosenButton == null){            //if not 0 will be selected
