@@ -4,38 +4,17 @@ import QtQuick.Dialogs 1.3
 
 Item {
     id: cGrid
-    
-    TextField {
-        id: rowText
-        placeholderText: qsTr("Enter rows")
-        x: 2
-        y: height + 2
-        validator: IntValidator {bottom: 1; top: 50;}
-        focus: true
-        text: qsTr("9")
-        visible: false
-    }
-
-    TextField {
-        id: colText
-        placeholderText: qsTr("Enter columns")
-        x: rowText.x + rowText.width + 5
-        y: rowText.y
-        validator: IntValidator {bottom: 1; top: 50;}
-        text: qsTr("20")
-        visible: false
-    }
 
     Grid {
         id: grid
-        x: rowText.x + 5
-        y: rowText.y + rowText.height + 5
+        x: 7
+        y: 0.05 * window.height + 25
         spacing: 1
         width: window.width - 10
-        height: window.height * 0.95 - rowText.height - rowText.y
+        height: window.height * 0.95 - y
 
-        columns: colText.text ? parseInt(colText.text) : 10;
-        rows: rowText.text ? parseInt(rowText.text) : 10;
+        columns: 20
+        rows: 9
 
         // This component creates a fixed number of repetitive, sub-components (in this case rectangles)
         Repeater {
