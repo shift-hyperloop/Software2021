@@ -267,6 +267,7 @@ ApplicationWindow {
                     }
                     else{
                         battery.charge = 0
+                        vcuchecklist.checklist.get(1).currentState = "bad"
                     }
 
 
@@ -311,6 +312,14 @@ ApplicationWindow {
                 }
                 width: window.width / 4
                 height: width * 4/5
+            }
+            VCUChecklist {
+                id: vcuchecklist
+                x: 100
+                y: 100
+                width: 200
+                height: 200
+                names: ["Checklist 1", "Checklist 2", "Checklist 3"]
             }
 
         }
