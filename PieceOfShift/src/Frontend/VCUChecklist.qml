@@ -13,7 +13,8 @@ Item {
             id: checklistModel
 
         }
-
+        //The checklist is made up of two components, text, and a colored circle. The circle changes color based on the current state of that checklist object. Circle can be replaced by
+        //an icon in the future. State of an object is set by "checklist.get(i).currentState = ''"
         Component {
             id: checklistDelegate
             Row {
@@ -66,6 +67,7 @@ Item {
             model: checklistModel
             delegate: checklistDelegate
             interactive: false
+            //The listView is populated by the elements in the names array from main.qml. Every object starts with state "bad".
             Component.onCompleted: {
                 for (var i = 0; i < names.length; i++){
                     checklistModel.append({"name": names[i], "currentState": "bad"});
