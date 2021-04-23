@@ -319,7 +319,7 @@ ApplicationWindow {
                 y: 100
                 width: 200
                 height: 200
-                names: ["Checklist 1", "Checklist 2", "Checklist 3"]
+                names: ["Telemetry", "State Indication", "Sensors suite 1", "Sensors suite 2", "Inverter Control", "BMS Master"]
             }
 
         }

@@ -33,15 +33,9 @@ Item {
                     radius: height
                     color: "blue"
                     y: text.font.pixelSize / 2
+                    Layout.alignment: Qt.AlignRight
                 }
                 states: [
-                    State {
-                        name: "good"
-                        PropertyChanges {
-                            target: rect
-                            color: "green"
-                        }
-                    },
                     State {
                         name: "bad"
                         PropertyChanges {
@@ -50,13 +44,34 @@ Item {
                         }
                     },
                     State {
-                        name: "ok"
+                        name: "precon 1"
+                        PropertyChanges {
+                            target: rect
+                            color: "white"
+                            border.color: "black"
+                        }
+                    },
+                    State {
+                        name: "precon 2"
+                        PropertyChanges {
+                            target: rect
+                            color: "light yellow"
+                        }
+                    },
+                    State {
+                        name: "precon 3"
                         PropertyChanges {
                             target: rect
                             color: "yellow"
                         }
+                    },
+                    State {
+                        name: "precon 4"
+                        PropertyChanges {
+                            target: rect
+                            color: "green"
+                        }
                     }
-
                 ]
             }
         }
@@ -82,8 +97,9 @@ Item {
         running: true
         repeat: true
         onTriggered: {
-            checklistModel.get(0).currentState = "ok"
-            checklistModel.get(1).currentState = 'good'
+            checklistModel.get(0).currentState = "precon 1"
+            checklistModel.get(1).currentState = 'precon 2'
+            checklistModel.get(5).currentState = 'precon 4'
         }
     }
 }
