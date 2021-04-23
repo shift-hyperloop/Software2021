@@ -243,11 +243,10 @@ void DataManager::removePlot(CustomPlotItem *plotItem)
     {
         for (QPair<CustomPlotItem*, int> pair : *plotItems.value(name)) {
             if (pair.first == plotItem) {
-                plotItems.value(name)->removeOne(pair); //TODO: Test that this actually removes pair
+                plotItems.value(name)->removeOne(pair);
             }
             if (plotItems.value(name)->size() == 0) {
                 plotItems.remove(name);
-                return;
             }
         }
     }
