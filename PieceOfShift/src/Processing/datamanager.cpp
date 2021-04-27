@@ -52,6 +52,7 @@ void DataManager::addData(unsigned int timeMs, const QString &name, const DataTy
             dataStream >> dataStruct;
             float data = dataStruct.value_0;
             addPlotData(name, timeMs, data);
+            emit newData(name, dataStruct);
             break;
         }  
         case DataType::ERROR_CODE: 
@@ -66,114 +67,133 @@ void DataManager::addData(unsigned int timeMs, const QString &name, const DataTy
             DataStructs::VCUStatus dataStruct;
             dataStream >> dataStruct;
             emit newData(name, dataStruct);
+            break;
         }
         case DataType::VECTOR_3F:
         {
             DataStructs::Vector3f dataStruct;
             dataStream >> dataStruct;
             emit newData(name, dataStruct);
+            break;
         }
         case DataType::POD_STATE:
         {
             DataStructs::PodState dataStruct;
             dataStream >> dataStruct;
             emit newData(name, dataStruct);
+            break;
         }
         case DataType::VECTOR_3I:
         {
             DataStructs::Vector3i dataStruct;
             dataStream >> dataStruct;
             emit newData(name, dataStruct);
+            break;
         }
         case DataType::BOOL:
         {
             DataStructs::Bool dataStruct;
             dataStream >> dataStruct;
             emit newData(name, dataStruct);
+            break;
         }
         case DataType::VECTOR_3B:
         {
             DataStructs::Vector3b dataStruct;
             dataStream >> dataStruct;
             emit newData(name, dataStruct);
+            break;
         }
         case DataType::CHAR:
         {
             DataStructs::Char dataStruct;
             dataStream >> dataStruct;
             emit newData(name, dataStruct);
+            break;
         }
         case DataType::VECTOR_2C:
         {
             DataStructs::Vector2c dataStruct;
             dataStream >> dataStruct;
             emit newData(name, dataStruct);
+            break;
         }
         case DataType::VECTOR_3C:
         {
             DataStructs::Vector3c dataStruct;
             dataStream >> dataStruct;
             emit newData(name, dataStruct);
+            break;
         }
         case DataType::VECTOR_16C:
         {
             DataStructs::Vector16c dataStruct;
             dataStream >> dataStruct;
             emit newData(name, dataStruct);
+            break;
         }
         case DataType::SHORT:
         {
             DataStructs::Short dataStruct;
             dataStream >> dataStruct;
             emit newData(name, dataStruct);
+            break;
         }
         case DataType::VECTOR_2S:
         {
             DataStructs::Vector2s dataStruct;
             dataStream >> dataStruct;
             emit newData(name, dataStruct);
+            break;
         }
         case DataType::FLOAT:
         {
             DataStructs::Float dataStruct;
             dataStream >> dataStruct;
             emit newData(name, dataStruct);
+            break;
         }
         case DataType::DOUBLE:
         {
             DataStructs::Double dataStruct; 
             dataStream >> dataStruct;
             emit newData(name, dataStruct);
+            break;
         }
         case DataType::VECTOR_2F:
         {
             DataStructs::Vector2f dataStruct;
             dataStream >> dataStruct;
             emit newData(name, dataStruct);
+            break;
         }
         case DataType::VECTOR_4F:
         {
             DataStructs::Vector2f dataStruct;
             dataStream >> dataStruct;
             emit newData(name, dataStruct);
+            break;
         }
         case DataType::VECTOR_6F:
         {
             DataStructs::Vector2f dataStruct;
             dataStream >> dataStruct;
             emit newData(name, dataStruct);
+            break;
         }
         case DataType::VECTOR_8F:
         {
             DataStructs::Vector2f dataStruct;
             dataStream >> dataStruct;
             emit newData(name, dataStruct);
+            break;
         }
         case DataType::VECTOR_16F:
         {
             DataStructs::Vector2f dataStruct;
             dataStream >> dataStruct;
             emit newData(name, dataStruct);
+            break;
         }
     }
 }
