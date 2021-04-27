@@ -273,16 +273,22 @@ void DataManager::dummyData()
 
     QByteArray data;
     QDataStream stream(&data, QIODevice::ReadWrite);
+    stream.setByteOrder(QDataStream::LittleEndian);
     stream << vel;
 
     QByteArray data2;
     QDataStream stream2(&data2, QIODevice::ReadWrite);
+    stream2.setByteOrder(QDataStream::LittleEndian);
     stream2 << acc;
 
     QByteArray data3, data4, data5;
     QDataStream stream3(&data3, QIODevice::ReadWrite);
     QDataStream stream4(&data4, QIODevice::ReadWrite);
     QDataStream stream5(&data5, QIODevice::ReadWrite);
+    stream3.setByteOrder(QDataStream::LittleEndian);
+    stream4.setByteOrder(QDataStream::LittleEndian);
+    stream5.setByteOrder(QDataStream::LittleEndian);
+
 
     stream3 << vol1;
     stream4 << vol2;
