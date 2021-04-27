@@ -5,11 +5,28 @@ import QtQuick.Dialogs 1.3
 Item {
     id: cGrid
 
+    Keys.onPressed: {
+        if (event.key === 16777219) {
+            stackView.pop("main.qml");
+        }
+    }
+
     Column {
         id: colorIndex
         x: 10
         y: 0.05 * window.height + 25
         spacing: 5
+
+        Button {
+        id: but2
+        text: "Go back"
+        height: 70
+        width: 105
+        font.pixelSize: window.height * 0.02
+        onClicked: {
+            stackView.pop("main.qml");
+        }
+    }
 
         Text {
             id: explanation
