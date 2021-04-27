@@ -45,132 +45,136 @@ void DataManager::addData(unsigned int timeMs, const QString &name, const DataTy
     QDataStream dataStream(&data, QIODevice::ReadWrite);
     dataStream.setByteOrder(QDataStream::LittleEndian);
 
-    if (dataType == DataType::INT32)
-    {
-        DataStructs::Int *dataStruct = new DataStructs::Int();
-        dataStream >> *dataStruct;
-        float data = dataStruct->value_0;
-        addPlotData(name, timeMs, data);
-    }
-    else if (dataType == DataType::ERROR_CODE)
-    {
-        DataStructs::ErrorCode *dataStruct = new DataStructs::ErrorCode();
-        dataStream >> *dataStruct;
-        emit newData(name, *dataStruct);
-    }
-    else if (dataType == DataType::VCU_STATUS)
-    {
-        DataStructs::VCUStatus *dataStruct = new DataStructs::VCUStatus();
-        dataStream >> *dataStruct;
-        emit newData(name, *dataStruct);
-    }
-    else if (dataType == DataType::VECTOR_3F)
-    {
-        DataStructs::Vector3f *dataStruct = new DataStructs::Vector3f();
-        dataStream >> *dataStruct;
-        emit newData(name, *dataStruct);
-    }
-    else if (dataType == DataType::POD_STATE)
-    {
-        DataStructs::PodState *dataStruct = new DataStructs::PodState();
-        dataStream >> *dataStruct;
-        emit newData(name, *dataStruct);
-    }
-    else if (dataType == DataType::VECTOR_3I)
-    {
-        DataStructs::Vector3i *dataStruct = new DataStructs::Vector3i();
-        dataStream >> *dataStruct;
-        emit newData(name, *dataStruct);
-    }
-    else if (dataType == DataType::BOOL)
-    {
-        DataStructs::Bool *dataStruct = new DataStructs::Bool();
-        dataStream >> *dataStruct;
-        emit newData(name, *dataStruct);
-    }
-    else if (dataType == DataType::VECTOR_3B)
-    {
-        DataStructs::Vector3b *dataStruct = new DataStructs::Vector3b();
-        dataStream >> *dataStruct;
-        emit newData(name, *dataStruct);
-    }
-    else if (dataType == DataType::CHAR)
-    {
-        DataStructs::Char *dataStruct = new DataStructs::Char();
-        dataStream >> *dataStruct;
-        emit newData(name, *dataStruct);
-    }
-    else if (dataType == DataType::VECTOR_2C)
-    {
-        DataStructs::Vector2c *dataStruct = new DataStructs::Vector2c();
-        dataStream >> *dataStruct;
-        emit newData(name, *dataStruct);
-    }
-    else if (dataType == DataType::VECTOR_3C)
-    {
-        DataStructs::Vector3c *dataStruct = new DataStructs::Vector3c();
-        dataStream >> *dataStruct;
-        emit newData(name, *dataStruct);
-    }
-    else if (dataType == DataType::VECTOR_16C)
-    {
-        DataStructs::Vector16c *dataStruct = new DataStructs::Vector16c();
-        dataStream >> *dataStruct;
-        emit newData(name, *dataStruct);
-    }
-    else if (dataType == DataType::SHORT)
-    {
-        DataStructs::Short *dataStruct = new DataStructs::Short();
-        dataStream >> *dataStruct;
-        emit newData(name, *dataStruct);
-    }
-    else if (dataType == DataType::VECTOR_2S)
-    {
-        DataStructs::Vector2s *dataStruct = new DataStructs::Vector2s();
-        dataStream >> *dataStruct;
-        emit newData(name, *dataStruct);
-    }
-    else if (dataType == DataType::FLOAT)
-    {
-        DataStructs::Float *dataStruct = new DataStructs::Float();
-        dataStream >> *dataStruct;
-        emit newData(name, *dataStruct);
-    }
-    else if (dataType == DataType::DOUBLE)
-    {
-        DataStructs::Double *dataStruct = new DataStructs::Double();
-        dataStream >> *dataStruct;
-        emit newData(name, *dataStruct);
-    }
-    else if (dataType == DataType::VECTOR_2F)
-    {
-        DataStructs::Vector2f *dataStruct = new DataStructs::Vector2f();
-        dataStream >> *dataStruct;
-        emit newData(name, *dataStruct);
-    }
-    else if (dataType == DataType::VECTOR_4F)
-    {
-        DataStructs::Vector2f *dataStruct = new DataStructs::Vector2f();
-        dataStream >> *dataStruct;
-        emit newData(name, *dataStruct);
-    }
-    else if (dataType == DataType::VECTOR_6F)
-    {
-        DataStructs::Vector2f *dataStruct = new DataStructs::Vector2f();
-        dataStream >> *dataStruct;
-        emit newData(name, *dataStruct);
-    }
-    else if (dataType == DataType::VECTOR_8F)
-    {
-        DataStructs::Vector2f *dataStruct = new DataStructs::Vector2f();
-        dataStream >> *dataStruct;
-        emit newData(name, *dataStruct);
-    }
-    else if (dataType == DataType::VECTOR_16F)
-    {
-        DataStructs::Vector2f *dataStruct = new DataStructs::Vector2f();
-        dataStream >> *dataStruct;
-        emit newData(name, *dataStruct);
+    switch (dataType) {
+        case DataType::INT32: 
+        {
+            DataStructs::Int dataStruct;
+            dataStream >> dataStruct;
+            float data = dataStruct.value_0;
+            addPlotData(name, timeMs, data);
+            break;
+        }  
+        case DataType::ERROR_CODE: 
+        {
+            DataStructs::ErrorCode dataStruct;
+            dataStream >> dataStruct;
+            emit newData(name, dataStruct);
+            break;
+        }
+        case DataType::VCU_STATUS:
+        {
+            DataStructs::VCUStatus dataStruct;
+            dataStream >> dataStruct;
+            emit newData(name, dataStruct);
+        }
+        case DataType::VECTOR_3F:
+        {
+            DataStructs::Vector3f dataStruct;
+            dataStream >> dataStruct;
+            emit newData(name, dataStruct);
+        }
+        case DataType::POD_STATE:
+        {
+            DataStructs::PodState dataStruct;
+            dataStream >> dataStruct;
+            emit newData(name, dataStruct);
+        }
+        case DataType::VECTOR_3I:
+        {
+            DataStructs::Vector3i dataStruct;
+            dataStream >> dataStruct;
+            emit newData(name, dataStruct);
+        }
+        case DataType::BOOL:
+        {
+            DataStructs::Bool dataStruct;
+            dataStream >> dataStruct;
+            emit newData(name, dataStruct);
+        }
+        case DataType::VECTOR_3B:
+        {
+            DataStructs::Vector3b dataStruct;
+            dataStream >> dataStruct;
+            emit newData(name, dataStruct);
+        }
+        case DataType::CHAR:
+        {
+            DataStructs::Char dataStruct;
+            dataStream >> dataStruct;
+            emit newData(name, dataStruct);
+        }
+        case DataType::VECTOR_2C:
+        {
+            DataStructs::Vector2c dataStruct;
+            dataStream >> dataStruct;
+            emit newData(name, dataStruct);
+        }
+        case DataType::VECTOR_3C:
+        {
+            DataStructs::Vector3c dataStruct;
+            dataStream >> dataStruct;
+            emit newData(name, dataStruct);
+        }
+        case DataType::VECTOR_16C:
+        {
+            DataStructs::Vector16c dataStruct;
+            dataStream >> dataStruct;
+            emit newData(name, dataStruct);
+        }
+        case DataType::SHORT:
+        {
+            DataStructs::Short dataStruct;
+            dataStream >> dataStruct;
+            emit newData(name, dataStruct);
+        }
+        case DataType::VECTOR_2S:
+        {
+            DataStructs::Vector2s dataStruct;
+            dataStream >> dataStruct;
+            emit newData(name, dataStruct);
+        }
+        case DataType::FLOAT:
+        {
+            DataStructs::Float dataStruct;
+            dataStream >> dataStruct;
+            emit newData(name, dataStruct);
+        }
+        case DataType::DOUBLE:
+        {
+            DataStructs::Double dataStruct; 
+            dataStream >> dataStruct;
+            emit newData(name, dataStruct);
+        }
+        case DataType::VECTOR_2F:
+        {
+            DataStructs::Vector2f dataStruct;
+            dataStream >> dataStruct;
+            emit newData(name, dataStruct);
+        }
+        case DataType::VECTOR_4F:
+        {
+            DataStructs::Vector2f dataStruct;
+            dataStream >> dataStruct;
+            emit newData(name, dataStruct);
+        }
+        case DataType::VECTOR_6F:
+        {
+            DataStructs::Vector2f dataStruct;
+            dataStream >> dataStruct;
+            emit newData(name, dataStruct);
+        }
+        case DataType::VECTOR_8F:
+        {
+            DataStructs::Vector2f dataStruct;
+            dataStream >> dataStruct;
+            emit newData(name, dataStruct);
+        }
+        case DataType::VECTOR_16F:
+        {
+            DataStructs::Vector2f dataStruct;
+            dataStream >> dataStruct;
+            emit newData(name, dataStruct);
+        }
     }
 }
 
