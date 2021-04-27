@@ -5,13 +5,115 @@ import QtQuick.Dialogs 1.3
 Item {
     id: cGrid
 
+    Column {
+        id: colorIndex
+        x: 10
+        y: 0.05 * window.height + 25
+        spacing: 5
+
+        Text {
+            id: explanation
+            x: parent.x
+            y: parent.y
+            width: 130
+            text: qsTr("The following\nboxes indicate\ncell temperatures")
+            color: "yellow"
+        }
+
+        Rectangle {
+            id: color1
+            x: parent.x
+            color: "#FF0000"
+
+            width: Math.floor((grid.width - 20) / grid.columns)
+            height: Math.floor((grid.height - 20) / grid.rows)
+
+            border.width: 2
+            border.color: "black"
+
+            Text {
+                anchors.centerIn: parent
+                text: ">= 50" + "\u00b0" + "C"
+            }
+        }
+
+        Rectangle {
+            id: color2
+            x: parent.x
+            color: "#FF8800"
+            
+            width: Math.floor((grid.width - 20) / grid.columns)
+            height: Math.floor((grid.height - 20) / grid.rows)
+
+            border.width: 2
+            border.color: "black"
+
+            Text {
+                anchors.centerIn: parent
+                text: ">= 36" + "\u00b0" + "C"
+            }
+        }
+
+        Rectangle {
+            id: color3
+            x: parent.x
+            color: "#FFBB00"
+            
+            width: Math.floor((grid.width - 20) / grid.columns)
+            height: Math.floor((grid.height - 20) / grid.rows)
+
+            border.width: 2
+            border.color: "black"
+
+            Text {
+                anchors.centerIn: parent
+                text: ">= 22" + "\u00b0" + "C"
+            }
+        }
+
+        Rectangle {
+            id: color4
+            x: parent.x
+            color: "#FFFF00"
+            
+            width: Math.floor((grid.width - 20) / grid.columns)
+            height: Math.floor((grid.height - 20) / grid.rows)
+
+            border.width: 2
+            border.color: "black"
+
+            Text {
+                anchors.centerIn: parent
+                text: ">= 6" + "\u00b0" + "C"
+            }
+        }
+
+        Rectangle {
+            id: color5
+            x: parent.x
+            color: "#9dff00"
+            
+            width: Math.floor((grid.width - 20) / grid.columns)
+            height: Math.floor((grid.height - 20) / grid.rows)
+
+            border.width: 2
+            border.color: "black"
+
+            Text {
+                anchors.centerIn: parent
+                text: "< 6" + "\u00b0" + "C"
+            }
+        }
+
+    }
+
     Grid {
         id: grid
-        x: 7
-        y: 0.05 * window.height + 25
+        x: colorIndex.x + colorIndex.width + 5
+        y: colorIndex.y
         spacing: 1
-        width: window.width - 10
-        height: window.height * 0.95 - y
+        width: window.width - colorIndex.width - 15
+        height: window.height * 0.95 - y + 25
 
         columns: 20
         rows: 9
@@ -47,7 +149,7 @@ Item {
                     },
                     State {
                         name: "cold"
-                        PropertyChanges { target: rect; color: "#910000"}
+                        PropertyChanges { target: rect; color: "#9dff00"}
                     }
                 ]
 
