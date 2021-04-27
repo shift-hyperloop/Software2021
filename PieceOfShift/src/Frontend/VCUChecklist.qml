@@ -25,6 +25,7 @@ Item {
                 width: parent.width
                 Text {
                     id: text
+                    color: "#ededed"
                     text: name
                     width: parent.width * 0.8
                     verticalAlignment: Text.AlignVCenter

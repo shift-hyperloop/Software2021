@@ -113,6 +113,7 @@ ApplicationWindow {
 
                 Speedometer {
                     id: speedometer
+                    redirect: "MechanicalDetails.qml"
                     width: Math.round(window.width / 6) //round, because speedometer is very picky and doesnt like uneven widths.
                     height: width //width and height have to be equal!! (+- some margin but idk why you'd want an elliptical gauge)
                     anchors {
