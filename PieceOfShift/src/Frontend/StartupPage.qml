@@ -2,7 +2,14 @@ import QtQuick 2.12
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.3
 import QtQuick.Dialogs 1.3
-Page{ //Password for activating buttons is "ElonMusk"
+import shift.datamanagement 1.0
+
+Page{ 
+    DataManagerAccessor {
+        id: dataManager
+    }
+    
+    //Password for activating buttons is "ElonMusk"
     //if the user has written the correct password, the buttons can be pressed. the buttons opens a MessageDialog that makes you confirm your choise.
     //code for sending information to the pod should therefore be written in the onYes{} function of the buttons corresponding MessageDialog
     id: stateIndicationPage
@@ -42,6 +49,7 @@ Page{ //Password for activating buttons is "ElonMusk"
         onYes: {
             // code for sending command to pod should go here
             // also need some backend verification, so that you cant press "start" before "engage high voltage"
+            dataManager.dataManager.sendPodCommand(PodCommand.HIGH_VOLTAGE);
             highVoltageStatus.status = 2;
         }
     }
@@ -169,6 +177,7 @@ Page{ //Password for activating buttons is "ElonMusk"
         y: window.height / 15 * 9
         onClicked: {
             if(startStatus.status == 0 && passwordAccepted){
+
                 startMessage.open()
             }
         }
@@ -181,6 +190,7 @@ Page{ //Password for activating buttons is "ElonMusk"
         standardButtons: StandardButton.Yes | StandardButton.Abort
         onYes: {
             // code for sending command to pod should go here
+            dataManager.dataManager.sendPodCommand(PodCommand.START);
             startStatus.status = 2;
         }
     }

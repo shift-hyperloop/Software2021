@@ -99,6 +99,7 @@ int main()
         if (send(connfd, (void*) buffer, 7 + sizeof(can_data), 0) == -1) {
             printf("Can not send :(\n");
         }
+        printf("Sent value %d!\n", can_data.value_0);
         timeMs += 50;
         msleep(50);
     }

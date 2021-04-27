@@ -46,7 +46,7 @@ Item {
                         PropertyChanges { target: rect; color: "#FFFF00"}
                     },
                     State {
-                        name: "error"
+                        name: "cold"
                         PropertyChanges { target: rect; color: "#910000"}
                     }
                 ]
@@ -74,12 +74,12 @@ Item {
         interval: 200
         onTriggered: {
             for (let i = 0; i < repeater.count; i++) {
-                let temperature = Math.floor(Math.random() * 60) + 60;
+                let temperature = Math.floor(Math.random() * 70) - 10;
                 repeater.itemAt(i).temperature = temperature;
-                repeater.itemAt(i).state = (temperature < 30) ?
-                            'error' : (temperature < 60) ?
-                            'not so hot' : (temperature < 90) ?
-                            'hot' : (temperature < 120) ?
+                repeater.itemAt(i).state = (temperature < 6) ?
+                            'cold' : (temperature < 22) ?
+                            'not so hot' : (temperature < 36) ?
+                            'hot' : (temperature < 50) ?
                             'slightly hot' : 'very hot';
             }
         }
