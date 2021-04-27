@@ -112,8 +112,8 @@ Item {
         x: colorIndex.x + colorIndex.width + 5
         y: colorIndex.y
         spacing: 1
-        width: window.width - colorIndex.width - 10
-        height: window.height * 0.95 - y
+        width: window.width - colorIndex.width - 15
+        height: window.height * 0.95 - y + 25
 
         columns: 20
         rows: 9
