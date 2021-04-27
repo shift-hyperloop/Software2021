@@ -3,11 +3,13 @@ import QtQuick.Layouts 1.3
 import shift.datamanagement 1.0
 
 Item {
+    width: 200
+    height: 200
     property alias checklist: checklistModel
     property var names: []
     Rectangle {
-        width: 200
-        height: 200
+        id: checklist
+        anchors.fill: parent
         color: "#00000000"
         ListModel {
             id: checklistModel
@@ -20,21 +22,25 @@ Item {
             Row {
                 state: currentState
                 spacing: 10
+                width: parent.width
                 Text {
                     id: text
                     text: name
+                    width: parent.width * 0.8
                     verticalAlignment: Text.AlignVCenter
-                    font.pixelSize: window.width / 110
+                    font.pixelSize: checklist.width / 10
+                    Layout.fillWidth: true
                 }
 
                 Rectangle {
                     id: rect
-                    height: 10; width: 10
+                    y: text.font.pixelSize / 2
+                    height: parent.width / 20; width: parent.width / 20
                     radius: height
                     color: "blue"
-                    y: text.font.pixelSize / 2
                     Layout.alignment: Qt.AlignRight
                 }
+
                 states: [
                     State {
                         name: "bad"
@@ -49,6 +55,9 @@ Item {
                             target: rect
                             color: "white"
                             border.color: "black"
+                            border.width: 2
+                            width: (parent.width / 20) + 4 ; height: (parent.width / 20) + 4
+
                         }
                     },
                     State {
@@ -90,7 +99,7 @@ Item {
             }
         }
     }
-
+//for testing purposes
     Timer {
         id: timer
         interval: 5000
@@ -100,7 +109,10 @@ Item {
             checklistModel.get(0).currentState = "precon 1"
             checklistModel.get(1).currentState = 'precon 2'
             checklistModel.get(5).currentState = 'precon 4'
+            checklistModel.get(3).currentState = "precon 3"
         }
     }
+
+
 }
 
