@@ -97,7 +97,7 @@ ApplicationWindow {
 
             property alias timer: timer
             //property alias chart: chart
-            property alias counter: customChart.counter
+            //property alias counter: customChart.counter
             //to change networkinfo status with button
             property alias connected: networkinfo.connected
             Item {
@@ -113,6 +113,7 @@ ApplicationWindow {
 
                 Speedometer {
                     id: speedometer
+                    redirect: "MechanicalDetails.qml"
                     width: Math.round(window.width / 6) //round, because speedometer is very picky and doesnt like uneven widths.
                     height: width //width and height have to be equal!! (+- some margin but idk why you'd want an elliptical gauge)
                     anchors {
@@ -223,21 +224,26 @@ ApplicationWindow {
                 anchors.bottomMargin: height/5
             }
             ValueTable{
-             id: batteryCells
-             anchors.bottom: battery.bottom
-             x: battery.x + battery.height/1.5
-            // anchors.leftMargin: window.width * 0.01
-             height: battery.height
-             width: window.width / 3.5
-             names: ["Max voltage", "Max battery temperature", "Minumum voltage", "Minumum battery temperature","Average voltage", "Average battery temperature"]
-             values: [0,0,0,0,0,0]
+                id: batteryCells
+                anchors {
+                    right: valueTable.left
+                    rightMargin: 0.03 * window.width
+                    top: valueTable.top
+                }
+                height: battery.height
+                width: window.width / 3.5
+                names: ["Max voltage", "Max battery temperature", "Minumum voltage", "Minumum battery temperature","Average voltage", "Average battery temperature"]
+                values: [0,0,0,0,0,0]
             }
             Text{
                 id: batteryText
                 text: Math.round(battery.charge*100) + "%"
                 font.pixelSize: window.width / 110
-                anchors.top: battery.bottom
-                anchors.topMargin: window.height*0.01
+                anchors {
+                    top: battery.bottom
+                    topMargin: window.height*0.01
+                }
+
                 x: battery.x + battery.height/4 - width/2
                 color: "white"
             }
@@ -260,7 +266,7 @@ ApplicationWindow {
                     thermometerAmbient.value = Math.random() * 25 + 25;
                     thermometerBattery.value = Math.random() * 10 + 25;
                     //change from customChart to chart to get old chart back.
-                    customChart.counter++;
+                    //customChart.counter++;
                     //chart.lineseries.append(chart.counter, speed);
                     if(battery.charge>0){
                         battery.charge = 1 - slider.value / 100
@@ -277,14 +283,16 @@ ApplicationWindow {
                 }
             }
 
-            CustomChart{
+            /*CustomChart{
                 id: customChart
                 redirect: "MechanicalDetails.qml"
                 width: window.width * 0.35
                 height: window.height * 0.25
-                anchors.right: valueTable.left
-                anchors.rightMargin: 0.03*window.width
-                anchors.top: valueTable.top
+                anchors {
+                    right: valueTable.left
+                    rightMargin: 0.03 * window.width
+                    top: valueTable.top
+                }
                 property var counter: 0
                 Component.onCompleted: {
                     //create a customPlot item with (2) graphs, and set their colors.
@@ -298,7 +306,7 @@ ApplicationWindow {
                     chart.setAxisLabels("Time","Speed km/h")
                     chart.setSimpleGraph(); // disables all interactions with the chart
                 }
-            }
+            }*/
 
             ValueTable{
                 id: valueTable
@@ -313,11 +321,15 @@ ApplicationWindow {
                 width: window.width / 4
                 height: width * 4/5
             }
+
             VCUChecklist {
                 id: vcuchecklist
-                x: 100
-                y: 100
-                width: 200
+                anchors {
+                    left: battery.right
+                    leftMargin: battery.height / 1.8
+                    top: battery.top
+                }
+                width: 250
                 height: 200
                 names: ["Telemetry", "State Indication", "Sensors suite 1", "Sensors suite 2", "Inverter Control", "BMS Master"]
             }
