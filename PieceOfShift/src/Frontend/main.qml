@@ -193,6 +193,23 @@ ApplicationWindow {
                 anchors.rightMargin: window.width * 0.025
 
             }
+            Speedometer {
+                id: barometer
+                redirect: ""
+                width: Math.round(window.width / 8)
+                height: width
+                minValue: 0
+                maxValue: 100
+                primaryUnit: " bar"
+                secondaryTextVisible: false
+                accentColor: "#e34242"
+                anchors {
+                    left: vcuchecklist.right
+                    top: battery.top
+                    leftMargin: window.width * 0.025
+                }
+            }
+
             Tiltmeter{
                 id: tiltMeter
                 rollDeg: 0
@@ -333,6 +350,7 @@ ApplicationWindow {
                 height: 200
                 names: ["Telemetry", "State Indication", "Sensors suite 1", "Sensors suite 2", "Inverter Control", "BMS Master"]
             }
+
 
         }
     }
