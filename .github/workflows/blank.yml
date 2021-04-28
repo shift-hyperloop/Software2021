@@ -24,7 +24,7 @@ jobs:
         
       - name: Build Application
         run: |
-          cd PieceOfShift
+          cd POS
           mkdir build
           cd build
           cmake ..
@@ -52,7 +52,7 @@ jobs:
         
       - name: Build Application
         run: |
-          cd PieceOfShift
+          cd POS
           mkdir build
           cd build
           cmake ..
@@ -88,7 +88,7 @@ jobs:
       - name: Build Application
        
         run: |
-          cd PieceOfShift
+          cd POS
           mkdir build
           cd build
           cmake -DCMAKE_BUILD_TYPE=Release .. -G "MinGW Makefiles"
@@ -106,7 +106,7 @@ jobs:
       - uses: actions/upload-artifact@v1
         id: upload_artifact
         with:
-          path: PieceOfShift/Release/POS-x86_64-${{ github.run_id }}.zip
+          path: POS/Release/POS-x86_64-${{ github.run_id }}.zip
           name: POS-x86_64-${{ github.run_id }}
 
   release:
