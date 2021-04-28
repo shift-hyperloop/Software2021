@@ -71,6 +71,7 @@ public:
     }
 
     inline QList<QString> getDataTypes() { return m_Data.keys(); }
+    QMap<QString, QPair<QVector<double>*, QVector<QVariant>*>> dataMap() const {return m_Data;}
 
 private:
     QMap<QString, QPair<QVector<double>*, QVector<QVariant>*>> m_Data;

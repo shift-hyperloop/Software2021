@@ -53,9 +53,6 @@ public slots:
 signals:
     // TODO: Add signals for each CAN message
     // TODO: Add signals for each data type
-    void newVelocity(const QString &name, const QVariant &velocity);
-    void newAcceleration(const QVariant &a);
-    void newAccelerationVelocity(const QVariant &av);
 
     void podConnectionEstablished();
     void podConnectionTerminated();

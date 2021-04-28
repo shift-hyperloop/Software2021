@@ -1,5 +1,6 @@
 
 #include "filehandler.h"
+#include "Processing/plotdata.h"
 
 #include <QDebug>
 #include <QDateTime>
@@ -9,29 +10,35 @@
 #include <QMap>
 
 
+
 FileHandler::FileHandler() {}
 
 FileHandler::~FileHandler() {}
 
 // Reads a file from given path
 // TODO fix serialization 
-void FileHandler::readLogFile(QString path) {
+QMap<QString, QPair<QVector<double>*, QVector<QVariant>*>> readLogFile(QString path) {
 
     QFile file(path);
+
+    QMap<QString, QPair<QVector<double>*, QVector<QVariant>*>> map;
 
     QDataStream in(&file);
 
     // Setting version in case there is change with Qt serialization
     in.setVersion(QDataStream::Qt_5_12);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        return;
+        return map;
     }
+
+    in >> map;
+    qDebug() << "File finished reading";
+    return map;
 
     // TODO 
     // De-serialize map/ sending onwards
    //  in >> map;
 
-    qDebug() << "File finished reading";
 }
 
 
@@ -45,10 +52,15 @@ void FileHandler::writeLogFile(QString path) {
         return;
     }
 
+    QMap<QString, QPair<QVector<double>*, QVector<QVariant>*>> dataCopyMap;
+    PlotData plotdata;
+    dataCopyMap = plotdata.dataMap();
+
     // Setting version in case there is change with Qt serialization
     QDataStream out(&file);
     out.setVersion(QDataStream::Qt_5_12);
-   //  out << dataCopyMap;
+    qInfo() << out;
+    out << dataCopyMap;
 
 
     qDebug() << "File has been written with path: " << path;
