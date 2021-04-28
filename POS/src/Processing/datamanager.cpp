@@ -11,10 +11,6 @@
 
 DataManager::DataManager()
 {
-    /* Create and append all processing units here,
-     * maybe refactor to separate function
-     */
-
     connect(&canServer, &CANServer::dataReceived,
             &decoder, &Decoder::checkData);
 
@@ -26,33 +22,32 @@ DataManager::DataManager()
 
     connect(&canServer, &CANServer::connectionTerminated,
             this, &DataManager::podConnectionTerminated);
-
-    /* Create Decoder/DataFetcher object here and start it when signal from
-     QML has been received */
 }
 
 DataManager::~DataManager()
 {
-    // Delete all processing units on destruction to avoid memory leak
-    //    for (auto processingUnit : processingUnits) {
-    //        delete processingUnit;
-    //    }
 }
 
 void DataManager::addData(unsigned int timeMs, const QString &name, const DataType &dataType, QByteArray data)
 {
     if (!plotData.hasKey(name)) emit newDataName(name);
+
+    // Using QDataStream to deserialize data, 
+    // overloaded functions for >> operator for 
+    // each data struct can be found in datastructs.h
     QDataStream dataStream(&data, QIODevice::ReadWrite);
+    dataStream.setVersion(QDataStream::Qt_5_12);
     dataStream.setByteOrder(QDataStream::LittleEndian);
 
+    // Choose what struct to create based on dataType
     switch (dataType) {
         case DataType::INT32: 
         {
             DataStructs::Int dataStruct;
             dataStream >> dataStruct;
             float data = dataStruct.value_0;
-            addPlotData(name, timeMs, data);
-            emit newData(name, dataStruct);
+            addPlotData(name, timeMs, data); // Plot data is two floats for CustomPlotItem
+            emit newData(name, dataStruct); // Always emit data to be accessed from QML
             break;
         }  
         case DataType::ERROR_CODE: 
@@ -200,9 +195,10 @@ void DataManager::addData(unsigned int timeMs, const QString &name, const DataTy
 
 void DataManager::addPlotData(const QString &name, unsigned int timeMs, float data)
 {
-    plotData.addData(name, QPointF(timeMs, data));
+    plotData.addData(name, QPointF(timeMs, data)); // Store data no matter what
     if (plotItems.contains(name))
     {
+        // If plot exists which expects this data, add it to the plot
         for (QPair<CustomPlotItem*, int> plot : *plotItems.value(name))
         {
             plot.first->addData(QPointF(timeMs, data), plot.second);
@@ -235,34 +231,40 @@ void DataManager::registerGraph(CustomPlotItem *plotItem, const QString &name, i
 {
     if (!plotData.hasKey(name)) emit newDataName(name);
 
-    if (!plotItems.contains(name))
+    if (!plotItems.contains(name)) // Check if new plot
     {
+        // Add plot along with graph index to plotItem map
         QPair<CustomPlotItem*, int> item(plotItem, graphIndex);
         QList<QPair<CustomPlotItem*, int>>* list = new QList<QPair<CustomPlotItem*, int>>();
         list->append(item);
         plotItems.insert(name, list);
 
-        if (plotData.hasKey(name))
+        if (plotData.hasKey(name)) // If data exists in plotData for this name
         {
+            // Copy data to new plot if data exists
             plotItem->getCustomPlot()->graph(graphIndex)->setData(plotData.getXValues(name), plotData.getYValues(name));
         }
         else
         {
+            // Create empty plot data
             plotData.insertEmpty(name);
         }
     }
     else
     {
+        // Copy data for each plot to new plot
         for (unsigned int i = 0; i < plotItem->getCustomPlot()->graphCount(); i++)
         {
             plotItem->getCustomPlot()->graph(graphIndex)->setData(plotData.getXValues(name), plotData.getYValues(name));
         }
+        // Add new graph to plot item
         plotItems.value(name)->append(QPair<CustomPlotItem*, int>(plotItem, graphIndex));
     }
 }
 
 void DataManager::removePlot(CustomPlotItem *plotItem)
 {
+    // CustomPlotItem is cleaned up by QML, but need to remove it from plotItems
     for (QString name : plotItems.keys())
     {
         for (QPair<CustomPlotItem*, int> pair : *plotItems.value(name)) {
