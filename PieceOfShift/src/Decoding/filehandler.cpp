@@ -37,7 +37,7 @@ QMap<QString, QPair<QVector<double>*, QVector<QVariant>*>> readLogFile(QString p
 
     // TODO 
     // De-serialize map/ sending onwards
-    in >> map;
+    //in >> map;
 
 }
 
