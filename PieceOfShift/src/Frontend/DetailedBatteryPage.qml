@@ -67,32 +67,21 @@ Page {
         }
     }
 
-
-
-    /*Button {              //not needed anymore?
-        id: but1
-        text: "Reset Graph"
-        x: 0
-        // This y-value corresponds to the y-value of the MenuBar in CustomMenuBar.qml
-        y: rect1.y + rect1.height
-        onClicked: {
-            const charts = [chart2, chart3, chart4, chart5, chart6];
-            resetChartAxes(charts);
-        }
-    }*/
     Button {
         id: but2
         text: "Go back"
-        x: window.width * 0.01
-        y: 0.05 * window.height
-        height: window.height * 0.07
+        anchors {
+            top: rect1.bottom
+            left: rect1.left
+            margins: 5
+        }
+        height: 0.5 * y
         width: window.width * 0.07
         font.pixelSize: window.height * 0.02
         onClicked: {
             stackView.pop("main.qml");
         }
     }
-
 
     //This is the amount of vertical height that's "left" when taking elements above into account
     property var remainingWindowHeight: window.height - 0.05 * window.height - but2.height - rect1.height
@@ -103,18 +92,18 @@ Page {
         height: Math.floor(remainingWindowHeight / 3)
         anchors.left: parent.left
         anchors.top: but2.bottom
+        anchors.margins: 5
         property var counter: 0
         Component.onCompleted: {
             chart.initCustomPlot(3);
             chart.setGraphColor(0, "#2674BB");
             chart.setGraphColor(1, "#AE3328");
             chart.setGraphColor(2, "#FC37AB");
-            chart.setDataType("Voltage");
-            chart.setName(0,"V1");
-            chart.setName(1,"V2");
-            chart.setName(2,"V2");
+            chart.setGraphName(0,"Voltage1");
+            chart.setGraphName(1,"Voltage2");
+            chart.setGraphName(2,"Voltage3");
             chart.setAxisLabels("Time","Voltage")
-            chart.setAxisRange(Qt.point(0, 100), Qt.point(0, 100));
+            chart.setAxisRange(Qt.point(0, 500), Qt.point(0, 300));
         }
     }
 
@@ -130,12 +119,11 @@ Page {
             chart.setGraphColor(0, "#2674BB");
             chart.setGraphColor(1, "#AE3328");
             chart.setGraphColor(2, "#FC37AB");
-            chart.setDataType("Voltage");
-            chart.setName(0,"V1");
-            chart.setName(1,"V2");
-            chart.setName(2,"V2");
+            chart.setGraphName(0,"Voltage1");
+            chart.setGraphName(1,"Voltage2");
+            chart.setGraphName (2,"Voltage3");
             chart.setAxisLabels("Time","Voltage")
-            chart.setAxisRange(Qt.point(0, 100), Qt.point(0, 100));
+            chart.setAxisRange(Qt.point(0, 800), Qt.point(0, 300));
         }
     }
 
@@ -151,12 +139,11 @@ Page {
             chart.setGraphColor(0, "#2674BB");
             chart.setGraphColor(1, "#AE3328");
             chart.setGraphColor(2, "#FC37AB");
-            chart.setDataType("Voltage");
-            chart.setName(0,"V1");
-            chart.setName(1,"V2");
-            chart.setName(2,"V2");
+            chart.setGraphName(0,"Voltage1");
+            chart.setGraphName(1,"Voltage2");
+            chart.setGraphName(2,"Voltage3");
             chart.setAxisLabels("Time","Voltage")
-            chart.setAxisRange(Qt.point(0, 100), Qt.point(0, 100));
+            chart.setAxisRange(Qt.point(0, 1500), Qt.point(0, 300));
         }
     }
     
@@ -172,12 +159,11 @@ Page {
             chart.setGraphColor(0, "#2674BB");
             chart.setGraphColor(1, "#AE3328");
             chart.setGraphColor(2, "#FC37AB");
-            chart.setDataType("Voltage");
-            chart.setName(0,"V1");
-            chart.setName(1,"V2");
-            chart.setName(2,"V2");
+            chart.setGraphName(0,"Voltage1");
+            chart.setGraphName(1,"Voltage2");
+            chart.setGraphName(2,"Voltage3");
             chart.setAxisLabels("Time","Voltage")
-            chart.setAxisRange(Qt.point(0, 100), Qt.point(0, 100));
+            chart.setAxisRange(Qt.point(0, 600), Qt.point(0, 300));
         }
     }
 
@@ -193,12 +179,11 @@ Page {
             chart.setGraphColor(0, "#2674BB");
             chart.setGraphColor(1, "#AE3328");
             chart.setGraphColor(2, "#FC37AB");
-            chart.setDataType("Voltage");
-            chart.setName(0,"V1");
-            chart.setName(1,"V2");
-            chart.setName(2,"V2");
+            chart.setGraphName(0,"Voltage1");
+            chart.setGraphName(1,"Voltage2");
+            chart.setGraphName(2,"Voltage3");
             chart.setAxisLabels("Time","Voltage")
-            chart.setAxisRange(Qt.point(0, 100), Qt.point(0, 100));
+            chart.setAxisRange(Qt.point(0, 300), Qt.point(0, 300));
         }
     }
 
@@ -214,12 +199,11 @@ Page {
             chart.setGraphColor(0, "#2674BB");
             chart.setGraphColor(1, "#AE3328");
             chart.setGraphColor(2, "#FC37AB");
-            chart.setDataType("Voltage");
-            chart.setName(0,"V1");
-            chart.setName(1,"V2");
-            chart.setName(2,"V2");
+            chart.setGraphName(0,"Voltage1");
+            chart.setGraphName(1,"Voltage2");
+            chart.setGraphName(2,"Voltage3");
             chart.setAxisLabels("Time","Voltage")
-            chart.setAxisRange(Qt.point(0, 100), Qt.point(0, 100));
+            chart.setAxisRange(Qt.point(0, 100), Qt.point(0, 300));
         }
     }
 

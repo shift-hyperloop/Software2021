@@ -41,10 +41,10 @@ include_directories("src")
 include_directories("include/qcustomplot")
 
 # Tell CMake to create the helloworld executable
-add_executable(PieceOfShift ${SOURCE} ${HEADER} ${qml_QRC} ${assets_QRC})
+add_executable(POS ${SOURCE} ${HEADER} ${qml_QRC} ${assets_QRC})
 
 # Use the Qml/Quick modules from Qt 5.
-target_link_libraries(PieceOfShift Qt5::Network Qt5::Qml Qt5::Quick Qt5::Core Qt5::Widgets Qt5::Concurrent Qt5::QuickControls2 Qt5::PrintSupport)
+target_link_libraries(POS Qt5::Network Qt5::Qml Qt5::Quick Qt5::Core Qt5::Widgets Qt5::Concurrent Qt5::QuickControls2 Qt5::PrintSupport)
 
 
 # post-build steps

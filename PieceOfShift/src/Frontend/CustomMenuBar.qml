@@ -117,30 +117,22 @@ Item {
               }
         }
         Menu {
-            title: qsTr("Edit")
+            title: qsTr("Startup")
             font.pixelSize:  0.025 * window.height
 
-            MenuItem { text: qsTr("&Cut")
+            MenuItem { text: qsTr("Start Pod")
                 onTriggered: {
-
+                    stackView.push("StartupPage.qml");
                 }
               }
-            MenuItem { text: qsTr("&Copy")
-                onTriggered: {
 
-                }
-              }
-            MenuItem { text: qsTr("&Paste")
-                onTriggered: {
-
-                }
-             }
         }
         Menu{
             title: qsTr("View")
             font.pixelSize:  0.025 * window.height
             MenuItem{
                 CheckBox{
+                    id:fullscreen
                     anchors.verticalCenter: parent.verticalCenter
                     onCheckStateChanged: {
                         if(checked){
@@ -151,21 +143,39 @@ Item {
                         }
                         }
                     }
+                onTriggered: {
+                    if(!fullscreen.checked){
+                        fullscreen.checked = true;
+                    }
+                    else{
+                        fullscreen.checked = false;
+                    }
+                }
+
                 Label{
                     text: "Fullscreen"
                     anchors.centerIn: parent
                 }
             }
 
-            MenuItem { text: qsTr("Battery")
+            MenuItem { text: qsTr("Battery Graphs")
                 onTriggered: {
                     stackView.push("DetailedBatteryPage.qml");
                 }
               }
-
-            MenuItem { text: qsTr("Network")
+            MenuItem { text: qsTr("Battery Cells")
                 onTriggered: {
-                    stackView.push("NetworkInfoPage.qml");
+                    stackView.push("CellularGrid.qml");
+                }
+              }
+            MenuItem { text: qsTr("Custom Chart")
+                onTriggered: {
+                    stackView.push("CustomizableChartPage.qml");
+                }
+              }
+            MenuItem { text: qsTr("Inverter")
+                onTriggered: {
+                    stackView.push("InverterPage.qml");
                 }
               }
 
@@ -174,6 +184,12 @@ Item {
                     stackView.push("MechanicalDetails.qml");
                 }
               }
+            MenuItem { text: qsTr("Network")
+                onTriggered: {
+                    stackView.push("NetworkInfoPage.qml");
+                }
+              }
+
 
 /*
             Menu{
@@ -214,6 +230,7 @@ Item {
               }
         }
         Menu {
+            id: menuHelp
             title: qsTr("Help")
             font.pixelSize:  0.025 * window.height
 

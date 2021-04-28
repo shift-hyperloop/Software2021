@@ -35,7 +35,7 @@ class Client(threading.Thread):
                 connections.remove(self)
                 break
             if data != "":
-                print("ID " + str(self.id) + ": " + str(data.decode("utf-8")))
+                print("ID " + str(self.id) + ": " + data.hex())
                 for client in connections:
                     #message = bytes.fromhex('00 01 00 00 00 00 00 00 00 10 00 00 00 00 20 30 30 30')
                     message = bytes.fromhex('00 00 01 00 00 00 00 00 00 00 10 00 30 20 00 00 00 00 30 30')

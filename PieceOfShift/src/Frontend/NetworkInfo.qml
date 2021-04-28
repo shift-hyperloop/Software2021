@@ -7,7 +7,7 @@ Item {
     property bool connected: true
     property int ping: 0
     property int connectionStrength: 0 //number between 0 and 4 that shows how many bars in SignalSymbol are filled
-    width: 300
+    width: 200
     height: window.height * 0.05
     Component.onCompleted: {
         connected = false;
@@ -50,9 +50,12 @@ Item {
         color: connected ? "#3feb67" : "#f54838"
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignRight
-        font.pixelSize: window.width/110
+        font.pixelSize: window.width / 100
         anchors.right: signalSymbol.left
         anchors.rightMargin: 10
+        anchors.top: parent.top
+        anchors.topMargin: 2
+
     }
 
     SignalSymbol{

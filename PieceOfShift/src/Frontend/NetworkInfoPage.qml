@@ -128,9 +128,8 @@ Page {
             chart.initCustomPlot(1);
             chart.setAxisRange(Qt.point(0, 100), Qt.point(0, 200));
             chart.setGraphColor(0, "#2674BB");
-            chart.setDataType("");
-            chart.setName(0,"");
-            chart.setAxisLabels("","")
+            chart.setGraphName(0,"");
+            chart.setAxisLabels("", "")
         }
     }
     ValueTable{
@@ -138,7 +137,8 @@ Page {
         values: [10, 12, 100, 8]
         anchors.bottom: networkChart.bottom
         anchors.right: parent.right
-        height: page.height / 3
+        anchors.rightMargin: 0.025 * window.width
+        height: page.height / 2.5
         width: page.width / 3
     }
 

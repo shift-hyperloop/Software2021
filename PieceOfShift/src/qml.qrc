@@ -9,6 +9,7 @@
         <file>Frontend/Chart.qml</file>
         <file>Frontend/MultiLineChart.qml</file>
         <file>Frontend/Thermometer.qml</file>
+        <file>Frontend/CellularGrid.qml</file>
         <file>Frontend/CustomMenuBar.qml</file>
         <file>Frontend/ControlButtons.qml</file>
         <file>Frontend/DistanceSlider.qml</file>
@@ -21,5 +22,10 @@
         <file>Frontend/NetworkInfoPage.qml</file>
         <file>Frontend/SignalSymbol.qml</file>
         <file>Frontend/CustomChart.qml</file>
+        <file>Frontend/CustomizableChartPage.qml</file>
+        <file>Frontend/PodState.qml</file>
+        <file>Frontend/StartupPage.qml</file>
+        <file>Frontend/VCUChecklist.qml</file>
+        <file>Frontend/InverterPage.qml</file>
     </qresource>
 </RCC>

@@ -14,21 +14,21 @@ Item {
             hoverEnabled: true
             cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor;
             onClicked: {
-                stackView.push("DetailedBatteryPage.qml")
+                stackView.push("CellularGrid.qml")
             }
         }
         }
         Rectangle {
             id: container
-            height: batteryImg.height * 0.88
+            height: batteryImg.height * 0.83
             width: batteryImg.width * 0.88
-            y: batteryImg.y + batteryImg.height * 0.1
+            y: batteryImg.y + batteryImg.height * 0.15
             z: 1
             anchors.horizontalCenter: batteryImg.horizontalCenter
         }
         Rectangle{
             id: rectRed                 //red rectangle is anchored to the top and starts with height 0.
-            color: "red"                // height increases as charge decreases
+            color: "#e36868"                // height increases as charge decreases
             height: {
                 if( charge > 0){
                     container.height  - rectGreen.height
@@ -45,7 +45,7 @@ Item {
         }
         Rectangle{
             id: rectGreen
-            color: "green"
+            color: "#55a848"
             height: container.height * charge //the green rectangle is anchored to the bottom and height decreases as charge decreases
             width: container.width
             anchors.bottom: container.bottom

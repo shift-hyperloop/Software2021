@@ -2,6 +2,7 @@
 #include <QDataStream>
 #include <qabstractsocket.h>
 #include <qdebug.h>
+#include <qglobal.h>
 
 
 CANServer::CANServer()
@@ -48,11 +49,11 @@ void CANServer::handleIncoming()
         // Define area of datagram as id, datasize and data
         quint16 id = qFromBigEndian<quint16>(datagram.mid(CAN_ID_OFFSET, CAN_ID_SIZE).toHex().toInt(&ok, 16));
         quint8 dataSize = qFromBigEndian<quint8>(datagram.mid(CAN_DATA_SIZE_OFFSET, CAN_DATA_SIZE_SIZE).toHex().toInt(&ok, 16));
-        QByteArray data = datagram.mid(CAN_DATA_OFFSET, CAN_DATA_SIZE_SIZE);
-
+        quint32 timeMs = qFromBigEndian<quint32>(datagram.mid(CAN_TIMESTAMP_OFFSET, CAN_TIMESTAMP_SIZE).toHex().toInt(&ok, 16)); 
+        QByteArray data = datagram.mid(CAN_DATA_OFFSET, dataSize);
 
         // Send id, datasize and data as signal onward
-        emit dataReceived(id, dataSize, data);
+        emit dataReceived(timeMs, id, dataSize, data);
     }
 }
 
@@ -65,23 +66,21 @@ void CANServer::sendPodCommand(const PodCommand& type)
         return;
     }
     QByteArray frameID;
-    // Call from visualizer for a messageID (int)
-    // Using dummy data in switch case
-    // TODO change this
+    QDataStream ds(&frameID, QIODevice::ReadWrite);
 
     switch(type){
     // MessageID determines which signal to send to the pod
     case PodCommand::EMERGENCY_BRAKE: // emergencyBrake (AA3) -> 2723
-        frameID= QByteArray::number(0x3C1);
+        ds << 0x3C1;
         break;
     case PodCommand::START: // start braking (DA1) -> 3489
-        frameID= QByteArray::number(0x3C2);
+        ds << 0x3C2;
         break;
     case PodCommand::STOP: //  regular braking (DA2) --> 3490
-        frameID= QByteArray::number(0x0C3);
+        ds << 0x0C3;
         break;
     case PodCommand::HIGH_VOLTAGE:
-        frameID= QByteArray::number(0x3C3);
+        ds << 0x3C3;
         break;
     }
     m_TcpSocket->write(frameID, frameID.length());
