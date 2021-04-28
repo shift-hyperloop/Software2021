@@ -157,7 +157,11 @@ Item {
                     anchors.centerIn: parent
                 }
             }
-
+            MenuItem { text: qsTr("Accelerometer")
+                onTriggered: {
+                    stackView.push("AccelerometerPage.qml");
+                }
+              }
             MenuItem { text: qsTr("Battery")
                 onTriggered: {
                     stackView.push("DetailedBatteryPage.qml");
