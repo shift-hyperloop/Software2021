@@ -4,7 +4,7 @@
 cmake_minimum_required(VERSION 3.17)
 
 
-project(PieceOfShift)
+project(POS)
 
 # Find includes in corresponding build directories
 set(CMAKE_CXX_STANDARD 14)
