@@ -7,6 +7,11 @@
 #include <qvariant.h>
 #include <qvector.h>
 
+/*
+ * This class is a wrapper around a QMap<QString, QPair<QVector<double>*, QVector<QVariant>*>>
+ * to make life easier.
+ */
+
 class PlotData
 {
 public:
