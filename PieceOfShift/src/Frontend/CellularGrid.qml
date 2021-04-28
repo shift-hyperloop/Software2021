@@ -5,29 +5,37 @@ import QtQuick.Dialogs 1.3
 Item {
     id: cGrid
 
+    // Press back-button => go back to the previous page
     Keys.onPressed: {
         if (event.key === 16777219) {
             stackView.pop("main.qml");
         }
     }
 
+    // Create a column of fixed cells to indicate what temperatures correspond to which colours
     Column {
         id: colorIndex
+        // Just set some fixed x- and y-coordinates that looks good, nothing too fancy here
         x: 10
         y: 0.05 * window.height + 25
+        // Space between each element in the column
         spacing: 5
 
+        // Create, similar to all other pages, a button to go back
         Button {
-        id: but2
-        text: "Go back"
-        height: 70
-        width: 105
-        font.pixelSize: window.height * 0.02
-        onClicked: {
-            stackView.pop("main.qml");
+            id: but2
+            text: "Go back"
+            // Arbitrary height/width that fits the page well
+            height: 70
+            width: 105
+            // Set the size of the font inside the button
+            font.pixelSize: window.height * 0.02
+            onClicked: {
+                stackView.pop("main.qml");
+            }
         }
-    }
 
+        // A small text included to explain what the cells are for
         Text {
             id: explanation
             x: parent.x
@@ -37,19 +45,23 @@ Item {
             color: "yellow"
         }
 
+        // The following 5 rectangles are aforementioned cells to describe the temp. range of each colour
         Rectangle {
             id: color1
             x: parent.x
             color: "#FF0000"
-
+            
+            // Width and height are taken from grid in order to have the same size as the actual grid-cells
             width: Math.floor((grid.width - 20) / grid.columns)
             height: Math.floor((grid.height - 20) / grid.rows)
 
+            // Set border to 2 pixels wide, and black colour. Same for all following column-cells
             border.width: 2
             border.color: "black"
-
+            // Text that will contain the actual temperature range
             Text {
                 anchors.centerIn: parent
+                // \u in QML text means unicode, and 00b0 is the unicode value of the degrees symbol
                 text: ">= 50" + "\u00b0" + "C"
             }
         }
@@ -124,14 +136,25 @@ Item {
 
     }
 
+    /*
+    Create a grid that will resemble the battery-cells on the pod in order to track their temperatures.
+    This grid will have format 9x20, i.e. 9 rows, 20 columns, as requested per glorious Bendik Nyhavn.
+    The number of columns and rows can be defined in the component, but it's worth mentioning that the index
+    of every element in the grid is incrementing, and not done in two dimensions. For example, since we have
+    9x20 objects, the last element will have index 179 (9 * 20 - 1), not index (8, 19) as one might be used to.
+    */
     Grid {
         id: grid
+        // Position the grid according to the above rectangles. Could probably be done better with anchors
         x: colorIndex.x + colorIndex.width + 5
         y: colorIndex.y
+        // Space between each element in the grid
         spacing: 1
+        // Make width according to the window size and the reference-cells, with a bit extra breathing room
         width: window.width - colorIndex.width - 15
         height: window.height * 0.95 - y + 25
 
+        // Here we define the number of elements to go in the grid
         columns: 20
         rows: 9
 
@@ -143,12 +166,20 @@ Item {
             // Here we create columns * rows number of Rectangle-components
             Rectangle {
                 id: rect
+                // Divide the width and height into sections of the entire grid
                 width: Math.floor((parent.width - 20) / parent.columns)
                 height: Math.floor((parent.height - 20) / parent.rows)
-                color: "red"
-                property var temperature: 50
+                // Initial color corresponds to lowest temperature (we assume they're cold at start)
+                color: "#9dff00"
+                // Define a variable that tells us the temperature of the cell, which we can also change based
+                // on what data we receive from the pod. 
+                property var temperature: 0
+                // Define a list of states that the cells can change between. The way these can be used, is
+                // by changing "rect.state", and the below transitions will define what the state-changes look like
                 states: [
                     State {
+                        // Each state needs a name, and PopertyChanges define what the State-component targets
+                        // (the ID of the component), as well as what attributes to change (in our case, only colour).
                         name: "very hot"
                         PropertyChanges { target: rect; color: "#FF0000"}
                     },
@@ -169,15 +200,19 @@ Item {
                         PropertyChanges { target: rect; color: "#9dff00"}
                     }
                 ]
-
+                // Define transitions (or here, only one transition) to define how a change in state will look.
+                // Here we only define a colour-transition that takes 0.8s . 
                 transitions: Transition {
                     ColorAnimation { duration: 800 }
                 }
+
+                // Define a border to each cell
                 border {
                     color: "black"
                     width: 2
                 }
 
+                // Each cell contains text of its own temperature
                 Text {
                     text: rect.temperature + "\u00b0" + "C"
                     anchors.centerIn: parent
@@ -186,14 +221,21 @@ Item {
         }
     }
 
+    // Timer to simulate changes in temperature
     Timer {
         id: timer
         running: true
         repeat: true
         interval: 200
+        // Fancy-shmancy JS code
         onTriggered: {
             for (let i = 0; i < repeater.count; i++) {
                 let temperature = Math.floor(Math.random() * 70) - 10;
+                /*
+                itemAt(index) returns the repeater item at the corresponding index
+                repeater.count is the number of items in in the repeater, and in our case the number of
+                ojects in the grid
+                */
                 repeater.itemAt(i).temperature = temperature;
                 repeater.itemAt(i).state = (temperature < 6) ?
                             'cold' : (temperature < 22) ?
