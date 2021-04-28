@@ -186,8 +186,9 @@ void DataManager::addPlotData(const QString &name, unsigned int timeMs, float da
     }
 }
 
-void DataManager::readLogFile(QString path) {
-    fileHandler.readLogFile(path); 
+void DataManager::readLogFile(QString path) 
+{
+    //QMap<QString, QPair<QVector<double>*, QVector<QVariant>*>> m = fileHandler.readLogFile(path);
 }
 
 

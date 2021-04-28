@@ -3,9 +3,16 @@ import QtQuick 2.12
 import QtQuick.Window 2.3
 import QtQuick.Controls 2.5
 import QtQuick.Controls.Styles 1.4
+import shift.datamanagement 1.0
+
 Item {
    // property alias _width: __menu.width
     //property alias _height: __menu.height
+
+    DataManagerAccessor {
+        id: dmAccessor
+    }
+
     Rectangle {
         width: logoWhite_RightText.width + 5
         height: logoWhite_RightText.height + 10
@@ -97,12 +104,20 @@ Item {
               }
             MenuItem { text: qsTr("Save &As...")
                 FolderDialog {
+                    
                     id: folderDialog
                     acceptLabel : "Save here"
                     //folder: //standard folder
 
                     onAccepted: {
-                        console.log(folder) // this is the path of the folder
+                        var path = folder.toString(); //folderDialog.folderUrl.toString();
+                        // remove prefixed "file:///"
+                        path = path.replace(/^(file:\/{3})/,"");
+                        // unescape html codes like '%23' for '#'
+                        var cleanPath = decodeURIComponent(path);
+                        dmAccessor.dataManager.writeLogFile(cleanPath)
+                        console.log(folder) // this is the path of the folderSave
+
                     }
                  }
                 onTriggered: {

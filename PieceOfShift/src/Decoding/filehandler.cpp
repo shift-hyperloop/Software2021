@@ -31,20 +31,22 @@ QMap<QString, QPair<QVector<double>*, QVector<QVariant>*>> readLogFile(QString p
         return map;
     }
 
-    in >> map;
+    //in >> map;
     qDebug() << "File finished reading";
     return map;
 
     // TODO 
     // De-serialize map/ sending onwards
-   //  in >> map;
+    in >> map;
 
 }
 
 
 // TODO fix serialization 
 void FileHandler::writeLogFile(QString path) {
-
+    path.insert(0, "/");
+    path.append("/file.txt");
+    qDebug() << path;
     QFile file(path);
 
     if (!file.open(QIODevice::WriteOnly)) {
@@ -59,9 +61,7 @@ void FileHandler::writeLogFile(QString path) {
     // Setting version in case there is change with Qt serialization
     QDataStream out(&file);
     out.setVersion(QDataStream::Qt_5_12);
-    qInfo() << out;
     out << dataCopyMap;
-
 
     qDebug() << "File has been written with path: " << path;
     file.flush();
