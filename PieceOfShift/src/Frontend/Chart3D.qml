@@ -2,13 +2,30 @@ import QtQuick 2.5
 import QtQuick.Window 2.12
 import QtDataVisualization 1.2
 import QtQuick.Controls 2.5
+//The way this 3d chart works is that the chart is a Scatter3D. Each point in the chart is its own graph made of a Scatter3DSeries
+//Each Scatter3DSeries needs a list of its points (a ListModel where every point is a ListElement with x,y and z values)
+//Since we are only showing onw point at a time from each graph things become more complicated.
+//The ListModel for the graphs can then only have one ListElement, so each graph (Scatter3DSeries) now has to ListModels
+//the graphs have a ListModel called values(n) which contains all its values that you can cycle through using the slider
+//they also have a ListModel called currentValue(n) that only contains a listelement with the point currently beeing shown,
+//this ListElement is changed every time a new point is added, or the slider is moved.
+
+
 Item {
-    property var currentValues: [currentValue0,currentValue1,currentValue2,currentValue3]
-    property var values: [values0,values1,values2,values3]
+
+    property var currentValueValues: [
+        [0,0,0],
+        [0,0,0],
+        [0,0,0],
+        [0,0,0]
+    ]
+
     property var colorArray: ["red","green","blue", "yellow"]
     property var axisMin: -5
     property var axisMax: 5
     property var sliderVisible: true
+    property var currentValue0: currentValue0
+    property var slider: slider
     Theme3D {
         id: theme
         type: Theme3D.ThemeArmyBlue
@@ -22,20 +39,20 @@ Item {
     }
     ValueAxis3D{
         id: xAxis
-        min: -5
-        max: 5
+        min: axisMin
+        max: axisMax
         autoAdjustRange: false
     }
     ValueAxis3D{
         id: yAxis
-        min: -5
-        max: 5
+        min: axisMin
+        max: axisMax
         autoAdjustRange: false
     }
     ValueAxis3D{
         id: zAxis
-        min: -5
-        max: 5
+        min: axisMin
+        max: axisMax
         autoAdjustRange: false
     }
     Scatter3D {
@@ -156,6 +173,22 @@ Item {
                 currentValue1.append(values1.get(slider.value))
                 currentValue2.append(values2.get(slider.value))
                 currentValue3.append(values3.get(slider.value))
+            currentValueValues[0][0] = currentValue0.get(0).xPos
+            currentValueValues[0][1] = currentValue0.get(0).yPos
+            currentValueValues[0][2] = currentValue0.get(0).zPos
+            currentValueValues[1][0] = currentValue1.get(0).xPos
+            currentValueValues[1][1] = currentValue1.get(0).yPos
+            currentValueValues[1][2] = currentValue1.get(0).zPos
+            currentValueValues[2][0] = currentValue2.get(0).xPos
+            currentValueValues[2][1] = currentValue2.get(0).yPos
+            currentValueValues[2][2] = currentValue2.get(0).zPos
+            currentValueValues[3][0] = currentValue3.get(0).xPos
+            currentValueValues[3][1] = currentValue3.get(0).yPos
+            currentValueValues[3][2] = currentValue3.get(0).zPos
+            t0.text = "Accelerometer 1 (" + currentValueValues[0][0] + "," + currentValueValues[0][1] + "," +currentValueValues[0][2] + ")"
+            t1.text = "Accelerometer 2 (" + currentValueValues[1][0] + "," + currentValueValues[1][1] + "," + currentValueValues[1][2] + ")"
+            t2.text = "Accelerometer 3 (" + currentValueValues[2][0] + "," + currentValueValues[2][1] + "," + currentValueValues[2][2] + ")"
+            t3.text = "Accelerometer 4 (" + currentValueValues[3][0] + "," + currentValueValues[3][1] + "," + currentValueValues[3][2] + ")"
         }
     }
     Text{
@@ -178,6 +211,7 @@ Item {
         values0.append(tempList.get(0))
         currentValue0.clear()
         currentValue0.append(values0.get(values0.count-1))
+
 
         tempList.setProperty(0,"xPos",String(data[1][0]))
         tempList.setProperty(0,"yPos",String(data[1][1]))
@@ -202,7 +236,56 @@ Item {
         slider.to = values3.count-1
         slider.value = values3.count-1
 
+        currentValueValues = data
+        t0.text = "Accelerometer 1 (" + currentValueValues[0][0] + "," + currentValueValues[0][1] + "," +currentValueValues[0][2] + ")"
+        t1.text = "Accelerometer 2 (" + currentValueValues[1][0] + "," + currentValueValues[1][1] + "," + currentValueValues[1][2] + ")"
+        t2.text = "Accelerometer 3 (" + currentValueValues[2][0] + "," + currentValueValues[2][1] + "," + currentValueValues[2][2] + ")"
+        t3.text = "Accelerometer 4 (" + currentValueValues[3][0] + "," + currentValueValues[3][1] + "," + currentValueValues[3][2] + ")"
 
+    }
+    Repeater{
+        model: 4
+        Rectangle{
+            color: colorArray[index]
+            width: window.width / 35
+            height: width
+            radius: width
+            x: parent.width*0.85
+            y: window.height * 0.1 * (index+2)
+            border.width: 1
+        }
+    }
+    Text {
+        id: t0
+        text: "Accelerometer 1 (" + currentValueValues[0][0] + "," + currentValueValues[0][1] + "," +currentValueValues[0][2] + ")"
+        x: parent.width*0.95
+        y: window.height * 0.1 * (2) + window.height * 0.01
+        font.pixelSize: window.height * 0.02
+        color: "grey"
+    }
+    Text {
+        id: t1
+        text: "Accelerometer 2 (" + currentValueValues[1][0] + "," + currentValueValues[1][1] + "," + currentValueValues[1][2] + ")"
+        x: parent.width*0.95
+        y: window.height * 0.1 * (3) + window.height * 0.01
+        font.pixelSize: window.height * 0.02
+        color: "grey"
+    }
+    Text {
+        id: t2
+        text: "Accelerometer 3 (" + currentValueValues[2][0] + "," + currentValueValues[2][1] + "," + currentValueValues[2][2] + ")"
+        x: parent.width*0.95
+        y: window.height * 0.1 * (4) + window.height * 0.01
+        font.pixelSize: window.height * 0.02
+        color: "grey"
+    }
+    Text {
+        id: t3
+        text: "Accelerometer 4 (" + currentValueValues[3][0] + "," + currentValueValues[3][1] + "," + currentValueValues[3][2] + ")"
+        x: parent.width*0.95
+        y: window.height * 0.1 * (5) + window.height * 0.01
+        font.pixelSize: window.height * 0.02
+        color: "grey"
     }
 
 }
