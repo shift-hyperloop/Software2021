@@ -14,8 +14,6 @@ CustomPlotItem::CustomPlotItem( QQuickItem* parent ) : QQuickPaintedItem( parent
     , m_CustomPlot( nullptr )
 {
     setFlag( QQuickItem::ItemHasContents, true );
-    // setRenderTarget(QQuickPaintedItem::FramebufferObject);
-    // setAcceptHoverEvents(true);
     setAcceptedMouseButtons( Qt::AllButtons );
  
     connect( this, &QQuickPaintedItem::widthChanged, this, &CustomPlotItem::updateCustomPlotSize );
@@ -32,7 +30,6 @@ void CustomPlotItem::addData(QPointF data, int graphNum)
 {
     m_CustomPlot->graph(graphNum)->addData(data.x(), data.y());
     m_CustomPlot->xAxis->setRange(data.x(), m_XSize, Qt::AlignRight);
-    //m_CustomPlot->yAxis->setRange(data.y(), 1000, Qt::AlignTop);
     m_CustomPlot->replot(); 
 }
 void CustomPlotItem::setGraphColor(int graphIndex, QColor color)
