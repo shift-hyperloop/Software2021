@@ -12,11 +12,10 @@ class FileHandler : public QObject
 public:
     FileHandler();
     ~FileHandler();
-public slots:
+
+public:
     void writeLogFile(QString path);
-    void readLogFile(QString path);
-
-
+    QMap<QString, QPair<QVector<double>*, QVector<QVariant>*>> readLogFile(QString path);
 };
 
 #endif // FILEHANDLER_H

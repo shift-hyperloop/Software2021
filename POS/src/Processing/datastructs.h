@@ -1,9 +1,9 @@
 #pragma once
 
+#include <qobject.h>
 #include <stdint.h>
 #include <QDataStream>
 #include <QVariant>
-#include <QMetaProperty>
 
 /*
 +---+ How to use +--+
@@ -54,35 +54,23 @@ enum class DataType
 
 namespace DataStructs 
 {
-
-    struct DataStruct : public QObject
+    struct DataStruct
     {
-        Q_OBJECT
-        friend QDataStream& operator<<(QDataStream& dataStream, const DataStruct& object)
-        {
-            for(int i=0; i< object.metaObject()->propertyCount(); ++i) {
-                if(object.metaObject()->property(i).isStored(&object)) {
-                    dataStream << object.metaObject()->property(i).read(&object);
-                }
-            }
-            return dataStream;
-        }
-
-        friend QDataStream & operator>>(QDataStream& dataStream, DataStruct& object) {
-            QVariant var;
-            for(int i=0; i < object.metaObject()->propertyCount(); ++i) {
-                if(object.metaObject()->property(i).isStored(&object)) {
-                    dataStream >> var;
-                    object.metaObject()->property(i).write(&object, var);
-                }
-            }
-            return dataStream;
-        }
     };
 
     struct ErrorCode : public DataStruct
     {
         uint8_t error_code;
+
+        friend QDataStream& operator<<(QDataStream& dataStream, const ErrorCode& object)
+        {
+            return dataStream;
+        }
+
+        friend QDataStream & operator>>(QDataStream& dataStream, ErrorCode& object) 
+        {
+            return dataStream;
+        }
     };
 
 
@@ -144,12 +132,32 @@ namespace DataStructs
     {
         float position;			
         float speed;				
-        float acceleration;			
+        float acceleration;		
+
+        friend QDataStream& operator<<(QDataStream& dataStream, const Vector3f& object)
+        {
+            return dataStream;
+        }
+
+        friend QDataStream & operator>>(QDataStream& dataStream, Vector3f& object) 
+        {
+            return dataStream;
+        }	
     };
 
     struct PodState : public DataStruct
     {
         uint8_t state;
+
+        friend QDataStream& operator<<(QDataStream& dataStream, const PodState& object)
+        {
+            return dataStream;
+        }
+
+        friend QDataStream & operator>>(QDataStream& dataStream, PodState& object) 
+        {
+            return dataStream;
+        }	
     };
 
 
@@ -158,29 +166,79 @@ namespace DataStructs
         uint32_t pitch;
         uint32_t yaw;
         uint32_t roll;
+
+        friend QDataStream& operator<<(QDataStream& dataStream, const Vector3i& object)
+        {
+            return dataStream;
+        }
+
+        friend QDataStream & operator>>(QDataStream& dataStream, Vector3i& object) 
+        {
+            return dataStream;
+        }	
     } ;
 
     struct Bool : public DataStruct
     {
         bool status_0;
+
+        friend QDataStream& operator<<(QDataStream& dataStream, const Bool& object)
+        {
+            return dataStream;
+        }
+
+        friend QDataStream & operator>>(QDataStream& dataStream, Bool& object) 
+        {
+            return dataStream;
+        }	
     };
 
     struct Vector3b : public DataStruct
     {
         bool status_0;
         bool status_1;
+
+        friend QDataStream& operator<<(QDataStream& dataStream, const Vector3b& object)
+        {
+            return dataStream;
+        }
+
+        friend QDataStream & operator>>(QDataStream& dataStream, Vector3b& object) 
+        {
+            return dataStream;
+        }	
     };
 
 
     struct Char : public DataStruct
     {
         uint8_t value_0;	
-    } ;
+
+        friend QDataStream& operator<<(QDataStream& dataStream, const Char& object)
+        {
+            return dataStream;
+        }
+
+        friend QDataStream & operator>>(QDataStream& dataStream, Char& object) 
+        {
+            return dataStream;
+        }
+    };
 
     struct Vector2c : public DataStruct
     {
         uint8_t value_0;
         uint8_t value_1;
+
+        friend QDataStream& operator<<(QDataStream& dataStream, const Vector2c& object)
+        {
+            return dataStream;
+        }
+
+        friend QDataStream & operator>>(QDataStream& dataStream, Vector2c& object) 
+        {
+            return dataStream;
+        }
     };
 
     struct Vector3c : public DataStruct
@@ -188,6 +246,16 @@ namespace DataStructs
         uint8_t value_0;
         uint8_t value_1;
         uint8_t value_2;
+
+        friend QDataStream& operator<<(QDataStream& dataStream, const Vector3c& object)
+        {
+            return dataStream;
+        }
+
+        friend QDataStream & operator>>(QDataStream& dataStream, Vector3c& object) 
+        {
+            return dataStream;
+        }
     };
 
     struct Vector16c : public DataStruct
@@ -208,23 +276,51 @@ namespace DataStructs
         uint8_t value_13;
         uint8_t value_14;
         uint8_t value_15;	
+
+        friend QDataStream& operator<<(QDataStream& dataStream, const Vector16c& object)
+        {
+            return dataStream;
+        }
+
+        friend QDataStream & operator>>(QDataStream& dataStream, Vector16c& object) 
+        {
+            return dataStream;
+        }
     };
 
     struct Short : public DataStruct
     {
         uint16_t value_0;
+
+        friend QDataStream& operator<<(QDataStream& dataStream, const Short& object)
+        {
+            return dataStream;
+        }
+
+        friend QDataStream & operator>>(QDataStream& dataStream, Short& object) 
+        {
+            return dataStream;
+        }
     };
 
     struct Vector2s : public DataStruct
     {
         uint16_t value_0;
         uint16_t value_1;
+
+        friend QDataStream& operator<<(QDataStream& dataStream, const Vector2s& object)
+        {
+            return dataStream;
+        }
+
+        friend QDataStream & operator>>(QDataStream& dataStream, Vector2s& object) 
+        {
+            return dataStream;
+        }
     };
 
     struct Int : public DataStruct
     {
-        Q_OBJECT
-        public:
         uint32_t value_0;
 
         friend QDataStream& operator<<(QDataStream& dataStream, const Int& object)
@@ -245,17 +341,47 @@ namespace DataStructs
     struct Float : public DataStruct
     {
         float value_0;
+
+        friend QDataStream& operator<<(QDataStream& dataStream, const Float& object)
+        {
+            return dataStream;
+        }
+
+        friend QDataStream & operator>>(QDataStream& dataStream, Float& object) 
+        {
+            return dataStream;
+        }
     };
 
     struct Double : public DataStruct
     {
         double value_0;
+
+        friend QDataStream& operator<<(QDataStream& dataStream, const Double& object)
+        {
+            return dataStream;
+        }
+
+        friend QDataStream & operator>>(QDataStream& dataStream, Double& object) 
+        {
+            return dataStream;
+        }
     };
 
     struct Vector2f : public DataStruct
     {
         float value_0;
         float value_1;
+
+        friend QDataStream& operator<<(QDataStream& dataStream, const Vector2f& object)
+        {
+            return dataStream;
+        }
+
+        friend QDataStream & operator>>(QDataStream& dataStream, Vector2f& object) 
+        {
+            return dataStream;
+        }
     } ;
 
     struct Vector4f : public DataStruct
@@ -264,6 +390,16 @@ namespace DataStructs
         float value_1;
         float value_2;
         float value_3;
+
+        friend QDataStream& operator<<(QDataStream& dataStream, const Vector4f& object)
+        {
+            return dataStream;
+        }
+
+        friend QDataStream & operator>>(QDataStream& dataStream, Vector4f& object) 
+        {
+            return dataStream;
+        }
     };
 
     struct Vector6f : public DataStruct
@@ -274,6 +410,16 @@ namespace DataStructs
         float value_3;
         float value_4;
         float value_5;
+
+        friend QDataStream& operator<<(QDataStream& dataStream, const Vector6f& object)
+        {
+            return dataStream;
+        }
+
+        friend QDataStream & operator>>(QDataStream& dataStream, Vector6f& object) 
+        {
+            return dataStream;
+        }
     };
 
     struct Vector8f : public DataStruct
@@ -286,6 +432,16 @@ namespace DataStructs
         float value_5;
         float value_6;
         float value_7;
+
+        friend QDataStream& operator<<(QDataStream& dataStream, const Vector8f& object)
+        {
+            return dataStream;
+        }
+
+        friend QDataStream & operator>>(QDataStream& dataStream, Vector8f& object) 
+        {
+            return dataStream;
+        }
     };
 
     struct Vector16f : public DataStruct
@@ -306,18 +462,76 @@ namespace DataStructs
         float value_13;
         float value_14;
         float value_15;
+
+        friend QDataStream& operator<<(QDataStream& dataStream, const Vector16f& object)
+        {
+            // NOTE: Change if stream we receive is not continuous
+            dataStream << object.value_0
+                       << object.value_1
+                       << object.value_2
+                       << object.value_3
+                       << object.value_4
+                       << object.value_5
+                       << object.value_6
+                       << object.value_7
+                       << object.value_8
+                       << object.value_9
+                       << object.value_10
+                       << object.value_11
+                       << object.value_12
+                       << object.value_13
+                       << object.value_14
+                       << object.value_15;
+
+            return dataStream;
+        }
+
+        friend QDataStream & operator>>(QDataStream& dataStream, Vector16f& object) 
+        {
+            dataStream >> object.value_0
+                       >> object.value_1
+                       >> object.value_2
+                       >> object.value_3
+                       >> object.value_4
+                       >> object.value_5
+                       >> object.value_6
+                       >> object.value_7
+                       >> object.value_8
+                       >> object.value_9
+                       >> object.value_10
+                       >> object.value_11
+                       >> object.value_12
+                       >> object.value_13
+                       >> object.value_14
+                       >> object.value_15;
+
+            return dataStream;
+        }
     };
 
-//    QList<QPair> dataStructs;
-//    dataStructs << QPair("Vector16f", Vector16f);
+    typedef union {
+        Vector16f vec;
+        float arr[16];
+    } Union16f;
+
+    typedef union {
+        Vector8f vec;
+        float arr[8];
+    } Union8f;
+
+    typedef union {
+        Vector3f vec;
+        float arr[3];
+    } Union3f;
 
 
 }
-
-/*
-Q_DECLARE_METATYPE(ErrorCode)
+Q_DECLARE_METATYPE(DataStructs::ErrorCode)
 Q_DECLARE_METATYPE(DataStructs::Float)
 Q_DECLARE_METATYPE(DataStructs::Int)
+Q_DECLARE_METATYPE(DataStructs::Double)
+Q_DECLARE_METATYPE(DataStructs::Char)
+Q_DECLARE_METATYPE(DataStructs::Bool)
 Q_DECLARE_METATYPE(DataStructs::PodState)
 Q_DECLARE_METATYPE(DataStructs::Short)
 Q_DECLARE_METATYPE(DataStructs::VCUStatus)
@@ -333,6 +547,5 @@ Q_DECLARE_METATYPE(DataStructs::Vector3i)
 Q_DECLARE_METATYPE(DataStructs::Vector4f)
 Q_DECLARE_METATYPE(DataStructs::Vector6f)
 Q_DECLARE_METATYPE(DataStructs::Vector8f)
-*/
 
 

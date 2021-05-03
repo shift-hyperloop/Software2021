@@ -30,14 +30,16 @@ DataManager::~DataManager()
 
 void DataManager::addData(unsigned int timeMs, const QString &name, const DataType &dataType, QByteArray data)
 {
-    if (!plotData.hasKey(name)) emit newDataName(name);
-
     // Using QDataStream to deserialize data, 
     // overloaded functions for >> operator for 
     // each data struct can be found in datastructs.h
     QDataStream dataStream(&data, QIODevice::ReadWrite);
     dataStream.setVersion(QDataStream::Qt_5_12);
     dataStream.setByteOrder(QDataStream::LittleEndian);
+
+    bool bNewName = false; // Some structs emit data with several names
+
+    QVariantList qmlData;
 
     // Choose what struct to create based on dataType
     switch (dataType) {
@@ -47,150 +49,164 @@ void DataManager::addData(unsigned int timeMs, const QString &name, const DataTy
             dataStream >> dataStruct;
             float data = dataStruct.value_0;
             addPlotData(name, timeMs, data); // Plot data is two floats for CustomPlotItem
-            emit newData(name, dataStruct); // Always emit data to be accessed from QML
+            qmlData.append(data);
+            emit newData(name, timeMs, qmlData); // Always emit data to be accessed from QML
             break;
         }  
         case DataType::ERROR_CODE: 
         {
             DataStructs::ErrorCode dataStruct;
             dataStream >> dataStruct;
-            emit newData(name, dataStruct);
+            emit newData(name, timeMs, qmlData);
             break;
         }
         case DataType::VCU_STATUS:
         {
             DataStructs::VCUStatus dataStruct;
             dataStream >> dataStruct;
-            emit newData(name, dataStruct);
+            emit newData(name, timeMs, qmlData);
             break;
         }
         case DataType::VECTOR_3F:
         {
             DataStructs::Vector3f dataStruct;
             dataStream >> dataStruct;
-            emit newData(name, dataStruct);
+            emit newData(name, timeMs, qmlData);
             break;
         }
         case DataType::POD_STATE:
         {
             DataStructs::PodState dataStruct;
             dataStream >> dataStruct;
-            emit newData(name, dataStruct);
+            emit newData(name, timeMs, qmlData);
             break;
         }
         case DataType::VECTOR_3I:
         {
             DataStructs::Vector3i dataStruct;
             dataStream >> dataStruct;
-            emit newData(name, dataStruct);
+            emit newData(name, timeMs, qmlData);
             break;
         }
         case DataType::BOOL:
         {
             DataStructs::Bool dataStruct;
             dataStream >> dataStruct;
-            emit newData(name, dataStruct);
+            emit newData(name, timeMs, qmlData);
             break;
         }
         case DataType::VECTOR_3B:
         {
             DataStructs::Vector3b dataStruct;
             dataStream >> dataStruct;
-            emit newData(name, dataStruct);
+            emit newData(name, timeMs, qmlData);
             break;
         }
         case DataType::CHAR:
         {
             DataStructs::Char dataStruct;
             dataStream >> dataStruct;
-            emit newData(name, dataStruct);
+            emit newData(name, timeMs, qmlData);
             break;
         }
         case DataType::VECTOR_2C:
         {
             DataStructs::Vector2c dataStruct;
             dataStream >> dataStruct;
-            emit newData(name, dataStruct);
+            emit newData(name, timeMs, qmlData);
             break;
         }
         case DataType::VECTOR_3C:
         {
             DataStructs::Vector3c dataStruct;
             dataStream >> dataStruct;
-            emit newData(name, dataStruct);
+            emit newData(name, timeMs, qmlData);
             break;
         }
         case DataType::VECTOR_16C:
         {
             DataStructs::Vector16c dataStruct;
             dataStream >> dataStruct;
-            emit newData(name, dataStruct);
+            emit newData(name, timeMs, qmlData);
             break;
         }
         case DataType::SHORT:
         {
             DataStructs::Short dataStruct;
             dataStream >> dataStruct;
-            emit newData(name, dataStruct);
+            emit newData(name, timeMs, qmlData);
             break;
         }
         case DataType::VECTOR_2S:
         {
             DataStructs::Vector2s dataStruct;
             dataStream >> dataStruct;
-            emit newData(name, dataStruct);
+            emit newData(name, timeMs, qmlData);
             break;
         }
         case DataType::FLOAT:
         {
             DataStructs::Float dataStruct;
             dataStream >> dataStruct;
-            emit newData(name, dataStruct);
+            emit newData(name, timeMs, qmlData);
             break;
         }
         case DataType::DOUBLE:
         {
             DataStructs::Double dataStruct; 
             dataStream >> dataStruct;
-            emit newData(name, dataStruct);
+            emit newData(name, timeMs, qmlData);
             break;
         }
         case DataType::VECTOR_2F:
         {
             DataStructs::Vector2f dataStruct;
             dataStream >> dataStruct;
-            emit newData(name, dataStruct);
+            emit newData(name, timeMs, qmlData);
             break;
         }
         case DataType::VECTOR_4F:
         {
-            DataStructs::Vector2f dataStruct;
+            DataStructs::Vector4f dataStruct;
             dataStream >> dataStruct;
-            emit newData(name, dataStruct);
+            emit newData(name, timeMs, qmlData);
             break;
         }
         case DataType::VECTOR_6F:
         {
-            DataStructs::Vector2f dataStruct;
+            DataStructs::Vector6f dataStruct;
             dataStream >> dataStruct;
-            emit newData(name, dataStruct);
+            emit newData(name, timeMs, qmlData);
             break;
         }
         case DataType::VECTOR_8F:
         {
-            DataStructs::Vector2f dataStruct;
+            DataStructs::Vector8f dataStruct;
             dataStream >> dataStruct;
-            emit newData(name, dataStruct);
+            emit newData(name, timeMs, qmlData);
             break;
         }
         case DataType::VECTOR_16F:
         {
-            DataStructs::Vector2f dataStruct;
+            DataStructs::Vector16f dataStruct;
             dataStream >> dataStruct;
-            emit newData(name, dataStruct);
+
+            DataStructs::Union16f u;
+            u.vec = dataStruct;
+
+            for (unsigned int i = 0; i < 16; i++) {
+                QString newName = name;
+                newName = newName.append("_").append(QString::number(i));
+                addPlotData(newName, timeMs, u.arr[i]);
+                qmlData.append(u.arr[i]);
+                if (!plotData.hasKey(newName)) emit newDataName(newName);
+            }
+            emit newData(name, timeMs, qmlData);
+            bNewName = true;
             break;
         }
     }
+    if (!plotData.hasKey(name) && !bNewName) emit newDataName(name);
 }
 
 void DataManager::addPlotData(const QString &name, unsigned int timeMs, float data)
@@ -207,7 +223,7 @@ void DataManager::addPlotData(const QString &name, unsigned int timeMs, float da
 }
 
 void DataManager::readLogFile(QString path) {
-    fileHandler.readLogFile(path); 
+    //fileHandler.readLogFile(path); 
 }
 
 
@@ -326,6 +342,21 @@ void DataManager::dummyData()
     canServer.dataReceived(timeMs, 0x335, 4, data3);
     canServer.dataReceived(timeMs, 0x336, 4, data4);
     canServer.dataReceived(timeMs, 0x337, 4, data5);
+
+    DataStructs::Vector16f test;
+    test.value_0 = vol1;
+    test.value_1 = vol2;
+    test.value_2 = vol3;
+    test.value_3 = vol1;
+    test.value_4 = vol1;
+    test.value_15 = vol1;
+
+    QByteArray data6;
+    QDataStream stream6(&data6, QIODevice::ReadWrite);
+    stream6.setByteOrder(QDataStream::LittleEndian);
+    stream6 << test;
+
+    canServer.dataReceived(timeMs, 0x338, 16*sizeof(float), data6);
 
     timeMs += 10;
 }

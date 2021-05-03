@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QVector>
 #include <QtConcurrent/QtConcurrent>
+#include <qlist.h>
+#include <qvariant.h>
 #include "Processing/datastructs.h"
 #include "src/Decoding/canserver.h"
 #include "src/Decoding/decoder.h"
@@ -60,7 +62,7 @@ signals:
     void podConnectionEstablished();
     void podConnectionTerminated();
 
-    void newData(const QString &name, const DataStructs::DataStruct &value);
+    void newData(const QString &name, unsigned int timeMs, const QVariantList& data);
     void newDataName(const QString& name);
 
 private:
@@ -77,6 +79,8 @@ private:
     Decoder decoder;
     CANServer canServer;
     FileHandler fileHandler;
+
+    
 };
 
 // The purpose of this class is to have a single DataManager object which can be accessed from QML using this class.

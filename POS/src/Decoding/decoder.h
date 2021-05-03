@@ -15,6 +15,7 @@ static const QMap<quint16, QString> idToName = {
   {0x335, "Voltage1"},
   {0x336, "Voltage2"},
   {0x337, "Voltage3"},
+  {0x338, "Voltages[0-29]"}
   /* ... */
 };
 
@@ -26,6 +27,7 @@ static const QMap<quint16, DataType> idToType = {
   {0x335, DataType::INT32},
   {0x336, DataType::INT32},
   {0x337, DataType::INT32},
+  {0x338, DataType::VECTOR_16F}
   /* ... */
 };
 
