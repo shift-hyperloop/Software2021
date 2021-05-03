@@ -8,25 +8,30 @@ Item {
     property alias minValue: circulargauge.minimumValue
     property alias maxValue: circulargauge.maximumValue
     property alias value: circulargauge.value
-    property alias style: circulargauge.style
+    property var accentColor: "#0099ff"
+    property var redirect: ""
+    property var primaryUnit: " km/h"
+    property var secondaryUnit: " m/s"
+    property var secondaryTextVisible: true
 
     CircularGauge{
         id: circulargauge
         minimumValue: 0
-        maximumValue: 500
+        maximumValue: 600
         stepSize: 1
         anchors.fill: parent
         style: CircularGaugeStyle {
-            labelStepSize: 100
-            tickmarkStepSize: 50
+            property var labelStep: 10**Math.floor(Math.log(circulargauge.maximumValue - 10) / Math.log(10))
+            labelStepSize: labelStep
+            tickmarkStepSize: labelStep / 2
             needle: Rectangle {
                 implicitWidth: outerRadius * 0.03
                 implicitHeight: outerRadius * 0.9
                 antialiasing: true
-                color: "#0099ff"
+                color: accentColor
             }
             foreground: Rectangle {
-                width: Math.round(outerRadius * 0.1)
+                width: circulargauge.width * 0.1
                 height: width
                 radius: Math.round(width / 2)
                 //circle sometimes fills entire component, to be fixed. TODO: find out why it happens. For now, the circle in the middle is invisible
@@ -37,20 +42,20 @@ Item {
             tickmarkLabel: Text {
                 font.pixelSize: outerRadius * 0.13
                 text: styleData.value
-                color: styleData.value >= (Math.round(circulargauge.maximumValue * 0.008) * 100) ? "#e34c22" : "#ededed"
+                color: styleData.value >= (Math.ceil(circulargauge.maximumValue * 0.8 / labelStep) * labelStep) ? "#e34c22" : "#ededed"
                 antialiasing: true
             }
             tickmark: Rectangle {
                 implicitWidth: outerRadius * 0.02
                 antialiasing: true
                 implicitHeight: outerRadius * 0.06
-                color: styleData.value >= (Math.round(circulargauge.maximumValue * 0.008) * 100) ? "#e34c22" : "#ededed"
+                color: styleData.value >= (Math.ceil(circulargauge.maximumValue * 0.8 / labelStep) * labelStep) ? "#e34c22" : "#ededed"
             }
             minorTickmark: Rectangle {
                 implicitWidth: outerRadius * 0.01
                 antialiasing: true
                 implicitHeight: outerRadius * 0.03
-                color: styleData.value >= (Math.round(circulargauge.maximumValue * 0.008) * 100) ? "#e34c22" : "#ededed"
+                color: styleData.value >= (Math.ceil(circulargauge.maximumValue * 0.8 / labelStep) * labelStep) ? "#e34c22" : "#ededed"
             }
         }
 
@@ -66,7 +71,7 @@ Item {
         x: circulargauge.scale * circulargauge.x + 126
         y: circulargauge.scale * circulargauge.y + 249
         color: "#ededed"
-        text: qsTr(circulargauge.value + "km/h")
+        text: qsTr(circulargauge.value + primaryUnit)
         anchors.verticalCenter: parent.verticalCenter
         horizontalAlignment: Text.AlignHCenter
         anchors.verticalCenterOffset: 90
@@ -76,11 +81,12 @@ Item {
         font.bold: true
     }
     Text {
-        id: speedometerValueTextMetersPerSecond
+        opacity: secondaryTextVisible ? 1 : 0
+        id: speedometerValueTextSecondary
         x: circulargauge.scale * circulargauge.x + 126
         y: circulargauge.scale * circulargauge.y + 249
         color: "#ededed"
-        text: qsTr(Math.round(circulargauge.value / 3.6) + "m/s")
+        text: qsTr(Math.round(circulargauge.value / 3.6) + secondaryUnit)
         anchors.verticalCenter: parent.verticalCenter
         horizontalAlignment: Text.AlignHCenter
         anchors.verticalCenterOffset: 115
@@ -88,5 +94,15 @@ Item {
         styleColor: "#ededed"
         font.pixelSize: window.width / 110
         font.bold: false
+    }
+    MouseArea{
+        id: chartMouseArea
+        anchors.fill: parent
+        hoverEnabled: true
+        cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor;
+        enabled: redirect !== ""; // if redirect is set, the graph will redirect to the redirect variable which will be a qml page
+        onClicked: {
+            stackView.push(redirect);
+        }
     }
 }

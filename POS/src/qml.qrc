@@ -27,5 +27,7 @@
         <file>Frontend/StartupPage.qml</file>
         <file>Frontend/VCUChecklist.qml</file>
         <file>Frontend/InverterPage.qml</file>
+        <file>Frontend/Chart3D.qml</file>
+        <file>Frontend/AccelerometerPage.qml</file>
     </qresource>
 </RCC>

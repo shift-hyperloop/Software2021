@@ -172,10 +172,19 @@ Item {
                     anchors.centerIn: parent
                 }
             }
-
-            MenuItem { text: qsTr("Battery")
+            MenuItem { text: qsTr("Accelerometer")
+                onTriggered: {
+                    stackView.push("AccelerometerPage.qml");
+                }
+              }
+            MenuItem { text: qsTr("Battery Graphs")
                 onTriggered: {
                     stackView.push("DetailedBatteryPage.qml");
+                }
+              }
+            MenuItem { text: qsTr("Battery Cells")
+                onTriggered: {
+                    stackView.push("CellularGrid.qml");
                 }
               }
             MenuItem { text: qsTr("Custom Chart")

@@ -67,32 +67,21 @@ Page {
         }
     }
 
-
-
-    /*Button {              //not needed anymore?
-        id: but1
-        text: "Reset Graph"
-        x: 0
-        // This y-value corresponds to the y-value of the MenuBar in CustomMenuBar.qml
-        y: rect1.y + rect1.height
-        onClicked: {
-            const charts = [chart2, chart3, chart4, chart5, chart6];
-            resetChartAxes(charts);
-        }
-    }*/
     Button {
         id: but2
         text: "Go back"
-        x: window.width * 0.01
-        y: 0.05 * window.height
-        height: window.height * 0.07
+        anchors {
+            top: rect1.bottom
+            left: rect1.left
+            margins: 5
+        }
+        height: 0.5 * y
         width: window.width * 0.07
         font.pixelSize: window.height * 0.02
         onClicked: {
             stackView.pop("main.qml");
         }
     }
-
 
     //This is the amount of vertical height that's "left" when taking elements above into account
     property var remainingWindowHeight: window.height - 0.05 * window.height - but2.height - rect1.height
@@ -103,6 +92,7 @@ Page {
         height: Math.floor(remainingWindowHeight / 3)
         anchors.left: parent.left
         anchors.top: but2.bottom
+        anchors.margins: 5
         property var counter: 0
         Component.onCompleted: {
             chart.initCustomPlot(3);

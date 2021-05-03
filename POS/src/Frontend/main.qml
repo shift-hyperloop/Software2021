@@ -72,6 +72,20 @@ ApplicationWindow {
         Component.onCompleted: {
             dataManager.init()
         }
+
+        dataManager.onNewData: {
+            if (name == "Voltages[0-29]") {
+                console.log("Data1: " + data[0]);
+                console.log("Data2: " + data[1]);
+                console.log("Data3: " + data[2]);
+                console.log("Data4: " + data[3]);
+                console.log("Data5: " + data[4]);
+            }
+        }
+
+        dataManager.onNewDataName: {
+            console.log("Name2: " + name);
+        }
     }
 
     /*
@@ -113,6 +127,7 @@ ApplicationWindow {
 
                 Speedometer {
                     id: speedometer
+                    redirect: "MechanicalDetails.qml"
                     width: Math.round(window.width / 6) //round, because speedometer is very picky and doesnt like uneven widths.
                     height: width //width and height have to be equal!! (+- some margin but idk why you'd want an elliptical gauge)
                     anchors {
@@ -192,6 +207,23 @@ ApplicationWindow {
                 anchors.rightMargin: window.width * 0.025
 
             }
+            Speedometer {
+                id: barometer
+                redirect: ""
+                width: Math.round(window.width / 8)
+                height: width
+                minValue: 0
+                maxValue: 100
+                primaryUnit: " bar"
+                secondaryTextVisible: false
+                accentColor: "#e34242"
+                anchors {
+                    left: vcuchecklist.right
+                    top: battery.top
+                    leftMargin: window.width * 0.025
+                }
+            }
+
             Tiltmeter{
                 id: tiltMeter
                 rollDeg: 0
@@ -332,6 +364,7 @@ ApplicationWindow {
                 height: 200
                 names: ["Telemetry", "State Indication", "Sensors suite 1", "Sensors suite 2", "Inverter Control", "BMS Master"]
             }
+
 
         }
     }

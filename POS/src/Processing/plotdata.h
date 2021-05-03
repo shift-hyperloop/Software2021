@@ -6,6 +6,12 @@
 #include <QVariant>
 #include <qvariant.h>
 #include <qvector.h>
+#include <qdebug.h>
+
+/*
+ * This class is a wrapper around a QMap<QString, QPair<QVector<double>*, QVector<QVariant>*>>
+ * to make life easier.
+ */
 
 class PlotData
 {
@@ -30,7 +36,8 @@ public:
 
     void addData(const QString& key, double x, QVariant y)
     {
-        if (!m_Data.contains(key)) insertEmpty(key);
+        if (!m_Data.contains(key)) 
+            insertEmpty(key);
 
         m_Data.value(key).first->append(x);
         m_Data.value(key).second->append(y);
@@ -69,8 +76,6 @@ public:
     {
         return m_Data.contains(key);
     }
-
-    inline QList<QString> getDataTypes() { return m_Data.keys(); }
     QMap<QString, QPair<QVector<double>*, QVector<QVariant>*>> dataMap() const {return m_Data;}
 
 private:

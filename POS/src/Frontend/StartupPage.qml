@@ -10,7 +10,7 @@ Page{
     }
     
     //Password for activating buttons is "ElonMusk"
-    //if the user has written the correct password, the buttons can be pressed. the buttons opens a MessageDialog that makes you confirm your choise.
+    //if the user has written the correct password, the buttons can be pressed. the buttons opens a MessageDialog that makes you confirm your choice.
     //code for sending information to the pod should therefore be written in the onYes{} function of the buttons corresponding MessageDialog
     id: stateIndicationPage
     property var passwordAccepted: false // this should be stored somewhere else since now it resets when the page is opened
@@ -26,7 +26,7 @@ Page{
         }
     }
 
-    Button{                                //there is probably a more efficient way to do this with a repeater, but this way it is simpler to give the buttons and MessageDialogs their onclicked functions
+    Button{ //there is probably a more efficient way to do this with a repeater, but this way it is simpler to give the buttons and MessageDialogs their onclicked functions
         id:highVoltageButton
         text: "Engage High Voltage"
         height: window.height * 0.08
@@ -35,8 +35,11 @@ Page{
         x: window.width / 10
         y: window.height / 15 * 3
         onClicked: {
-            if(highVoltageStatus.status == 0 && passwordAccepted){
-                highVoltageMessage.open()
+            if (highVoltageStatus.status == 0 && passwordAccepted){
+                highVoltageMessage.open();
+            }
+            else {
+                requirePasswordMessage.open();
             }
         }
     }
@@ -107,7 +110,10 @@ Page{
         y: window.height / 15 * 6
         onClicked: {
             if(startupProtocolStatus.status == 0 && passwordAccepted){
-                startUpProtocolMessage.open()
+                startUpProtocolMessage.open();
+            }
+            else {
+                requirePasswordMessage.open();
             }
         }
     }
@@ -177,8 +183,10 @@ Page{
         y: window.height / 15 * 9
         onClicked: {
             if(startStatus.status == 0 && passwordAccepted){
-
-                startMessage.open()
+                startMessage.open();
+            }
+            else {
+                requirePasswordMessage.open();
             }
         }
     }
@@ -218,6 +226,14 @@ Page{
 
         border.width: window.height*0.005
 
+    }
+
+    MessageDialog {
+        id: requirePasswordMessage
+        title: "Unauthorized Access"
+        icon: StandardIcon.Warning
+        text: "Enter password to unlock startup"
+        standardButtons: StandardButton.Ok
     }
 
     Text{
