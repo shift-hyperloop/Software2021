@@ -1,6 +1,7 @@
 import QtQuick.Controls 2.15
 import QtQuick 2.15
 import QtQuick.Dialogs 1.3
+import shift.datamanagement 1.0
 
 Item {
     id: cGrid
@@ -9,6 +10,24 @@ Item {
     Keys.onPressed: {
         if (event.key === 16777219) {
             stackView.pop("main.qml");
+        }
+    }
+
+    DataManagerAccessor {
+        id: dm
+
+        dataManager.onNewData: {
+            if (name == "Voltages[0-29]") {
+                for (let i = 0; i < 30; i++) {
+                    var temperature = data[i];
+                    repeater.itemAt(i).temperature = temperature;
+                    repeater.itemAt(i).state = (temperature < 6) ?
+                                'cold' : (temperature < 22) ?
+                                'not so hot' : (temperature < 36) ?
+                                'hot' : (temperature < 50) ?
+                                'slightly hot' : 'very hot';
+                }
+            }
         }
     }
 
@@ -222,27 +241,27 @@ Item {
     }
 
     // Timer to simulate changes in temperature
-    Timer {
-        id: timer
-        running: true
-        repeat: true
-        interval: 200
-        // Fancy-shmancy JS code
-        onTriggered: {
-            for (let i = 0; i < repeater.count; i++) {
-                let temperature = Math.floor(Math.random() * 70) - 10;
-                /*
-                itemAt(index) returns the repeater item at the corresponding index
-                repeater.count is the number of items in in the repeater, and in our case the number of
-                ojects in the grid
-                */
-                repeater.itemAt(i).temperature = temperature;
-                repeater.itemAt(i).state = (temperature < 6) ?
-                            'cold' : (temperature < 22) ?
-                            'not so hot' : (temperature < 36) ?
-                            'hot' : (temperature < 50) ?
-                            'slightly hot' : 'very hot';
-            }
-        }
-    }
+    //Timer {
+    //    id: timer
+    //    running: true
+    //    repeat: true
+    //    interval: 200
+    //    // Fancy-shmancy JS code
+    //    onTriggered: {
+    //        for (let i = 0; i < repeater.count; i++) {
+    //            let temperature = Math.floor(Math.random() * 70) - 10;
+    //            /*
+    //            itemAt(index) returns the repeater item at the corresponding index
+    //            repeater.count is the number of items in in the repeater, and in our case the number of
+    //            ojects in the grid
+    //            */
+    //            repeater.itemAt(i).temperature = temperature;
+    //            repeater.itemAt(i).state = (temperature < 6) ?
+    //                        'cold' : (temperature < 22) ?
+    //                        'not so hot' : (temperature < 36) ?
+    //                        'hot' : (temperature < 50) ?
+    //                        'slightly hot' : 'very hot';
+    //        }
+    //    }
+    //}
 }

@@ -75,16 +75,7 @@ ApplicationWindow {
 
         dataManager.onNewData: {
             if (name == "Voltages[0-29]") {
-                console.log("Data1: " + data[0]);
-                console.log("Data2: " + data[1]);
-                console.log("Data3: " + data[2]);
-                console.log("Data4: " + data[3]);
-                console.log("Data5: " + data[4]);
             }
-        }
-
-        dataManager.onNewDataName: {
-            console.log("Name2: " + name);
         }
     }
 

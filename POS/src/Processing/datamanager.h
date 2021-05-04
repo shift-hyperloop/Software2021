@@ -63,7 +63,6 @@ signals:
     void podConnectionTerminated();
 
     void newData(const QString &name, unsigned int timeMs, const QVariantList& data);
-    void newDataName(const QString& name);
 
 private:
     // Internal function used for adding data to plot

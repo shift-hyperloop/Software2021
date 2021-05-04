@@ -27,7 +27,7 @@ static const QMap<quint16, DataType> idToType = {
   {0x335, DataType::INT32},
   {0x336, DataType::INT32},
   {0x337, DataType::INT32},
-  {0x338, DataType::VECTOR_16F}
+  {0x338, DataType::VECTOR_30S}
   /* ... */
 };
 

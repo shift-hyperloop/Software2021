@@ -1,6 +1,8 @@
 #include "datamanager.h"
 #include "customplotitem.h"
 #include "datastructs.h"
+#include <bits/stdint-intn.h>
+#include <bits/stdint-uintn.h>
 #include <math.h>
 #include <qdebug.h>
 #include <qlist.h>
@@ -8,6 +10,7 @@
 #include <qpoint.h>
 #include <qrandom.h>
 #include <qthread.h>
+#include <qvariant.h>
 
 DataManager::DataManager()
 {
@@ -37,9 +40,7 @@ void DataManager::addData(unsigned int timeMs, const QString &name, const DataTy
     dataStream.setVersion(QDataStream::Qt_5_12);
     dataStream.setByteOrder(QDataStream::LittleEndian);
 
-    bool bNewName = false; // Some structs emit data with several names
-
-    QVariantList qmlData;
+    QVariantList qmlData; // Data to QML is sent as list of struct values
 
     // Choose what struct to create based on dataType
     switch (dataType) {
@@ -47,143 +48,165 @@ void DataManager::addData(unsigned int timeMs, const QString &name, const DataTy
         {
             DataStructs::Int dataStruct;
             dataStream >> dataStruct;
-            float data = dataStruct.value_0;
-            addPlotData(name, timeMs, data); // Plot data is two floats for CustomPlotItem
-            qmlData.append(data);
-            emit newData(name, timeMs, qmlData); // Always emit data to be accessed from QML
+            qmlData.append(dataStruct.value_0);
+            addPlotData(name, timeMs, dataStruct.value_0); 
             break;
         }  
         case DataType::ERROR_CODE: 
         {
             DataStructs::ErrorCode dataStruct;
             dataStream >> dataStruct;
-            emit newData(name, timeMs, qmlData);
+            qmlData.append(dataStruct.error_code);
             break;
         }
         case DataType::VCU_STATUS:
         {
             DataStructs::VCUStatus dataStruct;
             dataStream >> dataStruct;
-            emit newData(name, timeMs, qmlData);
-            break;
-        }
-        case DataType::VECTOR_3F:
-        {
-            DataStructs::Vector3f dataStruct;
-            dataStream >> dataStruct;
-            emit newData(name, timeMs, qmlData);
+            qmlData.append(dataStruct.BMS_1);
+            qmlData.append(dataStruct.BMS_2);
+            qmlData.append(dataStruct.Inverter_1);
+            qmlData.append(dataStruct.Inverter_2);
+            qmlData.append(dataStruct.Telemetry);
+            qmlData.append(dataStruct.State_indication);
+            qmlData.append(dataStruct.Sensor_suite_1);
+            qmlData.append(dataStruct.Sensor_suite_2);
+            qmlData.append(dataStruct.latency_CAN_0);
+            qmlData.append(dataStruct.latency_CAN_1);
             break;
         }
         case DataType::POD_STATE:
         {
             DataStructs::PodState dataStruct;
             dataStream >> dataStruct;
-            emit newData(name, timeMs, qmlData);
+            qmlData.append(dataStruct.state);
             break;
         }
         case DataType::VECTOR_3I:
         {
             DataStructs::Vector3i dataStruct;
             dataStream >> dataStruct;
-            emit newData(name, timeMs, qmlData);
+
+            DataStructs::Union3i u;
+            u.vec = dataStruct;
+
+            for (unsigned int i = 0; i < 3; i++) {
+                QString newName = name;
+                newName = newName.append("_").append(QString::number(i));
+                addPlotData(newName, timeMs, u.arr[i]);
+                qmlData.append(u.arr[i]);
+            }
             break;
         }
         case DataType::BOOL:
         {
             DataStructs::Bool dataStruct;
             dataStream >> dataStruct;
-            emit newData(name, timeMs, qmlData);
+            qmlData.append(dataStruct.status_0);
             break;
         }
-        case DataType::VECTOR_3B:
+        case DataType::VECTOR_2B:
         {
-            DataStructs::Vector3b dataStruct;
+            DataStructs::Vector2b dataStruct;
             dataStream >> dataStruct;
-            emit newData(name, timeMs, qmlData);
+            qmlData.append(dataStruct.status_0);
+            qmlData.append(dataStruct.status_1);
             break;
         }
         case DataType::CHAR:
         {
             DataStructs::Char dataStruct;
             dataStream >> dataStruct;
-            emit newData(name, timeMs, qmlData);
-            break;
-        }
-        case DataType::VECTOR_2C:
-        {
-            DataStructs::Vector2c dataStruct;
-            dataStream >> dataStruct;
-            emit newData(name, timeMs, qmlData);
+            qmlData.append(dataStruct.value_0);
+            addPlotData(name, timeMs, dataStruct.value_0); 
             break;
         }
         case DataType::VECTOR_3C:
         {
             DataStructs::Vector3c dataStruct;
             dataStream >> dataStruct;
-            emit newData(name, timeMs, qmlData);
-            break;
-        }
-        case DataType::VECTOR_16C:
-        {
-            DataStructs::Vector16c dataStruct;
-            dataStream >> dataStruct;
-            emit newData(name, timeMs, qmlData);
+
+            DataStructs::Union3c u;
+            u.vec = dataStruct;
+
+            for (unsigned int i = 0; i < 3; i++) {
+                QString newName = name;
+                newName = newName.append("_").append(QString::number(i));
+                addPlotData(newName, timeMs, u.arr[i]);
+                qmlData.append(u.arr[i]);
+            }
             break;
         }
         case DataType::SHORT:
         {
             DataStructs::Short dataStruct;
             dataStream >> dataStruct;
-            emit newData(name, timeMs, qmlData);
+            qmlData.append(dataStruct.value_0);
+            addPlotData(name, timeMs, dataStruct.value_0); 
             break;
         }
-        case DataType::VECTOR_2S:
+        case DataType::VECTOR_30S:
         {
-            DataStructs::Vector2s dataStruct;
+            DataStructs::Vector30s dataStruct;
             dataStream >> dataStruct;
-            emit newData(name, timeMs, qmlData);
+            
+            DataStructs::Union30s u;
+            u.vec = dataStruct;
+
+            for (unsigned int i = 0; i < 30; i++) {
+                QString newName = name;
+                newName = newName.append("_").append(QString::number(i));
+                addPlotData(newName, timeMs, u.arr[i]);
+                qmlData.append(u.arr[i]);
+            }
             break;
         }
         case DataType::FLOAT:
         {
             DataStructs::Float dataStruct;
             dataStream >> dataStruct;
-            emit newData(name, timeMs, qmlData);
+            qmlData.append(dataStruct.value_0);
+            addPlotData(name, timeMs, dataStruct.value_0); 
             break;
         }
         case DataType::DOUBLE:
         {
-            DataStructs::Double dataStruct; 
+            DataStructs::Double dataStruct;
             dataStream >> dataStruct;
-            emit newData(name, timeMs, qmlData);
+            qmlData.append(dataStruct.value_0);
+            addPlotData(name, timeMs, dataStruct.value_0); 
             break;
         }
         case DataType::VECTOR_2F:
         {
             DataStructs::Vector2f dataStruct;
             dataStream >> dataStruct;
-            emit newData(name, timeMs, qmlData);
+
+            DataStructs::Union2f u;
+            u.vec = dataStruct;
+
+            for (unsigned int i = 0; i < 2; i++) {
+                QString newName = name;
+                newName = newName.append("_").append(QString::number(i));
+                addPlotData(newName, timeMs, u.arr[i]);
+                qmlData.append(u.arr[i]);
+            }
             break;
         }
-        case DataType::VECTOR_4F:
+        case DataType::VECTOR_3F:
         {
-            DataStructs::Vector4f dataStruct;
+            DataStructs::Vector3f dataStruct;
             dataStream >> dataStruct;
-            emit newData(name, timeMs, qmlData);
-            break;
-        }
-        case DataType::VECTOR_6F:
-        {
-            DataStructs::Vector6f dataStruct;
-            dataStream >> dataStruct;
-            emit newData(name, timeMs, qmlData);
-            break;
-        }
-        case DataType::VECTOR_8F:
-        {
-            DataStructs::Vector8f dataStruct;
-            dataStream >> dataStruct;
-            emit newData(name, timeMs, qmlData);
+
+            DataStructs::Union3f u;
+            u.vec = dataStruct;
+
+            for (unsigned int i = 0; i < 3; i++) {
+                QString newName = name;
+                newName = newName.append("_").append(QString::number(i));
+                addPlotData(newName, timeMs, u.arr[i]);
+                qmlData.append(u.arr[i]);
+            }
             break;
         }
         case DataType::VECTOR_16F:
@@ -199,14 +222,15 @@ void DataManager::addData(unsigned int timeMs, const QString &name, const DataTy
                 newName = newName.append("_").append(QString::number(i));
                 addPlotData(newName, timeMs, u.arr[i]);
                 qmlData.append(u.arr[i]);
-                if (!plotData.hasKey(newName)) emit newDataName(newName);
             }
-            emit newData(name, timeMs, qmlData);
-            bNewName = true;
+            break;
+        }
+        default:
+        {
             break;
         }
     }
-    if (!plotData.hasKey(name) && !bNewName) emit newDataName(name);
+    emit newData(name, timeMs, qmlData); // Always emit data to be accessed from QML
 }
 
 void DataManager::addPlotData(const QString &name, unsigned int timeMs, float data)
@@ -245,8 +269,6 @@ void DataManager::sendPodCommand(CANServer::PodCommand messageType)
 
 void DataManager::registerGraph(CustomPlotItem *plotItem, const QString &name, int graphIndex)
 {
-    if (!plotData.hasKey(name)) emit newDataName(name);
-
     if (!plotItems.contains(name)) // Check if new plot
     {
         // Add plot along with graph index to plotItem map
@@ -343,20 +365,44 @@ void DataManager::dummyData()
     canServer.dataReceived(timeMs, 0x336, 4, data4);
     canServer.dataReceived(timeMs, 0x337, 4, data5);
 
-    DataStructs::Vector16f test;
+    DataStructs::Vector30s test;
     test.value_0 = vol1;
     test.value_1 = vol2;
     test.value_2 = vol3;
     test.value_3 = vol1;
     test.value_4 = vol1;
+    test.value_5 = vol1;
+    test.value_6 = vol2;
+    test.value_7 = vol3;
+    test.value_8 = vol1;
+    test.value_9 = vol1;
+    test.value_10 = vol1;
+    test.value_11 = vol2;
+    test.value_12 = vol3;
+    test.value_13 = vol1;
+    test.value_14 = vol1;
     test.value_15 = vol1;
+    test.value_16 = vol1;
+    test.value_17 = vol2;
+    test.value_18 = vol3;
+    test.value_19 = vol1;
+    test.value_20 = vol1;
+    test.value_21 = vol1;
+    test.value_22 = vol2;
+    test.value_23 = vol3;
+    test.value_24 = vol1;
+    test.value_25 = vol1;
+    test.value_26 = vol1;
+    test.value_27 = vol2;
+    test.value_28 = vol3;
+    test.value_29 = vol1;
 
     QByteArray data6;
     QDataStream stream6(&data6, QIODevice::ReadWrite);
     stream6.setByteOrder(QDataStream::LittleEndian);
     stream6 << test;
 
-    canServer.dataReceived(timeMs, 0x338, 16*sizeof(float), data6);
+    canServer.dataReceived(timeMs, 0x338, 30*sizeof(uint16_t), data6);
 
     timeMs += 10;
 }
