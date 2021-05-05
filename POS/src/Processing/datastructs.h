@@ -1,5 +1,6 @@
 #pragma once
 
+#include <bits/stdint-uintn.h>
 #include <qobject.h>
 #include <qobjectdefs.h>
 #include <stdint.h>
@@ -528,6 +529,91 @@ namespace DataStructs
         }
     };
 
+    struct Vector23s : public DataStruct
+    {
+        uint16_t value_0;
+        uint16_t value_1;
+        uint16_t value_2;
+        uint16_t value_3;
+        uint16_t value_4;
+        uint16_t value_5;
+        uint16_t value_6;
+        uint16_t value_7;
+        uint16_t value_8;
+        uint16_t value_9;
+        uint16_t value_10;
+        uint16_t value_11;
+        uint16_t value_12;
+        uint16_t value_13;
+        uint16_t value_14;
+        uint16_t value_15;
+        uint16_t value_16;
+        uint16_t value_17;
+        uint16_t value_18;
+        uint16_t value_19;
+        uint16_t value_20;
+        uint16_t value_21;
+        uint16_t value_22;
+
+        friend QDataStream& operator<<(QDataStream& dataStream, const Vector23s& object)
+        {
+            dataStream << object.value_0
+               << object.value_1
+               << object.value_2
+               << object.value_3
+               << object.value_4
+               << object.value_5
+               << object.value_6
+               << object.value_7
+               << object.value_8
+               << object.value_9
+               << object.value_10
+               << object.value_11
+               << object.value_12
+               << object.value_13
+               << object.value_14
+               << object.value_15
+               << object.value_16
+               << object.value_17
+               << object.value_18
+               << object.value_19
+               << object.value_20
+               << object.value_21
+               << object.value_22;
+
+               return dataStream;
+        }
+
+        friend QDataStream& operator>>(QDataStream& dataStream, Vector23s& object)
+        {
+            dataStream >> object.value_0
+                       >> object.value_1
+                       >> object.value_2
+                       >> object.value_3
+                       >> object.value_4
+                       >> object.value_5
+                       >> object.value_6
+                       >> object.value_7
+                       >> object.value_8
+                       >> object.value_9
+                       >> object.value_10
+                       >> object.value_11
+                       >> object.value_12
+                       >> object.value_13
+                       >> object.value_14
+                       >> object.value_15
+                       >> object.value_16
+                       >> object.value_17
+                       >> object.value_18
+                       >> object.value_19
+                       >> object.value_20
+                       >> object.value_21
+                       >> object.value_22;
+
+            return dataStream;
+        }
+    };
+
     struct Int : public DataStruct
     {
         uint32_t value_0;
@@ -769,6 +855,36 @@ namespace DataStructs
                        >> object.value_13
                        >> object.value_14
                        >> object.value_15;
+
+            return dataStream;
+        }
+    };
+
+    struct Vector2c2d : public DataStruct 
+    {
+        uint8_t value_0;
+        uint8_t value_1;
+
+        double value_2;
+        double value_3;
+
+        friend QDataStream& operator<<(QDataStream& dataStream, const Vector2c2d& object)
+        {
+            // NOTE: Change if stream we receive is not continuous
+            dataStream << object.value_0
+                       << object.value_1
+                       << object.value_2
+                       << object.value_3;
+
+            return dataStream;
+        }
+
+        friend QDataStream & operator>>(QDataStream& dataStream, Vector2c2d& object) 
+        {
+            dataStream >> object.value_0
+                       >> object.value_1
+                       >> object.value_2
+                       >> object.value_3;
 
             return dataStream;
         }
