@@ -1,6 +1,5 @@
 #pragma once
 
-#include <bits/stdint-uintn.h>
 #include <qobject.h>
 #include <qobjectdefs.h>
 #include <stdint.h>
@@ -46,13 +45,14 @@ enum class DataType
     SHORT,
     VECTOR_2S,
     VECTOR_30S,
+    VECTOR_23S,
     VECTOR_2F,
     VECTOR_4F,
     VECTOR_6F,
     VECTOR_8F,
-    VECTOR_16F
-
-
+    VECTOR_16F,
+    BMS_STATUS,
+    BMS_SAFETY,
 };
 
 namespace DataStructs 
@@ -929,6 +929,11 @@ namespace DataStructs
         Vector3c vec;
         uint8_t arr[3];
     } Union3c;
+
+    typedef union {
+        Vector23s vec;
+        uint16_t arr[23];
+    } Union23s;
 
     typedef union {
         Vector30s vec;

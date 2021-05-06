@@ -17,9 +17,42 @@ Item {
         id: dm
 
         dataManager.onNewData: {
-            if (name == "Voltages[0-29]") {
-                for (let i = 0; i < 30; i++) {
+            if (name == "Temp_P1[0-22]") {
+                for (let i = 0; i < 23; i++) {
                     var temperature = data[i];
+                    repeater.itemAt(i).temperature = temperature;
+                    repeater.itemAt(i).state = (temperature < 6) ?
+                                'cold' : (temperature < 22) ?
+                                'not so hot' : (temperature < 36) ?
+                                'hot' : (temperature < 50) ?
+                                'slightly hot' : 'very hot';
+                }
+            }
+            if (name == "Temp_P1[23-44]") {
+                for (let i = 23; i < 45; i++) {
+                    var temperature = data[i-23];
+                    repeater.itemAt(i).temperature = temperature;
+                    repeater.itemAt(i).state = (temperature < 6) ?
+                                'cold' : (temperature < 22) ?
+                                'not so hot' : (temperature < 36) ?
+                                'hot' : (temperature < 50) ?
+                                'slightly hot' : 'very hot';
+                }
+            }
+            if (name == "Temp_P2[0-22]") {
+                for (let i = 45; i < 68; i++) {
+                    var temperature = data[i-45];
+                    repeater.itemAt(i).temperature = temperature;
+                    repeater.itemAt(i).state = (temperature < 6) ?
+                                'cold' : (temperature < 22) ?
+                                'not so hot' : (temperature < 36) ?
+                                'hot' : (temperature < 50) ?
+                                'slightly hot' : 'very hot';
+                }
+            }
+            if (name == "Temp_P2[23-44]") {
+                for (let i = 68; i < 90; i++) {
+                    var temperature = data[i-68];
                     repeater.itemAt(i).temperature = temperature;
                     repeater.itemAt(i).state = (temperature < 6) ?
                                 'cold' : (temperature < 22) ?

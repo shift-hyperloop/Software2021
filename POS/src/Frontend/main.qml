@@ -73,8 +73,19 @@ ApplicationWindow {
             dataManager.init()
         }
 
+        property var maxVoltage: 0;
+        property var minVoltage: Infinity
+
         dataManager.onNewData: {
-            if (name == "Voltages[0-29]") {
+            if (name.includes("Voltages") == true) { 
+                for (let i = 0; i < data.length; i++) {
+                    if (data[i] > maxVoltage) {
+                        maxVoltage = data[i];
+                    }
+                    if (data[i] < minVoltage) {
+                        minVoltage = data[i];
+                    }
+                }
             }
         }
     }
@@ -255,7 +266,7 @@ ApplicationWindow {
                 height: battery.height
                 width: window.width / 3.5
                 names: ["Max voltage", "Max battery temperature", "Minumum voltage", "Minumum battery temperature","Average voltage", "Average battery temperature"]
-                values: [0,0,0,0,0,0]
+                values: [dm.maxVoltage + " V", 0, dm.minVoltage + " V", 0,0,0]
             }
             Text{
                 id: batteryText

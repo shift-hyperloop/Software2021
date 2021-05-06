@@ -161,6 +161,22 @@ void DataManager::addData(unsigned int timeMs, const QString &name, const DataTy
             }
             break;
         }
+        case DataType::VECTOR_23S:
+        {
+            DataStructs::Vector23s dataStruct;
+            dataStream >> dataStruct;
+            
+            DataStructs::Union23s u;
+            u.vec = dataStruct;
+
+            for (unsigned int i = 0; i < 23; i++) {
+                QString newName = name;
+                newName = newName.append("_").append(QString::number(i));
+                addPlotData(newName, timeMs, u.arr[i]);
+                qmlData.append(u.arr[i]);
+            }
+            break;
+        }
         case DataType::FLOAT:
         {
             DataStructs::Float dataStruct;
@@ -320,7 +336,7 @@ long timeMs = 0;
 QRandomGenerator generator(1000224242);
 void DataManager::dummyData()
 {
-    if (timeMs > 1500)
+    if (timeMs > 2000)
     {
         return;
     }
@@ -331,6 +347,16 @@ void DataManager::dummyData()
     vol1 = 240*exp(-0.0051*timeMs);
     vol2 = 235*exp(-0.0042*timeMs);
     vol3 = 284*exp(-0.0052*timeMs);
+
+    int t1, t2, t3, t4, t5, t6, t7, t8;
+    t1 = 440*exp(-0.00051*timeMs);
+    t2 = 435*exp(-0.00042*timeMs);
+    t3 = 484*exp(-0.00052*timeMs);
+    t4 = 522*exp(-0.00038*timeMs);
+    t5 = 431*exp(-0.00082*timeMs);
+    t6 = 514*exp(-0.00042*timeMs);
+    t7 = 446*exp(-0.00031*timeMs);
+    t8 = 535*exp(-0.00062*timeMs);
 
     vel = timeMs * exp(-0.004*timeMs);
     acc = 0.2 * timeMs * exp(-0.004*timeMs);
@@ -365,44 +391,82 @@ void DataManager::dummyData()
     canServer.dataReceived(timeMs, 0x336, 4, data4);
     canServer.dataReceived(timeMs, 0x337, 4, data5);
 
-    DataStructs::Vector30s test;
-    test.value_0 = vol1;
-    test.value_1 = vol2;
-    test.value_2 = vol3;
-    test.value_3 = vol1;
-    test.value_4 = vol1;
-    test.value_5 = vol1;
-    test.value_6 = vol2;
-    test.value_7 = vol3;
-    test.value_8 = vol1;
-    test.value_9 = vol1;
-    test.value_10 = vol1;
-    test.value_11 = vol2;
-    test.value_12 = vol3;
-    test.value_13 = vol1;
-    test.value_14 = vol1;
-    test.value_15 = vol1;
-    test.value_16 = vol1;
-    test.value_17 = vol2;
-    test.value_18 = vol3;
-    test.value_19 = vol1;
-    test.value_20 = vol1;
-    test.value_21 = vol1;
-    test.value_22 = vol2;
-    test.value_23 = vol3;
-    test.value_24 = vol1;
-    test.value_25 = vol1;
-    test.value_26 = vol1;
-    test.value_27 = vol2;
-    test.value_28 = vol3;
-    test.value_29 = vol1;
+    DataStructs::Vector23s test;
+    test.value_0 = t1;
+    test.value_1 = t2;
+    test.value_2 = t3;
+    test.value_3 = t4;
+    test.value_4 = t5;
+    test.value_5 = t6;
+    test.value_6 = t7;
+    test.value_7 = t8;
+    test.value_8 = t1;
+    test.value_9 = t2;
+    test.value_10 = t1;
+    test.value_11 = t2;
+    test.value_12 = t3;
+    test.value_13 = t4;
+    test.value_14 = t5;
+    test.value_15 = t6;
+    test.value_16 = t7;
+    test.value_17 = t8;
+    test.value_18 = t1;
+    test.value_19 = t2;
+    test.value_20 = t3;
+    test.value_21 = t4;
+    test.value_22 = t5;
 
     QByteArray data6;
     QDataStream stream6(&data6, QIODevice::ReadWrite);
     stream6.setByteOrder(QDataStream::LittleEndian);
     stream6 << test;
 
-    canServer.dataReceived(timeMs, 0x338, 30*sizeof(uint16_t), data6);
+    canServer.dataReceived(timeMs, 0x43B, 23*sizeof(uint16_t), data6);
+    canServer.dataReceived(timeMs, 0x53C, 23*sizeof(uint16_t), data6);
+    canServer.dataReceived(timeMs, 0x528, 23*sizeof(uint16_t), data6);
+    canServer.dataReceived(timeMs, 0x629, 23*sizeof(uint16_t), data6);
+
+    DataStructs::Vector30s voltages;
+    voltages.value_0 = t1;
+    voltages.value_1 = t2;
+    voltages.value_2 = t3;
+    voltages.value_3 = t4;
+    voltages.value_4 = t5;
+    voltages.value_5 = t6;
+    voltages.value_6 = t7;
+    voltages.value_7 = t8;
+    voltages.value_8 = t1;
+    voltages.value_9 = t2;
+    voltages.value_10 = t1;
+    voltages.value_11 = t2;
+    voltages.value_12 = t3;
+    voltages.value_13 = t4;
+    voltages.value_14 = t5;
+    voltages.value_15 = t6;
+    voltages.value_16 = t7;
+    voltages.value_17 = t8;
+    voltages.value_18 = t1;
+    voltages.value_19 = t2;
+    voltages.value_20 = t3;
+    voltages.value_21 = t4;
+    voltages.value_22 = t5;
+    voltages.value_23 = t7;
+    voltages.value_24 = t8;
+    voltages.value_25 = t1;
+    voltages.value_26 = t2;
+    voltages.value_27 = t3;
+    voltages.value_28 = t4;
+    voltages.value_29 = t5;
+
+    QByteArray data7;
+    QDataStream stream7(&data7, QIODevice::ReadWrite);
+    stream7.setByteOrder(QDataStream::LittleEndian);
+    stream7 << voltages;
+
+    canServer.dataReceived(timeMs, 0x124, 23*sizeof(uint16_t), data7);
+    canServer.dataReceived(timeMs, 0x225, 23*sizeof(uint16_t), data7);
+    canServer.dataReceived(timeMs, 0x326, 23*sizeof(uint16_t), data7);
+    canServer.dataReceived(timeMs, 0x138, 23*sizeof(uint16_t), data7);
 
     timeMs += 10;
 }
