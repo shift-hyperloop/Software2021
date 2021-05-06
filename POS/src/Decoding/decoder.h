@@ -34,6 +34,7 @@ static const QMap<quint16, QString> idToName = {
   { 0x03E , "BMS Safety" },
   { 0x074 , "Level shifters disabled" },
   { 0x275 , "Current measurements" },
+  { 0x09D , "Velocity" }
   /* ... */
 };
 
@@ -51,7 +52,7 @@ static const QMap<quint16, DataType> idToType = {
   { 0x124 , DataType::VECTOR_30S },
   { 0x225 , DataType::VECTOR_30S },
   { 0x326 , DataType::VECTOR_30S },
-  { 0x427 , DataType::FLOAT },
+  { 0x427 , DataType::FLOAT      },
   { 0x528 , DataType::VECTOR_23S },
   { 0x629 , DataType::VECTOR_23S },
   { 0x72A , DataType::BMS_STATUS },
@@ -64,7 +65,8 @@ static const QMap<quint16, DataType> idToType = {
   { 0x63D , DataType::BMS_STATUS },
   { 0x03E , DataType::BMS_SAFETY },
   { 0x074 , DataType::ERROR_CODE },
-  { 0x275 , DataType::VECTOR_3F },
+  { 0x275 , DataType::VECTOR_3F  },
+  { 0x09D , DataType::FLOAT      },
   /* ... */
 };
 

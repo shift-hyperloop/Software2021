@@ -74,19 +74,83 @@ ApplicationWindow {
         }
 
         property var maxVoltage: 0;
-        property var minVoltage: Infinity
+	property var currMaxVoltage: 0;
+
+        property var minVoltage: Infinity;
+	property var currMinVoltage: Infinity;
+
+	property var avgVoltage: 0;
+	property var voltageSum: 0;
+	property var numVoltages: 0;
+
+	property var maxTemp: 0;
+	property var currMaxTemp: 0;
+
+        property var minTemp: Infinity;
+	property var currMinTemp: Infinity;
+
+	property var avgTemp: 0;
+	property var tempSum: 0;
+	property var numTemps: 0;
+
+	/* These two are used to update max, min and avg. 
+	   temps and voltages when all messages have been 
+	   received such that the values shown are current 
+	   and not for the whole run */
+	property int voltagesReceived: 0;
+	property int tempsReceived: 0;
+
+	readonly property int num_voltage_messages: 6;
+	readonly property int num_temp_messages: 4;
 
         dataManager.onNewData: {
             if (name.includes("Voltages") == true) { 
                 for (let i = 0; i < data.length; i++) {
-                    if (data[i] > maxVoltage) {
+                    if (data[i] > currMaxVoltage) {
                         maxVoltage = data[i];
+			currMaxVoltage = data[i];
                     }
-                    if (data[i] < minVoltage) {
+                    if (data[i] < currMinVoltage) {
                         minVoltage = data[i];
+			currMinVoltage = data[i];
                     }
+		    voltageSum += data[i];
+		    numVoltages++;
                 }
+		voltagesReceived++;
+		if (voltagesReceived >= num_voltage_messages) {
+			currMaxVoltage = 0;
+			currMinVoltage = Infinity;
+			avgVoltage = voltageSum / numVoltages;
+			voltageSum = 0;
+			numVoltages = 0;
+		}
             }
+            if (name.includes("Temp") == true) { 
+                for (let i = 0; i < data.length; i++) {
+                    if (data[i] > currMaxTemp) {
+                        maxTemp = data[i];
+			currMaxTemp = data[i];
+                    }
+                    if (data[i] < currMinTemp) {
+                        minTemp = data[i];
+			currMinTemp = data[i];
+                    }
+		    tempSum += data[i];
+		    numTemps++;
+                }
+		tempsReceived++;
+		if (tempsReceived > num_temp_messages) {
+			currMaxTemp = 0;
+			currMinTemp = Infinity;
+			avgTemp = tempSum / numTemps;
+			tempSum = 0;
+			numTemps = 0;
+		}
+            }
+	    if (name == "Velocity") {
+	    	speedometer.value = data[0];
+	    }
         }
     }
 
@@ -266,7 +330,7 @@ ApplicationWindow {
                 height: battery.height
                 width: window.width / 3.5
                 names: ["Max voltage", "Max battery temperature", "Minumum voltage", "Minumum battery temperature","Average voltage", "Average battery temperature"]
-                values: [dm.maxVoltage + " V", 0, dm.minVoltage + " V", 0,0,0]
+                values: [dm.maxVoltage + " V", dm.maxTemp + " °C", dm.minVoltage + " V", dm.minTemp + " °C", dm.avgVoltage.toFixed(2) + " V", dm.avgTemp.toFixed(2) + " V"]
             }
             Text{
                 id: batteryText
@@ -293,7 +357,6 @@ ApplicationWindow {
                     var distance = (Math.random() * 0.03) + 0.1;
                     var speed = (distance * 50) / 0.02;
                     slider.value = slider.value + distance * 10;
-                    speedometer.value = speed;
                     //valueTable.tableModel.setRow(0,{"name": "Speed", "value":qsTr(speedometer.value + "km/h")})
                     //updating field in table with index 0
                     thermometerAmbient.value = Math.random() * 25 + 25;

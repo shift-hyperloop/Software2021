@@ -1,8 +1,6 @@
 #include "datamanager.h"
 #include "customplotitem.h"
 #include "datastructs.h"
-#include <bits/stdint-intn.h>
-#include <bits/stdint-uintn.h>
 #include <math.h>
 #include <qdebug.h>
 #include <qlist.h>
@@ -341,7 +339,7 @@ void DataManager::dummyData()
         return;
     }
 
-    int vel;
+    float vel;
     int acc;
     int vol1, vol2, vol3;
     vol1 = 240*exp(-0.0051*timeMs);
@@ -384,7 +382,7 @@ void DataManager::dummyData()
     stream4 << vol2;
     stream5 << vol3;
 
-    canServer.dataReceived(timeMs, 0x333, 4, data);
+    canServer.dataReceived(timeMs, 0x09D, 4, data);
     canServer.dataReceived(timeMs, 0x334, 4, data2);
 
     canServer.dataReceived(timeMs, 0x335, 4, data3);
