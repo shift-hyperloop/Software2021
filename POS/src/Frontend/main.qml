@@ -69,42 +69,43 @@ ApplicationWindow {
 
     DataManagerAccessor {
         id: dm
+
         Component.onCompleted: {
             dataManager.init()
         }
 
         property var maxVoltage: 0;
-	property var currMaxVoltage: 0;
+	    property var currMaxVoltage: 0;
 
         property var minVoltage: Infinity;
-	property var currMinVoltage: Infinity;
+	    property var currMinVoltage: Infinity;
 
-	property var avgVoltage: 0;
-	property var voltageSum: 0;
-	property var numVoltages: 0;
+	    property var avgVoltage: 0;
+	    property var voltageSum: 0;
+	    property var numVoltages: 0;
 
-	property var maxTemp: 0;
-	property var currMaxTemp: 0;
+	    property var maxTemp: 0;
+	    property var currMaxTemp: 0;
 
         property var minTemp: Infinity;
-	property var currMinTemp: Infinity;
+	    property var currMinTemp: Infinity;
 
-	property var avgTemp: 0;
-	property var tempSum: 0;
-	property var numTemps: 0;
+	    property var avgTemp: 0;
+	    property var tempSum: 0;
+	    property var numTemps: 0;
 
-	/* These two are used to update max, min and avg. 
-	   temps and voltages when all messages have been 
-	   received such that the values shown are current 
-	   and not for the whole run */
-	property int voltagesReceived: 0;
-	property int tempsReceived: 0;
+	    /* These two are used to update max, min and avg. 
+	       temps and voltages when all messages have been 
+	       received such that the values shown are current 
+	       and not for the whole run */
+	    property int voltagesReceived: 0;
+	    property int tempsReceived: 0;
 
-	readonly property int num_voltage_messages: 6;
-	readonly property int num_temp_messages: 4;
+	    readonly property int num_voltage_messages: 6;
+	    readonly property int num_temp_messages: 4;
 
         dataManager.onNewData: {
-            if (name.includes("Voltages") == true) { 
+            if (name.includes("Voltages_P") == true) { 
                 for (let i = 0; i < data.length; i++) {
                     if (data[i] > currMaxVoltage) {
                         maxVoltage = data[i];
@@ -126,7 +127,7 @@ ApplicationWindow {
 			numVoltages = 0;
 		}
             }
-            if (name.includes("Temp") == true) { 
+            if (name.includes("Temp_P") == true) { 
                 for (let i = 0; i < data.length; i++) {
                     if (data[i] > currMaxTemp) {
                         maxTemp = data[i];
