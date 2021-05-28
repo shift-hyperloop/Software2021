@@ -90,7 +90,15 @@ Item {
                     //selectedNameFilter.index: 0 // this is for sorting by filetype
                     //nameFilters: ["Text files (.txt)", "CSV files (.csv)"]
                     onAccepted: {
-                        console.log(file) // this is the path of the file
+                        // remove prefixed "file:///"
+                        var path = file.toString();
+
+                        // remove prefixed "file:///"
+                        path = path.replace(/^(file:\/{3})/,"");
+                        // unescape html codes like '%23' for '#'
+                        var cleanPath = decodeURIComponent(path);
+                        dmAccessor.dataManager.readLogFile(cleanPath)
+
                     }
                 }
                 onTriggered: {

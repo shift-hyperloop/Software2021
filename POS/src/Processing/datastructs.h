@@ -463,7 +463,7 @@ struct Vector23s
 
 struct Int
 {
-    uint32_t value_0;
+    int32_t value_0;
 
     friend QDataStream &operator<<(QDataStream &dataStream, const Int &object)
     {

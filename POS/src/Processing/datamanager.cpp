@@ -10,7 +10,7 @@
 #include <qthread.h>
 #include <qvariant.h>
 
-DataManager::DataManager()
+DataManager::DataManager() : plotData(new PlotData())
 {
     connect(&canServer, &CANServer::dataReceived, &decoder, &Decoder::checkData);
 
@@ -49,7 +49,7 @@ void DataManager::addData(unsigned int timeMs,
         DataStructs::Int dataStruct;
         dataStream >> dataStruct;
         qmlData.append(dataStruct.value_0);
-        addPlotData(name, timeMs, dataStruct.value_0);
+        addPlotData(name, timeMs, QVariant::fromValue<int>(dataStruct.value_0));
         break;
     }
     case DataType::ERROR_CODE: {
@@ -232,26 +232,30 @@ void DataManager::addData(unsigned int timeMs,
     emit newData(name, timeMs, qmlData); // Always emit data to be accessed from QML
 }
 
-void DataManager::addPlotData(const QString &name, unsigned int timeMs, float data)
+void DataManager::addPlotData(const QString &name, unsigned int timeMs, QVariant data)
 {
-    plotData.addData(name, QPointF(timeMs, data)); // Store data no matter what
+    plotData->addData(name, timeMs, data); // Store data no matter what
     if (plotItems.contains(name)) {
         // If plot exists which expects this data, add it to the plot
         for (QPair<CustomPlotItem *, int> plot : *plotItems.value(name)) {
-            plot.first->addData(QPointF(timeMs, data), plot.second);
+            plot.first->addData(QPointF(timeMs, data.value<float>()), plot.second);
         }
     }
 }
 
 void DataManager::readLogFile(QString path)
 {
-    //fileHandler.readLogFile(path);
+    path = path.insert(0, "/");
+    plotData = FileHandler::readLogFile(path);
 }
 
 void DataManager::writeLogFile(QString path)
 {
     // serialzie dataMap
-    fileHandler.writeLogFile(path);
+    QString filename = QString::number(QDateTime::currentSecsSinceEpoch()).append(".log");
+    path = path.append("/").insert(0, "/");
+    path = path.append(filename);
+    FileHandler::writeLogFile(path, plotData.get());
 }
 
 void DataManager::connectToPod(QString hostname, QString port)
@@ -274,22 +278,22 @@ void DataManager::registerGraph(CustomPlotItem *plotItem, const QString &name, i
         list->append(item);
         plotItems.insert(name, list);
 
-        if (plotData.hasKey(name)) // If data exists in plotData for this name
+        if (plotData->hasKey(name)) // If data exists in plotData for this name
         {
             // Copy data to new plot if data exists
             plotItem->getCustomPlot()
                 ->graph(graphIndex)
-                ->setData(plotData.getXValues(name), plotData.getYValues(name));
+                ->setData(plotData->getXValues(name), plotData->getYDoubleValues(name));
         } else {
             // Create empty plot data
-            plotData.insertEmpty(name);
+            plotData->insertEmpty(name);
         }
     } else {
         // Copy data for each plot to new plot
         for (unsigned int i = 0; i < plotItem->getCustomPlot()->graphCount(); i++) {
             plotItem->getCustomPlot()
                 ->graph(graphIndex)
-                ->setData(plotData.getXValues(name), plotData.getYValues(name));
+                ->setData(plotData->getXValues(name), plotData->getYDoubleValues(name));
         }
         // Add new graph to plot item
         plotItems.value(name)->append(QPair<CustomPlotItem *, int>(plotItem, graphIndex));
@@ -475,7 +479,7 @@ void DataManager::init()
 {
     QTimer *timer = new QTimer(this);
     timer->moveToThread(this->thread());
-    connect(timer, &QTimer::timeout, this, &DataManager::dummyData);
+    //connect(timer, &QTimer::timeout, this, &DataManager::dummyData);
     timer->start(50);
 }
 
