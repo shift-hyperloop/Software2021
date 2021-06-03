@@ -19,7 +19,7 @@ if (len(sys.argv) < 1):
 for i in range(1, len(sys.argv)):
     print()
     struct = str(sys.argv[i])
-    print('struct ' +  struct + ' : public DataStruct\n{')
+    print('struct ' +  struct + '\n{')
     struct_name = struct
     struct = struct.replace('Vector', '')
     members = re.split(r'([\d]+.)', struct)
