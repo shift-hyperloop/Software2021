@@ -2,9 +2,11 @@
 #ifndef FILEHANDLER_H
 #define FILEHANDLER_H
 
+#include <QByteArray>
 #include <QObject>
 #include <QVector>
-#include <QByteArray>
+
+#include "Processing/plotdata.h"
 
 class FileHandler : public QObject
 {
@@ -14,8 +16,8 @@ public:
     ~FileHandler();
 
 public:
-    void writeLogFile(QString path);
-    QMap<QString, QPair<QVector<double>*, QVector<QVariant>*>> readLogFile(QString path);
+    static void writeLogFile(const QString &path, const PlotData* plotData);
+    static std::unique_ptr<PlotData> readLogFile(const QString &path);
 };
 
 #endif // FILEHANDLER_H

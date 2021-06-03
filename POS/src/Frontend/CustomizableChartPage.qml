@@ -21,9 +21,6 @@ Page {
     DataManagerAccessor {
         id: dmAccessor
 
-        dataManager.onNewDataName: {
-            listModel.append({"text": name, "color": "red"})
-        }
     }
     
     CustomChart {
