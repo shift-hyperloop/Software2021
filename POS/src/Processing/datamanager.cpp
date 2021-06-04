@@ -1,7 +1,6 @@
 #include "datamanager.h"
 #include "customplotitem.h"
 #include "datastructs.h"
-#include <bits/stdint-uintn.h>
 #include <math.h>
 #include <qdebug.h>
 #include <qlist.h>
