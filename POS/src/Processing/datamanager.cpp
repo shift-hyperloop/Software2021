@@ -1,6 +1,7 @@
 #include "datamanager.h"
 #include "customplotitem.h"
 #include "datastructs.h"
+#include <bits/stdint-uintn.h>
 #include <math.h>
 #include <qdebug.h>
 #include <qlist.h>
@@ -42,7 +43,7 @@ void DataManager::addData(unsigned int timeMs,
     dataStream.setByteOrder(QDataStream::LittleEndian);
 
     QVariantList qmlData; // Data to QML is sent as list of struct values
-
+    
     // Choose what struct to create based on dataType
     switch (dataType) {
     case DataType::INT32: {
@@ -308,6 +309,19 @@ void DataManager::addData(unsigned int timeMs,
         break;
     }
 
+    case DataType::VECTOR_2S: {
+        DataStructs::Vector2s dataStruct;
+        dataStream >> dataStruct;
+
+        qmlData.append(dataStruct.value_0);
+        qmlData.append(dataStruct.value_1);
+
+        QString newName = name;
+        addPlotData(newName.append("_").append(QString::number(0)), timeMs, dataStruct.value_0);
+        addPlotData(newName.append("_").append(QString::number(1)), timeMs, dataStruct.value_1);
+        break;
+    }
+
     default: {
         break;
     }
@@ -407,6 +421,8 @@ void DataManager::dummyData()
     }
 
     float vel;
+    static float pos = 0;
+    uint16_t soc = (uint16_t) 100 * ((2000 - timeMs) / (float)2000);
     int acc;
     int vol1, vol2, vol3;
     vol1 = 240 * exp(-0.0051 * timeMs);
@@ -425,6 +441,9 @@ void DataManager::dummyData()
 
     vel = timeMs * exp(-0.004 * timeMs);
     acc = 0.2 * timeMs * exp(-0.004 * timeMs);
+
+    if (timeMs)
+        pos += vel / timeMs;
 
     QByteArray data;
     QDataStream stream(&data, QIODevice::ReadWrite);
@@ -554,6 +573,34 @@ void DataManager::dummyData()
     // DC-Link and Junction Temp
     canServer.dataReceived(timeMs, 0x676, 4, data);
     canServer.dataReceived(timeMs, 0x677, 4, data);
+
+    canServer.dataReceived(timeMs, 0xB1, sizeof(float) * 3, data8);
+
+    QByteArray data9;
+    QDataStream stream9(&data9, QIODevice::ReadWrite);
+    stream9.setByteOrder(QDataStream::LittleEndian);
+
+    DataStructs::Vector3f psa;
+    psa.position = pos;
+    psa.speed = vel;
+    psa.acceleration = acc;
+
+    stream9 << psa;
+
+    canServer.dataReceived(timeMs, 0xB0, sizeof(float) * 3, data9);
+
+    QByteArray data10;
+    QDataStream stream10(&data10, QIODevice::ReadWrite);
+    stream10.setByteOrder(QDataStream::LittleEndian);
+
+    DataStructs::Vector2s status;
+    status.value_0 = soc;
+    status.value_1 = 0;
+
+    stream10 << status;
+
+    canServer.dataReceived(timeMs, 0x72A, sizeof(uint16_t) * 2, data10);
+    canServer.dataReceived(timeMs, 0x63D, sizeof(uint16_t) * 2, data10);
 
     timeMs += 10;
 }

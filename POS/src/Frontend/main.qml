@@ -75,83 +75,105 @@ ApplicationWindow {
         }
 
         property var maxVoltage: 0;
-	    property var currMaxVoltage: 0;
+        property var currMaxVoltage: 0;
 
         property var minVoltage: Infinity;
-	    property var currMinVoltage: Infinity;
+        property var currMinVoltage: Infinity;
 
-	    property var avgVoltage: 0;
-	    property var voltageSum: 0;
-	    property var numVoltages: 0;
+        property var avgVoltage: 0;
+        property var voltageSum: 0;
+        property var numVoltages: 0;
 
-	    property var maxTemp: 0;
-	    property var currMaxTemp: 0;
+        property var maxTemp: 0;
+        property var currMaxTemp: 0;
 
         property var minTemp: Infinity;
-	    property var currMinTemp: Infinity;
+        property var currMinTemp: Infinity;
 
-	    property var avgTemp: 0;
-	    property var tempSum: 0;
-	    property var numTemps: 0;
+        property var avgTemp: 0;
+        property var tempSum: 0;
+        property var numTemps: 0;
 
-	    /* These two are used to update max, min and avg. 
-	       temps and voltages when all messages have been 
-	       received such that the values shown are current 
-	       and not for the whole run */
-	    property int voltagesReceived: 0;
-	    property int tempsReceived: 0;
+        /* These two are used to update max, min and avg. 
+        temps and voltages when all messages have been 
+        received such that the values shown are current 
+        and not for the whole run */
+        property int voltagesReceived: 0;
+        property int tempsReceived: 0;
 
-	    readonly property int num_voltage_messages: 6;
-	    readonly property int num_temp_messages: 4;
+        property var acceleration: 0
+        property var position: 0
+
+        property var soc_P1: 100
+        property var soc_P2: 100
+
+        property var table2Values: [speedometer.value + " m/s", acceleration + " m/s²", position + " m", (soc_P1 + soc_P2) / 2 +  " %", null, null]
+
+        readonly property int num_voltage_messages: 6;
+        readonly property int num_temp_messages: 4;
 
         dataManager.onNewData: {
             if (name.includes("Voltages_P") == true) { 
                 for (let i = 0; i < data.length; i++) {
                     if (data[i] > currMaxVoltage) {
                         maxVoltage = data[i];
-			currMaxVoltage = data[i];
-                    }
+			            currMaxVoltage = data[i];
+                        }
                     if (data[i] < currMinVoltage) {
                         minVoltage = data[i];
-			currMinVoltage = data[i];
+			            currMinVoltage = data[i];
                     }
-		    voltageSum += data[i];
-		    numVoltages++;
+		            voltageSum += data[i];
+		            numVoltages++;
                 }
-		voltagesReceived++;
-		if (voltagesReceived >= num_voltage_messages) {
-			currMaxVoltage = 0;
-			currMinVoltage = Infinity;
-			avgVoltage = voltageSum / numVoltages;
-			voltageSum = 0;
-			numVoltages = 0;
-		}
+		        voltagesReceived++;
+
+                if (voltagesReceived >= num_voltage_messages) {
+                    currMaxVoltage = 0;
+                    currMinVoltage = Infinity;
+                    avgVoltage = voltageSum / numVoltages;
+                    voltageSum = 0;
+                    numVoltages = 0;
+                }
             }
             if (name.includes("Temp_P") == true) { 
                 for (let i = 0; i < data.length; i++) {
                     if (data[i] > currMaxTemp) {
                         maxTemp = data[i];
-			currMaxTemp = data[i];
+			            currMaxTemp = data[i];
                     }
                     if (data[i] < currMinTemp) {
                         minTemp = data[i];
-			currMinTemp = data[i];
+			            currMinTemp = data[i];
                     }
-		    tempSum += data[i];
-		    numTemps++;
+                    tempSum += data[i];
+                    numTemps++;
+                    }
+                tempsReceived++;
+                if (tempsReceived > num_temp_messages) {
+                    currMaxTemp = 0;
+                    currMinTemp = Infinity;
+                    avgTemp = tempSum / numTemps;
+                    tempSum = 0;
+                    numTemps = 0;
                 }
-		tempsReceived++;
-		if (tempsReceived > num_temp_messages) {
-			currMaxTemp = 0;
-			currMinTemp = Infinity;
-			avgTemp = tempSum / numTemps;
-			tempSum = 0;
-			numTemps = 0;
-		}
             }
-	    if (name == "Velocity") {
-	    	speedometer.value = data[0];
-	    }
+            if (name == "IMU_PSA") {
+                speedometer.value = data[1].toFixed(2);
+                acceleration = data[2].toFixed(2);
+                position = data[0].toFixed(2);
+            }
+            if (name == "IMU_YPR") {
+                tiltMeter.yawDeg = data[0].toFixed(2);
+                tiltMeter.pitchDeg = data[1].toFixed(2);
+                tiltMeter.rollDeg = data[2].toFixed(2);
+            }
+            if (name == "BMS_Status_P1") {
+                soc_P1 = data[0];
+            }
+            if (name == "BMS_Status_P2") {
+                soc_P2 = data[0];
+            }
         }
     }
 
@@ -204,7 +226,7 @@ ApplicationWindow {
                         leftMargin: window.width*0.025
                     }
                     minValue: 0
-                    maxValue: 600
+                    maxValue: 100
                 }
 
             }
@@ -309,6 +331,7 @@ ApplicationWindow {
                 anchors {
                     bottom: parent.bottom
                 }
+                value: dm.position
 
                 minValue: 0
                 maxValue: 168
@@ -320,6 +343,8 @@ ApplicationWindow {
                 anchors.leftMargin: 0.025 * window.width
                 anchors.bottom: slider.top
                 anchors.bottomMargin: height/5
+
+                charge: (dm.soc_P1 + dm.soc_P2) / 200 // Charge is between 0-1 and not 0-100
             }
             ValueTable{
                 id: batteryCells
@@ -328,9 +353,9 @@ ApplicationWindow {
                     rightMargin: 0.03 * window.width
                     top: valueTable.top
                 }
-                height: battery.height
-                width: window.width / 3.5
-                names: ["Max voltage", "Max battery temperature", "Minumum voltage", "Minumum battery temperature","Average voltage", "Average battery temperature"]
+		width: window.width * 0.28
+                height: width * 4/5
+                names: ["Max voltage", "Max battery temperature", "Min voltage", "Min battery temperature","Avg. voltage", "Avg. battery temperature"]
                 values: [dm.maxVoltage + " V", dm.maxTemp + " °C", dm.minVoltage + " V", dm.minTemp + " °C", dm.avgVoltage.toFixed(2) + " V", dm.avgTemp.toFixed(2) + " V"]
             }
             Text{
@@ -355,9 +380,6 @@ ApplicationWindow {
 
                 //Updates both the speedometer and the graph with random values (for now)
                 function update(){
-                    var distance = (Math.random() * 0.03) + 0.1;
-                    var speed = (distance * 50) / 0.02;
-                    slider.value = slider.value + distance * 10;
                     //valueTable.tableModel.setRow(0,{"name": "Speed", "value":qsTr(speedometer.value + "km/h")})
                     //updating field in table with index 0
                     thermometerAmbient.value = Math.random() * 25 + 25;
@@ -365,18 +387,6 @@ ApplicationWindow {
                     //change from customChart to chart to get old chart back.
                     //customChart.counter++;
                     //chart.lineseries.append(chart.counter, speed);
-                    if(battery.charge>0){
-                        battery.charge = 1 - slider.value / 100
-                    }
-                    else{
-                        battery.charge = 0
-                        vcuchecklist.checklist.get(1).currentState = "bad"
-                    }
-
-
-                    tiltMeter.rollDeg +=  0.5 * Math.floor(Math.random()*3-1)
-                    tiltMeter.yawDeg += 0.5 * Math.floor(Math.random()*3-1)
-                    tiltMeter.pitchDeg += 0.5 * Math.floor(Math.random()*3-1)
                 }
             }
 
@@ -407,16 +417,17 @@ ApplicationWindow {
 
             ValueTable{
                 id: valueTable
-                names: ["Speed","Voltage battery 1", "Value Value", "Bruh moments:", "Crashes", "Battery Charge", "Ambient temperature", "Value"] // names for the values in the table
-                values: [qsTr(speedometer.value + "km/h"), 12, 100, 8, 0, qsTr(Math.round(battery.charge*100,1) + " %"), qsTr(Math.round(thermometerAmbient.value,1) + " \xB0 C"), 0] // values for the table
+                names: ["Velocity", "Acceleration", "Position", "Battery Charge", "Ambient temperature", "Pressure"] // names for the values in the table
+                values: dm.table2Values // values for the table
                 anchors {                                   // indexes in names[] and values[] are corresponding
                     top: parent.top
                     topMargin: 0.09 * window.height
                     right: parent.right
                     rightMargin: thermometerAmbient.width * 2 + 0.03 * window.width
                 }
-                width: window.width / 4
+		        width: window.width * 0.28
                 height: width * 4/5
+
             }
 
             VCUChecklist {

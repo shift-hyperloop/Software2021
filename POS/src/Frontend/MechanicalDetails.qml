@@ -95,8 +95,8 @@ Page {
             chart.setAxisRange(Qt.point(0, 1000), Qt.point(0, 500));
             chart.setGraphColor(0, "#2674BB");
             chart.setGraphColor(1, "#AE3328");
-            chart.setGraphName(0,"Velocity");
-            chart.setGraphName(1, "Acceleration")
+            chart.setGraphName(0,"IMU_PSA_0");
+            chart.setGraphName(1, "IMU_PSA_1")
             chart.setAxisLabels("Time","Speed km/h")
             chart.setBackgroundColor("#333333")
         }

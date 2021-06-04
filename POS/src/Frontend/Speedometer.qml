@@ -10,14 +10,14 @@ Item {
     property alias value: circulargauge.value
     property var accentColor: "#0099ff"
     property var redirect: ""
-    property var primaryUnit: " km/h"
-    property var secondaryUnit: " m/s"
+    property var primaryUnit: " m/s"
+    property var secondaryUnit: " km/h"
     property var secondaryTextVisible: true
 
     CircularGauge{
         id: circulargauge
         minimumValue: 0
-        maximumValue: 600
+        maximumValue: 100
         stepSize: 1
         anchors.fill: parent
         style: CircularGaugeStyle {
@@ -86,7 +86,7 @@ Item {
         x: circulargauge.scale * circulargauge.x + 126
         y: circulargauge.scale * circulargauge.y + 249
         color: "#ededed"
-        text: qsTr(Math.round(circulargauge.value / 3.6) + secondaryUnit)
+        text: qsTr(Math.round(circulargauge.value * 3.6) + secondaryUnit)
         anchors.verticalCenter: parent.verticalCenter
         horizontalAlignment: Text.AlignHCenter
         anchors.verticalCenterOffset: 115
