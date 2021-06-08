@@ -2,6 +2,8 @@ import QtQuick 2.5
 import QtQuick.Window 2.12
 import QtDataVisualization 1.2
 import QtQuick.Controls 2.5
+import shift.datamanagement 1.0
+
 //The way this 3d chart works is that the chart is a Scatter3D. Each point in the chart is its own graph made of a Scatter3DSeries
 //Each Scatter3DSeries needs a list of its points (a ListModel where every point is a ListElement with x,y and z values)
 //Since we are only showing onw point at a time from each graph things become more complicated.
@@ -13,12 +15,39 @@ import QtQuick.Controls 2.5
 
 Item {
 
+    DataManagerAccessor {
+        id: dm
+
+        Component.onCompleted: {
+            dataManager.init()
+        }
+
+        dataManager.onNewData: {
+            if (name == "Suite XS Front Pos") {
+                addDataSingle(0, [data[0], data[1], data[2]])
+                currentValueValues[0] = [data[0], data[1], data[2]]
+                addDataSingle(1, [data[3], data[4], data[5]])
+                currentValueValues[1] = [data[3], data[4], data[5]]
+            }
+            else if (name == "Suite XS Rear Pos") {
+                addDataSingle(2, [data[0], data[1], data[2]])
+                currentValueValues[2] = [data[0], data[1], data[2]]
+                addDataSingle(3, [data[3], data[4], data[5]])
+                currentValueValues[3] = [data[3], data[4], data[5]]
+            }
+
+        }
+    }
+
     property var currentValueValues: [
         [0,0,0],
         [0,0,0],
         [0,0,0],
         [0,0,0]
     ]
+
+    property var allValues: []
+    property var numReceived: 0
 
     property var colorArray: ["red","green","blue", "yellow"]
     property var axisMin: -5
@@ -165,14 +194,14 @@ Item {
         stepSize: 1
         snapMode: Slider.SnapAlways
         onMoved: {
-                currentValue0.clear()
-                currentValue1.clear()
-                currentValue2.clear()
-                currentValue3.clear()
-                currentValue0.append(values0.get(slider.value))
-                currentValue1.append(values1.get(slider.value))
-                currentValue2.append(values2.get(slider.value))
-                currentValue3.append(values3.get(slider.value))
+            currentValue0.clear()
+            currentValue1.clear()
+            currentValue2.clear()
+            currentValue3.clear()
+            currentValue0.append(values0.get(slider.value))
+            currentValue1.append(values1.get(slider.value))
+            currentValue2.append(values2.get(slider.value))
+            currentValue3.append(values3.get(slider.value))
             currentValueValues[0][0] = currentValue0.get(0).xPos
             currentValueValues[0][1] = currentValue0.get(0).yPos
             currentValueValues[0][2] = currentValue0.get(0).zPos
@@ -243,6 +272,46 @@ Item {
         t3.text = "Accelerometer 4 (" + currentValueValues[3][0] + "," + currentValueValues[3][1] + "," + currentValueValues[3][2] + ")"
 
     }
+
+    function addDataSingle(index, data) {
+        tempList.setProperty(0,"xPos",String(data[0]))
+        tempList.setProperty(0,"yPos",String(data[1]))
+        tempList.setProperty(0,"zPos",String(data[2]))
+
+
+        if (index == 0) {
+            values0.append(tempList.get(0))
+            currentValue0.clear()
+            currentValue0.append(values0.get(values0.count-1))
+            t0.text = "Accelerometer 1 (" + data[0].toFixed(2) + "," + data[1].toFixed(2) + "," +data[2].toFixed(2) + ")"
+        }
+        else if (index == 1) {
+            values1.append(tempList.get(0))
+            currentValue1.clear()
+            currentValue1.append(values1.get(values1.count-1))
+            t1.text = "Accelerometer 2 (" + data[0].toFixed(2) + "," + data[1].toFixed(2) + "," +data[2].toFixed(2) + ")"
+        }
+        else if (index == 2) {
+            values2.append(tempList.get(0))
+            currentValue2.clear()
+            currentValue2.append(values2.get(values2.count-1))
+            t2.text = "Accelerometer 3 (" + data[0].toFixed(2) + "," + data[1].toFixed(2) + "," +data[2].toFixed(2) + ")"
+        }
+        else if (index == 3) {
+            values3.append(tempList.get(0))
+            currentValue3.clear()
+            currentValue3.append(values3.get(values3.count-1))
+            t3.text = "Accelerometer 4 (" + data[0].toFixed(2) + "," + data[1].toFixed(2) + "," +data[2].toFixed(2) + ")"
+        }
+
+        numReceived = (numReceived + 1) % 2
+        if (numReceived == 0) {
+            slider.to += 1
+            slider.value += 1
+        }
+
+    }
+
     Repeater{
         model: 4
         Rectangle{

@@ -16,35 +16,35 @@ Page {
         id: chart3d
         width: window.width / 1.5
         height: window.height / 1.2
-        axisMax: 5
-        axisMin: -5
+        axisMax: 10
+        axisMin: -10
         anchors.centerIn: parent
         colorArray: ["red","green","blue", "yellow"]
         Component.onCompleted: {
-           var values = [
-               [1,2,3],
-               [4,4,4],
-               [2,2,2],
-               [3,2,1]
-           ]
-           addData(values) // function for adding points to the chart
+           //var values = [
+           //    [1,2,3],
+           //    [4,4,4],
+           //    [2,2,2],
+           //    [3,2,1]
+           //]
+           //addData(values) // function for adding points to the chart
         }
     }
     Timer{
         id: chartTimer
         interval: 500
         running: true
-         repeat: true
-         onTriggered: update();
-         function update(){
-             var values = [
-                         [(Math.random()*2-1).toFixed(3),(Math.random()*2-1).toFixed(3),(Math.random()*2-1).toFixed(3)],
-                         [(Math.random()*2-1).toFixed(3),(Math.random()*2-1).toFixed(3),(Math.random()*2-1).toFixed(3)],
-                         [(Math.random()*2-1).toFixed(3),(Math.random()*2-1).toFixed(3),(Math.random()*2-1).toFixed(3)],
-                         [(Math.random()*2-1).toFixed(3),(Math.random()*2-1).toFixed(3),(Math.random()*2-1).toFixed(3)]
-                     ]
-             chart3d.addData(values)
-            }
+        repeat: true
+        //onTriggered: update();
+        //function update(){
+        //    var values = [
+        //                [(Math.random()*2-1).toFixed(3),(Math.random()*2-1).toFixed(3),(Math.random()*2-1).toFixed(3)],
+        //                [(Math.random()*2-1).toFixed(3),(Math.random()*2-1).toFixed(3),(Math.random()*2-1).toFixed(3)],
+        //                [(Math.random()*2-1).toFixed(3),(Math.random()*2-1).toFixed(3),(Math.random()*2-1).toFixed(3)],
+        //                [(Math.random()*2-1).toFixed(3),(Math.random()*2-1).toFixed(3),(Math.random()*2-1).toFixed(3)]
+        //            ]
+        //    chart3d.addData(values)
+        //   }
     }
 
 }

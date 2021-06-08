@@ -32,12 +32,12 @@ static const QMap<quint16, QString> idToName = {
     { 0x9D  , "Velocity" },	
     { 0x9E  , "Temp" },	
     { 0xA0  , "Suite XS Front" },
-    { 0xA1  , "Suite XS Front" },
+    { 0xA1  , "Suite XS Front Pos" },
     { 0xB0  , "IMU_PSA"	},
     { 0xB1  , "IMU_YPR"	},
     { 0xB2  , "PE S&P esti." },
     { 0xB3  , "Suite XS Rear" },
-    { 0xB4  , "Suite XS Rear" },
+    { 0xB4  , "Suite XS Rear Pos" },
     { 0xB5  , "Dist, temp, pres" },		
 };
 

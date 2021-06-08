@@ -20,8 +20,10 @@ Page {
     DataManagerAccessor {
         id: dm
 
-        property var dcLink: null
-        property var juncTemp: null
+        property var dcLink: 0
+        property var juncTemp: 0
+        property var limTemp: 0
+        property var invTemp: 0
 
         dataManager.onNewData: {
             if (name.includes("DC-link measurement") == true) { 
@@ -29,6 +31,9 @@ Page {
             }
             else if (name.includes("Junction Temperature") == true) { 
                 juncTemp = data[0];
+            }
+            else if (name == "Temperature") { 
+                limTemp = data[0];
             }
         }
     }
@@ -71,7 +76,7 @@ Page {
 
     ValueTable{
         id: limValues
-        names: ["Junciton Temperature", "DC-link measurement"]
+        names: ["Junciton Temperature", "DC-link measurement", "LIM temp", "Inverter temp front"]
         values: [dm.juncTemp.toFixed(2) + " °C", dm.dcLink.toFixed(2) + " V?"]
         anchors.left: phaseChart.right
         anchors.leftMargin: window.width * 0.05

@@ -59,7 +59,6 @@ public:
     {
         QVector<double> list;
         auto x = m_Data.value(key);
-        qDebug() << x.second->size();
         for (QVariant v : *m_Data.value(key).second) {
             list.append(v.value<double>());
         }

@@ -11,17 +11,21 @@ import QtQuick.Controls.Material 2.12
 import CustomPlot 1.0
 
 ApplicationWindow {
+
+    // Global Styling
     Material.theme: Material.Dark
     Material.accent: "#0099ff"
+    
+    // Window Settings
     id: window
     width: 1700
     height: 900
     visible: true
     visibility: "Maximized"
+    title: "POS"
     color: "#444444"
-    title: "PieceOfShift"
 
-    menuBar: CustomMenuBar{
+    menuBar: CustomMenuBar {
         id: topBar
         Rectangle {
             id: menuDivider
@@ -37,7 +41,7 @@ ApplicationWindow {
         }
 
         NetworkInfo {
-            id: networkinfo
+            id: networkInfo
             connected: true
             ping: 10
             anchors.right: parent.right
@@ -55,6 +59,7 @@ ApplicationWindow {
                 }
             }
         }
+
         PodState {
             id: podState
             currentState: 2
@@ -177,34 +182,18 @@ ApplicationWindow {
         }
     }
 
-    /*
-      TODO:
-        Next workshop, focus on improving the Battery-page. Look into ValueAxis for naming of axes,
-        and also look into multiple LineSeries in the same graph.
-        This is wanted for the Battery-graphs, so figure out one way to have them on top of each other
-        in a nice-looking way with clear referencing of each line.
-      NOTE:
-        ValueAxis.TitleText is the attribute that decides the naming of the axis itself (appears
-        on the lefthand or righthand side of the graph).
-        LineSeries.name is the attribute that decides what shows up in the "little square" over the graph
-        that indicates the color of that particular line/function.
-    */
-
     StackView {
         id: stackView
         anchors.fill: parent
         property var chosenState // variable for the chosen state in StateIndication.qml
-        initialItem: Item {
 
+        initialItem: Item {
             id: mainView
 
-            property alias timer: timer
-            //property alias chart: chart
-            //property alias counter: customChart.counter
-            //to change networkinfo status with button
-            property alias connected: networkinfo.connected
+            // To change networkinfo status with button
+            property alias connected: networkInfo.connected
             Item {
-                id: panelLeft
+                id: panelTop
                 height: window.height - slider.height - anchors.topMargin
                 width: 0.3 * window.width
 
@@ -214,29 +203,99 @@ ApplicationWindow {
                     topMargin: 0.05 * window.height //height of menubar is 0.05, but you cant use menuBar.height for some reason.
                 }
 
-                Speedometer {
-                    id: speedometer
-                    redirect: "MechanicalDetails.qml"
-                    width: Math.round(window.width / 6) //round, because speedometer is very picky and doesnt like uneven widths.
-                    height: width //width and height have to be equal!! (+- some margin but idk why you'd want an elliptical gauge)
+                
+
+                Tiltmeter{
+                    id: tiltMeter
+                    rollDeg: 0
+                    pitchDeg: 0
+                    yawDeg: 0
+                    circleSize: window.height / 10
+                    anchors {
+                        left: battery.left
+                        leftMargin: window.width * 0.2
+                        top: battery.bottom
+                        topMargin: 0.08 * window.height
+                    }
+                }
+
+                Battery {
+                    id: battery
+                    height: window.height / 4
                     anchors {
                         left: parent.left
                         top: parent.top
                         topMargin: 0.04 * window.height
                         leftMargin: window.width*0.025
                     }
-                    minValue: 0
-                    maxValue: 100
+                    charge: (dm.soc_P1 + dm.soc_P2) / 200 // Charge is between 0-1 and not 0-100
+                }
+                Text{
+                    id: batteryText
+                    text: Math.round(battery.charge*100) + "%"
+                    font.pixelSize: window.width / 110
+                    anchors {
+                        left: battery.left
+                        leftMargin: window.width * 0.028
+                        top: battery.bottom
+                        topMargin: window.height*0.01
+                    }
+
+                    x: battery.x + battery.height/4 - width/2
+                    color: "white"
                 }
 
+                VCUChecklist {
+                    id: vcuchecklist
+                    anchors {
+                        left: battery.right
+                        leftMargin: battery.height
+                        top: parent.top
+                        topMargin: window.height * 0.1
+                    }
+                    width: 250
+                    height: 200
+                    names: ["Telemetry", "State Indication", "Sensors suite 1", "Sensors suite 2", "Inverter Control", "BMS Master"]
+                }
+
+                ValueTable{
+                    id: batteryCells
+                    anchors {
+                        left: valueTable.right
+                        leftMargin: 0.03 * window.width
+                        top: valueTable.top
+                    }
+                    width: window.width * 0.28
+                    height: width * 4/5
+                    names: ["Max voltage", "Max battery temperature", "Min voltage", "Min battery temperature","Avg. voltage", "Avg. battery temperature"]
+                    values: [dm.maxVoltage + " V", dm.maxTemp + " °C", dm.minVoltage + " V", dm.minTemp + " °C", dm.avgVoltage.toFixed(2) + " V", dm.avgTemp.toFixed(2) + " °C"]
+                }
+                
+
+                ValueTable{
+                    id: valueTable
+                    names: ["Velocity", "Acceleration", "Position", "Battery Charge", "Ambient temperature", "Pressure"] // names for the values in the table
+                    values: dm.table2Values // values for the table
+                    anchors {                                   // indexes in names[] and values[] are corresponding
+                        top: parent.top
+                        topMargin: 0.09 * window.height
+                        left: vcuchecklist.right
+                        leftMargin: window.width * 0.1
+                    }
+                    width: window.width * 0.28
+                    height: width * 4/5
+
+                }
             }
+
             Item {
-                id: panelRight
+                id: panelBottom
                 height: window.height - slider.height - anchors.topMargin
                 width: 0.3 * window.width
                 anchors {
                     right: parent.right
-                    top: parent.top
+                    rightMargin: window.width * 0.2
+                    top: parent.verticalCenter
                     topMargin: 0.05 * window.height
                 }
                 Thermometer {
@@ -244,85 +303,72 @@ ApplicationWindow {
                     width: window.width / 20
                     height: 4 * width
                     anchors {
-                        right: parent.right
-                        rightMargin: window.width * 0.025 - width * 0.3
+                        right: window.horizontalCenter
+                        rightMargin: window.width * 0.01
                         top: parent.top
                         topMargin: 0.04 * window.height
-                        //topMargin: (panelRight.height - (height * scale) - slider.height - (controlButtons.height * controlButtons.scale)) / 2
                     }
-                    //scale: Math.min(window.width / 1000, window.height / 600)
                     transformOrigin: Item.TopRight
                     minValue: 0
-                    maxValue: 100
-                    measuredTemp: "Battery:"
+                    maxValue: 400
+                    measuredTemp: "Battery Avg" 
+                    value: dm.avgTemp.toFixed(2)
                 }
+
                 Thermometer {
                     id: thermometerAmbient
                     width: window.width / 20
                     height: 4 * width
                     anchors {
                         right: thermometerBattery.right
-                        rightMargin: window.width * 0.040
+                        rightMargin: window.width * 0.1
                         top: parent.top
                         topMargin: 0.04 * window.height
-                        //topMargin: (panelRight.height - (height * scale) - slider.height - (controlButtons.height * controlButtons.scale)) / 2
                     }
-                    //scale: Math.min(window.width / 1000, window.height / 600)
                     transformOrigin: Item.TopRight
                     minValue: 0
                     maxValue: 50
                     measuredTemp: "Ambient:"
                 }
-              /* ControlButtons {
-                    id: controlButtons
 
-                    height: window.height / 3.5
-                    width: window.width / 5
-                    y: window.height - slider.height - height - (0.04 * window.height)
+                Speedometer {
+                    id: speedometer
+                    redirect: "MechanicalDetails.qml"
+                    width: Math.round(window.width / 5) //round, because speedometer is very picky and doesnt like uneven widths.
+                    height: width //width and height have to be equal!! (+- some margin but idk why you'd want an elliptical gauge)
                     anchors {
-                        //bottom: parent.bottom
-                        //bottomMargin: height * scale * 0.1
-                        right: parent.right
-                        rightMargin: window.width*0.025
+                        right: thermometerAmbient.left
+                        bottom: window.bottom
+                        bottomMargin: 0.02 * window.height
+                        rightMargin: window.width*0.18
                     }
-                    transformOrigin: Item.BottomRight
-                } */
+                    minValue: 0
+                    maxValue: 100
+                }
 
-
+                Speedometer {
+                    id: barometer
+                    redirect: ""
+                    width: Math.round(window.width / 8)
+                    height: width
+                    minValue: 0
+                    maxValue: 100
+                    primaryUnit: " bar"
+                    secondaryTextVisible: false
+                    accentColor: "#e34242"
+                    anchors {
+                        left: speedometer.right
+                        verticalCenter: speedometer.verticalCenter
+                        leftMargin: window.width * 0.025
+                    }
+                }
+                
             }
-            ControlButtons{
+
+            ControlButtons {
                 anchors.bottom: slider.top
                 anchors.right: parent.right
                 anchors.rightMargin: window.width * 0.025
-
-            }
-            Speedometer {
-                id: barometer
-                redirect: ""
-                width: Math.round(window.width / 8)
-                height: width
-                minValue: 0
-                maxValue: 100
-                primaryUnit: " bar"
-                secondaryTextVisible: false
-                accentColor: "#e34242"
-                anchors {
-                    left: vcuchecklist.right
-                    top: battery.top
-                    leftMargin: window.width * 0.025
-                }
-            }
-
-            Tiltmeter{
-                id: tiltMeter
-                rollDeg: 0
-                pitchDeg: 0
-                yawDeg: 0
-                circleSize: window.height / 10
-                anchors.left: parent.left
-                anchors.leftMargin: 1.9*circleSize + window.width*0.025
-                anchors.bottom: battery.top
-                anchors.bottomMargin: circleSize
             }
 
             DistanceSlider{
@@ -336,111 +382,10 @@ ApplicationWindow {
                 minValue: 0
                 maxValue: 168
             }
-            Battery{
-                id: battery
-                height: window.height / 4
-                anchors.left: parent.left
-                anchors.leftMargin: 0.025 * window.width
-                anchors.bottom: slider.top
-                anchors.bottomMargin: height/5
+            
+            
 
-                charge: (dm.soc_P1 + dm.soc_P2) / 200 // Charge is between 0-1 and not 0-100
-            }
-            ValueTable{
-                id: batteryCells
-                anchors {
-                    right: valueTable.left
-                    rightMargin: 0.03 * window.width
-                    top: valueTable.top
-                }
-		width: window.width * 0.28
-                height: width * 4/5
-                names: ["Max voltage", "Max battery temperature", "Min voltage", "Min battery temperature","Avg. voltage", "Avg. battery temperature"]
-                values: [dm.maxVoltage + " V", dm.maxTemp + " °C", dm.minVoltage + " V", dm.minTemp + " °C", dm.avgVoltage.toFixed(2) + " V", dm.avgTemp.toFixed(2) + " V"]
-            }
-            Text{
-                id: batteryText
-                text: Math.round(battery.charge*100) + "%"
-                font.pixelSize: window.width / 110
-                anchors {
-                    top: battery.bottom
-                    topMargin: window.height*0.01
-                }
 
-                x: battery.x + battery.height/4 - width/2
-                color: "white"
-            }
-
-            Timer {
-                id: timer
-                interval: 200
-                running: true
-                repeat: true
-                onTriggered: update();
-
-                //Updates both the speedometer and the graph with random values (for now)
-                function update(){
-                    //valueTable.tableModel.setRow(0,{"name": "Speed", "value":qsTr(speedometer.value + "km/h")})
-                    //updating field in table with index 0
-                    thermometerAmbient.value = Math.random() * 25 + 25;
-                    thermometerBattery.value = Math.random() * 10 + 25;
-                    //change from customChart to chart to get old chart back.
-                    //customChart.counter++;
-                    //chart.lineseries.append(chart.counter, speed);
-                }
-            }
-
-            /*CustomChart{
-                id: customChart
-                redirect: "MechanicalDetails.qml"
-                width: window.width * 0.35
-                height: window.height * 0.25
-                anchors {
-                    right: valueTable.left
-                    rightMargin: 0.03 * window.width
-                    top: valueTable.top
-                }
-                property var counter: 0
-                Component.onCompleted: {
-                    //create a customPlot item with (2) graphs, and set their colors.
-                    //any color sent to C++ will become a QColor, and vice versa.
-                    chart.initCustomPlot(2);
-                    chart.setAxisRange(Qt.point(0, 100), Qt.point(0, 200));
-                    chart.setGraphColor(0, "#2674BB");
-                    chart.setGraphColor(1, "#AE3328");
-                    chart.setGraphName(0,"Velocity");
-                    chart.setGraphName(1,"Acceleration");
-                    chart.setAxisLabels("Time","Speed km/h")
-                    chart.setSimpleGraph(); // disables all interactions with the chart
-                }
-            }*/
-
-            ValueTable{
-                id: valueTable
-                names: ["Velocity", "Acceleration", "Position", "Battery Charge", "Ambient temperature", "Pressure"] // names for the values in the table
-                values: dm.table2Values // values for the table
-                anchors {                                   // indexes in names[] and values[] are corresponding
-                    top: parent.top
-                    topMargin: 0.09 * window.height
-                    right: parent.right
-                    rightMargin: thermometerAmbient.width * 2 + 0.03 * window.width
-                }
-		        width: window.width * 0.28
-                height: width * 4/5
-
-            }
-
-            VCUChecklist {
-                id: vcuchecklist
-                anchors {
-                    left: battery.right
-                    leftMargin: battery.height / 1.8
-                    top: battery.top
-                }
-                width: 250
-                height: 200
-                names: ["Telemetry", "State Indication", "Sensors suite 1", "Sensors suite 2", "Inverter Control", "BMS Master"]
-            }
 
 
         }

@@ -12,18 +12,16 @@ Item {
     property alias style: thermometer.style
     property var measuredTemp: "0"
 
-
-
-    Rectangle {
-        id: rectangle1
-        y: parent.height * 0.88
-        width: thermometer.width / 2.5
-        height: width
-        color: "#cacaca"
-        radius: 100
-        anchors.right: parent.right
-        anchors.rightMargin: thermometer.width * 0.41 - thermometer.width * (maxValue / 950)
-    }
+    //Rectangle {
+    //    id: rectangle1
+    //    y: parent.height * 0.88
+    //    width: thermometer.width / 2.5
+    //    height: width
+    //    color: "#cacaca"
+    //    radius: 100
+    //    anchors.right: parent.right
+    //    anchors.rightMargin: thermometer.width * 0.41 - thermometer.width * (maxValue / 950)
+    //}
 
     Gauge {
         MouseArea{
@@ -65,23 +63,24 @@ Item {
         }
     }
     //the circle at the bottom
-    Rectangle {
-        id: rectangle
-        width: rectangle1.width * 0.8
-        height: rectangle1.height * 0.8
-        color: Qt.rgba((thermometer.value / thermometer.maximumValue) + 0.15, 0, (0.5 - (thermometer.value / thermometer.maximumValue) * 0.5), 1)
-        radius: 100
-        anchors.verticalCenter: rectangle1.verticalCenter
-        anchors.horizontalCenter: rectangle1.horizontalCenter
+    //Rectangle {
+    //    id: rectangle
+    //    width: rectangle1.width * 0.8
+    //    height: rectangle1.height * 0.8
+    //    color: Qt.rgba((thermometer.value / thermometer.maximumValue) + 0.15, 0, (0.5 - (thermometer.value / thermometer.maximumValue) * 0.5), 1)
+    //    radius: 100
+    //    anchors.verticalCenter: rectangle1.verticalCenter
+    //    anchors.horizontalCenter: rectangle1.horizontalCenter
+//
+    //}
 
-    }
     Text {
         id: tempNumber
         color: "#ededed"
-        text: qsTr(Math.round(thermometer.value) + "°")
+        text: qsTr(Math.round(thermometer.value) + "°C")
         horizontalAlignment: Text.AlignHCenter
         anchors {
-            horizontalCenter: rectangle.horizontalCenter
+            horizontalCenter: thermometer.horizontalCenter
             top: parent.bottom
         }
         styleColor: "#ededed"

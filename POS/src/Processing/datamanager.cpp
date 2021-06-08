@@ -601,6 +601,23 @@ void DataManager::dummyData()
     canServer.dataReceived(timeMs, 0x72A, sizeof(uint16_t) * 2, data10);
     canServer.dataReceived(timeMs, 0x63D, sizeof(uint16_t) * 2, data10);
 
+    QByteArray data11;
+    QDataStream stream11(&data11, QIODevice::ReadWrite);
+    stream11.setByteOrder(QDataStream::LittleEndian);
+
+    DataStructs::Vector6d threed;
+    threed.value_0 = 1 + sin(timeMs * 4);
+    threed.value_1 = 4 + sin(timeMs * 2);
+    threed.value_2 = 2 + sin(timeMs * 3);
+    threed.value_3 = 4 + sin(timeMs * 2);
+    threed.value_4 = 3 + sin(timeMs * 1);
+    threed.value_5 = 4 + sin(timeMs * 1);
+
+    stream11 << threed;
+
+    canServer.dataReceived(timeMs, 0xA1, sizeof(double) * 6, data11);
+    canServer.dataReceived(timeMs, 0xB4, sizeof(double) * 6, data11);
+
     timeMs += 10;
 }
 

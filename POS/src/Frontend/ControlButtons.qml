@@ -221,7 +221,7 @@ Item {
         anchors.right: parent.right
         anchors.bottom: emergencyStop.top
         anchors.bottomMargin: window.height*0.005
-        width: window.width / 5
+        width: window.width / 3
         contentItem: Text {
             text: parent.text
             font.pixelSize: window.width / 90
@@ -260,7 +260,7 @@ Item {
         anchors.bottom: buttons.bottom
         anchors.bottomMargin: window.height*0.007
         anchors.right: stop.right
-        width: window.width / 5
+        width: window.width / 3
         contentItem: Text {
             text: parent.text
             font.pixelSize: parent.height * 0.2
