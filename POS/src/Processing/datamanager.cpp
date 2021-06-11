@@ -479,7 +479,7 @@ void DataManager::init()
 {
     QTimer *timer = new QTimer(this);
     timer->moveToThread(this->thread());
-    //connect(timer, &QTimer::timeout, this, &DataManager::dummyData);
+    connect(timer, &QTimer::timeout, this, &DataManager::dummyData);
     timer->start(50);
 }
 
