@@ -209,7 +209,7 @@ struct Vector2b1s
 
     friend QDataStream &operator>>(QDataStream &dataStream, Vector2b1s &object)
     {
-        dataStream >> object.bool_0 >> object.bool_1 << object.short_0;
+        dataStream >> object.bool_0 >> object.bool_1 >> object.short_0;
 
         return dataStream;
     }

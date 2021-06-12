@@ -156,29 +156,29 @@ Item {
     ListModel {
         id: values0
         ListElement{ xPos: "0"; yPos: "0"; zPos: "0"; }
-        ListElement{ xPos: "2.754"; yPos: "1.455"; zPos: "3.362"; }
-        ListElement{ xPos: "2.754"; yPos: "1.455"; zPos: "3.362"; }
+        //ListElement{ xPos: "2.754"; yPos: "1.455"; zPos: "3.362"; }
+        //ListElement{ xPos: "2.754"; yPos: "1.455"; zPos: "3.362"; }
 
     }
     ListModel {
         id: values1
         ListElement{ xPos: "0"; yPos: "0"; zPos: "0"; }
-        ListElement{ xPos: "1.754"; yPos: "1.455"; zPos: "1.362"; }
-        ListElement{ xPos: "2.754"; yPos: "2.455"; zPos: "2.362"; }
+        //ListElement{ xPos: "1.754"; yPos: "1.455"; zPos: "1.362"; }
+        //ListElement{ xPos: "2.754"; yPos: "2.455"; zPos: "2.362"; }
 
     }
     ListModel {
         id: values2
         ListElement{ xPos: "0"; yPos: "0"; zPos: "0"; }
-        ListElement{ xPos: "0.754"; yPos: "0.455"; zPos: "1.362"; }
-        ListElement{ xPos: "0.704"; yPos: "0.055"; zPos: "0.302"; }
+        //ListElement{ xPos: "0.754"; yPos: "0.455"; zPos: "1.362"; }
+        //ListElement{ xPos: "0.704"; yPos: "0.055"; zPos: "0.302"; }
 
     }
     ListModel {
         id: values3
         ListElement{ xPos: "0"; yPos: "0"; zPos: "0"; }
-        ListElement{ xPos: "3.754"; yPos: "2.455"; zPos: "3.362"; }
-        ListElement{ xPos: "3.354"; yPos: "2.255"; zPos: "3.162"; }
+        //ListElement{ xPos: "3.754"; yPos: "2.455"; zPos: "3.362"; }
+        //ListElement{ xPos: "3.354"; yPos: "2.255"; zPos: "3.162"; }
 
 
     }

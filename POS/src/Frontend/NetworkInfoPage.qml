@@ -42,7 +42,7 @@ Page {
             y: window.height / 4
             TextInput {
                 id: inputIP
-                text: "IP-adress"
+                text: "192.168.  0.100"
                 inputMask: "000.000.000.000;_" //format of the input, 0s are placeholders for numbers, . are unchangable
                 padding: 5
                 bottomPadding: 0
@@ -81,6 +81,7 @@ Page {
             TextInput {
                 id: inputPort
                 validator: IntValidator{} // you can only write numbers
+                text: "80"
                 padding: 5
                 bottomPadding: 0
                 selectByMouse : true

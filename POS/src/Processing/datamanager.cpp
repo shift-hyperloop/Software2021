@@ -102,10 +102,12 @@ void DataManager::addData(unsigned int timeMs,
 
     // TODO: FIX
     case DataType::VECTOR_2B_1S: {
-        DataStructs::Vector2b dataStruct;
+        DataStructs::Vector2b1s dataStruct;
         dataStream >> dataStruct;
-        qmlData.append(dataStruct.status_0);
-        qmlData.append(dataStruct.status_1);
+        qmlData.append(dataStruct.bool_0);
+        qmlData.append(dataStruct.bool_1);
+        qmlData.append(dataStruct.short_0);
+
         break;
     }
     case DataType::CHAR: {
@@ -272,6 +274,8 @@ void DataManager::addData(unsigned int timeMs,
         qmlData.append(dataStruct.value_5);
         qmlData.append(dataStruct.value_6);
 
+        qDebug() << printf("Float 1: %x\n", dataStruct.value_3);
+
         QString newName = name;
         addPlotData(newName.append("_").append(QString::number(0)), timeMs, dataStruct.value_0);
         addPlotData(newName.append("_").append(QString::number(1)), timeMs, dataStruct.value_1);
@@ -324,6 +328,10 @@ void DataManager::addData(unsigned int timeMs,
     default: {
         break;
     }
+    }
+    qDebug() << "Offset size: " << offsetof(DataStructs::Vector3d4f,value_3);
+    for(QVariant x : qmlData){
+        qDebug() << x.value<double>();
     }
     emit newData(name, timeMs, qmlData); // Always emit data to be accessed from QML
 }
@@ -625,7 +633,7 @@ void DataManager::init()
 {
     QTimer *timer = new QTimer(this);
     timer->moveToThread(this->thread());
-    connect(timer, &QTimer::timeout, this, &DataManager::dummyData);
+    //connect(timer, &QTimer::timeout, this, &DataManager::dummyData);
     timer->start(50);
 }
 

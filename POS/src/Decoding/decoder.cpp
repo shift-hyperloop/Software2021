@@ -4,7 +4,6 @@
 #include <qdebug.h>
 #include "Processing/datastructs.h"
 #include "decoder.h"
-
 // NOTE: This was commented so the project would build
 Decoder::Decoder()
 {

@@ -3,6 +3,7 @@
 #include <qabstractsocket.h>
 #include <qdebug.h>
 #include <qglobal.h>
+#include <algorithm>
 
 
 CANServer::CANServer()
@@ -44,13 +45,19 @@ void CANServer::handleIncoming()
     while(m_TcpSocket->bytesAvailable()) {
 
         datagram = m_TcpSocket->readAll();
-
+        qDebug() << datagram.toHex();
         bool ok;
         // Define area of datagram as id, datasize and data
         quint16 id = qFromBigEndian<quint16>(datagram.mid(CAN_ID_OFFSET, CAN_ID_SIZE).toHex().toInt(&ok, 16));
         quint8 dataSize = qFromBigEndian<quint8>(datagram.mid(CAN_DATA_SIZE_OFFSET, CAN_DATA_SIZE_SIZE).toHex().toInt(&ok, 16));
         quint32 timeMs = qFromBigEndian<quint32>(datagram.mid(CAN_TIMESTAMP_OFFSET, CAN_TIMESTAMP_SIZE).toHex().toInt(&ok, 16)); 
         QByteArray data = datagram.mid(CAN_DATA_OFFSET, dataSize);
+        qDebug() << "ID: " << id;
+        qDebug() << "dataSize: " << dataSize;
+        qDebug() << "timeMs: " << timeMs;
+        qDebug() << "data: " << data.toHex();
+        qDebug() << "Float size" << sizeof (float);
+
 
         // Send id, datasize and data as signal onward
         emit dataReceived(timeMs, id, dataSize, data);
