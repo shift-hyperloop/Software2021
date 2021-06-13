@@ -91,12 +91,14 @@ struct VCUStatus
     // NOTE: Overload here as well so data from telemetry can be directly converted to struct and vice versa (for all structs really)
     friend QDataStream &operator<<(QDataStream &dataStream, const VCUStatus &object)
     {
+        char padding;
+        short morePadding;
         // NOTE: Change if stream we receive is not continuous
         dataStream << object.BMS_1 << object.BMS_2 << object.Inverter_1 << object.Inverter_2
                    << object.Telemetry << object.State_indication << object.Sensor_suite_1
                    << object.Sensor_suite_2 << object.VCU;
                    dataStream.setFloatingPointPrecision(QDataStream::SinglePrecision);
-                   dataStream << object.latency_CAN_0
+                   dataStream << padding << morePadding << object.latency_CAN_0
                    << object.latency_CAN_1;
 
         return dataStream;
@@ -108,6 +110,7 @@ struct VCUStatus
             >> object.Telemetry >> object.State_indication >> object.Sensor_suite_1
             >> object.Sensor_suite_2 >> object.VCU;
             dataStream.setFloatingPointPrecision(QDataStream::SinglePrecision);
+            dataStream.skipRawData(3);
             dataStream >> object.latency_CAN_0 >> object.latency_CAN_1;
 
         return dataStream;

@@ -117,7 +117,7 @@ Page {
            // enabled: !networkinfo.connected //if connected to pod the button is disabled
             onClicked: {
                 dataManager.dataManager.connectToPod(inputIP.text, inputPort.text);
-                stackView.pop(null); // go back to main page after connecting
+               // stackView.pop(null); // go back to main page after connecting
             }
             Keys.onReturnPressed: {
                 clicked()

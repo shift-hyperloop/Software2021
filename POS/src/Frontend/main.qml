@@ -277,8 +277,7 @@ ApplicationWindow {
                     names: ["Velocity", "Acceleration", "Position", "Battery Charge", "Ambient temperature", "Pressure"] // names for the values in the table
                     values: dm.table2Values // values for the table
                     anchors {                                   // indexes in names[] and values[] are corresponding
-                        top: parent.top
-                        topMargin: 0.09 * window.height
+                        top: battery.top
                         left: vcuchecklist.right
                         leftMargin: window.width * 0.1
                     }
@@ -322,8 +321,7 @@ ApplicationWindow {
                     anchors {
                         right: thermometerBattery.right
                         rightMargin: window.width * 0.1
-                        top: parent.top
-                        topMargin: 0.04 * window.height
+                        top: thermometerBattery.top
                     }
                     transformOrigin: Item.TopRight
                     minValue: 0

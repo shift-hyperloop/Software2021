@@ -56,7 +56,6 @@ void CANServer::handleIncoming()
         qDebug() << "dataSize: " << dataSize;
         qDebug() << "timeMs: " << timeMs;
         qDebug() << "data: " << data.toHex();
-        qDebug() << "Float size" << sizeof (float);
 
 
         // Send id, datasize and data as signal onward

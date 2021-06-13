@@ -328,8 +328,6 @@ void DataManager::addData(unsigned int timeMs,
         break;
     }
     }
-    qDebug() << "VCU size " << sizeof (DataStructs::VCUStatus);
-    qDebug() << "Offset " << offsetof(DataStructs::VCUStatus, latency_CAN_0);
     for(QVariant x : qmlData){
         qDebug() << x;
     }
