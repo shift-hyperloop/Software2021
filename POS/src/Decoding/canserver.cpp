@@ -74,6 +74,7 @@ void CANServer::sendPodCommand(const PodCommand& type)
     }
     QByteArray frameID;
     QDataStream ds(&frameID, QIODevice::ReadWrite);
+    ds.setByteOrder(QDataStream::BigEndian);
 
     switch(type){
     // MessageID determines which signal to send to the pod
