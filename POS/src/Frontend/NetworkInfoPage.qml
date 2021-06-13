@@ -5,7 +5,6 @@ import shift.datamanagement 1.0
 Page {
     id: page
     background: Rectangle{color: "#333333"} // background color for subpages
-
     Keys.onPressed: { //If backspace is pressed => go back to previous page
         if (event.key === 16777219) {
             //pop(null) implicitely pops to the first element, aka main.qml
@@ -31,7 +30,7 @@ Page {
     }
     Item {
         id: connectionInputs
-        visible: ! networkinfo.connected // the connection inputs and connect button is not visible when connected
+        //visible: ! networkinfo.connected // the connection inputs and connect button is not visible when connected
         Rectangle{
             color: "lightgray"
             id: ipInput
@@ -111,11 +110,18 @@ Page {
             y: ipInput.y - 5
             anchors.left: ipInput.right
             anchors.leftMargin: width / 4
-            enabled: !networkinfo.connected //if connected to pod the button is disabled
-            onClicked: {
-                dataManager.dataManager.connectToPod(inputIP.text, inputPort.text);
+            Component.onCompleted: {
+                connectButton.forceActiveFocus()
             }
 
+           // enabled: !networkinfo.connected //if connected to pod the button is disabled
+            onClicked: {
+                dataManager.dataManager.connectToPod(inputIP.text, inputPort.text);
+                stackView.pop(null); // go back to main page after connecting
+            }
+            Keys.onReturnPressed: {
+                clicked()
+            }
         }
     }
     CustomChart{

@@ -212,6 +212,12 @@ Item {
                 }
               }
             MenuItem { text: qsTr("Network")
+                Action {
+                    shortcut: "n"
+                    onTriggered: {
+                        stackView.push("NetworkInfoPage.qml");
+                    }
+                }
                 onTriggered: {
                     stackView.push("NetworkInfoPage.qml");
                 }
