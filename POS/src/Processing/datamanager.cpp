@@ -230,7 +230,7 @@ void DataManager::addData(unsigned int timeMs,
     }
 
     case DataType::VECTOR_2C_2D: {
-        DataStructs::Vector2c2i dataStruct;
+        DataStructs::Vector2c2d dataStruct;
         dataStream >> dataStruct;
 
         qmlData.append(dataStruct.value_0);
@@ -328,7 +328,8 @@ void DataManager::addData(unsigned int timeMs,
         break;
     }
     }
-
+    qDebug() << "VCU size " << sizeof (DataStructs::VCUStatus);
+    qDebug() << "Offset " << offsetof(DataStructs::VCUStatus, latency_CAN_0);
     for(QVariant x : qmlData){
         qDebug() << x;
     }

@@ -85,8 +85,8 @@ struct VCUStatus
     bool Sensor_suite_2;
     bool VCU;
 
-    float latency_CAN_0;
-    float latency_CAN_1;
+    uint32_t latency_CAN_0;
+    uint32_t latency_CAN_1;
 
     // NOTE: Overload here as well so data from telemetry can be directly converted to struct and vice versa (for all structs really)
     friend QDataStream &operator<<(QDataStream &dataStream, const VCUStatus &object)
@@ -688,8 +688,10 @@ struct Vector2c2d
 
     friend QDataStream &operator<<(QDataStream &dataStream, const Vector2c2d &object)
     {
+        short padding = 0;
+        uint32_t morePadding = 0;
         // NOTE: Change if stream we receive is not continuous
-        dataStream << object.value_0 << object.value_1;
+        dataStream << object.value_0 << object.value_1 << padding << morePadding;
         dataStream.setFloatingPointPrecision(QDataStream::DoublePrecision);
         dataStream << object.value_2 << object.value_3;
 
@@ -700,6 +702,7 @@ struct Vector2c2d
     {
         dataStream >> object.value_0 >> object.value_1;
         dataStream.setFloatingPointPrecision(QDataStream::DoublePrecision);
+        dataStream.skipRawData(6); // Struct has 6 padded bytes
         dataStream >> object.value_2 >> object.value_3;
 
         return dataStream;
