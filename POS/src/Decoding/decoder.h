@@ -39,6 +39,7 @@ static const QMap<quint16, QString> idToName = {
     { 0xB3  , "Suite XS Rear" },
     { 0xB4  , "Suite XS Rear Pos" },
     { 0xB5  , "Dist, temp, pres" },		
+    { 0x5C4  , "VCU Checklist" },
 };
 
 static const QMap<quint16, DataType> idToType = {
@@ -73,7 +74,9 @@ static const QMap<quint16, DataType> idToType = {
     { 0xB2	, DataType::VECTOR_2F },   
     { 0xB3	, DataType::VECTOR_2C_2D },
     { 0xB4	, DataType::VECTOR_6D },
-    { 0xB5	, DataType::VECTOR_3D_4F },   	
+    { 0xB5	, DataType::VECTOR_3D_4F },
+    { 0x5C4  , DataType::VCU_STATUS},
+
 };
 
 class Decoder : public QObject
