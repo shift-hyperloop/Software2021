@@ -104,9 +104,9 @@ struct VCUStatus
     {
         dataStream >> object.BMS_1 >> object.BMS_2 >> object.Inverter_1 >> object.Inverter_2
             >> object.Telemetry >> object.State_indication >> object.Sensor_suite_1
-            >> object.Sensor_suite_2 >> object.VCU
-
-            >> object.latency_CAN_0 >> object.latency_CAN_1;
+            >> object.Sensor_suite_2 >> object.VCU;
+            dataStream.setFloatingPointPrecision(QDataStream::SinglePrecision);
+            dataStream >> object.latency_CAN_0 >> object.latency_CAN_1;
 
         return dataStream;
     }
@@ -127,6 +127,7 @@ struct Vector3f
 
     friend QDataStream &operator>>(QDataStream &dataStream, Vector3f &object)
     {
+        dataStream.setFloatingPointPrecision(QDataStream::SinglePrecision);
         dataStream >> object.position >> object.speed >> object.acceleration;
 
         return dataStream;
@@ -498,6 +499,7 @@ struct Float
 
     friend QDataStream &operator>>(QDataStream &dataStream, Float &object)
     {
+        dataStream.setFloatingPointPrecision(QDataStream::SinglePrecision);
         dataStream >> object.value_0;
 
         return dataStream;
@@ -517,6 +519,7 @@ struct Double
 
     friend QDataStream &operator>>(QDataStream &dataStream, Double &object)
     {
+        dataStream.setFloatingPointPrecision(QDataStream::DoublePrecision);
         dataStream >> object.value_0;
 
         return dataStream;
@@ -537,6 +540,7 @@ struct Vector2f
 
     friend QDataStream &operator>>(QDataStream &dataStream, Vector2f &object)
     {
+        dataStream.setFloatingPointPrecision(QDataStream::SinglePrecision);
         dataStream >> object.value_0 >> object.value_1;
 
         return dataStream;
@@ -559,6 +563,7 @@ struct Vector4f
 
     friend QDataStream &operator>>(QDataStream &dataStream, Vector4f &object)
     {
+        dataStream.setFloatingPointPrecision(QDataStream::SinglePrecision);
         dataStream >> object.value_0 >> object.value_1 >> object.value_2 >> object.value_3;
 
         return dataStream;
@@ -584,6 +589,7 @@ struct Vector6f
 
     friend QDataStream &operator>>(QDataStream &dataStream, Vector6f &object)
     {
+        dataStream.setFloatingPointPrecision(QDataStream::SinglePrecision);
         dataStream >> object.value_0 >> object.value_1 >> object.value_2 >> object.value_3
             >> object.value_4 >> object.value_5;
 
@@ -612,6 +618,7 @@ struct Vector8f
 
     friend QDataStream &operator>>(QDataStream &dataStream, Vector8f &object)
     {
+        dataStream.setFloatingPointPrecision(QDataStream::SinglePrecision);
         dataStream >> object.value_0 >> object.value_1 >> object.value_2 >> object.value_3
             >> object.value_4 >> object.value_5 >> object.value_6 >> object.value_7;
 
@@ -651,6 +658,7 @@ struct Vector16f
 
     friend QDataStream &operator>>(QDataStream &dataStream, Vector16f &object)
     {
+        dataStream.setFloatingPointPrecision(QDataStream::SinglePrecision);
         dataStream >> object.value_0 >> object.value_1 >> object.value_2 >> object.value_3
             >> object.value_4 >> object.value_5 >> object.value_6 >> object.value_7
             >> object.value_8 >> object.value_9 >> object.value_10 >> object.value_11
@@ -678,7 +686,9 @@ struct Vector2c2d
 
     friend QDataStream &operator>>(QDataStream &dataStream, Vector2c2d &object)
     {
-        dataStream >> object.value_0 >> object.value_1 >> object.value_2 >> object.value_3;
+        dataStream >> object.value_0 >> object.value_1;
+        dataStream.setFloatingPointPrecision(QDataStream::DoublePrecision);
+        dataStream >> object.value_2 >> object.value_3;
 
         return dataStream;
     }
@@ -735,6 +745,7 @@ struct Vector6d
 
         friend QDataStream& operator>>(QDataStream& dataStream, Vector6d& object)
         {
+            dataStream.setFloatingPointPrecision(QDataStream::DoublePrecision);
                 dataStream >> object.value_0
                            >> object.value_1
                            >> object.value_2
@@ -771,6 +782,7 @@ struct Vector3d4f
 
         friend QDataStream& operator>>(QDataStream& dataStream, Vector3d4f& object)
         {
+            dataStream.setFloatingPointPrecision(QDataStream::DoublePrecision);
             dataStream >> object.value_0
                >> object.value_1
                >> object.value_2;
@@ -810,11 +822,13 @@ struct Vector4d4f
 
         friend QDataStream& operator>>(QDataStream& dataStream, Vector4d4f& object)
         {
+            dataStream.setFloatingPointPrecision(QDataStream::DoublePrecision);
                 dataStream >> object.value_0
                            >> object.value_1
                            >> object.value_2
-                           >> object.value_3
-                           >> object.value_4
+                           >> object.value_3;
+                           dataStream.setFloatingPointPrecision(QDataStream::SinglePrecision);
+                           dataStream >> object.value_4
                            >> object.value_5
                            >> object.value_6
                            >> object.value_7;
