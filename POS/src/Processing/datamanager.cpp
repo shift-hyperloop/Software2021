@@ -274,7 +274,6 @@ void DataManager::addData(unsigned int timeMs,
         qmlData.append(dataStruct.value_5);
         qmlData.append(dataStruct.value_6);
 
-        printf("Float 1: %x\n", dataStruct.value_3);
 
         QString newName = name;
         addPlotData(newName.append("_").append(QString::number(0)), timeMs, dataStruct.value_0);
@@ -329,7 +328,6 @@ void DataManager::addData(unsigned int timeMs,
         break;
     }
     }
-    qDebug() << "Offset size: " << offsetof(DataStructs::Vector3d4f,value_3);
 
     for(QVariant x : qmlData){
         qDebug() << x;
