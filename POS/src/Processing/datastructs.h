@@ -771,15 +771,15 @@ struct Vector3d4f
 
         friend QDataStream& operator>>(QDataStream& dataStream, Vector3d4f& object)
         {
-                dataStream >> object.value_0
-                           >> object.value_1
-                           >> object.value_2
-                           >> object.value_3
-                           >> object.value_4
-                           >> object.value_5
-                           >> object.value_6;
-
-                return dataStream;
+            dataStream >> object.value_0
+               >> object.value_1
+               >> object.value_2;
+               dataStream.setFloatingPointPrecision(QDataStream::SinglePrecision);
+               dataStream >> object.value_3
+               >> object.value_4
+               >> object.value_5
+               >> object.value_6;
+               return dataStream;
         }
 };
 
