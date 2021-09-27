@@ -224,44 +224,9 @@ Item {
               }
 
 
-/*
-            Menu{
-                title: qsTr("Speed")
-                MenuItem{
-                    CheckBox{
-                        checked: true
-                        onCheckStateChanged: speedometer.visible = checked
-                        }
-                    Label{
-                            text: "Speedometer"
-                            anchors.centerIn: parent
-                        }
-                }
-                Menu{
-                    title: qsTr("Charts")
-                    MenuItem{
-                        CheckBox{
-                            checked: true
-                            onCheckStateChanged: chart.visible = checked
-                            }
-                        Label{
-                                text: "Speed"
-                                anchors.centerIn: parent
-                            }
-                    }
-                }
-            }*/
-        }
-        Menu{
-            title: qsTr("State indication")
-            font.pixelSize:  0.025 * window.height
 
-            MenuItem { text: qsTr("Change State")
-                onTriggered: {
-                    stackView.push("StateIndication.qml");
-                }
-              }
         }
+
         Menu {
             id: menuHelp
             title: qsTr("Help")
